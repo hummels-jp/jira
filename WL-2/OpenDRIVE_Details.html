@@ -17,32 +17,33 @@
 
     <div class="card">
         <h2>1. 基本概念与 XML 整体结构</h2>
-        <p><strong>基本概念</strong>：OpenDRIVE 是一个基于 XML 的道路网络描述标准。</p>
+        <p><strong>基本概念</strong>：OpenDRIVE 是一个基于 XML 的道路网络描述标准，核心在于通过<strong>参数化参考线 (Reference Line)</strong> 来定义道路结构。</p>
         <div class="diagram"><img src="xml_structure.jpg" alt="OpenDRIVE XML Structure"></div>
     </div>
 
     <h1>2. 几何基元 (Geometry Primitives)</h1>
     <div class="card">
-        <div class="diagram"><img src="geometry_reference.jpg" alt="Steering Logic"></div>
+        <div class="diagram"><img src="geometry_reference.jpg" alt="OpenDRIVE Geometry Primitives Steering Logic"></div>
     </div>
+    
     <div class="card">
         <h2>Line (直线)</h2>
-        <img src="line_example.jpg" alt="Line">
+        <img src="line_example.jpg" alt="Line Primitive Example">
         <div class="data-block">&lt;geometry length="57.3"&gt;&lt;line/&gt;&lt;/geometry&gt;</div>
     </div>
     <div class="card">
         <h2>Arc (圆弧)</h2>
-        <img src="arc_example.jpg" alt="Arc">
+        <img src="arc_example.jpg" alt="Arc Primitive Example">
         <div class="data-block">&lt;geometry length="9.23"&gt;&lt;arc curvature="-0.127"/&gt;&lt;/geometry&gt;</div>
     </div>
     <div class="card">
         <h2>Spiral (螺旋线)</h2>
-        <img src="spiral_example.jpg" alt="Spiral">
+        <img src="spiral_example.jpg" alt="Spiral Primitive Example">
         <div class="data-block">&lt;geometry length="1.32"&gt;&lt;spiral curvStart="0.0" curvEnd="0.2"/&gt;&lt;/geometry&gt;</div>
     </div>
     <div class="card">
         <h2>Parametric Cubic Polynomial (参数化三次多项式)</h2>
-        <img src="paramPoly3_example.jpg" alt="Poly3">
+        <img src="paramPoly3_example.jpg" alt="Parametric Cubic Polynomial Example">
         <div class="data-block">&lt;paramPoly3 aU="0.0" bU="1.0" ... /&gt;</div>
     </div>
 
@@ -53,17 +54,30 @@
 
     <h1>4. Road Linkage (道路连接)</h1>
     <div class="card">
-        <h2>平滑连接规范 (Smooth Road Linkage)</h2>
-        <div class="diagram">
-            <img src="road_linkage_smooth.jpg" alt="How to link roads">
-        </div>
-        <p>在进行道路连接时，必须确保两条道路在连接点处的 <strong>Heading (航向角)</strong> 完全匹配。否则会导致道路之间产生<strong>间隙 (Gaps)</strong> 或 <strong>重叠 (Overlaps)</strong>，从而引发仿真与车辆控制问题。</p>
+        <h2>基础拓扑连接</h2>
+        <p>定义道路间的简单先后继关系，通过 <code>&lt;link&gt;</code> 标签建立前后继道路的索引。</p>
+        <div class="diagram"><img src="road_linkage_simple.jpg" alt="Road Linkage: Roads with roads"></div>
         <div class="data-block">
-            &lt;link&gt;<br>
-            &nbsp;&nbsp;&lt;predecessor elementType="road" elementId="2" /&gt;<br>
-            &nbsp;&nbsp;&lt;successor elementType="road" elementId="1" /&gt;<br>
-            &lt;/link&gt;
+            &lt;road rule="RHT" length="100.0" id="1" junction="-1" &gt;<br>
+            &nbsp;&nbsp;&lt;link&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;predecessor elementType="road" elementId="2" /&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;successor elementType="road" elementId="3" /&gt;<br>
+            &nbsp;&nbsp;&lt;/link&gt;<br>
+            &lt;/road&gt;
         </div>
+    </div>
+    <div class="card">
+        <h2>路口连接 (Junction Linkage)</h2>
+        <div class="diagram"><img src="road_linkage_junction.jpg" alt="Road Linkage with Junction"></div>
+        <p>对于复杂路口，OpenDRIVE 通过 <code>junction</code> 标签来管理多条道路的逻辑交叉与物理过渡。</p>
+        <div class="data-block">
+            &lt;predecessor elementType="junction" elementId="2" /&gt;
+        </div>
+    </div>
+    <div class="card">
+        <h2>平滑连接规范 (Smooth Road Linkage)</h2>
+        <div class="diagram"><img src="road_linkage_smooth.jpg" alt="Road Linkage Smooth Surface"></div>
+        <p>在进行道路连接时，必须确保两条道路在连接点处的 <strong>Heading (航向角)</strong> 完全匹配。否则会导致道路之间产生<strong>间隙 (Gaps)</strong> 或 <strong>重叠 (Overlaps)</strong>。</p>
     </div>
 
     <a href="Road_Geometry.html" class="back-link">&larr; 返回首页</a>
