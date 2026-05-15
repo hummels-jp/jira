@@ -17,7 +17,7 @@
 
     <div class="card">
         <h2>1. 基本概念与 XML 整体结构</h2>
-        <p><strong>基本概念</strong>：OpenDRIVE 是一个基于 XML 的道路网络描述标准，核心在于通过参数化参考线定义道路。</p>
+        <p><strong>基本概念</strong>：OpenDRIVE 是一个基于 XML 的道路网络描述标准，核心在于通过<strong>参数化参考线 (Reference Line)</strong> 来定义道路结构。</p>
         <div class="diagram"><img src="xml_structure.jpg" alt="OpenDRIVE XML Structure"></div>
     </div>
 
@@ -25,25 +25,21 @@
     <div class="card">
         <div class="diagram"><img src="geometry_reference.jpg" alt="OpenDRIVE Geometry Primitives Steering Logic"></div>
     </div>
-    
     <div class="card">
         <h2>Line (直线)</h2>
         <img src="line_example.jpg" alt="Line Primitive Example">
         <div class="data-block">&lt;geometry length="57.3"&gt;&lt;line/&gt;&lt;/geometry&gt;</div>
     </div>
-    
     <div class="card">
         <h2>Arc (圆弧)</h2>
         <img src="arc_example.jpg" alt="Arc Primitive Example">
         <div class="data-block">&lt;geometry length="9.23"&gt;&lt;arc curvature="-0.127"/&gt;&lt;/geometry&gt;</div>
     </div>
-    
     <div class="card">
         <h2>Spiral (螺旋线)</h2>
         <img src="spiral_example.jpg" alt="Spiral Primitive Example">
         <div class="data-block">&lt;geometry length="1.32"&gt;&lt;spiral curvStart="0.0" curvEnd="0.2"/&gt;&lt;/geometry&gt;</div>
     </div>
-    
     <div class="card">
         <h2>Parametric Cubic Polynomial (参数化三次多项式)</h2>
         <img src="paramPoly3_example.jpg" alt="Parametric Cubic Polynomial Example">
@@ -69,13 +65,9 @@
             &lt;/road&gt;
         </div>
     </div>
-
     <div class="card">
         <h2>路口连接 (Junction Linkage)</h2>
         <div class="diagram"><img src="road_linkage_junction.jpg" alt="Road Linkage with Junction"></div>
-        <div class="diagram">
-            <img src="road_linkage_roads_with_roads.jpg" alt="Road linkage: Roads with roads detailed">
-        </div>
         <p>对于复杂路口，OpenDRIVE 通过 <code>junction</code> 标签来管理多条道路的逻辑交叉与物理过渡。</p>
         <div class="data-block">
             &lt;predecessor elementType="junction" elementId="2" /&gt;
