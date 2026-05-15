@@ -25,25 +25,21 @@
     <div class="card">
         <div class="diagram"><img src="geometry_reference.jpg" alt="OpenDRIVE Geometry Primitives Steering Logic"></div>
     </div>
-
     <div class="card">
         <h2>Line (直线)</h2>
         <img src="line_example.jpg" alt="Line Primitive Example">
         <div class="data-block">&lt;geometry length="57.3"&gt;&lt;line/&gt;&lt;/geometry&gt;</div>
     </div>
-
     <div class="card">
         <h2>Arc (圆弧)</h2>
         <img src="arc_example.jpg" alt="Arc Primitive Example">
         <div class="data-block">&lt;geometry length="9.23"&gt;&lt;arc curvature="-0.127"/&gt;&lt;/geometry&gt;</div>
     </div>
-
     <div class="card">
         <h2>Spiral (螺旋线)</h2>
         <img src="spiral_example.jpg" alt="Spiral Primitive Example">
         <div class="data-block">&lt;geometry length="1.32"&gt;&lt;spiral curvStart="0.0" curvEnd="0.2"/&gt;&lt;/geometry&gt;</div>
     </div>
-
     <div class="card">
         <h2>Parametric Cubic Polynomial (参数化三次多项式)</h2>
         <img src="paramPoly3_example.jpg" alt="Parametric Cubic Polynomial Example">
@@ -57,11 +53,9 @@
 
     <h1>4. Road Linkage (道路连接)</h1>
     <div class="card">
-        <p><strong>Road Linkage</strong> 定义了道路间的拓扑连接关系，通过 <code>&lt;link&gt;</code> 标签建立前后继道路的索引。</p>
-        <div class="diagram">
-            <img src="road_linkage_simple.jpg" alt="Road Linkage: Roads with roads">
-        </div>
-        <p>基础道路连接逻辑如下：</p>
+        <h2>基础拓扑连接</h2>
+        <p>定义道路间的简单先后继关系：</p>
+        <div class="diagram"><img src="road_linkage_simple.jpg" alt="Road Linkage: Roads with roads"></div>
         <div class="data-block">
             &lt;road rule="RHT" length="100.0" id="1" junction="-1" &gt;<br>
             &nbsp;&nbsp;&lt;link&gt;<br>
@@ -69,6 +63,14 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&lt;successor elementType="road" elementId="3" /&gt;<br>
             &nbsp;&nbsp;&lt;/link&gt;<br>
             &lt;/road&gt;
+        </div>
+    </div>
+    <div class="card">
+        <h2>路口连接 (Junction Linkage)</h2>
+        <div class="diagram"><img src="road_linkage_junction.jpg" alt="Road Linkage with Junction"></div>
+        <p>对于复杂路口，OpenDRIVE 通过 <code>junction</code> 标签来管理多条道路的逻辑交叉与物理过渡。</p>
+        <div class="data-block">
+            &lt;predecessor elementType="junction" elementId="2" /&gt;
         </div>
     </div>
 
