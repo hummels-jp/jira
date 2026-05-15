@@ -17,76 +17,37 @@
 
     <div class="card">
         <h2>1. 基本概念与 XML 整体结构</h2>
-        <p><strong>基本概念</strong>：OpenDRIVE 是一个基于 XML 的道路网络描述标准，核心在于通过参数化参考线定义道路。</p>
-        <div class="diagram">
-            <img src="xml_structure.jpg" alt="OpenDRIVE XML Structure">
-        </div>
-        <p><strong>XML 标签含义详解</strong>：包含 header, road, junction, controller 等核心标签。</p>
+        <p>OpenDRIVE 是基于 XML 的道路网络描述标准，核心在于参数化参考线。</p>
+        <div class="diagram"><img src="xml_structure.jpg" alt="OpenDRIVE XML Structure"></div>
     </div>
 
     <h1>2. 几何基元 (Geometry Primitives)</h1>
     <div class="card">
+        <div class="diagram"><img src="geometry_reference.jpg" alt="Steering Logic"></div>
+        <p>OpenDRIVE 几何基元直接决定动力学逻辑 (Δα/Δt)。</p>
+    </div>
+
+    <!-- 省略其他部分... -->
+
+    <h1>4. Road Linkage (道路连接)</h1>
+    <div class="card">
+        <p><strong>Road Linkage</strong> 定义了道路间的拓扑连接关系，通过 <code>&lt;link&gt;</code> 标签建立前后继道路的索引。</p>
         <div class="diagram">
-            <img src="geometry_reference.jpg" alt="OpenDRIVE Geometry Primitives Steering Logic">
+            <img src="road_linkage.jpg" alt="Road Linkage Example">
         </div>
-        <p>OpenDRIVE 定义了多种几何基元，不仅决定物理轨迹，还决定了车辆转向控制的动力学逻辑 (Δα/Δt):</p>
-    </div>
-
-    <div class="card">
-        <h2>Line (直线)</h2>
-        <img src="line_example.jpg" alt="Line Primitive Example">
-        <div class="data-block">&lt;geometry length="57.3"&gt;&lt;line/&gt;&lt;/geometry&gt;</div>
-    </div>
-
-    <div class="card">
-        <h2>Arc (圆弧)</h2>
-        <img src="arc_example.jpg" alt="Arc Primitive Example">
-        <div class="data-block">&lt;geometry length="9.23"&gt;&lt;arc curvature="-0.127"/&gt;&lt;/geometry&gt;</div>
-    </div>
-
-    <div class="card">
-        <h2>Spiral (螺旋线)</h2>
-        <img src="spiral_example.jpg" alt="Spiral Primitive Example">
-        <div class="data-block">&lt;geometry length="1.32"&gt;&lt;spiral curvStart="0.0" curvEnd="0.2"/&gt;&lt;/geometry&gt;</div>
-    </div>
-
-    <div class="card">
-        <h2>Parametric Cubic Polynomial (参数化三次多项式)</h2>
-        <img src="paramPoly3_example.jpg" alt="Parametric Cubic Polynomial Example">
-        <div class="data-block">&lt;paramPoly3 aU="0.0" bU="1.0" ... /&gt;</div>
-    </div>
-
-    <div class="card">
-        <h2>几何连续性 (Geometric Continuity)</h2>
-        <div class="diagram">
-            <img src="continuity_reference.jpg" alt="Reference Line Continuity">
-        </div>
-        <p>前一个基元的结束状态必须与后一个基元的起始状态完全一致 (C1 连续性)。</p>
-    </div>
-
-    <h1>3. s/t 坐标系 (s/t Coordinate System)</h1>
-    <div class="card">
-        <div class="diagram">
-            <img src="st_coordinate.png" alt="s/t Coordinate System">
-        </div>
-        <p><strong>s/t 坐标系</strong>是 OpenDRIVE 的核心坐标系统，简化了车道属性定义。</p>
-    </div>
-
-    <h1>5. Road Definition (道路定义)</h1>
-    <div class="card">
-        <p><strong>Road Definition</strong> 是 OpenDRIVE 描述道路逻辑属性的基础单位。</p>
-        <div class="diagram">
-            <img src="road_definition.jpg" alt="Road Definition Example">
-        </div>
-        <p>通过 <code>&lt;road&gt;</code> 标签定义道路规则（如 <code>rule="RHT"</code> 右侧通行）、长度、ID 及所属路口。其内部挂载了完整的道路描述组件：</p>
+        <p>在 <code>&lt;link&gt;</code> 中使用 <code>predecessor</code> (前驱) 和 <code>successor</code> (后继) 明确道路的逻辑走向，这是进行长距离路径规划和路由的基础。</p>
         <div class="data-block">
-            &lt;road rule="RHT" length="100.0" id="1" junction="-1" &gt;<br>
-            &nbsp;&nbsp;&lt;link&gt;...&lt;/link&gt;<br>
-            &nbsp;&nbsp;&lt;planView&gt;...&lt;/planView&gt;<br>
-            &nbsp;&nbsp;&lt;lanes&gt;...&lt;/lanes&gt;<br>
-            &nbsp;&nbsp;&lt;objects&gt;...&lt;/objects&gt;<br>
-            &lt;/road&gt;
+            &lt;link&gt;<br>
+            &nbsp;&nbsp;&lt;predecessor elementType="road" elementId="2" /&gt;<br>
+            &nbsp;&nbsp;&lt;successor elementType="road" elementId="3" /&gt;<br>
+            &lt;/link&gt;
         </div>
+    </div>
+
+    <h1>5. s/t 坐标系 (s/t Coordinate System)</h1>
+    <div class="card">
+        <div class="diagram"><img src="st_coordinate.png" alt="s/t Coordinate System"></div>
+        <p>s/t 坐标系简化了车道属性定义。</p>
     </div>
 
     <a href="Road_Geometry.html" class="back-link">&larr; 返回首页</a>
