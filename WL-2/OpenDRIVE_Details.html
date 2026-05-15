@@ -52,7 +52,27 @@
             <li><strong>s (弧长)</strong>: 沿参考线中心线测量的纵向距离。</li>
             <li><strong>t (横向偏移)</strong>: 垂直于参考线中心线的横向距离。</li>
         </ul>
-        <p><strong>应用场景</strong>：s/t 系统简化了车道属性定义（如 <code>laneOffset</code>），使得物体（如交通标志）可以通过相对于参考线的 <code>(s, t)</code> 偏移量轻松放置，无需频繁计算全局地理坐标。</p>
+        <p><strong>应用场景</strong>：s/t 系统简化了车道属性定义，使得物体可以轻松放置，无需频繁计算全局地理坐标。</p>
+    </div>
+
+    <h1>4. 参考线 (Reference Line) 结构</h1>
+    <div class="card">
+        <p><strong>参考线 (Reference Line)</strong> 是每一条 OpenDRIVE 道路的“骨架”。所有的车道 (Lanes)、高程剖面 (Elevation Profile) 和横倾剖面 (Superelevation) 都是基于该参考线进行定义的。</p>
+        <p><strong>基本属性结构</strong>：</p>
+        <ul>
+            <li><strong>planView</strong>: 包含一系列几何基元 (Geometry)，构成二维的参考线路径。</li>
+            <li><strong>elevationProfile</strong>: 定义参考线在 Z 轴上的高程变化。</li>
+            <li><strong>lateralProfile</strong>: 定义道路横向的倾斜角变化。</li>
+        </ul>
+        <div class="data-block">
+            &lt;road id="1" name="MainRoad" length="100.0"&gt;<br>
+            &nbsp;&nbsp;&lt;planView&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;geometry s="0.0" x="0.0" y="0.0" hdg="0.0" length="100.0"&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;line/&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;/geometry&gt;<br>
+            &nbsp;&nbsp;&lt;/planView&gt;<br>
+            &lt;/road&gt;
+        </div>
     </div>
 
     <a href="Road_Geometry.html" class="back-link">&larr; 返回首页</a>
