@@ -47,9 +47,20 @@
     </div>
 
     <div class="card">
+        <h2>Arc (圆弧) 详细示例</h2>
+        <img src="arc_example.jpg" alt="Arc Primitive Example">
+        <p>圆弧通过 <code>curvature</code> 参数定义转弯半径，<code>curvature</code> 的正负值决定转弯方向。</p>
+        <div class="data-block">
+            &lt;geometry s="0.0" x="0.0" y="0.0" hdg="0.0" length="9.23"&gt;<br>
+            &nbsp;&nbsp;&lt;arc curvature="-0.127"/&gt;<br>
+            &lt;/geometry&gt;
+        </div>
+    </div>
+
+    <div class="card">
         <h2>Spiral (螺旋线) 详细示例</h2>
         <img src="spiral_example.jpg" alt="Spiral Primitive Example">
-        <p>螺旋线通过 <code>curvStart</code> 和 <code>curvEnd</code> 定义曲率的渐变过程，常用于避免转弯时的离心力突变。</p>
+        <p>通过 <code>curvStart</code> 和 <code>curvEnd</code> 定义曲率的渐变过程。</p>
         <div class="data-block">
             &lt;geometry s="0.0" x="0.0" y="0.0" hdg="0.0" length="1.32"&gt;<br>
             &nbsp;&nbsp;&lt;spiral curvStart="0.0" curvEnd="0.2"/&gt;<br>
@@ -62,7 +73,7 @@
         <div class="diagram">
             <img src="st_coordinate.png" alt="s/t Coordinate System">
         </div>
-        <p><strong>s/t 坐标系</strong>是 OpenDRIVE 的核心坐标系统，简化了车道属性定义。</p>
+        <p><strong>s/t 坐标系</strong>是 OpenDRIVE 的核心坐标系统：s 为沿中心线的弧长，t 为横向偏移量。</p>
     </div>
 
     <a href="Road_Geometry.html" class="back-link">&larr; 返回首页</a>
