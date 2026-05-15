@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>道路几何描述标准概述</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; max-width: 900px; margin: 40px auto; padding: 20px; color: #333; background-color: #f9f9f9; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #2980b9; margin-top: 30px; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        code { background: #eee; padding: 2px 4px; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #3498db; color: white; }
+    </style>
+</head>
+<body>
+    <h1>[English] 道路几何描述标准 (WL-2)</h1>
+    
+    <div class="card">
+        <h2>1. <a href="WL-2/NDS_Details.html">NDS (Navigation Data Standard)</a></h2>
+        <p><strong>核心范式</strong>: 高性能二进制拓扑模型。采用 Delta-encoding 对 WGS84 坐标进行压缩，路由层与渲染层解耦，以实现车载应用的高效性能。</p>
+    </div>
+
+    <div class="card">
+        <h2>2. ASAM OpenDRIVE</h2>
+        <p><strong>核心范式</strong>: 参数化参考线模型 (s/t 坐标系)。通过 <code>planView</code> 定义几何基元（螺旋线、多项式），确保仿真时路径的曲率连续性与物理一致性。</p>
+    </div>
+
+    <div class="card">
+        <h2>3. Lanelet2</h2>
+        <p><strong>核心范式</strong>: 物理边界描绘法 (Boundary-based Hull)。直接通过左右物理边界线串 (Linestring) 定义车道，语义贴合传感器感知与地图构建需求。</p>
+    </div>
+
+    <table>
+        <tr><th>标准</th><th>几何范式</th><th>场景</th></tr>
+        <tr><td>NDS</td><td>压缩二进制</td><td>车载导航</td></tr>
+        <tr><td>OpenDRIVE</td><td>参数化函数</td><td>仿真验证</td></tr>
+        <tr><td>Lanelet2</td><td>物理边界</td><td>高精地图/感知</td></tr>
+    </table>
+</body>
+</html>
