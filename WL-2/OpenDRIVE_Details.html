@@ -5,71 +5,27 @@
     <title>OpenDRIVE 几何基元详述</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 20px; color: #333; }
-        h1 { color: #2c3e50; }
-        .data-block { background: #282c34; color: #abb2bf; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 0.9em; }
-        .diagram { background: #f0f4f8; padding: 20px; border-left: 5px solid #3498db; margin: 20px 0; }
         .card { background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
-        img { max-width: 400px; height: auto; border: 1px solid #eee; }
+        .data-block { background: #282c34; color: #abb2bf; padding: 10px; border-radius: 5px; font-family: monospace; }
         .back-link { display: block; margin-top: 30px; color: #3498db; }
+        img { width: 100%; max-width: 600px; border: 1px solid #ddd; }
     </style>
 </head>
 <body>
     <h1>OpenDRIVE 几何表达详述</h1>
-
+    
     <div class="card">
-        <h2>1. 基本概念与特点</h2>
-        <p><strong>基本概念</strong>：OpenDRIVE 是一个基于 XML 的道路网络描述标准，核心在于通过<strong>参数化参考线 (Reference Line)</strong> 来定义道路结构。</p>
-        <p><strong>核心特点</strong>：</p>
+        <h2>1. 几何基元与转向控制逻辑</h2>
+        <img src="geometry_primitives_reference.jpg" alt="OpenDRIVE Primitives">
+        <p>上图展示了 OpenDRIVE 几何基元在车辆动力学中的不同角色，特别是转向轮角度变化率 (Δα/Δt) 的表现：</p>
         <ul>
-            <li><strong>参考线中心主义</strong>：所有车道边界、标线和高程信息均相对于参考线进行偏移。</li>
-            <li><strong>参数化逻辑</strong>：几何形状由数学函数（如多项式、回旋曲线）定义。</li>
-            <li><strong>逻辑与物理分离</strong>：描述道路的逻辑连通性，同时精确还原物理几何轨迹。</li>
-            <li><strong>曲率连续性</strong>：确保仿真中的车辆动力学真实性。</li>
+            <li><strong>Line (直线)</strong>: Δα/Δt = 0，车辆保持直线行驶，方向盘角度恒定。</li>
+            <li><strong>Spirals (螺旋线)</strong>: Δα/Δt = x°，转向轮均匀转动，用于平滑过渡至弯道。</li>
+            <li><strong>Arcs (圆弧)</strong>: Δα/Δt = 0，转向轮保持固定角度，适合定半径弧线行驶。</li>
+            <li><strong>Parametric Cubic Polynomials</strong>: Δα/Δt = f(x°)，转向控制随函数动态变化，适用于复杂轨迹跟踪。</li>
         </ul>
     </div>
-
-    <h1>2. 几何基元 (Geometry Primitives)</h1>
-    <p>OpenDRIVE 使用不同的几何基元通过数学方式定义参考线：</p>
-
-    <div class="card">
-        <h2>Line (直线)</h2>
-        <img src="prim_line.png" alt="Line">
-        <p>用于两点间的最短距离路径，由 <code>length</code> 定义。</p>
-        <div class="data-block">&lt;geometry length="50.0"/&gt;</div>
-    </div>
-
-    <div class="card">
-        <h2>Arc (圆弧)</h2>
-        <img src="prim_arc.png" alt="Arc">
-        <p>由固定的 <code>curvature</code>（曲率）定义，形成恒定半径的圆弧路径。</p>
-        <div class="data-block">&lt;arc curvature="0.1"/&gt;</div>
-    </div>
-
-    <div class="card">
-        <h2>Spiral (螺旋线)</h2>
-        <img src="prim_spiral.png" alt="Spiral">
-        <p>通过 <code>curvStart</code> 和 <code>curvEnd</code> 定义曲率平滑过渡，用于缓解转弯时的离心力冲击。</p>
-        <div class="data-block">&lt;spiral curvStart="0.1" curvEnd="0.2"/&gt;</div>
-    </div>
-
-    <div class="card">
-        <h2>Poly3 (三次多项式)</h2>
-        <img src="prim_poly3.png" alt="Poly3">
-        <p>利用三次方程：<code>a*s^3 + b*s^2 + c*s + d</code> 描述坐标轴的复杂偏移。</p>
-        <div class="data-block">&lt;poly3 a="0" b="0" c="0.5" d="0"/&gt;</div>
-    </div>
-
-    <h1>3. s/t 坐标系 (s/t Coordinate System)</h1>
-    <div class="card">
-        <img src="st_coordinate.png" alt="s/t Coordinate System">
-        <p><strong>s/t 坐标系</strong>是 OpenDRIVE 的核心坐标系统：</p>
-        <ul>
-            <li><strong>s (弧长)</strong>: 沿参考线中心线测量的纵向距离。</li>
-            <li><strong>t (横向偏移)</strong>: 垂直于参考线中心线的横向距离。</li>
-        </ul>
-        <p>这种系统简化了车道属性定义（如 <code>laneOffset</code>），使物体可以轻松放置。</p>
-    </div>
-
+    
     <a href="Road_Geometry.html" class="back-link">&larr; 返回首页</a>
 </body>
 </html>
