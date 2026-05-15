@@ -24,7 +24,6 @@
     <h1>2. 几何基元 (Geometry Primitives)</h1>
     <div class="card">
         <div class="diagram"><img src="geometry_reference.jpg" alt="OpenDRIVE Geometry Primitives Steering Logic"></div>
-        <p>OpenDRIVE 定义了多种几何基元，这些基元不仅决定了物理轨迹，还决定了车辆转向控制的动力学逻辑 (Δα/Δt)。</p>
     </div>
 
     <div class="card">
@@ -53,24 +52,23 @@
 
     <h1>3. s/t 坐标系 (s/t Coordinate System)</h1>
     <div class="card">
-        <div class="diagram">
-            <img src="st_coordinate.png" alt="s/t Coordinate System">
-        </div>
-        <p><strong>s/t 坐标系</strong>是 OpenDRIVE 的核心坐标系统，简化了车道属性定义。</p>
+        <div class="diagram"><img src="st_coordinate.png" alt="s/t Coordinate System"></div>
     </div>
 
     <h1>4. Road Linkage (道路连接)</h1>
     <div class="card">
-        <p><strong>Road Linkage</strong> 定义了道路间的拓扑连接关系，通过 <code>&lt;link&gt;</code> 标签建立前后继道路的索引。</p>
+        <p><strong>Road Linkage</strong> 定义了道路间的拓扑连接关系。对于复杂交叉路口，OpenDRIVE 使用 <code>junction</code> 来管理多条道路间的连接。</p>
         <div class="diagram">
-            <img src="link_roads_smooth.jpg" alt="Road Linkage Smooth Surface">
+            <img src="road_linkage_junction.jpg" alt="Road Linkage with Junction">
         </div>
-        <p>连接点处必须保持相同的航向角 (heading)，从而实现路面平滑过渡。</p>
+        <p>上图展示了 <code>Road id=1</code> 通过 <code>predecessor</code> 连接至 <code>Junction id=2</code> 的逻辑。在 XML 定义中，<code>elementType="junction"</code> 指明了该道路与路口相连，而非直接与其他道路相连：</p>
         <div class="data-block">
-            &lt;link&gt;<br>
-            &nbsp;&nbsp;&lt;predecessor elementType="road" elementId="2" /&gt;<br>
-            &nbsp;&nbsp;&lt;successor elementType="road" elementId="1" /&gt;<br>
-            &lt;/link&gt;
+            &lt;road rule="RHT" length="100.0" id="1" junction="-1" &gt;<br>
+            &nbsp;&nbsp;&lt;link&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;predecessor elementType="junction" elementId="2" /&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;successor elementType="road" elementId="3" /&gt;<br>
+            &nbsp;&nbsp;&lt;/link&gt;<br>
+            &lt;/road&gt;
         </div>
     </div>
 
