@@ -5,9 +5,11 @@
     <title>OpenDRIVE 几何基元详述</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 20px; color: #333; }
-        .card { background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+        h1 { color: #2c3e50; }
+        .data-block { background: #282c34; color: #abb2bf; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 0.9em; }
         .diagram { background: #f0f4f8; padding: 20px; border-left: 5px solid #3498db; margin: 20px 0; text-align: center; }
-        img { width: 100%; max-width: 700px; border: 1px solid #ddd; }
+        .card { background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+        img { max-width: 100%; height: auto; border: 1px solid #eee; }
         .back-link { display: block; margin-top: 30px; color: #3498db; }
     </style>
 </head>
@@ -16,8 +18,14 @@
 
     <div class="card">
         <h2>1. 基本概念与特点</h2>
-        <p><strong>基本概念</strong>：OpenDRIVE 通过参数化参考线定义道路结构，所有车道边界、标线和高程信息均相对于参考线进行偏移。</p>
-        <p><strong>核心特点</strong>：参考线中心主义、参数化逻辑、逻辑与物理分离、曲率连续性。</p>
+        <p><strong>基本概念</strong>：OpenDRIVE 是一个基于 XML 的道路网络描述标准，核心在于通过<strong>参数化参考线 (Reference Line)</strong> 来定义道路结构。</p>
+        <p><strong>核心特点</strong>：</p>
+        <ul>
+            <li><strong>参考线中心主义</strong>：所有车道边界、标线和高程信息均相对于参考线进行偏移。</li>
+            <li><strong>参数化逻辑</strong>：几何形状由数学函数定义。</li>
+            <li><strong>逻辑与物理分离</strong>：描述道路的逻辑连通性，同时精确还原物理几何轨迹。</li>
+            <li><strong>曲率连续性</strong>：确保仿真中的车辆动力学真实性。</li>
+        </ul>
     </div>
 
     <h1>2. 几何基元 (Geometry Primitives)</h1>
@@ -27,17 +35,24 @@
         </div>
         <p>OpenDRIVE 定义了多种几何基元，这些基元不仅决定了物理轨迹，还决定了车辆转向控制的动力学逻辑 (Δα/Δt):</p>
         <ul>
-            <li><strong>(Straight) Lines</strong>: Δα/Δt = 0。车辆保持当前方向，转向轮角度保持不变。</li>
-            <li><strong>Spirals (螺旋线)</strong>: Δα/Δt = x°。转向轮均匀转动，用于实现从直线到曲线的平滑过渡，避免向心力突变。</li>
+            <li><strong>(Straight) Lines</strong>: Δα/Δt = 0。车辆保持直线行驶，方向盘角度恒定。</li>
+            <li><strong>Spirals (螺旋线)</strong>: Δα/Δt = x°。转向轮均匀转动，用于实现从直线到弯道的平滑过渡。</li>
             <li><strong>Arcs (圆弧)</strong>: Δα/Δt = 0。转向轮角度固定，形成恒定曲率的圆周轨迹。</li>
-            <li><strong>Cubic Polynomials (三次多项式)</strong>: 已弃用 (Deprecated)。</li>
             <li><strong>Parametric Cubic Polynomials</strong>: Δα/Δt = f(x°)。转向控制随函数动态变化，适用于复杂轨迹跟踪。</li>
         </ul>
     </div>
 
     <h1>3. s/t 坐标系 (s/t Coordinate System)</h1>
     <div class="card">
-        <p><strong>s/t 坐标系</strong>是 OpenDRIVE 的核心坐标系统：s 为沿中心线的弧长，t 为横向偏移量。</p>
+        <div class="diagram">
+            <img src="st_coordinate.png" alt="s/t Coordinate System">
+        </div>
+        <p><strong>s/t 坐标系</strong>是 OpenDRIVE 的核心坐标系统，用于精确定位道路上的点或物体：</p>
+        <ul>
+            <li><strong>s (弧长)</strong>: 沿参考线中心线测量的纵向距离。</li>
+            <li><strong>t (横向偏移)</strong>: 垂直于参考线中心线的横向距离。</li>
+        </ul>
+        <p><strong>应用场景</strong>：s/t 系统简化了车道属性定义（如 <code>laneOffset</code>），使得物体（如交通标志）可以通过相对于参考线的 <code>(s, t)</code> 偏移量轻松放置，无需频繁计算全局地理坐标。</p>
     </div>
 
     <a href="Road_Geometry.html" class="back-link">&larr; 返回首页</a>
