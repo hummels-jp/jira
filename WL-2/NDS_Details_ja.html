@@ -2,59 +2,16 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>NDS 道路几何表达详细说明</title>
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 20px; color: #333; }
-        h1 { color: #2c3e50; }
-        .diagram { border: 2px dashed #3498db; padding: 20px; text-align: center; margin: 20px 0; background: #ebf5fb; font-family: monospace; }
-        .data-block { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 5px; overflow-x: auto; font-family: 'Courier New', Courier, monospace; }
-        .back-link { margin-top: 30px; display: block; color: #3498db; text-decoration: none; }
-    </style>
+    <title>NDS 詳細仕様 - 日本語</title>
 </head>
 <body>
-    <h1>[日本語] NDS 几何表达详述</h1>
-    
-    <p>NDS (Navigation Data Standard) 的道路几何表达核心在于<strong>二进制压缩与分层关联</strong>。</p>
-    
-    <h2>1. 表达形式与样式</h2>
+    <h1>[日本語] NDS 幾何表現詳細</h1>
+    <p>NDSは、バイナリ圧縮とレイヤー分離により高性能を実現しています。</p>
+    <h2>主要技術</h2>
     <ul>
-        <li><strong>离散化路径</strong>：由一系列高精度形状点 (Shape Points) 串联形成道路骨架。</li>
-        <li><strong>参数化属性</strong>：每个 Link 关联宽度、斜度、坡度等属性，而非仅存储点坐标。</li>
+        <li><strong>座標圧縮</strong>: データ容量削減のためのデルタエンコーディング。</li>
+        <li><strong>レイヤー分離</strong>: ルーティングレイヤー（トポロジー）とジオメトリレイヤー（物理形状）の分離。</li>
     </ul>
-
-    <h2>2. 逻辑分层示意图</h2>
-    <div class="diagram">
-        NDS 数据模型分层逻辑<br>
-        ------------------------------------<br>
-        | Level 1: Topology (路由层)      |<br>
-        |  (Node &lt;---&gt; Link 拓扑连接)      |<br>
-        ------------------------------------<br>
-        &darr; (ID 关联索引)<br>
-        ------------------------------------<br>
-        | Level 2: Geometry (物理层)      |<br>
-        |  (Compressed Delta Points)       |<br>
-        ------------------------------------
-    </div>
-
-    <h2>3. 示例数据结构说明 (C++ 表现形式)</h2>
-    <p>NDS 底层几何数据采用增量编码 (Delta-encoding) 以实现极致压缩。以下是该数据结构的 C++ 定义示例：</p>
-    <div class="data-block">
-    // NDS 二进制几何结构定义示例<br>
-    struct LinkGeometry {<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;uint32_t link_id;<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;int32_t start_lat_offset;<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;int32_t start_lon_offset;<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;uint16_t num_shape_points;<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;ShapePoint points[];<br>
-    };<br>
-    <br>
-    // 形状点存储：相对于上一点的增量编码<br>
-    struct ShapePoint {<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;int16_t dx; // Delta-X (增量)<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;int16_t dy; // Delta-Y (增量)<br>
-    };
-    </div>
-
-    <a href="index.html" class="back-link">&larr; 返回首页</a>
+    <a href="Road_Geometry_ja.html">標準一覧に戻る</a>
 </body>
 </html>
