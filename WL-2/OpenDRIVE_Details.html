@@ -27,18 +27,12 @@
             <img src="geometry_reference.jpg" alt="OpenDRIVE Geometry Primitives Steering Logic">
         </div>
         <p>OpenDRIVE 定义了多种几何基元，这些基元不仅决定了物理轨迹，还决定了车辆转向控制的动力学逻辑 (Δα/Δt):</p>
-        <ul>
-            <li><strong>(Straight) Lines</strong>: Δα/Δt = 0。车辆保持直线行驶，方向盘角度恒定。</li>
-            <li><strong>Spirals (螺旋线)</strong>: Δα/Δt = x°。转向轮均匀转动，用于实现从直线到弯道的平滑过渡。</li>
-            <li><strong>Arcs (圆弧)</strong>: Δα/Δt = 0。转向轮角度固定，形成恒定曲率的圆周轨迹。</li>
-            <li><strong>Parametric Cubic Polynomials</strong>: Δα/Δt = f(x°)。转向控制随函数动态变化，适用于复杂轨迹跟踪。</li>
-        </ul>
     </div>
 
     <div class="card">
-        <h2>Line (直线) 详细示例</h2>
+        <h2>Line (直线)</h2>
         <img src="line_example.jpg" alt="Line Primitive Example">
-        <p>直线由起始坐标 (x, y)、航向角 (hdg) 以及长度 (length) 确定。</p>
+        <p>用于两点间的最短距离路径，由 <code>length</code> 定义。</p>
         <div class="data-block">
             &lt;geometry s="4.0" x="-47.2" y="0.72" hdg="0.65" length="57.3"&gt;<br>
             &nbsp;&nbsp;&lt;line/&gt;<br>
@@ -47,9 +41,9 @@
     </div>
 
     <div class="card">
-        <h2>Arc (圆弧) 详细示例</h2>
+        <h2>Arc (圆弧)</h2>
         <img src="arc_example.jpg" alt="Arc Primitive Example">
-        <p>圆弧通过 <code>curvature</code> 参数定义转弯半径，<code>curvature</code> 的正负值决定转弯方向。</p>
+        <p>由固定的 <code>curvature</code>（曲率）定义，形成恒定半径的圆弧路径。</p>
         <div class="data-block">
             &lt;geometry s="0.0" x="0.0" y="0.0" hdg="0.0" length="9.23"&gt;<br>
             &nbsp;&nbsp;&lt;arc curvature="-0.127"/&gt;<br>
@@ -58,9 +52,9 @@
     </div>
 
     <div class="card">
-        <h2>Spiral (螺旋线) 详细示例</h2>
+        <h2>Spiral (螺旋线)</h2>
         <img src="spiral_example.jpg" alt="Spiral Primitive Example">
-        <p>通过 <code>curvStart</code> 和 <code>curvEnd</code> 定义曲率的渐变过程。</p>
+        <p>通过 <code>curvStart</code> 和 <code>curvEnd</code> 定义曲率平滑过渡，用于平滑轨迹转换。</p>
         <div class="data-block">
             &lt;geometry s="0.0" x="0.0" y="0.0" hdg="0.0" length="1.32"&gt;<br>
             &nbsp;&nbsp;&lt;spiral curvStart="0.0" curvEnd="0.2"/&gt;<br>
@@ -73,7 +67,7 @@
         <div class="diagram">
             <img src="st_coordinate.png" alt="s/t Coordinate System">
         </div>
-        <p><strong>s/t 坐标系</strong>是 OpenDRIVE 的核心坐标系统：s 为沿中心线的弧长，t 为横向偏移量。</p>
+        <p><strong>s/t 坐标系</strong>是 OpenDRIVE 的核心坐标系统，用于精确定位道路上的点或物体。</p>
     </div>
 
     <a href="Road_Geometry.html" class="back-link">&larr; 返回首页</a>
