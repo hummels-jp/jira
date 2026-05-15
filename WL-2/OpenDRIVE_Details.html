@@ -18,13 +18,13 @@
 
     <div class="card">
         <h2>1. 基本概念与特点</h2>
-        <p><strong>基本概念</strong>：OpenDRIVE 是一个基于 XML 的道路网络描述标准，核心在于通过<strong>参数化参考线 (Reference Line)</strong> 来定义道路结构。它将道路、车道及路侧设施挂载在一条逻辑线路上。</p>
+        <p><strong>基本概念</strong>：OpenDRIVE 是一个基于 XML 的道路网络描述标准，核心在于通过<strong>参数化参考线 (Reference Line)</strong> 来定义道路结构。</p>
         <p><strong>核心特点</strong>：</p>
         <ul>
             <li><strong>参考线中心主义</strong>：所有车道边界、标线和高程信息均相对于参考线进行偏移。</li>
-            <li><strong>参数化逻辑</strong>：几何形状由数学函数（如多项式、回旋曲线）定义，而非简单的坐标点集。</li>
-            <li><strong>逻辑与物理分离</strong>：能够描述道路的逻辑连通性（如路权、红绿灯关系），同时精确还原物理几何轨迹。</li>
-            <li><strong>曲率连续性</strong>：强制要求轨迹在几何连接处曲率连续，确保仿真环境中的车辆动力学真实性。</li>
+            <li><strong>参数化逻辑</strong>：几何形状由数学函数定义。</li>
+            <li><strong>逻辑与物理分离</strong>：描述道路的逻辑连通性，同时精确还原物理几何轨迹。</li>
+            <li><strong>曲率连续性</strong>：确保仿真中的车辆动力学真实性。</li>
         </ul>
     </div>
 
@@ -48,7 +48,7 @@
     <div class="card">
         <h2>Spiral (螺旋线)</h2>
         <img src="prim_spiral.png" alt="Spiral">
-        <p>通过 <code>curvStart</code> 和 <code>curvEnd</code> 定义曲率平滑过渡，用于缓解转弯时的离心力冲击。</p>
+        <p>通过 <code>curvStart</code> 和 <code>curvEnd</code> 定义曲率平滑过渡。</p>
         <div class="data-block">&lt;spiral curvStart="0.1" curvEnd="0.2"/&gt;</div>
     </div>
 
@@ -57,6 +57,16 @@
         <img src="prim_poly3.png" alt="Poly3">
         <p>利用三次方程：<code>a*s^3 + b*s^2 + c*s + d</code> 描述坐标轴的复杂偏移。</p>
         <div class="data-block">&lt;poly3 a="0" b="0" c="0.5" d="0"/&gt;</div>
+    </div>
+
+    <h1>3. s/t 坐标系 (s/t Coordinate System)</h1>
+    <div class="card">
+        <p><strong>s/t 坐标系</strong>是 OpenDRIVE 的核心坐标系统，用于精确定位道路上的点或物体：</p>
+        <ul>
+            <li><strong>s (弧长)</strong>: 沿参考线中心线测量的纵向距离。它是参考线的基准坐标。</li>
+            <li><strong>t (横向偏移)</strong>: 垂直于参考线中心线的横向距离。正值通常代表向参考线右侧偏移（取决于参考线的航向角 hdg）。</li>
+        </ul>
+        <p><strong>应用场景</strong>：s/t 系统极大地简化了车道属性的定义（如 <code>laneOffset</code>），使得物体（如交通标志）可以通过相对于参考线的 <code>(s, t)</code> 偏移量轻松放置，无需频繁计算全局地理坐标。</p>
     </div>
 
     <a href="Road_Geometry.html" class="back-link">&larr; 返回首页</a>
