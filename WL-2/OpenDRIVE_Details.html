@@ -21,21 +21,7 @@
         <div class="diagram">
             <img src="xml_structure.jpg" alt="OpenDRIVE XML Structure">
         </div>
-        <p><strong>XML 标签含义详解</strong>：</p>
-        <ul>
-            <li><code>&lt;header&gt;</code>: 文件头部信息，定义版本、单位及投影坐标系。</li>
-            <li><code>&lt;road&gt;</code>: 道路核心定义，包含所有几何、车道及附属设施：
-                <ul>
-                    <li><code>planView</code>: 定义二维平面参考线及几何基元。</li>
-                    <li><code>elevationProfile</code>: 定义道路高程（Z轴）变化。</li>
-                    <li><code>lateralProfile</code>: 定义道路横向倾斜（路拱）。</li>
-                    <li><code>lanes</code>: 定义车道结构、车道宽度及限速。</li>
-                    <li><code>objects/signals</code>: 道路上的静态物体及交通标志。</li>
-                </ul>
-            </li>
-            <li><code>&lt;junction&gt;</code>: 描述交叉路口，通过 <code>connection</code> 定义多条道路间的连接关系。</li>
-            <li><code>&lt;controller&gt;</code>: 管理红绿灯等动态逻辑控制。</li>
-        </ul>
+        <p><strong>XML 标签含义详解</strong>：包含 header, road, junction, controller 等核心标签。</p>
     </div>
 
     <h1>2. 几何基元 (Geometry Primitives)</h1>
@@ -43,7 +29,7 @@
         <div class="diagram">
             <img src="geometry_reference.jpg" alt="OpenDRIVE Geometry Primitives Steering Logic">
         </div>
-        <p>OpenDRIVE 定义了多种几何基元，这些基元不仅决定了物理轨迹，还决定了车辆转向控制的动力学逻辑 (Δα/Δt)。</p>
+        <p>OpenDRIVE 定义了多种几何基元，不仅决定物理轨迹，还决定了车辆转向控制的动力学逻辑 (Δα/Δt):</p>
     </div>
 
     <div class="card">
@@ -75,7 +61,7 @@
         <div class="diagram">
             <img src="continuity_reference.jpg" alt="Reference Line Continuity">
         </div>
-        <p>必须严格遵守 C1 连续性：前一基元末端状态必须与下一基元起点状态完全一致。</p>
+        <p>前一个基元的结束状态必须与后一个基元的起始状态完全一致 (C1 连续性)。</p>
     </div>
 
     <h1>3. s/t 坐标系 (s/t Coordinate System)</h1>
@@ -83,7 +69,24 @@
         <div class="diagram">
             <img src="st_coordinate.png" alt="s/t Coordinate System">
         </div>
-        <p>s/t 系统简化了车道属性定义。</p>
+        <p><strong>s/t 坐标系</strong>是 OpenDRIVE 的核心坐标系统，简化了车道属性定义。</p>
+    </div>
+
+    <h1>5. Road Definition (道路定义)</h1>
+    <div class="card">
+        <p><strong>Road Definition</strong> 是 OpenDRIVE 描述道路逻辑属性的基础单位。</p>
+        <div class="diagram">
+            <img src="road_definition.jpg" alt="Road Definition Example">
+        </div>
+        <p>通过 <code>&lt;road&gt;</code> 标签定义道路规则（如 <code>rule="RHT"</code> 右侧通行）、长度、ID 及所属路口。其内部挂载了完整的道路描述组件：</p>
+        <div class="data-block">
+            &lt;road rule="RHT" length="100.0" id="1" junction="-1" &gt;<br>
+            &nbsp;&nbsp;&lt;link&gt;...&lt;/link&gt;<br>
+            &nbsp;&nbsp;&lt;planView&gt;...&lt;/planView&gt;<br>
+            &nbsp;&nbsp;&lt;lanes&gt;...&lt;/lanes&gt;<br>
+            &nbsp;&nbsp;&lt;objects&gt;...&lt;/objects&gt;<br>
+            &lt;/road&gt;
+        </div>
     </div>
 
     <a href="Road_Geometry.html" class="back-link">&larr; 返回首页</a>
