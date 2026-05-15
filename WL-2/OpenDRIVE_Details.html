@@ -67,26 +67,20 @@
         </div>
     </div>
     <div class="card">
-        <h2>路口连接 (Junction Linkage)</h2>
-        <div class="diagram"><img src="road_linkage_junction.jpg" alt="Road Linkage with Junction"></div>
-        <p>对于复杂路口，OpenDRIVE 通过 <code>junction</code> 标签来管理多条道路的逻辑交叉与物理过渡。</p>
-        <div class="data-block">
-            &lt;predecessor elementType="junction" elementId="2" /&gt;
-        </div>
-    </div>
-    <div class="card">
         <h2>平滑连接规范 (Smooth Road Linkage)</h2>
-        <div class="diagram"><img src="road_linkage_smooth.jpg" alt="Road Linkage Smooth Surface"></div>
-        <p>在进行道路连接时，必须确保两条道路在连接点处的 <strong>Heading (航向角)</strong> 完全匹配。否则会导致道路之间产生<strong>间隙 (Gaps)</strong> 或 <strong>重叠 (Overlaps)</strong>。</p>
+        <div class="diagram">
+            <img src="road_linkage_smooth.jpg" alt="Standard Engineering Connectivity">
+        </div>
+        <p><strong>工程规范</strong>：这是 OpenDRIVE 连接的标准图示。连接点处的航向角 (Heading) 必须匹配，确保路径连续且无间隙，是仿真稳定性的前提。</p>
     </div>
-
     <div class="card">
         <h2>警告：连接重叠 (Overlap Warning)</h2>
         <div class="diagram">
             <img src="road_overlap_warning.jpg" alt="Road Linkage Overlap Warning">
         </div>
-        <p><strong>工程规范</strong>：在连接两条道路时，必须确保参考线在连接点处<strong>不发生重叠 (Overlap)</strong>。如果参考线重叠，会导致路面几何异常，从而在仿真与车辆控制中引发严重的轨迹计算冲突。</p>
+        <p><strong>严禁事项</strong>：连接处的参考线重叠 (Overlap) 或不匹配，将导致计算冗余与几何冲突。</p>
     </div>
+
     <a href="Road_Geometry.html" class="back-link">&larr; 返回首页</a>
 </body>
 </html>
