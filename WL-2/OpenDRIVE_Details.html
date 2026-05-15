@@ -10,6 +10,7 @@
         .diagram { background: #f0f4f8; padding: 20px; border-left: 5px solid #3498db; margin: 20px 0; text-align: center; }
         img { max-width: 100%; height: auto; border: 1px solid #eee; }
         .back-link { display: block; margin-top: 30px; color: #3498db; }
+        .feature-list { background: #fdfdfd; border-left: 4px solid #27ae60; padding: 15px; margin: 10px 0; }
     </style>
 </head>
 <body>
@@ -32,6 +33,14 @@
     <div class="card">
         <h2>Line (直线)</h2>
         <img src="line_example.jpg" alt="Line Primitive Example">
+        <div class="feature-list">
+            <strong>特征说明:</strong>
+            <ul>
+                <li>最简单的线性几何，曲率为 0。</li>
+                <li>转向角变化率 Δα/Δt = 0，车辆保持直线行驶。</li>
+                <li>主要用于高速公路的直线路段或连接桥。</li>
+            </ul>
+        </div>
         <div class="data-block">
             &lt;geometry s="4.0" x="-47.2" y="0.72" hdg="0.65" length="57.3"&gt;<br>
             &nbsp;&nbsp;&lt;line/&gt;<br>
@@ -42,6 +51,14 @@
     <div class="card">
         <h2>Arc (圆弧)</h2>
         <img src="arc_example.jpg" alt="Arc Primitive Example">
+        <div class="feature-list">
+            <strong>特征说明:</strong>
+            <ul>
+                <li>具有固定的曲率 (Constant Curvature)。</li>
+                <li>转向角变化率 Δα/Δt = 0，方向盘锁定在恒定角度。</li>
+                <li>广泛应用于环岛、固定转弯半径的匝道设计。</li>
+            </ul>
+        </div>
         <div class="data-block">
             &lt;geometry s="0.0" x="0.0" y="0.0" hdg="0.0" length="9.23"&gt;<br>
             &nbsp;&nbsp;&lt;arc curvature="-0.127"/&gt;<br>
@@ -52,6 +69,14 @@
     <div class="card">
         <h2>Spiral (螺旋线)</h2>
         <img src="spiral_example.jpg" alt="Spiral Primitive Example">
+        <div class="feature-list">
+            <strong>特征说明:</strong>
+            <ul>
+                <li>曲率线性变化 (Linear Curvature Change)。</li>
+                <li>转向角变化率 Δα/Δt = x°，模拟方向盘匀速转动过程。</li>
+                <li>核心用途：实现直线到圆弧的平滑过渡，减小侧向加速度突变。</li>
+            </ul>
+        </div>
         <div class="data-block">
             &lt;geometry s="0.0" x="0.0" y="0.0" hdg="0.0" length="1.32"&gt;<br>
             &nbsp;&nbsp;&lt;spiral curvStart="0.0" curvEnd="0.2"/&gt;<br>
@@ -62,7 +87,14 @@
     <div class="card">
         <h2>Parametric Cubic Polynomial (参数化三次多项式)</h2>
         <img src="paramPoly3_example.jpg" alt="Parametric Cubic Polynomial Example">
-        <p>Parametric Cubic Polynomial 通过 <code>a, b, c, d</code> 系数分别对 U 轴和 V 轴进行三维轨迹控制，适用于复杂路径跟踪。</p>
+        <div class="feature-list">
+            <strong>特征说明:</strong>
+            <ul>
+                <li>高自由度轨迹表达，适用于非标准几何路径。</li>
+                <li>转向控制逻辑 Δα/Δt = f(x°)，随多项式轨迹动态演变。</li>
+                <li>常用于复杂交叉路口、分岔口及自由定义的非标曲线。</li>
+            </ul>
+        </div>
         <div class="data-block">
             &lt;paramPoly3 aU="0.0" bU="1.0" cU="-4.67e-09" dU="-2.63e-08" <br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;aV="0.0" bV="1.67e-16" cV="-1.99e-04" dV="-1.32e-09" <br>
