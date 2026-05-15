@@ -24,10 +24,16 @@
 
     <h1>2. 几何基元 (Geometry Primitives)</h1>
     <div class="card">
+        <p>道路参考线是由上述多种基本几何单元串联构成的。在构建过程中，必须严格遵守<strong>几何连续性 (Geometric Continuity)</strong> 原则：</p>
         <div class="diagram">
-            <img src="geometry_reference.jpg" alt="OpenDRIVE Geometry Primitives Steering Logic">
+            <img src="continuity_reference.jpg" alt="Reference Line Continuity">
         </div>
-        <p>OpenDRIVE 定义了多种几何基元，这些基元不仅决定了物理轨迹，还决定了车辆转向控制的动力学逻辑 (Δα/Δt):</p>
+        <p><strong>注意要点</strong>：为了保证车辆行驶的平滑性，前一个基元的结束状态（航向角 <code>hdg</code> 和曲率 <code>curvature</code>）必须与后一个基元的起始状态完全一致。例如：</p>
+        <ul>
+            <li><code>hdg_line == hdg_spiral_start</code> (直线结束航向必须等于螺旋线起始航向)</li>
+            <li><code>hdg_spiral_end == hdg_arc_start</code> (螺旋线结束航向必须等于圆弧起始航向)</li>
+        </ul>
+        <p>此外，每个基元的结束曲率也必须与下一基元的起始曲率匹配，这种 C1 连续性是仿真动力学准确性的基石。</p>
     </div>
 
     <div class="card">
@@ -36,16 +42,10 @@
         <div class="feature-list">
             <strong>特征说明:</strong>
             <ul>
-                <li>最简单的线性几何，曲率为 0。</li>
-                <li>转向角变化率 Δα/Δt = 0，车辆保持直线行驶。</li>
-                <li>主要用于高速公路的直线路段或连接桥。</li>
+                <li>曲率为 0，方向盘角度恒定。</li>
             </ul>
         </div>
-        <div class="data-block">
-            &lt;geometry s="4.0" x="-47.2" y="0.72" hdg="0.65" length="57.3"&gt;<br>
-            &nbsp;&nbsp;&lt;line/&gt;<br>
-            &lt;/geometry&gt;
-        </div>
+        <div class="data-block">&lt;geometry length="57.3"&gt;&lt;line/&gt;&lt;/geometry&gt;</div>
     </div>
 
     <div class="card">
@@ -54,16 +54,10 @@
         <div class="feature-list">
             <strong>特征说明:</strong>
             <ul>
-                <li>具有固定的曲率 (Constant Curvature)。</li>
-                <li>转向角变化率 Δα/Δt = 0，方向盘锁定在恒定角度。</li>
-                <li>广泛应用于环岛、固定转弯半径的匝道设计。</li>
+                <li>曲率恒定，形成圆周轨迹。</li>
             </ul>
         </div>
-        <div class="data-block">
-            &lt;geometry s="0.0" x="0.0" y="0.0" hdg="0.0" length="9.23"&gt;<br>
-            &nbsp;&nbsp;&lt;arc curvature="-0.127"/&gt;<br>
-            &lt;/geometry&gt;
-        </div>
+        <div class="data-block">&lt;geometry length="9.23"&gt;&lt;arc curvature="-0.127"/&gt;&lt;/geometry&gt;</div>
     </div>
 
     <div class="card">
@@ -72,16 +66,10 @@
         <div class="feature-list">
             <strong>特征说明:</strong>
             <ul>
-                <li>曲率线性变化 (Linear Curvature Change)。</li>
-                <li>转向角变化率 Δα/Δt = x°，模拟方向盘匀速转动过程。</li>
-                <li>核心用途：实现直线到圆弧的平滑过渡，减小侧向加速度突变。</li>
+                <li>曲率线性变化，实现平滑转弯过渡。</li>
             </ul>
         </div>
-        <div class="data-block">
-            &lt;geometry s="0.0" x="0.0" y="0.0" hdg="0.0" length="1.32"&gt;<br>
-            &nbsp;&nbsp;&lt;spiral curvStart="0.0" curvEnd="0.2"/&gt;<br>
-            &lt;/geometry&gt;
-        </div>
+        <div class="data-block">&lt;geometry length="1.32"&gt;&lt;spiral curvStart="0.0" curvEnd="0.2"/&gt;&lt;/geometry&gt;</div>
     </div>
 
     <div class="card">
@@ -90,16 +78,10 @@
         <div class="feature-list">
             <strong>特征说明:</strong>
             <ul>
-                <li>高自由度轨迹表达，适用于非标准几何路径。</li>
-                <li>转向控制逻辑 Δα/Δt = f(x°)，随多项式轨迹动态演变。</li>
-                <li>常用于复杂交叉路口、分岔口及自由定义的非标曲线。</li>
+                <li>动态轨迹控制，适用于复杂几何路径。</li>
             </ul>
         </div>
-        <div class="data-block">
-            &lt;paramPoly3 aU="0.0" bU="1.0" cU="-4.67e-09" dU="-2.63e-08" <br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;aV="0.0" bV="1.67e-16" cV="-1.99e-04" dV="-1.32e-09" <br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prange="arcLength"/&gt;
-        </div>
+        <div class="data-block">&lt;paramPoly3 aU="0.0" bU="1.0" ... /&gt;</div>
     </div>
 
     <h1>3. s/t 坐标系 (s/t Coordinate System)</h1>
