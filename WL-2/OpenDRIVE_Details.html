@@ -24,50 +24,41 @@
 
     <h1>2. 几何基元 (Geometry Primitives)</h1>
     <div class="card">
-        <p>道路参考线是由上述多种基本几何单元串联构成的。在构建过程中，必须严格遵守<strong>几何连续性 (Geometric Continuity)</strong> 原则：</p>
         <div class="diagram">
-            <img src="continuity_reference.jpg" alt="Reference Line Continuity">
+            <img src="geometry_reference.jpg" alt="OpenDRIVE Geometry Primitives Steering Logic">
         </div>
-        <p><strong>注意要点</strong>：为了保证车辆行驶的平滑性，前一个基元的结束状态（航向角 <code>hdg</code> 和曲率 <code>curvature</code>）必须与后一个基元的起始状态完全一致。例如：</p>
+        <p>OpenDRIVE 定义了多种几何基元，这些基元不仅决定了物理轨迹，还决定了车辆转向控制的动力学逻辑 (Δα/Δt):</p>
         <ul>
-            <li><code>hdg_line == hdg_spiral_start</code> (直线结束航向必须等于螺旋线起始航向)</li>
-            <li><code>hdg_spiral_end == hdg_arc_start</code> (螺旋线结束航向必须等于圆弧起始航向)</li>
+            <li><strong>(Straight) Lines</strong>: Δα/Δt = 0。车辆保持直线行驶，方向盘角度恒定。</li>
+            <li><strong>Spirals (螺旋线)</strong>: Δα/Δt = x°。转向轮均匀转动，用于实现从直线到弯道的平滑过渡。</li>
+            <li><strong>Arcs (圆弧)</strong>: Δα/Δt = 0。转向轮角度固定，形成恒定曲率的圆周轨迹。</li>
+            <li><strong>Parametric Cubic Polynomials</strong>: Δα/Δt = f(x°)。转向控制随函数动态变化，适用于复杂轨迹跟踪。</li>
         </ul>
-        <p>此外，每个基元的结束曲率也必须与下一基元的起始曲率匹配，这种 C1 连续性是仿真动力学准确性的基石。</p>
     </div>
 
     <div class="card">
-        <h2>Line (直线)</h2>
+        <h2>Line (直线) 详细示例</h2>
         <img src="line_example.jpg" alt="Line Primitive Example">
         <div class="feature-list">
-            <strong>特征说明:</strong>
-            <ul>
-                <li>曲率为 0，方向盘角度恒定。</li>
-            </ul>
+            <strong>特征说明:</strong> 转向角变化率 Δα/Δt = 0，车辆保持直线行驶。
         </div>
         <div class="data-block">&lt;geometry length="57.3"&gt;&lt;line/&gt;&lt;/geometry&gt;</div>
     </div>
 
     <div class="card">
-        <h2>Arc (圆弧)</h2>
+        <h2>Arc (圆弧) 详细示例</h2>
         <img src="arc_example.jpg" alt="Arc Primitive Example">
         <div class="feature-list">
-            <strong>特征说明:</strong>
-            <ul>
-                <li>曲率恒定，形成圆周轨迹。</li>
-            </ul>
+            <strong>特征说明:</strong> 曲率恒定，形成圆周轨迹，方向盘锁定。
         </div>
         <div class="data-block">&lt;geometry length="9.23"&gt;&lt;arc curvature="-0.127"/&gt;&lt;/geometry&gt;</div>
     </div>
 
     <div class="card">
-        <h2>Spiral (螺旋线)</h2>
+        <h2>Spiral (螺旋线) 详细示例</h2>
         <img src="spiral_example.jpg" alt="Spiral Primitive Example">
         <div class="feature-list">
-            <strong>特征说明:</strong>
-            <ul>
-                <li>曲率线性变化，实现平滑转弯过渡。</li>
-            </ul>
+            <strong>特征说明:</strong> 曲率线性变化，模拟方向盘匀速转动过程。
         </div>
         <div class="data-block">&lt;geometry length="1.32"&gt;&lt;spiral curvStart="0.0" curvEnd="0.2"/&gt;&lt;/geometry&gt;</div>
     </div>
@@ -76,12 +67,17 @@
         <h2>Parametric Cubic Polynomial (参数化三次多项式)</h2>
         <img src="paramPoly3_example.jpg" alt="Parametric Cubic Polynomial Example">
         <div class="feature-list">
-            <strong>特征说明:</strong>
-            <ul>
-                <li>动态轨迹控制，适用于复杂几何路径。</li>
-            </ul>
+            <strong>特征说明:</strong> 动态轨迹控制，适用于非标几何路径跟踪。
         </div>
         <div class="data-block">&lt;paramPoly3 aU="0.0" bU="1.0" ... /&gt;</div>
+    </div>
+
+    <div class="card">
+        <h2>几何连续性 (Geometric Continuity)</h2>
+        <div class="diagram">
+            <img src="continuity_reference.jpg" alt="Reference Line Continuity">
+        </div>
+        <p>在构建路径时，必须严格遵守<strong>几何连续性 (Geometric Continuity)</strong> 原则：前一个基元的结束状态（航向角 <code>hdg</code> 和曲率 <code>curvature</code>）必须与后一个基元的起始状态完全一致。这种 C1 连续性是仿真动力学准确性的基石。</p>
     </div>
 
     <h1>3. s/t 坐标系 (s/t Coordinate System)</h1>
@@ -89,7 +85,7 @@
         <div class="diagram">
             <img src="st_coordinate.png" alt="s/t Coordinate System">
         </div>
-        <p><strong>s/t 坐标系</strong>是 OpenDRIVE 的核心坐标系统，简化了车道属性定义。</p>
+        <p><strong>s/t 坐标系</strong>是 OpenDRIVE 的核心坐标系统，用于精确定位道路上的点或物体。</p>
     </div>
 
     <a href="Road_Geometry.html" class="back-link">&larr; 返回首页</a>
