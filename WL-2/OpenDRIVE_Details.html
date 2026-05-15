@@ -9,11 +9,12 @@
         .data-block { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 5px; font-family: monospace; }
         .diagram { background: #f0f4f8; padding: 20px; border-left: 5px solid #3498db; margin: 20px 0; }
         .back-link { margin-top: 30px; display: block; color: #3498db; text-decoration: none; }
+        img { max-width: 100%; height: auto; border: 1px solid #ccc; }
     </style>
 </head>
 <body>
     <h1>OpenDRIVE 几何基元 (Geometry Primitives)</h1>
-    <p>OpenDRIVE 使用不同的几何基元通过数学方式定义参考线。以下是几种基本元素及其图形逻辑：</p>
+    <p>OpenDRIVE 使用不同的几何基元通过数学方式定义参考线。以下是基本元素及其图形逻辑：</p>
 
     <h2>1. 基本几何类型</h2>
     <ul>
@@ -23,11 +24,9 @@
         <li><strong>Poly3 (三次多项式)</strong>: 使用三次多项式方程定义坐标偏移。</li>
     </ul>
 
-    <h2>2. 几何关系示意图</h2>
+    <h2>2. 几何图形表示</h2>
     <div class="diagram">
-        <strong>曲率平滑逻辑:</strong><br>
-        直线 (Curvature 0) &mdash;&gt; 螺旋线 (Curvature 渐变) &mdash;&gt; 圆弧 (Curvature 固定)<br>
-        <span style="font-size:0.8em;">(这种组合保证了车辆在行驶轨迹上的加速度连续性)</span>
+        <img src="geometry_primitives.png" alt="OpenDRIVE Geometry Primitives">
     </div>
 
     <h2>3. 示例定义</h2>
