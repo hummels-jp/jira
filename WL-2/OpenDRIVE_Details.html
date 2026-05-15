@@ -5,10 +5,9 @@
     <title>OpenDRIVE 几何基元详述</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 20px; color: #333; }
-        h1 { color: #2c3e50; }
+        .card { background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
         .data-block { background: #282c34; color: #abb2bf; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 0.9em; }
         .diagram { background: #f0f4f8; padding: 20px; border-left: 5px solid #3498db; margin: 20px 0; text-align: center; }
-        .card { background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
         img { max-width: 100%; height: auto; border: 1px solid #eee; }
         .back-link { display: block; margin-top: 30px; color: #3498db; }
     </style>
@@ -19,13 +18,7 @@
     <div class="card">
         <h2>1. 基本概念与特点</h2>
         <p><strong>基本概念</strong>：OpenDRIVE 是一个基于 XML 的道路网络描述标准，核心在于通过<strong>参数化参考线 (Reference Line)</strong> 来定义道路结构。</p>
-        <p><strong>核心特点</strong>：</p>
-        <ul>
-            <li><strong>参考线中心主义</strong>：所有车道边界、标线和高程信息均相对于参考线进行偏移。</li>
-            <li><strong>参数化逻辑</strong>：几何形状由数学函数定义。</li>
-            <li><strong>逻辑与物理分离</strong>：描述道路的逻辑连通性，同时精确还原物理几何轨迹。</li>
-            <li><strong>曲率连续性</strong>：确保仿真中的车辆动力学真实性。</li>
-        </ul>
+        <p><strong>核心特点</strong>：参考线中心主义、参数化逻辑、逻辑与物理分离、曲率连续性。</p>
     </div>
 
     <h1>2. 几何基元 (Geometry Primitives)</h1>
@@ -42,37 +35,46 @@
         </ul>
     </div>
 
+    <div class="card">
+        <h2>Line (直线) 详细示例</h2>
+        <img src="line_example.jpg" alt="Line Primitive Example">
+        <p>直线是几何定义中最基础的元素。它由起始坐标 (x, y)、航向角 (hdg) 以及长度 (length) 确定。</p>
+        <div class="data-block">
+            &lt;planView&gt;<br>
+            &nbsp;&nbsp;&lt;geometry s="4.0e+00" x="-4.72e+01" y="7.23e-01" hdg="6.54e-01" length="5.73e+01"&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;line/&gt;<br>
+            &nbsp;&nbsp;&lt;/geometry&gt;<br>
+            &lt;/planView&gt;
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Arc (圆弧)</h2>
+        <img src="prim_arc.png" alt="Arc">
+        <p>由固定的 <code>curvature</code>（曲率）定义，形成恒定半径的圆弧路径。</p>
+        <div class="data-block">&lt;arc curvature="0.1"/&gt;</div>
+    </div>
+
+    <div class="card">
+        <h2>Spiral (螺旋线)</h2>
+        <img src="prim_spiral.png" alt="Spiral">
+        <p>通过 <code>curvStart</code> 和 <code>curvEnd</code> 定义曲率平滑过渡。</p>
+        <div class="data-block">&lt;spiral curvStart="0.1" curvEnd="0.2"/&gt;</div>
+    </div>
+
+    <div class="card">
+        <h2>Poly3 (三次多项式)</h2>
+        <img src="prim_poly3.png" alt="Poly3">
+        <p>利用三次方程描述坐标轴偏移。</p>
+        <div class="data-block">&lt;poly3 a="0" b="0" c="0.5" d="0"/&gt;</div>
+    </div>
+
     <h1>3. s/t 坐标系 (s/t Coordinate System)</h1>
     <div class="card">
         <div class="diagram">
             <img src="st_coordinate.png" alt="s/t Coordinate System">
         </div>
-        <p><strong>s/t 坐标系</strong>是 OpenDRIVE 的核心坐标系统，用于精确定位道路上的点或物体：</p>
-        <ul>
-            <li><strong>s (弧长)</strong>: 沿参考线中心线测量的纵向距离。</li>
-            <li><strong>t (横向偏移)</strong>: 垂直于参考线中心线的横向距离。</li>
-        </ul>
-        <p><strong>应用场景</strong>：s/t 系统简化了车道属性定义，使得物体可以轻松放置，无需频繁计算全局地理坐标。</p>
-    </div>
-
-    <h1>4. 参考线 (Reference Line) 结构</h1>
-    <div class="card">
-        <p><strong>参考线 (Reference Line)</strong> 是每一条 OpenDRIVE 道路的“骨架”。所有的车道 (Lanes)、高程剖面 (Elevation Profile) 和横倾剖面 (Superelevation) 都是基于该参考线进行定义的。</p>
-        <p><strong>基本属性结构</strong>：</p>
-        <ul>
-            <li><strong>planView</strong>: 包含一系列几何基元 (Geometry)，构成二维的参考线路径。</li>
-            <li><strong>elevationProfile</strong>: 定义参考线在 Z 轴上的高程变化。</li>
-            <li><strong>lateralProfile</strong>: 定义道路横向的倾斜角变化。</li>
-        </ul>
-        <div class="data-block">
-            &lt;road id="1" name="MainRoad" length="100.0"&gt;<br>
-            &nbsp;&nbsp;&lt;planView&gt;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&lt;geometry s="0.0" x="0.0" y="0.0" hdg="0.0" length="100.0"&gt;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;line/&gt;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&lt;/geometry&gt;<br>
-            &nbsp;&nbsp;&lt;/planView&gt;<br>
-            &lt;/road&gt;
-        </div>
+        <p><strong>s (弧长)</strong> 与 <strong>t (横向偏移)</strong> 组成坐标系，简化了车道属性定义。</p>
     </div>
 
     <a href="Road_Geometry.html" class="back-link">&larr; 返回首页</a>
