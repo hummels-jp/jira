@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenDRIVE 基础概念详解</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.8; max-width: 800px; margin: 40px auto; padding: 20px; color: #444; background-color: #fcfcfc; }
+        h1 { color: #111; font-size: 2.5em; margin-bottom: 30px; font-weight: 700; }
+        p { margin-bottom: 20px; font-size: 1.1em; color: #333; }
+        img { max-width: 100%; height: auto; border-radius: 8px; margin: 25px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: block; }
+        .content { padding: 0; }
+    </style>
+</head>
+<body>
+    <h1>OpenDRIVE 基础概念详解</h1>
+    <div class="content">
+
+        <p>videoplayback_原文</p>
+        <p>2026年05月15日 13:28</p>
+        <p>Welcome to this video on what is open drives. My name is Nico and in this video I will give you a basic idea about open drives. When running any traffic simulation, having something to drive on helps a lot. For this, it is necessary to model roads or even whole road networks. These roads or road networks can be quite complex to model, as we can see in this example here, and therefore quite expensive to create, either costing a lot of money or time. Having this road network in an exchangeable format will make the lives of many people a lot easier in the development of future mobility solutions. And let's be honest, they are facing enough challenges already. So all Asam open drives provides the exchange format specification, describes static road networks for driving simulations.</p>
+        <img src="images/image1.png" alt="Diagram">
+        <p>The primary task of open drives is the road description, including objects along the road. Open drives covers the description on how to motor roads, lanes, junctions, signals, and everything else that influence traffic flow. So as we now know what opendrive is about, let's jump into the basic hierarchy of any open drives file.</p>
+        <p>As said before, with open drive, you can model road networks to know the basic shape of any road. Open drive uses a road reference line. The reference line defines how the road bends and turns from a bird's eye perspective. The reference line is the key concept in opendrive, and most features in opendrive are in reference to that reference line. To form roads, we not only need the basic shape of the road, we also need lanes to drive on, and those lanes are attached to that reference line we mentioned before. Now we have basic roads to drive on Open drive letsch enhance your roads with further features, for example speed limit signs like shown here. This representation, of course, is only the tip of the iceberg.</p>
+        <img src="images/image2.png" alt="Diagram">
+        <p>Now let's dive deeper into the structure on how the XML code of every open drive file looks like. On the top level, we have the open drive element, and within this element, we will define our road network with all its features. In the header, we can define the version of open drive we are using and add some metadata to the file. For example, who's the author below the header? We will now start to add all the elements to the final road.</p>
+        <img src="images/image3.png" alt="Diagram">
+        <p>Each road in Open Drive has has its own road element. This example right here has one road, a road network with two roads will have two road element entries within the road element. The characteristics of each road is defined, including lanes, signals, and objects.</p>
+        <p>For every road, we need the reference element, and this reference line is defined in the plan view element to shape the road left and right, we will use the geometry elements and I will create an individual video just on this topic.</p>
+        <p>The reference line only shapes the road in the Xy plane, and as the earth is not flat and we need an elevation profile for every road, defining the z value of the reference line, the elevation profile defines the height of the road along the reference line.</p>
+        <img src="images/image4.png" alt="Diagram">
+        <p>The reference line is defined in the plan view as said before, and the elevation is the height difference from that plan view or the Xy plane. As such. This is only one dimension. A road needs to be shaped. The other dimension is the lateral profile. Within the lateral profile, there are two different options on shaping the road. The shape elements defines the shape of the road perpendicular to the reference line, for example with this crossfall shown here in that example, and the second option is the super elevation that defines a rotation around the S axis. For example, if a road is tilted by 2 degrees, our road has a nice shape.</p>
+        <img src="images/image5.png" alt="Diagram">
+        <img src="images/image6.png" alt="Diagram">
+        <p>Now in the lane element, we can specify all the lanes of our road and the specific lane type and width to define objects and signals that are necessary for road open drive reserves elements in the Road Definition As mentioned in the introduction, open drive only defines the static content of the road network.</p>
+        <p>So when defining a traffic light, the controller for that traffic light is referenced within the controller element while the controller itself is designed and defined outside of open drive in open drive, the junction element and the underlying connection elements are used to specify intersections. Sometimes it can be very useful to link intersections together, for example T junctions that are position in a circular shape can be linked together to form a roundabout.</p>
+        <p>Now you have a basic idea of what open drive does. There's a lot more to discover, so stay tuned. And with that, I can say thank you very much for watching, and I hope you enjoyed this video. For more, consider to like and subscribe.</p>
+        <img src="images/image7.png" alt="Diagram">
+        </div>
+
+<!-- 纯净标注脚本 -->
+<script>
+document.addEventListener('mouseup', function() {
+    var selection = window.getSelection();
+    if (!selection.rangeCount) return;
+
+    var range = selection.getRangeAt(0);
+    if (range.collapsed) return;
+
+    try {
+        var span = document.createElement('span');
+        span.style.color = '#ff0000';
+        span.style.fontWeight = 'bold';
+        range.surroundContents(span);
+        selection.removeAllRanges();
+        localStorage.setItem(window.location.pathname, document.querySelector('.content').innerHTML);
+    } catch (e) {
+        var newNode = document.createElement('span');
+        newNode.style.color = '#ff0000';
+        newNode.style.fontWeight = 'bold';
+        var fragment = range.extractContents();
+        newNode.appendChild(fragment);
+        range.insertNode(newNode);
+        selection.removeAllRanges();
+        localStorage.setItem(window.location.pathname, document.querySelector('.content').innerHTML);
+    }
+});
+
+window.onload = function() {
+    const saved = localStorage.getItem(window.location.pathname);
+    if(saved) document.querySelector('.content').innerHTML = saved;
+};
+</script>
+
+</body>
+</html>

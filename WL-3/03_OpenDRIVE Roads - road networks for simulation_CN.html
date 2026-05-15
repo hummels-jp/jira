@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>03_OpenDRIVE 道路建模</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.8; max-width: 800px; margin: 40px auto; padding: 20px; color: #444; }
+        img { max-width: 150%; width: 150%; height: auto; border-radius: 8px; margin: 25px 0; }
+        .content { padding: 0; }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <p>欢迎来到 OpenDRIVE 道路课程 我是 Nico，在本视频中，我将解释 OpenDRIVE 中道路的工作原理。 在 OpenDRIVE 中构建道路时，始终需要参考线，因为几乎所有特征都依附于它。 我专门制作过关于参考线的视频，请务必观看，因为道路定义需要其中的知识。</p><img src="images/road_images/image1.jpeg"><p>在本视频中，您将学习 OpenDRIVE 道路定义的基本要素 以及如何正确地将道路连接起来形成道路网络。 我们还将探讨 OpenDRIVE 为道路定义的各种属性。 今天我们不会讨论车道，这将在后续的视频中详细讲解。现在让我们开始定义道路。</p><p>这是 OpenDRIVE 的高级 XML 结构。请查看我关于 OpenDRIVE 结构定义的视频，链接已在视频描述中提供。 道路定义位于 header 之下，您需要为您定义的每条道路创建一个 road 条目。 根据用例不同，道路数量可能很多。每条道路都有自己的参考线，位于 Plan View 元素中。正如我们之前所学，参考线是每条道路的核心元素之一。 如图所示，道路定义中包含许多元素，我将在本系列教程后续部分详细解释。</p><img src="images/road_images/image10.jpeg"><p>In this video, we will focus on 道路连接与属性定义. 定义一条简单的道路，并指定其为右侧通行 这通过 rule 属性 rHT 指定。然后我们设置道路长度为 100 米。</p><img src="images/road_images/image11.jpeg"><p>我们为道路分配 ID 1，并通过将 junction 属性设置为 -1 来表明它不属于任何交叉口。 接下来是 link 元素（目前不详述，后续会讲），它指明了道路的前驱和后继。我们还可以说明道路类型及其有效 S 位置。若需中途更改道路类型，只需在对应 S 位置添加新的 type 元素即可。接着是 Plan View，我已为其制作过专门视频，后续将会有更多关于其他元素的视频。</p><p>这就是我们的道路定义。关于行驶方向与参考线方向的关系，答案非常简单：两者完全无关。 如果我们指定右侧通行，那么无论参考线如何定义，车辆都会在道路右侧行驶。 如果我们反转参考线方向，车辆依然会在道路右侧行驶；只有当我们指定左侧通行时，车辆才会切换到道路另一侧行驶。由此可见，参考线的方向与行驶方向无关。</p><img src="images/road_images/image12.jpeg"><img src="images/road_images/image13.jpeg"><p>现在让我们看看 link 元素，因为我们已经有了一条道路，现在想将其与其他道路连接起来。假设我们想将 road 2 和 road 3 分别作为前驱和后继元素，我们将它们写入 road 定义的 link 元素中。Road 1 就会知道它的前驱是 ID 为 2 的道路，后继是 ID 为 3 的道路。在道路网络的某个点，道路会与交叉口连接，在 OpenDRIVE 中，交叉口被视为一个元素。例如，ID 为 2 的交叉口是我们道路的前驱（元素类型为 junction），后继依然是 road 3。</p><img src="images/road_images/image2.jpeg"><img src="images/road_images/image3.jpeg"><img src="images/road_images/image4.jpeg"><p>Let's jump back to the previous example where row 2 is the predecessor of road 1. So how do we need to link those roads together to form a smooth surface? And there are a few things you need to consider, and that is very important that 两条道路的参考线在连接点处具有相同的航向角 at that connection point, because otherwise there will be gaps and overlaps in your road surface.</p><img src="images/road_images/image5.jpeg"><p>And if you consider that the heading at that connection point is the same, then you will have a 平滑的道路表面. So let's see, how would those mistakes look like. So for example, if the reference line doesn't connect properly at that connection point, you will have a gap between those two roads. And that is obviously quite bad.</p><p>因此，务必确保参考线连接正确。如果航向角不同，底部会出现重叠，顶部会出现缝隙，这对模拟中的车辆动力学不利。如果参考线重叠且航向角不一致，也会再次出现重叠。如果其中一条道路倾斜或有高度变化，这对车辆动力学更是不利。因此，设计曲线时，务必确保连接点处的航向角相同，并使用合适的参考线元素来构建平滑的道路和曲线。</p><img src="images/road_images/image6.jpeg"><img src="images/road_images/image7.jpeg"><img src="images/road_images/image8.jpeg"><p>现在，您已经基本了解了如何在 OpenDRIVE 中定义和连接道路。今天我们没有涉及如何定义车道，这将在后续视频中详细讲解。感谢观看，希望您喜欢本视频，下次再见。</p><img src="images/road_images/image9.jpeg">
+    </div>
+    <script>
+    document.addEventListener('mouseup', function() {
+        var selection = window.getSelection();
+        if (!selection.rangeCount) return;
+        var range = selection.getRangeAt(0);
+        if (range.collapsed) return;
+        try {
+            var span = document.createElement('span');
+            span.style.color = '#ff0000'; span.style.fontWeight = 'bold';
+            range.surroundContents(span);
+            selection.removeAllRanges();
+            localStorage.setItem(window.location.pathname, document.body.innerHTML);
+        } catch(e) {}
+    });
+    window.onload = function() {
+        const saved = localStorage.getItem(window.location.pathname);
+        if(saved) document.body.innerHTML = saved;
+    };
+    </script>
+</body>
+</html>

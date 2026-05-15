@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenDRIVE 参考线建模详解</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.8; max-width: 800px; margin: 40px auto; padding: 20px; color: #444; background-color: #fcfcfc; }
+        h1 { color: #111; font-size: 2.5em; margin-bottom: 30px; font-weight: 700; }
+        p { margin-bottom: 20px; font-size: 1.1em; color: #333; }
+        img { max-width: 100%; height: auto; border-radius: 8px; margin: 25px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: block; }
+        .content { padding: 0; }
+        #color-tool { position: fixed; top: 20px; right: 20px; background: white; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 1000; }
+    </style>
+</head>
+<body>
+    <h1>02_Reference_Line 参考线建模详解</h1>
+    <div class="content">
+        <p>videoplayback (1)_原文</p>
+        <p>2026年05月15日 13:33</p>
+        <p>ようこそ What is the 参照線 in opendrive My name is Nico and in this video I will talk about the key concept in opendrive the 参照線 to build roads in open drive. You will always need that 参照線. Nearly all features that are important are attached to this 参照線, lanes, for example, and they are quite important for driving. In this video, you will learn what the 参照線 is and how to design the 参照線 in open drive. We will start with a short recap about the hierarchy of open drives and then look at the basic structure of the XML file and find the correct place to define our 参照線. Once we will have that, I will give you a quick overview about the different coordinate systems in opendrive, followed by the elements forward for the 参照線. Then we will see what opendrive offers us to model the 参照線 itself.</p>
+        <img src="images/refline_image1.jpeg" alt="Diagram">
+        <img src="images/refline_image2.jpeg" alt="Diagram">
+        <p>Let's recapture the role of the 参照線 in open drive to know the basic shape of any road in open drive, you need a 参照線. The 参照線 defines how the road bends and turns from a bird's eye perspective, or as the check is called, the plan view. The 参照線 is the one thing you will not get around when dealing with open drive, so lanes are attached to the 参照線 as well as signals, for example, and they are positioned according to that 参照線, as we can see here. Now let's check out where in the XML structure the plan view is located. This is the high level XML structure of open drives, and I made a video on what is open drives where I'm explaining what each element in this structure is for I will post a link in the video description and at the end of this video, each road has its own 参照線, as said before, which is located in the plan view element, what you can see here to define the form of the 参照線, geometric primitives are used.</p>
+        <img src="images/refline_image3.jpeg" alt="Diagram">
+        <img src="images/refline_image4.jpeg" alt="Diagram">
+        <p>And before we jump into details, let's quickly go through the coordinate systems open drives is working with in open drives, we will use three different coordinate systems, the inertial coordinate system. Everything is living within this system. You could also call this the world system. Then we have the 参照線 system, this is a Fourier coordinate system in your 参照線s defining the S axis of this system. And last but not least, we have the local system, and in this we are defining objects, which can then be placed in other systems with a insertion point.</p>
+        <img src="images/refline_image5.jpeg" alt="Diagram">
+        <p>So while this is still quite abstract, let's see how this is all interconnected.</p>
+        <p>The inertial system is the basis, and everything is defined within the system. Obviously, we want to define roads, so let's start with the row definition in the inertial system and the star point of each 参照線 element is defined in the local system and has some x, y coordinates for the sorting point. In this example here, that would be x equals 2.5 and y equals one.</p>
+        <img src="images/refline_image6.jpeg" alt="Diagram">
+        <p>Many features are attached to the 参照線, like the object representing the poles a sign is sitting on. In this case, the object is defined in its own Cartesian coordinate system, the local system, and is inserted with an insertion point in the 参照線 system at a specific S and T coordinate. This is a common setup on how the coordinate systems are being used in open drive.</p>
+        <p>In open drive, there's also a convention on how pitch, roll, and heading are being used. I will explain this on the example of the inertia system.</p>
+        <p>Let's see how pitch, roll, and heading are applied on the example of a cube starting with no rotation. Heading is a rotation around the z axis of the system, as we can see in this image. Now, pitch is a rotation about the Y axis. The 参照線 system has no pitch, which is very important to remember, and roll is a rotation around the x axis. In case of the local system, this is the U axis and the reference end system. This is the X axis. The 参照線 system has only a heading and roll. There is no pitch for the 参照線 system when it comes to elevation of roles, this is very, very important and I will make a dedicated video just on this.</p>
+        <img src="images/refline_image7.jpeg" alt="Diagram">
+        <img src="images/refline_image8.jpeg" alt="Diagram">
+        <img src="images/refline_image9.jpeg" alt="Diagram">
+        <p>Next up, we are going to see how actually we can define the 参照線.</p>
+        <p>There are several different elements in open drives for defining the 参照線. The first one is the line element, and as the name says, it is a straight line with a starting point, a heading, a length, and when driving over this line, the steering angle of the vehicle is not changing over time. Once you want to design curves, the steering angle is something we need to keep in mind. An open drive, you can define spirals. These elements have a start and end curvature, so you can define smooth transitions in terms of curvature and this avoids jumps in the steering angle. So when driving over these elements, there is a change of the steering angle over time for actually going around a corner with a constant steering angle. Open drive letsch define an arc, a piece of 参照線 with a constant curvature. These three elements are really good when modeling open drive networks by hand using available tools.</p>
+        <img src="images/refline_image10.jpeg" alt="Diagram">
+        <img src="images/refline_image11.jpeg" alt="Diagram">
+        <img src="images/refline_image12.jpeg" alt="Diagram">
+        <p>It is also a common use case that you want to derive your net 参照線 from measurement data. Here it comes in handy when you have equations for your 参照線 with parameters for optimization, opendrive offers the cubic polynomial. This unfortunately, this method was then pred in opendrive 1.6, and because there is a better solution, the parametric cubic polynomial as a Ta is called para polythor.</p>
+        <img src="images/refline_image13.jpeg" alt="Diagram">
+        <img src="images/refline_image14.jpeg" alt="Diagram">
+        <p>This is a function and the steering angle changes accordingly when driving over this element.</p>
+        <p>So each 参照線 element has the following attributes. We have a heading, we have the length, we have the s position of this element in the row definition, and we have the xy coordinates defining the starting point of that 参照線 element and of obviously where that where is located in the inertial system. So as we know now what elements we can use and how they are defined, we can also check out a few examples, and that is what we will do.</p>
+        <img src="images/refline_image15.jpeg" alt="Diagram">
+        <p>Now. The line element is the simplest one, and as you can see here, all you need are the following attributes, So we need the S element to indicate where the 参照線 coordinate system has its base, and this is s equals 4. Then we specify the x and y coordinates. In this case, this is pointing, where does our 参照線 element start in the inertial coordinate system, and in this example here, this is x equals -47.2 and y equals 0.723, next what we define as the heading.</p>
+        <img src="images/refline_image16.jpeg" alt="Diagram">
+        <p>So we know where our 参照線 element is heading to, and that heading only specifies the heading of the very first point of that 参照線 element. And if we define anything else that align the heading at the end of the element will definitely differ from the heading at the start of the element. And now we add the length. And the length specifies how long is that 参照線 element. In case of a line that is really simple. And to indicate that this is a line, we now just add the line tag.</p>
+        <p>The spiral, as mentioned before, has a change in curvature. And so we need to define how this curvature changes. And therefore, a start and an end curvature. In open drive, the curvature change is linear. And that is very important. In addition, we again have the attributes as x, y, heading, and the length. The arc has a constant curvature, and therefore the steering angle when driving on the spot will not change. To define an arc, you need to specify, as always, s, x, y, heading and length, and the curvature within an arc element. These three elements, as said before, are the ones you would most likely use when you design your roles by hand.</p>
+        <img src="images/refline_image17.jpeg" alt="Diagram">
+        <img src="images/refline_image18.jpeg" alt="Diagram">
+        <p>Next, we will check out the parametric cubic polynom, which is used in many cases to fit the 参照線 to measurement data. This piece of 参照線 is defined in a local coordinate system. The values for the U on the V axis are calculated by two individual equations. Let me show you how this works.</p>
+        <img src="images/refline_image19.jpeg" alt="Diagram">
+        <p>First, you calculate the values for the U AES. I'm not using the ones from the example before, and the result is nearly a straight line, and that is what you could expect when looking at the parameters. The equation we are using here is the third order polynomial. The parameters are placed within that polynomial you can see below the graph.</p>
+        <img src="images/refline_image20.jpeg" alt="Diagram">
+        <p>Next, we calculate the values for the V axis and again using the values from the example and what we do here, and this is what you can see on the vertical axis, you see the u or the V values, while on the horizontal axis, you can see the p values we are using to go through the equations. And here I took 1000 sample points for our 参照線 elements. So once we did this, and we do have those two graphs, or in that case values for u and V, we can merge them together. And let's check out how that looks like. Now we can apply the u values to the horizontal axis and the v values to the vertical axis. And this is our 参照線 element.</p>
+        <img src="images/refline_image21.jpeg" alt="Diagram">
+        <img src="images/refline_image22.jpeg" alt="Diagram">
+        <p>Now all that is left to do is apply the heading and place that piece of 参照線 in the inertial system according to the x and y coordinates given in the definition.</p>
+        <p>Let's have a look at a simple example where we're adding a line, 2 spirals, and 2 arcs together to form a nice and smooth 参照線. First, we place a straight line in our inertial system. Next, we attach a spiral to it to achieve the curvature we need for our curve, and that is represented by an arc As our curve now opens a little bit, we need to adapt the curvature. And for that, we're going to apply a spiral, which is followed by another arc to represent our curve. And this is a very smooth 参照線 without any jumps in the curvature, and we can easily drive over this 参照線.</p>
+        <p>So when adding elements of the 参照線 together to form a smooth 参照線, we need to make sure that the heading at the end of each element is identical to the heading at the beginning of the next element. And this is very important. So in our case, the heading of the line element should be identical to the heading of the spiral as it start. And the heading of the arc element needs to be identical to the heading of the spiral element at its end. If the heading is not identical at these connection points, then we will cause a jump in the steering angle of any vehicle driving over this 参照線.</p>
+        <p>Now you have a basic idea how the line and open drive works and what you need to consider when designing your 参照線. But still, there is a lot more to discover, so stay tuned, and I hope you enjoy this video. So thank you very much for watching and if you like this video, consider to like, like and subscribe and see you the next time.</p>
+        <img src="images/refline_image23.jpeg" alt="Diagram">
+        <img src="images/refline_image24.jpeg" alt="Diagram">
+    </div>
+
+<!-- 交互式颜色调节器 -->
+<div id="color-tool">
+    <label for="color-picker">调节字体颜色:</label>
+    <input type="color" id="color-picker" value="#444444" oninput="changeColor(this.value)">
+</div>
+
+<script>
+function changeColor(color) {
+    document.body.style.color = color;
+    document.querySelectorAll('p, h1, h2, h3').forEach(el => el.style.color = color);
+}
+</script>
+
+<!-- 纯净标注脚本 -->
+<script>
+document.addEventListener('mouseup', function() {
+    var selection = window.getSelection();
+    if (!selection.rangeCount) return;
+
+    var range = selection.getRangeAt(0);
+    if (range.collapsed) return;
+
+    try {
+        var span = document.createElement('span');
+        span.style.color = '#ff0000';
+        span.style.fontWeight = 'bold';
+        range.surroundContents(span);
+        selection.removeAllRanges();
+        localStorage.setItem(window.location.pathname, document.querySelector('.content').innerHTML);
+    } catch (e) {
+        var newNode = document.createElement('span');
+        newNode.style.color = '#ff0000';
+        newNode.style.fontWeight = 'bold';
+        var fragment = range.extractContents();
+        newNode.appendChild(fragment);
+        range.insertNode(newNode);
+        selection.removeAllRanges();
+        localStorage.setItem(window.location.pathname, document.querySelector('.content').innerHTML);
+    }
+});
+
+window.onload = function() {
+    const saved = localStorage.getItem(window.location.pathname);
+    if(saved) document.querySelector('.content').innerHTML = saved;
+};
+</script>
+
+</body>
+</html>

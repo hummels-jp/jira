@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenDRIVE 详解</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.8; max-width: 800px; margin: 40px auto; padding: 20px; color: #444; background-color: #fcfcfc; }
+        h1 { color: #111; font-size: 2.2em; margin-bottom: 30px; font-weight: 700; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        p { margin-bottom: 20px; font-size: 1.1em; color: #333; }
+        img { max-width: 100%; height: auto; border-radius: 8px; margin: 25px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: block; }
+    </style>
+</head>
+<body>
+    <h1>技术文档</h1>
+    <div class="content">
+        <p>08_OpenDRIVE Road shape - road networks for simulation_原文</p>
+        <p>2026年05月15日 14:25</p>
+        <p>Welcome to my video about road shapes on open drives. My name is Nico and in this video will explain how the road shapes work in open drive, what elements it is represented by, and as usual, we'll have a look in the overall XML structure where you can find the shape elements that represent the road shape. You will have a look at the concepts that apply it to shape entries, and we will also have a look at some simple examples to help you apply the shape elements and road shapes in your everyday work. So let's get into it.</p>
+        <img src="images/image1.jpeg" alt="Diagram">
+        <p>So first of all we need to check out our high level XML structure and here we can find the shape entry that represents our road shape within the lateral profile. If you're interested in all the other attributes you can see here, you can check out my video about what is open drive, and I will put a link in the video description. So, but now let's get into the lateral profile because that's got what's going to be interesting for today.</p>
+        <img src="images/image2.jpeg" alt="Diagram">
+        <p>Within the lateral profile, we will find our shape entry. And our shape entry is perpendicular to the S axis and defines a row shape at a given S coordinate. But we have a second part in our lateral profile that can be interesting, and I will make a future video about, and that is a super elevation, which is a rotation of the whole road across the T axis using the S axis as a rotation point and applies a rotation angle to our road.</p>
+        <img src="images/image3.jpeg" alt="Diagram">
+        <p>But for now, we will stick to the shape element. And so let's see how that is defined. So the shape element is defined by 6 attributes, and that is the S coordinate, which defines at what S position, this shape is valid. Then we have the T coordinate that tells us from what T coordinate that shape is valid from. So that case, we have t -4, and then we have the parameters ABC, and d that are part of our well known and of third polynomial have an open drive. So for example, if you want to apply a constant height to our shape, then we can do so by changing the parameter. A in our third order polynomial can see up here. And this is going to be the result.</p>
+        <img src="images/image4.jpeg" alt="Diagram">
+        <p>Obviously, just having a constant height is not going to be enough. So we can also apply a constant ascent or descent, like in the example here, where we change the parameters b, if you want to combine that with a offset, with a height offset, you can, you know, adapt parameter A and B, and then it would look not like this, but, you know, similar with an I offset, if we want to create a cross for like in the very first picture you saw, then we can add a second shape to our shape definitions. And the interesting part here is that the second shape is also valid at the same as coordinate as the previous shape, but the difference here is that we have another T coordinate that tells us from where along the T axis, this shape entry is valid from, and what we can see here that the first shape entry represents the yellow box and the second one represents the purple box. And you can see that parameter b in the purple box is the direct opposite to the one in the yellow box by that creating this crossfall here.</p>
+        <img src="images/image5.jpeg" alt="Diagram">
+        <p>Obviously, we can add as many shapes as we need for a road shape, and here I've made this plateau in the purple box by applying a constant height to it and then added the blue box to create a descent at the end. Obviously, there's one problem with this kind of linear changes in the road shape because there is not a smooth transitions between each of the shape. Elements for that have our third order polynomial, we can do something like this. Obviously this is not perfect and you can run it through optimizations using those four parameters in the third order polynomial, Just to give you an example and an idea how it could look like. So this could be a more likely cross fall.</p>
+        <img src="images/image6.jpeg" alt="Diagram">
+        <p>And as we now know how we can define a row shape at 1 S coordinate, let's see, how do we get a second road shape in there? And now the most important and interesting part is how do we calculate points in between those? So here I created a very, very simple example where we have the first shape entry at a certain S coordinate, and we have a second shape entry at a S coordinate further down the road. And what we now want to do is get to know the equation that helps us calculate that point in between those 2 shape entries.</p>
+        <img src="images/image7.jpeg" alt="Diagram">
+        <p>Obviously, we need to figure out what interpolation opendrive provides us here. And that is very simple. It's a linear interpolation. So the equations that we need now are provided by the standard itself, and we can see that we get the equations of each of those shape entries here. Obviously, depending on how many shape elements you find for that shape entry, you need to adapt that a bit. But it will look like this. And if you combine that to calculate the height of that selected point, this is going to be the equation, and you can find that in the open drive standard itself in chapter 8, 4.3 in version 1 7 0. And this is it about road shapes.</p>
+        <img src="images/image8.jpeg" alt="Diagram">
+        <p>I hope that helped you and God give you a little bit of an insight. I want to say thank you very much for watching. I hope you liked that video first time with me in the picture, so like consider to like and subscribe for future videos, see you the next one.</p>
+        <img src="images/image9.jpeg" alt="Diagram">
+    </div>
+
+<!-- 纯净标注脚本 -->
+<script>
+document.addEventListener('mouseup', function() {
+    var selection = window.getSelection();
+    if (!selection.rangeCount) return;
+
+    var range = selection.getRangeAt(0);
+    if (range.collapsed) return;
+
+    try {
+        var span = document.createElement('span');
+        span.style.color = '#ff0000';
+        span.style.fontWeight = 'bold';
+        range.surroundContents(span);
+        selection.removeAllRanges();
+        localStorage.setItem(window.location.pathname, document.querySelector('.content').innerHTML);
+    } catch (e) {
+        var newNode = document.createElement('span');
+        newNode.style.color = '#ff0000';
+        newNode.style.fontWeight = 'bold';
+        var fragment = range.extractContents();
+        newNode.appendChild(fragment);
+        range.insertNode(newNode);
+        selection.removeAllRanges();
+        localStorage.setItem(window.location.pathname, document.querySelector('.content').innerHTML);
+    }
+});
+
+window.onload = function() {
+    const saved = localStorage.getItem(window.location.pathname);
+    if(saved) document.querySelector('.content').innerHTML = saved;
+};
+</script>
+
+</body>
+</html>

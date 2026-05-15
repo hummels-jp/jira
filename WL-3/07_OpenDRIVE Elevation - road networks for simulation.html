@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenDRIVE 详解</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.8; max-width: 800px; margin: 40px auto; padding: 20px; color: #444; background-color: #fcfcfc; }
+        h1 { color: #111; font-size: 2.2em; margin-bottom: 30px; font-weight: 700; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        p { margin-bottom: 20px; font-size: 1.1em; color: #333; }
+        img { max-width: 100%; height: auto; border-radius: 8px; margin: 25px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: block; }
+    </style>
+</head>
+<body>
+    <h1>技术文档</h1>
+    <div class="content">
+        <p>07_OpenDRIVE Elevation - road networks for simulation_原文</p>
+        <p>2026年05月15日 14:25</p>
+        <p>Welcome to my video about elevation opendrive my name is Nico and in this video I will explain how elevation works in opendrive. In this video, you will learn how to define the elevation profile and the elevation entries within that profile. And obviously that's all you need then to design and define elevation. So this an ascent for your roads in open drive. This is the high levels XML structure of opendrive. Check out my video about what is opendrive, where I'm explaining what each of those elements are for and what you can use them for.</p>
+        <img src="images/image1.jpeg" alt="Diagram">
+        <img src="images/image2.jpeg" alt="Diagram">
+        <p>Link in the video description and at the end of this video, so you can find the elevation profile directly under the plan view within the row definition. And the elevation profile defines how the road ascends and descends along the S axis to define how the road tilts and to define the lateral profile, we obviously can use the lateral profile. Under the elevation profile. I will make an individual video for lateral profiles later, so let us check out how we can use the elevation profile and how it works in opendrive.</p>
+        <img src="images/image3.jpeg" alt="Diagram">
+        <p>Elevation profile defines the height of the road along the reference line. The reference line is defined in the plan view, and the plan view sticks to the xy plane defined in the inertial coordinate system. In the elevation is the height difference of a road surface to our plan view. This means that once we apply elevation, the road length is being stretched while the reference line stays the same length. And that is important that we keep that in mind. And we can see that how that works here in that image, The green line represents the reference line and has a certain length, and the white line, it represents the road surface. And obviously, this is going to be longer than the green line.</p>
+        <img src="images/image4.jpeg" alt="Diagram">
+        <p>The elevation profile is defined and within the road and contains elevation definitions for road, depending on how we would like to shape our elevation. So the elevation is defined by a third order polynomial, has the following attributes, ABC, and d, as we have known from so many other third audit para norms, we use an open drive. So as is defining the s code in it from where the elevation entry is valid and the parameters ABC, and d are just the parameters of the polynomial. You can see here in that wide equation.</p>
+        <img src="images/image5.jpeg" alt="Diagram">
+        <p>So if we want to apply a constant height, we just change or give the parameter a value and that specifies how far the road surface is going to be from our inertial coordinate system, or the x, y plane. If the value is negative, we will be below that. And if it's positive, obviously, we are going to be above the x, y plane. And our example here, we applied the value 2, and therefore we are 2 m above the xy plane, just applying a constant height to road. It's just not going to do it for most road networks. So we also need to be capable to apply a constant ascent or descent to a road. And that you can do by changing parameter B, so what I showed here is a constant ascend from 0 to a height of 2 over a distance of 10 m.</p>
+        <p>So for that, we change the pitch of the road by changing the parameter b, just having constant heights and constant ascend won't do the job. So we need to be able to combine those two. And what we can see now is a constant descent followed by a constant height, and this can be realized by two elevation entries, and here you can see that the second entry is valid from the S coordinate 5, while the first entry is, as we've seen before, valid from s equals 0, which means that if we are below the S coordinate 5, the first elevation entry is valid. And after that, the next elation entry is valid until we have a further elevation entry over the road ends.</p>
+        <img src="images/image6.jpeg" alt="Diagram">
+        <p>Of course, this type of elevation would not be a good one as we are completely missing any smooth transitions and therefore would end up with a bumpy ride. So what can we do about that? We can use the power of the third order polym to create that smooth transition. Now I change the parameters c and D to create that third order polynomial shape. Here. We now have that smooth transition from the first elevation entry, which is whether it from 0 to s equals 4. And you can see how the gradient of the elevation changes smooth smoothly as soon as the required height is reached at s equals 4, we can now switch to our constant height again, and this will probably be a way smoother ride for our eco vehicle. So thank you very much for watching.</p>
+        <img src="images/image7.jpeg" alt="Diagram">
+        <p>Now you have a basic idea about how elevation works on open drives and how you can apply it. So if you like this video, consider it to like and subscribe and recommend it to colleagues of yours who might find that helpful as well. See you the next time.</p>
+    </div>
+
+<!-- 纯净标注脚本 -->
+<script>
+document.addEventListener('mouseup', function() {
+    var selection = window.getSelection();
+    if (!selection.rangeCount) return;
+
+    var range = selection.getRangeAt(0);
+    if (range.collapsed) return;
+
+    try {
+        var span = document.createElement('span');
+        span.style.color = '#ff0000';
+        span.style.fontWeight = 'bold';
+        range.surroundContents(span);
+        selection.removeAllRanges();
+        localStorage.setItem(window.location.pathname, document.querySelector('.content').innerHTML);
+    } catch (e) {
+        var newNode = document.createElement('span');
+        newNode.style.color = '#ff0000';
+        newNode.style.fontWeight = 'bold';
+        var fragment = range.extractContents();
+        newNode.appendChild(fragment);
+        range.insertNode(newNode);
+        selection.removeAllRanges();
+        localStorage.setItem(window.location.pathname, document.querySelector('.content').innerHTML);
+    }
+});
+
+window.onload = function() {
+    const saved = localStorage.getItem(window.location.pathname);
+    if(saved) document.querySelector('.content').innerHTML = saved;
+};
+</script>
+
+</body>
+</html>

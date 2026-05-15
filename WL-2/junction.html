@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenDRIVE Junctions 详述</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 20px; color: #333; }
+        .card { background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+        .data-block { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 0.9em; margin: 15px 0; }
+        .diagram { background: #f0f4f8; padding: 20px; border-left: 5px solid #3498db; margin: 20px 0; text-align: center; }
+        img { max-width: 100%; height: auto; border: 1px solid #eee; }
+        .back-link { display: block; margin-top: 30px; color: #3498db; }
+    </style>
+</head>
+<body>
+    <h1>6. Junctions (路口) 建模进阶</h1>
+    
+    <div class="card">
+        <p>Junctions 用于定义多条道路汇合的区域。它通过 <code>connection</code> 标签建立道路间复杂的逻辑关系，包含路口的进入道路、离开道路以及具体的车道连接。</p>
+        <div class="diagram"><img src="lane_link_example.jpg" alt="Lane Link and Section Split at s=15.0"></div>
+        <div class="data-block">
+            &lt;junction id="1" name="Intersection_01"&gt;<br>
+            &nbsp;&nbsp;&lt;connection id="0" incomingRoad="1" connectingRoad="2" contactPoint="start"&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;laneLink from="-1" to="-1"/&gt;<br>
+            &nbsp;&nbsp;&lt;/connection&gt;<br>
+            &lt;/junction&gt;
+        </div>
+        <p><strong>关键要素</strong>：</p>
+        <ul>
+            <li><strong>connection</strong>: 定义了从一条进入道路 (incomingRoad) 到连接道路 (connectingRoad) 的物理路径。</li>
+            <li><strong>laneLink</strong>: 定义了在该连接路径中，具体的左右车道是如何进行 ID 映射的，这是实现转向决策的核心。</li>
+            <li><strong>建模注意</strong>: 连接道路 (connectingRoad) 在路口内几何上允许重叠，建模时需确保车道属性（如人行道）正确闭合。</li>
+        </ul>
+    </div>
+
+    <a href="Road_Geometry.html" class="back-link">&larr; 返回首页</a>
+</body>
+</html>

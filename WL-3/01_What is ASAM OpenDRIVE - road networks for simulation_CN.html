@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenDRIVE 基础概念详解</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.8; max-width: 800px; margin: 40px auto; padding: 20px; color: #444; background-color: #fcfcfc; }
+        h1 { color: #111; font-size: 2.5em; margin-bottom: 30px; font-weight: 700; }
+        p { margin-bottom: 20px; font-size: 1.1em; color: #333; }
+        img { max-width: 100%; height: auto; border-radius: 8px; margin: 25px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: block; }
+        .content { padding: 0; }
+    </style>
+</head>
+<body>
+
+    <h1>OpenDRIVE 基础概念详解</h1>
+    <div class="content">
+        <p>OpenDRIVE 基础概念教学</p>
+        <p>2026年05月15日</p>
+        <p>欢迎观看本期关于 OpenDRIVE 的教学视频。我是 Nico，本期视频我将带您初步了解 OpenDRIVE。在进行任何交通仿真时，构建可行驶的路面至关重要。为此，我们需要对单条道路或整个路网进行建模。如本例所示，路网建模可能非常复杂，因此无论是人力还是时间成本都很高。如果能采用一种可交换的格式来描述这些路网，将极大地简化未来移动出行解决方案的开发流程。事实上，行业目前已经面临诸多挑战。因此，ASAM OpenDRIVE 提供了一套路网交换格式规范，专门用于描述静态交通仿真路网。</p>
+        <img src="images/image1.png" alt="图示">
+        <p>OpenDRIVE 的主要任务是进行道路描述，包括沿路的各类对象。它涵盖了道路、车道、路口、信号灯以及所有影响交通流的要素的建模方式。在了解 OpenDRIVE 的基本定义后，让我们深入探索 OpenDRIVE 文件的基本层级结构。</p>
+        <p>如前所述，通过 OpenDRIVE，您可以对路网进行建模，以获取道路的基本形状。OpenDRIVE 使用“道路参考线 (Reference Line)”的概念，参考线定义了道路在上帝视角（Plan View）下的弯曲与走向。参考线是 OpenDRIVE 的核心，绝大多数功能（如车道、信号灯）均基于参考线进行定位。构建道路时，不仅需要道路的基本形状，还需要定义车辆行驶的车道，这些车道均附着于参考线之上。除了基础道路，OpenDRIVE 还支持扩展功能，例如限速标志等。当然，目前的描述仅仅是其功能的冰山一角。</p>
+        <img src="images/image2.png" alt="图示">
+        <p>现在让我们深入了解 OpenDRIVE 文件的 XML 结构。顶层是 OpenDRIVE 元素，并在其中定义了包含所有功能特性的路网。在 header 部分，可以定义 OpenDRIVE 版本及相关元数据（如作者信息）。在 header 之下，我们将开始添加用于定义道路的各个元素。</p>
+        <img src="images/image3.png" alt="图示">
+        <p>每条道路在 OpenDRIVE 中都有其独立的 road 元素。如果路网包含两条道路，则会有两个 road 元素条目。每条道路的特性均在此定义，包括车道、信号及物体等。对于每条道路，我们都需要定义参考线，它位于 plan view 元素内。为了定义道路的左右形状，我们将使用 geometry 元素。</p>
+        <p>参考线仅在 XY 平面上塑造道路。由于地球并非平坦，我们还需要定义高程轮廓 (Elevation Profile) 来确定参考线的 Z 轴高度值。高程轮廓定义了道路沿参考线的高度变化，它是相对于 XY 平面的高度差。</p>
+        <img src="images/image4.png" alt="图示">
+        <p>这是道路建模的一个维度，另一个维度是横断面 (Lateral Profile)。横断面提供了两种修饰道路形状的选项：一是 shape 元素，定义垂直于参考线的截面形状（如横坡）；二是超高 (Superelevation)，定义绕 S 轴的旋转（例如道路倾斜 2 度，能使路面形态更优）。</p>
+        <img src="images/image5.png" alt="图示">
+<!-- 交互式颜色调节器 -->
+<div id="color-tool" style="position: fixed; top: 20px; right: 20px; background: white; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 1000;">
+    <label for="color-picker">标注画笔颜色:</label>
+    <input type="color" id="color-picker" value="#ff0000">
+</div>
+
+<script>
+// 监听鼠标松开事件：使用更兼容的 range 处理方式
+document.addEventListener('mouseup', function() {
+    var selection = window.getSelection();
+    if (!selection.rangeCount) return;
+
+    var range = selection.getRangeAt(0);
+    if (range.collapsed) return;
+
+    // 尝试直接使用 span 包装（最简洁有效的方式）
+    try {
+        var span = document.createElement('span');
+        span.style.color = '#ff0000';
+        span.style.fontWeight = 'bold';
+        range.surroundContents(span);
+        selection.removeAllRanges();
+        localStorage.setItem(window.location.pathname, document.querySelector('.content').innerHTML);
+    } catch (e) {
+        // 如果跨越了节点 (Node)，则使用 Range 的 applyNode 逻辑（更通用）
+        console.warn("Simple wrap failed, applying fallback:", e);
+        var newNode = document.createElement('span');
+        newNode.style.color = '#ff0000';
+        newNode.style.fontWeight = 'bold';
+        
+        // 跨节点处理：我们需要使用 extractContents
+        var fragment = range.extractContents();
+        newNode.appendChild(fragment);
+        range.insertNode(newNode);
+        selection.removeAllRanges();
+        localStorage.setItem(window.location.pathname, document.querySelector('.content').innerHTML);
+    }
+});
+
+// 初始化加载时恢复
+window.onload = function() {
+    const saved = localStorage.getItem(window.location.pathname);
+    if(saved) document.querySelector('.content').innerHTML = saved;
+};
+</script>
+function changeColor(color) {
+    document.body.style.color = color;
+    document.querySelectorAll('p, h1, h2, h3').forEach(el => el.style.color = color);
+}
+</script>
+
+<!-- 纯净标注脚本 -->
+<script>
+document.addEventListener('mouseup', function() {
+    var selection = window.getSelection();
+    if (!selection.rangeCount) return;
+
+    var range = selection.getRangeAt(0);
+    if (range.collapsed) return;
+
+    try {
+        var span = document.createElement('span');
+        span.style.color = '#ff0000';
+        span.style.fontWeight = 'bold';
+        range.surroundContents(span);
+        selection.removeAllRanges();
+        localStorage.setItem(window.location.pathname, document.querySelector('.content').innerHTML);
+    } catch (e) {
+        var newNode = document.createElement('span');
+        newNode.style.color = '#ff0000';
+        newNode.style.fontWeight = 'bold';
+        var fragment = range.extractContents();
+        newNode.appendChild(fragment);
+        range.insertNode(newNode);
+        selection.removeAllRanges();
+        localStorage.setItem(window.location.pathname, document.querySelector('.content').innerHTML);
+    }
+});
+
+window.onload = function() {
+    const saved = localStorage.getItem(window.location.pathname);
+    if(saved) document.querySelector('.content').innerHTML = saved;
+};
+</script>
+
+</body>
+</html>
+</html>

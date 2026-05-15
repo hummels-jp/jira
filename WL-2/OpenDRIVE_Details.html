@@ -80,6 +80,51 @@
         <p><strong>工程规范</strong>：两条道路的参考线在连接处必须具有<strong>相同的航向角 (heading)</strong>，且不产生<strong>间隙 (gaps)</strong> 或 <strong>重叠 (overlap)</strong>，从而确保路面平滑，维持仿真动力学的准确性。</p>
     </div>
 
+    <h1>5. OpenDrive Lane (车道定义)</h1>
+    <div class="card">
+        <p>OpenDRIVE 使用 <code>&lt;lanes&gt;</code> 标签定义道路的车道配置。每一条道路包含至少一个车道段 (laneSection)，并根据参考线进行左右划分。</p>
+        <div class="data-block">
+            &lt;lanes&gt;<br>
+            &nbsp;&nbsp;&lt;laneSection s="0.0"&gt;...&lt;/laneSection&gt;<br>
+            &nbsp;&nbsp;&lt;laneSection s="15.0"&gt;...&lt;/laneSection&gt;<br>
+            &lt;/lanes&gt;
+        </div>
+        <p><strong>关键要素</strong>：</p>
+        <ul>
+            <li><strong>laneSection</strong>: 道路在 <code>s</code> 坐标方向上的分段（如图所示在 s=15.0 处切分），用于描述车道数或类型的变化（如车道合并/增加）。</li>
+            <li><strong>ID 分布</strong>: <code>0</code> 为中心车道（参考线所在），正数表示左侧车道，负数表示右侧车道。</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>车道段分割示意 (Lane Section Split)</h2>
+        <div class="diagram"><img src="lane_section_split.jpg" alt="Lane Section Split at s=15.0"></div>
+        <p>如图所示，在 <code>s = 15.0</code> 处，参考线触发了新的 <code>laneSection</code>，这通常用于描述车道数的变化（例如在该点增加了一条右侧车道）。</p>
+    </div>
+
+    <div class="card">
+        <h2>车道连接 (Lane Link)</h2>
+        <div class="diagram"><img src="lane_link_example.jpg" alt="Lane Link and Section Split at s=15.0"></div>
+        <p>在此基础上，通过 <code>&lt;link&gt;</code> 标签定义车道间的前驱关系 (Predecessor)，从而确保即使在车道数发生变化的情况下，拓扑连接依然保持连续。</p>
+    </div>
+
+    <h1>6. Junctions (路口)</h1>
+    <div class="card">
+        <p>Junctions 用于定义多条道路汇合的区域。它通过 <code>connection</code> 标签建立道路间复杂的逻辑关系，包含路口的进入道路、离开道路以及具体的车道连接。</p>
+        <div class="data-block">
+            &lt;junction id="1" name="Intersection_01"&gt;<br>
+            &nbsp;&nbsp;&lt;connection id="0" incomingRoad="1" connectingRoad="2" contactPoint="start"&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;laneLink from="-1" to="-1"/&gt;<br>
+            &nbsp;&nbsp;&lt;/connection&gt;<br>
+            &lt;/junction&gt;
+        </div>
+        <p><strong>关键要素</strong>：</p>
+        <ul>
+            <li><strong>connection</strong>: 定义了从一条进入道路 (incomingRoad) 到连接道路 (connectingRoad) 的物理路径。</li>
+            <li><strong>laneLink</strong>: 定义了在该连接路径中，具体的左右车道是如何进行 ID 映射的，这是实现转向决策的核心。</li>
+        </ul>
+    </div>
+
     <a href="Road_Geometry.html" class="back-link">&larr; 返回首页</a>
 </body>
 </html>
