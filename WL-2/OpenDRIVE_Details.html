@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenDRIVE 道路几何表达详细说明</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 20px; color: #333; }
+        h1 { color: #2c3e50; }
+        .data-block { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 5px; overflow-x: auto; font-family: 'Courier New', Courier, monospace; }
+        .back-link { margin-top: 30px; display: block; color: #3498db; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <h1>OpenDRIVE 几何表达详述</h1>
+    <p>ASAM OpenDRIVE 通过<strong>参数化参考线 (Reference Line)</strong> 定义道路几何，是自动驾驶仿真的行业标准。</p>
+
+    <h2>1. 核心式样</h2>
+    <ul>
+        <li><strong>参考线 (Reference Line)</strong>: 所有几何属性的基准。</li>
+        <li><strong>几何基元 (Geometry Primitives)</strong>: 道路轨迹由 line, arc, spiral, poly3 等组合而成。</li>
+        <li><strong>s/t 坐标系</strong>: 沿参考线弧长 s 与横向偏移 t。</li>
+    </ul>
+
+    <h2>2. 示例数据结构 (XML 形式)</h2>
+    <div class="data-block">
+    &lt;planView&gt;<br>
+    &nbsp;&nbsp;&lt;geometry s="0.00" x="100.0" y="200.0" hdg="0.0" length="50.0"&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;spiral curvStart="0.0" curvEnd="0.1"/&gt;<br>
+    &nbsp;&nbsp;&lt;/geometry&gt;<br>
+    &lt;/planView&gt;
+    </div>
+
+    <a href="Road_Geometry.html" class="back-link">&larr; 返回首页</a>
+</body>
+</html>
