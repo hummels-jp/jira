@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>リンク 2：OSMデータソースに基づく</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; }
+        .step { background: #eef; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .qa-section { background-color: #f9f9f9; padding: 15px; border-left: 5px solid #3498db; margin-top: 30px; }
+        .qa-item { margin-bottom: 30px; }
+        .qa-q { font-weight: bold; color: #2c3e50; font-size: 1.1em; }
+        .qa-a { margin-top: 10px; color: #555; }
+        .sub-points { margin-left: 20px; margin-top: 10px; }
+        .diagram-img { max-width: 100%; height: auto; margin: 20px 0; display: block; border: 1px solid #eee; }
+    </style>
+</head>
+<body>
+    <h1>リンク 2：OSMデータソースに基づく</h1>
+    <div class="step">
+        <strong>コアパス：</strong> OSM → SUMO → OpenDrive → RoadRunner → CARLA
+    </div>
+    <h2>詳細な処理フロー：</h2>
+    <ul>
+        <li><strong>データ形式変換：</strong> SUMOの `netconvert` ツールを使用して、OSMネットワークデータをOpenDRIVE形式に変換します。</li>
+        <li><strong>トポロジー再構築：</strong> SUMO変換過程で交差点ロジックや車線接続を重点的に処理し、論理的な接続性を確保します。</li>
+        <li><strong>シーンインスタンス化：</strong> RoadRunnerフローへ同期させ、物理的な視覚構築を完了します。</li>
+    </ul>
+
+    <div class="qa-section">
+        <h2>技術検証 (QA)</h2>
+        <div class="qa-item">
+            <p class="qa-q">Q: OpenStreetMap サイトから必要なエリアの OSM 地図データをエクスポートする方法は？</p>
+            <p class="qa-a">
+                A: シミュレーションシーン構築の第一歩として、以下の標準手順で OSM データを取得します。
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>エリア指定：</strong> OpenStreetMap公式サイトにアクセスし、検索バーや地図のドラッグでターゲットエリアを特定します。</li>
+                    <li><strong>データエクスポート：</strong> 上部の「エクスポート」ボタンをクリックし、範囲選択 (Bounding Box) を手動調整して必要な範囲をカバーします。</li>
+                    <li><strong>形式の取得：</strong> <code>.osm</code> という拡張子の XML ファイルをダウンロードします。</li>
+                </ul>
+                <img src="images/osm_export_screenshot.jpg" alt="OSMデータエクスポート示意図" class="diagram-img">
+            </div>
+        </div>
+
+        <div class="qa-item">
+            <p class="qa-q">Q: SUMO の netconvert ツールによる OSM データから OpenDrive への変換結果は？</p>
+            <p class="qa-a">
+                A: SUMO 変換ツールを用いることで、原始的な OSM セマンティックネットワークをシミュレーターが読み取り可能な OpenDrive 形式に変換可能です。川崎や根岸エリアの変換結果は明確で完全です。
+            </p>
+            <div class="sub-points">
+                <img src="images/sumo_conversion_result.jpg" alt="SUMO変換結果ファイル示意図" class="diagram-img">
+            </div>
+        </div>
+
+        <div class="qa-item">
+            <p class="qa-q">Q: RoadRunner を使用して生成された OpenDrive データを Scene として作成し、FBX 中間形式としてエクスポートするロジックは？</p>
+            <p class="qa-a">
+                A: RoadRunner のシーン編集環境を通じて、OpenDrive の論理トポロジーを CARLA が利用可能な高性能なシミュレーションアセットへ変換します。
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>視覚的編集とインスタンス化：</strong> <code>negishi.xodr</code> をインポートすると、3D 路網ロジック図としてレンダリングされ、トポロジーの欠落や接続エラーを直感的に確認できます。</li>
+                    <li><strong>Scene コンテナの構築：</strong> `CreateScene` コマンドにより、論理トポロジーとアセットライブラリを結合し、完全なシミュレーション Scene を形成します。</li>
+                    <li><strong>FBX エクスポート戦略：</strong> FBX 変換は重要です。座標原点のオフセットや材質情報を含み、CARLA プラグインを使用して正しい軸系で出力します。</li>
+                    <li><strong>CARLA への連携：</strong> CARLA エンジンは xodr ファイルを論理ガイドとして読み込み、FBX モデルを視覚要素として表示し、両者の整合性を保ちます。</li>
+                    <li><strong>補足（クローズドループの課題）：</strong> OSM ソースデータの道路の閉塞性 (Road Closure) が低いため、`CreateScene` を使用した際に道路端が自動で接続されず、論理クローズドループを形成できない場合があります。これに対しては RoadRunner 内での手動縫合 (Stitching) が必要となります。</li>
+                </ul>
+                <img src="images/roadrunner_scene_edit.jpg" alt="RoadRunnerシーン編集示意図" class="diagram-img">
+            </div>
+        </div>
+    </div>
+
+    <p><a href="workflow_analysis_ja.html">メインページに戻る</a></p>
+</body>
+</html>

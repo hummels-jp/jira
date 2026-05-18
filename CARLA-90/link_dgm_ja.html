@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>リンク 1：DGMデータソースに基づく</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; }
+        .step { background: #eef; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .qa-section { background-color: #f9f9f9; padding: 15px; border-left: 5px solid #3498db; margin-top: 30px; }
+        .qa-item { margin-bottom: 30px; }
+        .qa-q { font-weight: bold; color: #2c3e50; font-size: 1.1em; }
+        .qa-a { margin-top: 10px; color: #555; }
+        .sub-points { margin-left: 20px; margin-top: 10px; }
+        .diagram-img { max-width: 100%; height: auto; margin: 20px 0; display: block; border: 1px solid #eee; }
+    </style>
+</head>
+<body>
+    <h1>リンク 1：DGMデータソースに基づく</h1>
+    <div class="step">
+        <strong>コアパス：</strong> 武漢DGMデータ (OpenDrive) → RoadRunner → CARLA
+    </div>
+    <h2>詳細な処理フロー：</h2>
+    <ul>
+        <li><strong>データ前処理：</strong> 武漢側のDGMから変換されたOpenDRIVEファイルのバージョン検証とトポロジーチェックを行います。</li>
+        <li><strong>RoadRunnerモデリング：</strong> OpenDRIVEファイルをRoadRunnerにインポートし、ジオメトリのインスタンス化を行い、路面材質や物理属性を補完します。</li>
+        <li><strong>プラグインエクスポート：</strong> RoadRunnerのCARLAプラグインを利用してFBXファイルと対応するxodrファイルを出力し、座標合わせを確認します。</li>
+    </ul>
+
+    <div class="qa-section">
+        <h2>技術検証 (QA)</h2>
+        <div class="qa-item">
+            <p class="qa-q">Q: NOA_CITYWAY_V3.0.xodr ファイルの分析結論は？</p>
+            <p class="qa-a">
+                A: このファイルは路網構築の基礎要素（トポロジー接続、幾何軌跡、車線構造、初期の交通標識）を備えていますが、以下の制限に注意が必要です。
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>トポロジーの完全性：</strong> `link` 関係は良好ですが、交差点（Junction）内部のすべての接続に正確な `laneLink` が提供されているか再確認が必要です。</li>
+                    <li><strong>信号機のセマンティクス：</strong> `type="294"` (停止線) や `type="293"` (横断歩道) の信号情報は識別されましたが、コントローラー定義が欠けています。動的な信号機シミュレーションにはController連携が必要です。</li>
+                    <li><strong>物理属性：</strong> Surface定義は現在空であり、摩擦係数などの動力学シミュレーションに不可欠なパラメータが不足しています。</li>
+                    <li><strong>今後の検証建議：</strong> odr-viewer で孤立ノードをチェックし、AutowareマップローダーでLanelet2変換テストを実施し、セマンティック属性が正しく保持されているか検証することを推奨します。</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="qa-item">
+            <p class="qa-q">Q: DGMデータの変換フローにおいて、元のOpenDriveデータは様々なツールでどのように表示されますか？</p>
+            <p class="qa-a">
+                A: 元のDGMから変換されたOpenDriveデータは、`odrViewer` や `RoadRunner` 内で高度に構造化されたベクトルグリッドとして表示され、以下の特徴を持ちます。
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>直感的なトポロジーネットワーク：</strong> 各Road IDは一貫した道路として解析され、viewer内で都市路網の骨格として可視化されます。</li>
+                    <li><strong>幾何学的忠実度：</strong> RoadNetworkは層状に表示され、精緻な参照線により武漢の現実の路網のカーブや交差形態を再現しています。</li>
+                    <li><strong>構造的一貫性：</strong> OpenDRIVE仕様に厳密に従っており、データ構造の整合性が検証されています。</li>
+                </ul>
+                <img src="images/odr_viewer_analysis.jpg" alt="OpenDRIVEデータプレビュー図" class="diagram-img">
+            </div>
+            
+            <p class="qa-q" style="margin-top:20px;">Q: OpenDriveデータをCARLAで使用可能なFBXシーンに変換する方法は？</p>
+            <p class="qa-a">
+                A: RoadRunnerの <code>CreateScene</code> ワークフローにより、効率的な変換が可能です。
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>インポート：</strong> OpenDriveファイル (NOA_CITYWAY_V3.0.xodr) を直接RoadRunnerシーン編集画面へドラッグします。</li>
+                    <li><strong>作成とインスタンス化：</strong> <code>CreateScene</code> コマンドによりデータをインスタンス化し、道路メッシュや材質を自動生成します。</li>
+                    <li><strong>調整と確認：</strong> RoadRunner画面でNOA_CITYWAY_V3.0.xodrの全容を確認し、ネットワークの断裂や交差点ロジックを確認します。</li>
+                    <li><strong>エクスポート：</strong> CARLAエクスポートプラグインを使用してFBXを出力し、xodrファイルと合わせてCARLAへインポートします。</li>
+                </ul>
+                <img src="images/roadrunner_import.jpg" alt="RoadRunnerインポート示意図" class="diagram-img">
+            </div>
+        </div>
+
+        <div class="qa-item">
+            <p class="qa-q">Q4: Carla UE Editor 環境で make import コマンドを実行し、FBX 等のリソースを Carla Editor にインポートする方法は？</p>
+            <p class="qa-a">
+                A: Unreal Engine Editor 環境下で、Makefile または手動インポートフローを使用して処理された FBX およびアセットを Carla にデプロイします。
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>Content Browser 構造：</strong> 図の Content Browser に示すように、マップリソースは <code>Content > map_package > Maps > kawasaki</code> パス下に編成されています。</li>
+                    <li><strong>アセット統合：</strong> インポート後、モデルは <code>StaticMeshActor</code> (kawasaki_Roads_Road_Layer0 等) として認識され、World Outliner に正しくマウントされます。</li>
+                    <li><strong>コンパイルとビルド：</strong> Editor 画面で `Build` オプションを介して Mesh Distance Fields をコンパイルします（右下に表示）。これは路面の衝突検知やセンサーシミュレーション（特にLiDAR）に不可欠です。</li>
+                    <li><strong>デプロイ検証：</strong> インポート後、Viewport 上で kawasaki マップが完全にロードされているか、すべての材質（LaneMarking_Yellow1 等）が期待通りにレンダリングされているか確認し、シミュレーション環境と現実の物理形態の一致を確保します。</li>
+                </ul>
+                <img src="images/ue_import_kawasaki.jpg" alt="Carla Editor インポートkawasakiマップシーン" class="diagram-img">
+            </div>
+        </div>
+    </div>
+
+    <p><a href="workflow_analysis_ja.html">メインページに戻る</a></p>
+</body>
+</html>

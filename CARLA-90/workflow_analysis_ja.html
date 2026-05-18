@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>CARLA-90: 地図データ変換とシミュレーションワークフロー分析</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+        h2 { color: #34495e; margin-top: 30px; }
+        .workflow-img { max-width: 100%; height: auto; margin: 20px 0; border: 1px solid #ddd; }
+        .section { background: #f9f9f9; padding: 20px; border-radius: 8px; margin-top: 20px; }
+        ul { margin-top: 10px; }
+        .workflow-box { border: 1px solid #bdc3c7; padding: 15px; margin: 10px 0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>CARLA-90: 地図データ変換とシミュレーションワークフロー分析</h1>
+    
+    <img src="images/workflow_analysis.jpg" alt="地図データ変換ワークフロー図" class="workflow-img">
+
+    <div class="section">
+        <h2>1. コア変換ワークフローパス</h2>
+        <p>現在、異なるデータソースに対応する2つの主要な変換フローを特定しました。</p>
+        
+        <div class="workflow-box">
+            <h3><a href="link_dgm_ja.html">リンク 1：DGMデータソースに基づく</a></h3>
+            <p><strong>パス：</strong> 武漢DGMデータ (OpenDrive) → RoadRunner → FBXアセットとシーンファイル → CARLAへインポート</p>
+            <ul>
+                <li><strong>特徴：</strong> データソースの精度が高く、OpenDrive形式から直接開始します。</li>
+            </ul>
+        </div>
+
+        <div class="workflow-box">
+            <h3><a href="link_osm_ja.html">リンク 2：OSMデータソースに基づく</a></h3>
+            <p><strong>パス：</strong> OSM → SUMO (形式変換) → OpenDrive → RoadRunner → FBXアセットとシーンファイル → CARLAへインポート</p>
+            <ul>
+                <li><strong>特徴：</strong> OSMの広域カバレッジを活用し、SUMOを介してトポロジーロジックを生成した後、RoadRunnerでシーンをインスタンス化します。</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>2. ワークフローの重要要素と最適化項目</h2>
+        <ul>
+            <li><strong>現状の基盤</strong>：両方のリンクとも、RoadRunnerを物理アセット（FBX）とシーンインスタンス化の核として利用しています。</li>
+            <li><strong>セマンティクスの欠如</strong>：変換結果では、横断歩道、停止線、信号機などの論理的セマンティクスが欠落しているという問題が共通しています。</li>
+            <li><strong>解決すべき課題</strong>：
+                <ul>
+                    <li>SUMOの変換パラメータを最適化し、より多くのOSMセマンティクスを保持する。</li>
+                    <li>RoadRunner段階での論理アセット（横断歩道/停止線）の手動または自動修正。</li>
+                    <li>OpenDriveの原始情報からCarlaシミュレーション環境へのセマンティックマッピング基準の確立。</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>3. 段階的な実施目標</h2>
+        <ul>
+            <li><strong>第一段階</strong>：リンク1とリンク2のインポート可能性を検証し、既存リソースを利用して基礎的なシミュレーション環境を構築する。</li>
+            <li><strong>第二段階</strong>：変換プロセスを標準化し、横断歩道、停止線、信号機などの重要なセマンティクスの欠落を修正し、高精度マップ環境の自動化クローズドループを実現する。</li>
+        </ul>
+    </div>
+</body>
+</html>

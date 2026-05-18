@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>链路 1：基于 DGM 数据源</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; }
+        .step { background: #eef; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .qa-section { background-color: #f9f9f9; padding: 15px; border-left: 5px solid #3498db; margin-top: 30px; }
+        .qa-item { margin-bottom: 30px; }
+        .qa-q { font-weight: bold; color: #2c3e50; font-size: 1.1em; }
+        .qa-a { margin-top: 10px; color: #555; }
+        .sub-points { margin-left: 20px; margin-top: 10px; }
+        .diagram-img { max-width: 100%; height: auto; margin: 20px 0; display: block; border: 1px solid #eee; }
+    </style>
+</head>
+<body>
+    <h1>链路 1：基于 DGM 数据源</h1>
+    <div class="step">
+        <strong>核心路径：</strong> 武汉 DGM 数据 (OpenDrive) → RoadRunner → CARLA
+    </div>
+    <h2>详细处理流程：</h2>
+    <ul>
+        <li><strong>数据预处理：</strong> 对武汉侧 DGM 转换出的 OpenDRIVE 文件进行版本校验与拓扑检查。</li>
+        <li><strong>RoadRunner 建模：</strong> 将 OpenDRIVE 文件导入 RoadRunner 进行几何体实例化，补充路面材质与物理属性。</li>
+        <li><strong>插件导出：</strong> 利用 RoadRunner 的 Carla 插件导出 FBX 文件与匹配的 xodr 文件，确保坐标对齐。</li>
+    </ul>
+
+    <div class="qa-section">
+        <h2>技术验证 (QA)</h2>
+        <div class="qa-item">
+            <p class="qa-q">Q: 针对 NOA_CITYWAY_V3.0.xodr 文件的分析结论是什么？</p>
+            <p class="qa-a">
+                A: 该文件已具备构建路网的基础要素（拓扑连接、几何轨迹、车道结构、初步交通标志），但需注意以下潜在限制：
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>拓扑完整性：</strong> 虽然 `link` 关系构建良好，但需进一步核实 Junction 内部是否为所有连接提供了精确的 `laneLink`，以防自动驾驶在路口丢失路径。</li>
+                    <li><strong>信号灯语义：</strong> 已识别出 `type="294"` (停止线) 和 `type="293"` (人行横道) 的信号信息，但缺乏控制器定义，若需动态交通灯模拟，需补充 Controller 关联。</li>
+                    <li><strong>物理属性：</strong> Surface 定义部分目前为空，缺乏路面摩擦系数等动力学模拟关键参数，如需进行车辆极限动力学测试需手动补充。</li>
+                    <li><strong>后续验证建议：</strong> 建议通过 odr-viewer 检查孤立节点，并利用 Autoware 地图加载器进行 Lanelet2 转换测试，验证语义属性是否被正确保留。</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="qa-item">
+            <p class="qa-q">Q: DGM 数据的转换流程中，原始 OpenDrive 数据在不同工具中的表现是怎样的？</p>
+            <p class="qa-a">
+                A: 原始 DGM 转换的 OpenDrive 数据在 `odrViewer` 与 `RoadRunner` 中表现为高度结构化的矢量网格，其核心特征包括：
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>直观的拓扑网络：</strong> 每一个 Road ID 均被显式地解析为一条连贯的道路，并在 viewer 中可见完整的城市路网骨架。</li>
+                    <li><strong>几何保真度：</strong> RoadNetwork 在视图中呈现出明显的层次感，参考线定义精确，能够还原武汉真实路网的弯道与交汇形态。</li>
+                    <li><strong>视图结构一致性：</strong> 数据结构严格遵循 OpenDRIVE 规范，通过 viewer 的 Road Network 面板可以快速遍历全网，验证了转换链路在“几何拓扑提取”这一步骤的正确性。</li>
+                </ul>
+                <img src="images/odr_viewer_analysis.jpg" alt="OpenDRIVE 数据预览示意图" class="diagram-img">
+            </div>
+            
+            <p class="qa-q" style="margin-top:20px;">Q: 如何将 OpenDrive 数据转换为 CARLA 可用的 FBX 场景？</p>
+            <p class="qa-a">
+                A: 通过 RoadRunner 的 <code>CreateScene</code> 工作流，可以高效完成 OpenDrive 到仿真场景的转换：
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>导入：</strong> 将 OpenDrive 文件 (如 NOA_CITYWAY_V3.0.xodr) 直接拖入 RoadRunner 场景编辑界面。</li>
+                    <li><strong>创建与实例化：</strong> 使用 <code>CreateScene</code> 命令将 OpenDrive 数据实例化，系统会自动生成道路网格、路面材质及相关的逻辑约束。</li>
+                    <li><strong>调整与检查：</strong> 在 RoadRunner 界面中可以清晰地看到 NOA_CITYWAY_V3.0.xodr 的全貌，确认网络连接无断裂，路口逻辑正确。</li>
+                    <li><strong>导出：</strong> 使用 Carla 插件导出 FBX 文件，该文件包含了精细的 3D 模型资产，配合导出的 xodr 文件，即可完美导入 Carla 引擎。</li>
+                </ul>
+                <img src="images/roadrunner_import.jpg" alt="RoadRunner 导入 OpenDrive 场景示意图" class="diagram-img">
+            </div>
+        </div>
+
+        <div class="qa-item">
+            <p class="qa-q">Q4: 如何在 Carla UE Editor 环境中执行 make import 命令，将 FBX 等资源导入 Carla Editor？</p>
+            <p class="qa-a">
+                A: 在 Unreal Engine Editor 环境下，通过 Makefile 或手动导入流程将处理好的 FBX 及资产部署到 Carla 中。如图所示：
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>Content Browser 结构：</strong> 如图中 Content Browser 所示，地图资源已被组织在 <code>Content > map_package > Maps > kawasaki</code> 路径下。</li>
+                    <li><strong>资产集成：</strong> 导入后，模型被识别为 <code>StaticMeshActor</code>（如 kawasaki_Roads_Road_Layer0 等），并正确挂载至 World Outliner。</li>
+                    <li><strong>编译与构建：</strong> 在 Editor 界面中，通过 `Build` 选项编译 Mesh Distance Fields（如右下角所示），这对于车辆在路面的碰撞检测和传感器模拟（特别是 LiDAR）至关重要。</li>
+                    <li><strong>验证部署：</strong> 导入后，可在 Viewport 中直观检查 kawasaki 地图是否完全加载，所有材质（如 LaneMarking_Yellow1）是否按预期渲染，确保仿真环境与真实物理形态的一致性。</li>
+                </ul>
+                <img src="images/ue_import_kawasaki.jpg" alt="Carla Editor 导入kawasaki地图场景" class="diagram-img">
+            </div>
+        </div>
+
+        <div class="qa-item">
+            <p class="qa-q">Q5: DGM 的原始数据格式是什么样的，通过什么样的工具从数据库导出为 OpenDrive 数据格式？</p>
+            <p class="qa-a">
+                A: DGM (Digital Map) 原始数据通常源自高精度测绘数据库，其格式与导出工具链如下：
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>原始格式：</strong> DGM 原始数据通常以私有数据库格式（如 Oracle Spatial 或 GIS 专用存储）存在，核心包含：
+                        <ul>
+                            <li><strong>几何图层 (Geometry Layer)</strong>：存储道路中心线、车道宽度、坡度的原始点集坐标。</li>
+                            <li><strong>属性图层 (Attribute Layer)</strong>：以字段形式存储限速、车道数量、交通标志等语义标签。</li>
+                        </ul>
+                    </li>
+                    <li><strong>转换导出工具：</strong> 
+                        <ul>
+                            <li><strong>ETL 转换工具：</strong> 通常使用自主研发的 ETL (Extract, Transform, Load) 管道，通过 SQL 查询从空间数据库中按区域提取数据。</li>
+                            <li><strong>OpenDrive 生成引擎：</strong> 使用专门的 MapConverter 引擎（如基于 C++ 的定制化库），将提取出的 GIS 几何信息和语义属性按照 OpenDrive 的 XML Schema 定义，进行插值计算和拓扑重构，最终生成标准的 `.xodr` 文件。</li>
+                        </ul>
+                    </li>
+                    <li><strong>坐标基准：</strong> 数据库中通常使用经纬度 (WGS84) 或国家大地坐标系 (如 CGCS2000)，在导出时需要通过坐标转换插件（如 PROJ 库）将其投影到平面直角坐标系下，以符合仿真引擎对局部坐标的精度需求。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <p><a href="workflow_analysis.html">返回主页面</a></p>
+</body>
+</html>

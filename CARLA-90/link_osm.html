@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>链路 2：基于 OSM 数据源</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; }
+        .step { background: #eef; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .qa-section { background-color: #f9f9f9; padding: 15px; border-left: 5px solid #3498db; margin-top: 30px; }
+        .qa-item { margin-bottom: 30px; }
+        .qa-q { font-weight: bold; color: #2c3e50; font-size: 1.1em; }
+        .qa-a { margin-top: 10px; color: #555; }
+        .sub-points { margin-left: 20px; margin-top: 10px; }
+        .diagram-img { max-width: 100%; height: auto; margin: 20px 0; display: block; border: 1px solid #eee; }
+    </style>
+</head>
+<body>
+    <h1>链路 2：基于 OSM 数据源</h1>
+    <div class="step">
+        <strong>核心路径：</strong> OSM → SUMO → OpenDrive → RoadRunner → CARLA
+    </div>
+    <h2>详细处理流程：</h2>
+    <ul>
+        <li><strong>数据格式转换：</strong> 利用 SUMO 的 `netconvert` 工具将 OSM 网络数据转换为 OpenDRIVE 格式。</li>
+        <li><strong>拓扑重构：</strong> 在 SUMO 转换过程中重点处理交叉口逻辑及车道连接，确保逻辑连通性。</li>
+        <li><strong>场景实例化：</strong> 同步进入 RoadRunner 流程，完成场景的物理视觉构建。</li>
+    </ul>
+
+    <div class="qa-section">
+        <h2>技术验证 (QA)</h2>
+        <div class="qa-item">
+            <p class="qa-q">Q1: 如何从 OpenStreetMap 网站导出所需区域的 OSM 地图数据？</p>
+            <p class="qa-a">
+                A: 获取 OSM 原始数据是进行仿真场景构建的第一步，可以通过以下标准操作流程完成：
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>区域定位：</strong> 访问 OpenStreetMap 官网，在搜索栏或地图拖动中定位至目标区域。</li>
+                    <li><strong>数据导出：</strong> 点击顶部的“导出”按钮，手动调整界面的选框 (Bounding Box)，确保涵盖完整范围。</li>
+                    <li><strong>获取格式：</strong> 下载后缀为 <code>.osm</code> 的 XML 格式文件。</li>
+                </ul>
+                <img src="images/osm_export_screenshot.jpg" alt="OSM 网站导出数据示意图" class="diagram-img">
+            </div>
+        </div>
+
+        <div class="qa-item">
+            <p class="qa-q">Q2: 通过 SUMO 的 netconvert 工具将 OSM 数据转换为 OpenDrive 数据的处理结果如何？</p>
+            <p class="qa-a">
+                A: 通过 SUMO 的转换工具，可以成功将原始的 OSM 语义网络转化为仿真器可读的 OpenDrive 格式，对于 kawasaki 和 negishi 区域的转换结果清晰完整。
+            </p>
+            <div class="sub-points">
+                <img src="images/sumo_conversion_result.jpg" alt="SUMO 转换结果文件示意图" class="diagram-img">
+            </div>
+        </div>
+
+        <div class="qa-item">
+            <p class="qa-q">Q3: 通过 RoadRunner 将生成的 OpenDrive 数据创建为 Scene 并导出为 FBX 中间格式的逻辑是什么？</p>
+            <p class="qa-a">
+                A: 通过 RoadRunner 的 Scene 编辑环境，可以将 OpenDrive 逻辑拓扑转化为 CARLA 可用的高性能仿真资产：
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>可视化编辑与实例化：</strong> 如截图所示，在 RoadRunner 的场景编辑界面中导入 <code>negishi.xodr</code>，系统会自动将其渲染为 3D 路网逻辑图，便于直观检查拓扑是否完整，是否存在“路口断裂”或“车道连接错误”等常见问题。</li>
+                    <li><strong>构建 Scene 容器：</strong> 使用 `CreateScene` 命令将 OpenDrive 定义的逻辑拓扑与 RoadRunner 的 3D 资产库（如标志、路标、地面模型）进行绑定，形成一个完整的仿真 Scene。</li>
+                    <li><strong>FBX 导出策略：</strong> 导出 FBX 是关键的一步。FBX 不仅仅是一个几何网格，还包含了材质信息与坐标原点偏移 (Transform) 信息。导出时选择 CARLA 导出插件，确保导出的 xodr 与 FBX 在坐标系和原点对齐上达到一致。</li>
+                    <li><strong>CARLA 衔接：</strong> 最终导入 Carla 引擎时，CARLA 地图引擎将直接读取该 xodr 文件作为路网逻辑引导，使用 FBX 模型作为视觉展示，从而实现逻辑与视觉的完美契合。</li>
+                    <li><strong>补充说明（闭环问题）：</strong> 由于 OSM 原始数据源的道路闭合性（Road Closure）较差，在 RoadRunner 中使用 `CreateScene` 时，部分区域的道路末端可能无法自动对齐，从而未能形成逻辑闭环。这通常会导致仿真中的车辆在末端无法寻路，后续需在 RoadRunner 环境内进行手动缝合（Stitching）操作。</li>
+                </ul>
+                <img src="images/roadrunner_scene_edit.jpg" alt="RoadRunner 场景编辑示意图" class="diagram-img">
+            </div>
+        </div>
+
+        <div class="qa-item">
+            <p class="qa-q">Q4: 如何在 Carla UE Editor 环境中执行 make import 命令，将 FBX 等资源导入 Carla Editor？</p>
+            <p class="qa-a">
+                A: 在 Unreal Engine Editor 环境下，通过 Makefile 或手动导入流程将处理好的 FBX 及资产部署到 Carla 中。如图所示：
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>Content Browser 结构：</strong> 如图中 Content Browser 所示，地图资源已被组织在 <code>Content > map_package > Maps > kawasaki</code> 路径下。</li>
+                    <li><strong>资产集成：</strong> 导入后，模型被识别为 <code>StaticMeshActor</code>（如 kawasaki_Roads_Road_Layer0 等），并正确挂载至 World Outliner。</li>
+                    <li><strong>编译与构建：</strong> 在 Editor 界面中，通过 `Build` 选项编译 Mesh Distance Fields（如右下角所示），这对于车辆在路面的碰撞检测和传感器模拟（特别是 LiDAR）至关重要。</li>
+                    <li><strong>验证部署：</strong> 导入后，可在 Viewport 中直观检查 kawasaki 地图是否完全加载，所有材质（如 LaneMarking_Yellow1）是否按预期渲染，确保仿真环境与真实物理形态的一致性。</li>
+                </ul>
+                <img src="images/ue_import_kawasaki.jpg" alt="Carla Editor 导入kawasaki地图场景" class="diagram-img">
+            </div>
+        </div>
+    </div>
+
+    <p><a href="workflow_analysis.html">返回主页面</a></p>
+</body>
+</html>

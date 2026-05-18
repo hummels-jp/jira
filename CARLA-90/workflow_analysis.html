@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>CARLA-90: 地图数据转换与仿真工作流分析</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+        h2 { color: #34495e; margin-top: 30px; }
+        .workflow-img { max-width: 100%; height: auto; margin: 20px 0; border: 1px solid #ddd; }
+        .section { background: #f9f9f9; padding: 20px; border-radius: 8px; margin-top: 20px; }
+        ul { margin-top: 10px; }
+        .workflow-box { border: 1px solid #bdc3c7; padding: 15px; margin: 10px 0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>CARLA-90: 地图数据转换与仿真工作流分析</h1>
+    
+    <img src="images/workflow_analysis.jpg" alt="地图数据转换工作流图" class="workflow-img">
+
+    <div class="section">
+        <h2>1. 核心转换工作流路径</h2>
+        <p>目前识别出两条主要的数据转换链路，分别服务于不同的数据源场景：</p>
+        
+        <div class="workflow-box">
+            <h3><a href="link_dgm.html">链路 1：基于 DGM 数据源</a></h3>
+            <p><strong>路径：</strong> 武汉 DGM 数据 (OpenDrive) → RoadRunner → FBX 资产与场景文件 → CARLA 导入</p>
+            <ul>
+                <li><strong>特点：</strong> 数据源精度较高，直接从 OpenDrive 格式切入。</li>
+            </ul>
+        </div>
+
+        <div class="workflow-box">
+            <h3><a href="link_osm.html">链路 2：基于 OSM 数据源</a></h3>
+            <p><strong>路径：</strong> OSM → SUMO (格式转换) → OpenDrive → RoadRunner → FBX 资产与场景文件 → CARLA 导入</p>
+            <ul>
+                <li><strong>特点：</strong> 利用 OSM 的广覆盖特性，通过 SUMO 进行中转以生成拓扑逻辑，再进入 RoadRunner 进行场景实例化。</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>2. 工作流核心要素与待优化项</h2>
+        <ul>
+            <li><strong>现有基础</strong>：两条链路均利用 RoadRunner 作为物理资产（FBX）与场景实例化的核心枢纽。</li>
+            <li><strong>语义缺失</strong>：目前转换结果中普遍存在横道线、停止线及信号灯等逻辑语义丢失的问题。</li>
+            <li><strong>待解决课题</strong>：
+                <ul>
+                    <li>优化 SUMO 转换参数以保留更多 OSM 语义。</li>
+                    <li>RoadRunner 阶段的逻辑资产（横道线/停止线）手动或自动化修复。</li>
+                    <li>建立从 OpenDrive 原始信息到 Carla 仿真环境的语义映射标准。</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>3. 实施分阶段目标</h2>
+        <ul>
+            <li><strong>第一阶段</strong>：验证链路 1 与链路 2 的基础导入可行性，利用现有资源构建基础仿真环境。</li>
+            <li><strong>第二阶段</strong>：标准化转换流程，修复横道线、停止线、信号灯等关键语义缺失，实现高精度地图环境的自动化闭环。</li>
+        </ul>
+    </div>
+</body>
+</html>
