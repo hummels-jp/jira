@@ -70,6 +70,22 @@
                 <img src="images/roadrunner_scene_edit.jpg" alt="RoadRunnerシーン編集示意図" class="diagram-img">
             </div>
         </div>
+
+        <div class="qa-item">
+            <p class="qa-q">Q4: Carla UE Editor 環境で make import コマンドを実行し、FBX 等のリソースを Carla Editor にインポートする方法は？</p>
+            <p class="qa-a">
+                A: Unreal Engine Editor 環境下で、Makefile または手動インポートフローを使用して処理された FBX およびアセットを Carla にデプロイします。
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>Content Browser 構造：</strong> 図の Content Browser に示すように、マップリソースは <code>Content > map_package > Maps > kawasaki</code> パス下に編成されています。</li>
+                    <li><strong>アセット統合：</strong> インポート後、モデルは <code>StaticMeshActor</code> (kawasaki_Roads_Road_Layer0 等) として認識され、World Outliner に正しくマウントされます。</li>
+                    <li><strong>コンパイルとビルド：</strong> Editor 画面で `Build` オプションを介して Mesh Distance Fields をコンパイルします（右下に表示）。これは路面の衝突検知やセンサーシミュレーション（特にLiDAR）に不可欠です。</li>
+                    <li><strong>デプロイ検証：</strong> インポート後、Viewport 上で kawasaki マップが完全にロードされているか、すべての材質（LaneMarking_Yellow1 等）が期待通りにレンダリングされているか確認し、シミュレーション環境と現実の物理形態の一致を確保します。</li>
+                </ul>
+                <img src="images/ue_import_kawasaki.jpg" alt="Carla Editor インポートkawasakiマップシーン" class="diagram-img">
+            </div>
+        </div>
     </div>
 
     <p><a href="workflow_analysis_ja.html">メインページに戻る</a></p>

@@ -88,30 +88,6 @@
                 <img src="images/ue_import_kawasaki.jpg" alt="Carla Editor 导入kawasaki地图场景" class="diagram-img">
             </div>
         </div>
-
-        <div class="qa-item">
-            <p class="qa-q">Q5: DGM 的原始数据格式是什么样的，通过什么样的工具从数据库导出为 OpenDrive 数据格式？</p>
-            <p class="qa-a">
-                A: DGM (Digital Map) 原始数据通常源自高精度测绘数据库，其格式与导出工具链如下：
-            </p>
-            <div class="sub-points">
-                <ul>
-                    <li><strong>原始格式：</strong> DGM 原始数据通常以私有数据库格式（如 Oracle Spatial 或 GIS 专用存储）存在，核心包含：
-                        <ul>
-                            <li><strong>几何图层 (Geometry Layer)</strong>：存储道路中心线、车道宽度、坡度的原始点集坐标。</li>
-                            <li><strong>属性图层 (Attribute Layer)</strong>：以字段形式存储限速、车道数量、交通标志等语义标签。</li>
-                        </ul>
-                    </li>
-                    <li><strong>转换导出工具：</strong> 
-                        <ul>
-                            <li><strong>ETL 转换工具：</strong> 通常使用自主研发的 ETL (Extract, Transform, Load) 管道，通过 SQL 查询从空间数据库中按区域提取数据。</li>
-                            <li><strong>OpenDrive 生成引擎：</strong> 使用专门的 MapConverter 引擎（如基于 C++ 的定制化库），将提取出的 GIS 几何信息和语义属性按照 OpenDrive 的 XML Schema 定义，进行插值计算和拓扑重构，最终生成标准的 `.xodr` 文件。</li>
-                        </ul>
-                    </li>
-                    <li><strong>坐标基准：</strong> 数据库中通常使用经纬度 (WGS84) 或国家大地坐标系 (如 CGCS2000)，在导出时需要通过坐标转换插件（如 PROJ 库）将其投影到平面直角坐标系下，以符合仿真引擎对局部坐标的精度需求。</li>
-                </ul>
-            </div>
-        </div>
     </div>
 
     <p><a href="workflow_analysis.html">返回主页面</a></p>
