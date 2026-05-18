@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>CARLA 与 Autoware 联动机制说明</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
+        h2 { color: #34495e; margin-top: 30px; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .highlight { color: #e74c3c; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>CARLA 与 Autoware 联动机制说明 (CARLA-84)</h1>
+    
+    <p>CARLA 与 Autoware 的联动是实现自动驾驶算法闭环验证的核心架构。这种联动通常通过 ROS2 Bridge 进行通信，将 CARLA 的高仿真环境与 Autoware 的感知、规划、控制套件深度结合。</p>
+
+    <h2>联动工作流程</h2>
+    <ol>
+        <li><a href="map_sync_detail.html"><strong>场景与地图联动</strong></a>: CARLA 侧加载特定的场景数据，Autoware 侧加载与之完全对应的矢量地图（Lanelet2）和点云地图（PCD），并确保坐标原点和比例尺一致。</li>
+        <li><a href="#global-planning"><strong>车道级路径计算</strong></a>: Autoware 的 Mission Planner 根据地图拓扑计算出从当前位置到目标的车道级参考线（Route）。</li>
+        <li><a href="#motion-planning"><strong>动力学感知的轨迹生成</strong></a>: Motion Planner 结合车辆状态生成符合动力学约束的局部轨迹（Trajectory）。</li>
+        <li><a href="#control-command"><strong>控制指令下发</strong></a>: Control 模块通过对比车辆当前位姿与目标轨迹，计算出速度控制和方向盘转角指令。</li>
+        <li><a href="#feedback-loop"><strong>车辆控制与反馈闭环</strong></a>: CARLA 接收控制指令并作用于仿真车辆，同时将传感器数据（LiDAR/Camera/IMU）实时反馈回 Autoware，形成完整闭环。</li>
+    </ol>
+
+    <h2 id="global-planning">2. 车道级路径计算 (详细说明)</h2>
+    <ul>
+        <li><strong>目标下发</strong>: 通过 Rviz2 设置 Goal Pose。</li>
+        <li><strong>拓扑搜索</strong>: Mission Planner 基于矢量地图的连接关系，确定最优路径序列。</li>
+    </ul>
+
+    <h2 id="motion-planning">3. 动力学感知的轨迹生成 (详细说明)</h2>
+    <ul>
+        <li><strong>约束满足</strong>: 确保生成的轨迹在当前速度、加速度及转角限制内。</li>
+        <li><strong>时空属性</strong>: 包含精确的空间坐标、时间戳及目标动力学参数，用于避障。</li>
+    </ul>
+
+    <h2 id="control-command">4. 控制指令下发 (详细说明)</h2>
+    <ul>
+        <li><strong>算法对比</strong>: MPC 或 PID 控制器比较当前位姿与参考轨迹的偏差。</li>
+        <li><strong>报文输出</strong>: 生成实时的速度与方向盘转角指令。</li>
+    </ul>
+
+    <h2 id="feedback-loop">5. 车辆控制与反馈闭环 (详细说明)</h2>
+    <ul>
+        <li><strong>实时执行</strong>: CARLA 引擎通过 ROS2 Bridge 驱动仿真车辆。</li>
+        <li><strong>反馈回路</strong>: 持续回传真实传感器数据，维持感知-决策-控制的闭环链路。</li>
+    </ul>
+
+    <h2>联动组件与数据对照表</h2>
+    <table>
+        <tr><th>阶段</th><th>核心组件 (Autoware)</th><th>交互数据</th><th>作用</th></tr>
+        <tr><td>环境层</td><td>Map Loader</td><td>Lanelet2 / PCD</td><td>提供环境基础</td></tr>
+        <tr><td>决策层</td><td>Mission Planner</td><td>Route (车道序列)</td><td>确定目的地</td></tr>
+        <tr><td>规划层</td><td>Motion Planner</td><td>Trajectory (轨迹点)</td><td>确定行驶轨迹</td></tr>
+        <tr><td>控制层</td><td>Controller</td><td>Ackermann / Twist</td><td>确定操作指令</td></tr>
+        <tr><td>仿真层</td><td>CARLA Engine</td><td>Sensor / Ego State</td><td>物理仿真引擎执行</td></tr>
+    </table>
+
+    <script>
+        document.querySelectorAll('.highlight').forEach(el => {
+            el.onclick = () => { el.style.backgroundColor = 'yellow'; };
+        });
+    </script>
+</body>
+</html>
