@@ -88,6 +88,37 @@
         </div>
     </div>
 
+        <div class="qa-item">
+            <p class="qa-q">Q5: OpenDrive データは経路計算をサポートしていますか？</p>
+            <p class="qa-a">
+                A: はい、OpenDrive 形式は設計当初より、経路計画と計算を明示的にサポートしています。以下のメカニズムによってこのコア機能を支えています。
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>道路ネットワークトポロジー (Road Network Topology):</strong> OpenDrive は厳密な <code>&lt;road&gt;</code>、<code>&lt;laneSection&gt;</code>、および <code>&lt;lane&gt;</code> 階層を定義し、<code>predecessor/successor</code> ロジックを通じてすべての車線を完全なトポロジーグラフに接続します。</li>
+                    <li><strong>幾何学的経路パラメータ化:</strong> 各道路セグメントは、解析幾何学（<code>line</code>, <code>arc</code>, <code>spiral</code>（クロソイド曲線）、<code>poly3</code> 等）によって中心線を定義しており、経路計画器は車両の当該曲線上の空間座標と方位角を直接計算できます。</li>
+                    <li><strong>接続点ロジック (Junction Logic):</strong> <code>&lt;junction&gt;</code> および <code>&lt;connection&gt;</code> を介して、複雑な交差点の通行ルールと車線変更経路を定義し、グローバル経路計画に底層の通行ロジックを提供します。</li>
+                    <li><strong>高精度路網クエリ:</strong> 経路計画アルゴリズム（A*, Dijkstra 等）は、OpenDrive 内の路網グラフ構造を直接読み取り、始点から終点までの車線レベルでの経路計算を実現できます。</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="qa-item">
+            <p class="qa-q">Q6: Autoware が OpenDrive 地図形式を直接使用せず、Lanelet2 地図形式を採用している理由は？</p>
+            <p class="qa-a">
+                A: Autoware が OpenDrive ではなく Lanelet2 を核心地図形式に選定した理由は、「リアルタイム認識と動的計画」に適した設計思想に基づいています。
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>計算効率と軽量化：</strong> OpenDrive はシミュレーション向けであり、複雑な幾何学的ロジックや 3D 属性定義を多く含むため解析負荷が高いです。対して Lanelet2 は点シーアンストポロジー（Primitives）に基づいており、ストレージサイズが非常に小さく、Autoware の計画器はメモリ内で直接効率的に動的経路探索を行うことができ、レスポンスが高速です。</li>
+                    <li><strong>動的通行ロジックのプログラム可能性：</strong> Lanelet2 は「Lanelet」メタデータ定義（優先権、制限速度、交通標識等）に基づいており、高度な認識モジュールとの対話が容易です。Autoware は簡単な幾何学演算を介して、車両が有効な Lanelet エリア内にいるかを動的に判断できます。</li>
+                    <li><strong>セマンティック階層と空間インデックス：</strong> Lanelet2 は洗練された R-tree 空間インデックスを内蔵しており、Autoware が認識マッチング（Localization）を実行する際、全地図を探索する必要がなく、ミリ秒単位で現在の Lanelet と関連する周辺道路を特定できます。</li>
+                    <li><strong>開放性とリアルタイム修正：</strong> シミュレーション (OpenDrive) は物理的一致性を重視しますが、実車 (Autoware) はシーンセマンティクスの動的更新を重視します。Lanelet2 のモジュール構造 (Point-Lanelet-Area) は、稼働中に地図をホットフィックス（一時的な道路封鎖や迂回マーキング等）することをサポートしており、巨大な物理シミュレーションモデルを再ロードする必要はありません。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <p><a href="workflow_analysis_ja.html">メインページに戻る</a></p>
 </body>
 </html>

@@ -86,8 +86,54 @@
                 <img src="images/ue_import_kawasaki.jpg" alt="Carla Editor 导入kawasaki地图场景" class="diagram-img">
             </div>
         </div>
+
+        <div class="qa-item">
+            <p class="qa-q">Q5: OpenDrive 数据支持路径计算吗？</p>
+            <p class="qa-a">
+                A: 是的，OpenDrive 格式设计之初就明确支持路径规划与计算。它通过以下机制支撑这一核心功能：
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>路网拓扑结构 (Road Network Topology):</strong> OpenDrive 定义了严密的 <code>&lt;road&gt;</code>、<code>&lt;laneSection&gt;</code> 及 <code>&lt;lane&gt;</code> 层次，并通过 <code>predecessor/successor</code> 逻辑将所有车道串联为完整的拓扑图。</li>
+                    <li><strong>几何路径参数化:</strong> 每一段道路均通过解析几何（如 <code>line</code>, <code>arc</code>, <code>spiral</code>（回旋曲线）、<code>poly3</code> 等）定义中心线，路径规划器可直接计算出车辆在该曲线上的空间坐标与航向角。</li>
+                    <li><strong>连接点逻辑 (Junction Logic):</strong> 通过 <code>&lt;junction&gt;</code> 及 <code>&lt;connection&gt;</code> 定义了复杂的路口通行规则与车道切换路径，为全局路径规划提供了底层的通行逻辑支持。</li>
+                    <li><strong>高精路网查询:</strong> 路径规划算法（如 A*, Dijkstra）可直接读取 OpenDrive 中的路网图结构，从而实现从起点到终点的车道级路径计算。</li>
+                </ul>
+            </div>
+        </div>
     </div>
 
+        <div class="qa-item">
+            <p class="qa-q">Q5: OpenDrive 数据支持路径计算吗？</p>
+            <p class="qa-a">
+                A: 是的，OpenDrive 格式设计之初就明确支持路径规划与计算。它通过以下机制支撑这一核心功能：
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>路网拓扑结构 (Road Network Topology):</strong> OpenDrive 定义了严密的 <code>&lt;road&gt;</code>、<code>&lt;laneSection&gt;</code> 及 <code>&lt;lane&gt;</code> 层次，并通过 <code>predecessor/successor</code> 逻辑将所有车道串联为完整的拓扑图。</li>
+                    <li><strong>几何路径参数化:</strong> 每一段道路均通过解析几何（如 <code>line</code>, <code>arc</code>, <code>spiral</code>（回旋曲线）、<code>poly3</code> 等）定义中心线，路径规划器可直接计算出车辆在该曲线上的空间坐标与航向角。</li>
+                    <li><strong>连接点逻辑 (Junction Logic):</strong> 通过 <code>&lt;junction&gt;</code> 及 <code>&lt;connection&gt;</code> 定义了复杂的路口通行规则与车道切换路径，为全局路径规划提供了底层的通行逻辑支持。</li>
+                    <li><strong>高精路网查询:</strong> 路径规划算法（如 A*, Dijkstra）可直接读取 OpenDrive 中的路网图结构，从而实现从起点到终点的车道级路径计算。</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="qa-item">
+            <p class="qa-q">Q6: Autoware 为什么使用 Lanelet2 地图格式，而不直接使用 OpenDrive 地图格式？</p>
+            <p class="qa-a">
+                A: Autoware 选用 Lanelet2 而非 OpenDrive 作为核心地图格式，主要基于其更适合“实时感知与动态规划”的设计理念：
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>计算效率与轻量化：</strong> OpenDrive 面向仿真，包含大量复杂的几何逻辑与 3D 属性描述，解析负载高；Lanelet2 基于点序列拓扑（Primitives），不仅存储空间极小，且 Autoware 的规划器可直接在内存中对其进行高效的动态寻路，响应速度快。</li>
+                    <li><strong>动态通行逻辑的可编程性：</strong> Lanelet2 基于“Lanelet”元数据定义（如路权、限速、交通标志），非常易于与高精感知模块交互；Autoware 可直接通过简单的几何交集运算动态判断车辆是否位于有效的 Lanelet 区域内。</li>
+                    <li><strong>语义层级与空间索引：</strong> Lanelet2 内置了成熟的 R-tree 空间索引，Autoware 在执行感知匹配（Localization）时，无需遍历全图，即可在毫秒级内锁定车辆所在的当前 Lanelet 及其关联的临近路段。</li>
+                    <li><strong>开放性与实时修正：</strong> 仿真（OpenDrive）注重物理一致性，而实车（Autoware）注重场景语义的动态更新；Lanelet2 的模块化架构（Point-Lanelet-Area）支持在运行时对地图进行热修复（如临时道路封闭、绕行标记），无需重新加载庞大的物理仿真模型。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
     <p><a href="workflow_analysis.html">返回主页面</a></p>
 </body>
 </html>
