@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>VLA算法与自动驾驶 - 第一章</title>
+            <style>
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; padding: 20px; background: #f4f4f4; }
+        .slide { background: white; padding: 20px; margin-bottom: 30px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+                 display: flex; flex-wrap: wrap; gap: 20px; }
+        h2 { width: 100%; color: #2c3e50; margin-bottom: 5px; }
+        img { flex: 0 0 45%; max-width: 45%; height: auto; border: 1px solid #ddd; border-radius: 4px; }
+        .content-box { flex: 1; min-width: 300px; padding: 20px; background-color: #fff; border: 1px solid #ccc; border-radius: 8px; font-size: 1.1em; line-height: 1.6; }
+    </style>
+</head>
+<body>
+    <h1>第一章：VLA算法核心技术与应用 (课件展示)</h1>
+    <div class="slide">
+        <h2>Slide 1</h2>
+        <img src="images/slide_1.png" alt="Slide 1">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 2</h2>
+        <img src="images/slide_2.png" alt="Slide 2">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 3</h2>
+        <img src="images/slide_3.png" alt="Slide 3">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 4</h2>
+        <img src="images/slide_4.png" alt="Slide 4">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 5-1</h2>
+        <img src="images/slide_5.png" alt="Slide 5">
+        <div class="content-box">
+            <h3>目标检测任务</h3>
+            <p><strong>定义：</strong>在视觉场景中定位并识别各类交通参与者。通过输出边界框 (Bounding Box) 及对应的类别分数，实现空间定位与语义分类。</p>
+            <p><strong>Q1: 基于图像的目标检测算法有哪些？</strong><br>
+            主要分为三类：<br>
+            1. <strong>两阶段检测器 (Two-stage):</strong> 如 Faster R-CNN，精度高但速度较慢。<br>
+            2. <strong>单阶段检测器 (One-stage):</strong> 如 YOLO 系列、SSD，推理速度快，适合实时场景。<br>
+            3. <strong>Transformer 类检测器:</strong> 如 DETR (Detection Transformer)，通过全局注意力机制直接预测对象，在复杂场景下表现卓越。</p>
+            <p><strong>Q2: 基于点云的目标检测算法有哪些？</strong><br>
+            主要分为三种范式：<br>
+            1. <strong>基于体素 (Voxel-based):</strong> 如 VoxelNet, SECOND，将点云离散化为网格，使用 3D 卷积处理，适合远距离检测。<br>
+            2. <strong>基于点 (Point-based):</strong> 如 PointRCNN，直接处理原始点云，保留了精细的几何特征，但计算复杂度较高。<br>
+            3. <strong>点-体素混合 (Point-Voxel-based):</strong> 如 PV-RCNN，结合两者的优点，在保证速度的同时提升了特征提取的鲁棒性。</p>
+            <p><strong>Q3: 基于传感器融合的目标检测算法有哪些？</strong><br>
+            核心思想是利用多模态数据的互补性：<br>
+            1. <strong>数据级融合 (Data-level):</strong> 如 PointPainting，将图像特征投影到点云上，增强点云的语义表达。<br>
+            2. <strong>特征级融合 (Feature-level):</strong> 如 BEVFusion，通过统一的 Bird's Eye View (BEV) 空间，将图像和点云特征对齐并融合，目前是自动驾驶主流范式。<br>
+            3. <strong>决策级融合 (Decision-level):</strong> 分别对图像和点云进行检测，最后通过逻辑门限或加权平均合并检测结果。</p>
+            <p><strong>Q4: 当前自动驾驶系统中，常用的目标检测算法有哪些？</strong><br>
+            在当前的量产与前沿研发中，主流选择包括：<br>
+            1. <strong>BEVFormer:</strong> 基于 Transformer 和 BEV 空间，处理多相机输入，是视觉感知的标杆。<br>
+            2. <strong>BEVFusion:</strong> 行业内多模态融合的首选，高效整合了 LiDAR 与摄像头的优势。<br>
+            3. <strong>YOLOv8/v9/v10:</strong> 凭借极佳的推理速度，在单相机及轻量化感知任务中广泛应用。<br>
+            4. <strong>CenterPoint:</strong> 点云 3D 检测的基础算法，因其预测头设计简单且鲁棒，广泛用于 LiDAR 感知架构。</p>
+        </div>
+    </div>
+    <div class="slide">
+        <h2>Slide 5-2</h2>
+        <img src="images/slide_5.png" alt="Slide 5">
+        <div class="content-box">
+            <h3>轨迹预测任务</h3>
+            <p><strong>定义：</strong>基于物体当前运动状态与环境信息，预测其未来的航点轨迹。通过引入多模态模型，表征物体的行为不确定性与意图交互。</p>
+            <p><strong>Q1: 轨迹预测的输出数据格式及其含义是什么？</strong><br>
+            通常输出为 <strong>轨迹序列集合 (Trajectory Sequence)</strong>，主要格式如下：<br>
+            1. <strong>位置点坐标 (x, y):</strong> 在全局或车身坐标系下，相对于当前时刻的位移序列（通常预测 3-5 秒内的航点）。<br>
+            2. <strong>置信度分数 (Confidence Score):</strong> 针对每条预测轨迹（如直行、左转、右转），模型会输出一个概率值，表示该意图的可能性。<br>
+            3. <strong>速度与加速度 (v, a):</strong> 描述轨迹点的动力学状态，用于下游规划模块更平滑地进行避障计算。<br>
+            4. <strong>不确定性协方差 (Uncertainty Covariance):</strong> 表征预测位置的误差范围，帮助规划器在复杂路况下实施保守的避险策略。</p>
+            <p><strong>Q2: 单目标轨迹预测模型有哪些？</strong><br>
+            主要关注对象自身的动力学建模，代表模型包括：<br>
+            1. <strong>LSTM-based:</strong> 利用长短期记忆网络捕捉物体时序运动特征，是早期轨迹预测的基础范式。<br>
+            2. <strong>GRU-Encoder-Decoder:</strong> 相比 LSTM 计算效率更高，常用于实时的单目标轨迹外推。<br>
+            3. <strong>Transformer-based:</strong> 利用注意力机制直接建模长距离运动依赖，能更好地捕捉物体运动趋势中的突变点。</p>
+            <p><strong>Q3: 多目标轨迹预测模型有哪些？</strong><br>
+            核心在于建模物体间的交互 (Interaction) 与群体运动规律：<br>
+            1. <strong>Social-LSTM/Social-GAN:</strong> 引入池化机制或生成对抗网络，建模周围参与者对目标对象的影响。<br>
+            2. <strong>Graph-based (如 Trajectron++):</strong> 将车辆和行人视为图节点，通过边缘交互来表征复杂的社会约束关系。<br>
+            3. <strong>Multi-Agent Transformer (如 LaneGCN/VectorNet):</strong> 目前主流方法，将地图几何作为先验，通过 Transformer 全局建模场景中所有代理的意图与避让逻辑。</p>
+        </div>
+    </div>
+    <div class="slide">
+        <h2>Slide 5-3: 地图检测 (Map Detection)</h2>
+        <img src="images/slide_5.png" alt="Slide 5">
+        <div class="content-box">
+            <h3>地图检测任务</h3>
+            <p><strong>定义：</strong>实时提取车道线、路口逻辑、停止线等高精地图要素，构建行驶空间的先验地图信息。</p>
+        </div>
+    </div>
+    <div class="slide">
+        <h2>Slide 5-4: 占据预测 (Occupancy Prediction)</h2>
+        <img src="images/slide_5.png" alt="Slide 5">
+        <div class="content-box">
+            <h3>占据预测任务</h3>
+            <p><strong>定义：</strong>将环境离散化为网格，预测每个空间网格是否被障碍物占据，从而解决非分类异形物体的感知盲点。</p>
+        </div>
+    </div><div class="slide">
+        <h2>Slide 6</h2>
+        <img src="images/slide_6.png" alt="Slide 6">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 7</h2>
+        <img src="images/slide_7.png" alt="Slide 7">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 8</h2>
+        <img src="images/slide_8.png" alt="Slide 8">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 9</h2>
+        <img src="images/slide_9.png" alt="Slide 9">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 10</h2>
+        <img src="images/slide_10.png" alt="Slide 10">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 11</h2>
+        <img src="images/slide_11.png" alt="Slide 11">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 12</h2>
+        <img src="images/slide_12.png" alt="Slide 12">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 13</h2>
+        <img src="images/slide_13.png" alt="Slide 13">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 14</h2>
+        <img src="images/slide_14.png" alt="Slide 14">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 15</h2>
+        <img src="images/slide_15.png" alt="Slide 15">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 16</h2>
+        <img src="images/slide_16.png" alt="Slide 16">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 17</h2>
+        <img src="images/slide_17.png" alt="Slide 17">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 18</h2>
+        <img src="images/slide_18.png" alt="Slide 18">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 19</h2>
+        <img src="images/slide_19.png" alt="Slide 19">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 20</h2>
+        <img src="images/slide_20.png" alt="Slide 20">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 21</h2>
+        <img src="images/slide_21.png" alt="Slide 21">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 22</h2>
+        <img src="images/slide_22.png" alt="Slide 22">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 23</h2>
+        <img src="images/slide_23.png" alt="Slide 23">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 24</h2>
+        <img src="images/slide_24.png" alt="Slide 24">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 25</h2>
+        <img src="images/slide_25.png" alt="Slide 25">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 26</h2>
+        <img src="images/slide_26.png" alt="Slide 26">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 27</h2>
+        <img src="images/slide_27.png" alt="Slide 27">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 28</h2>
+        <img src="images/slide_28.png" alt="Slide 28">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 29</h2>
+        <img src="images/slide_29.png" alt="Slide 29">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 30</h2>
+        <img src="images/slide_30.png" alt="Slide 30">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 31</h2>
+        <img src="images/slide_31.png" alt="Slide 31">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 32</h2>
+        <img src="images/slide_32.png" alt="Slide 32">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 33</h2>
+        <img src="images/slide_33.png" alt="Slide 33">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 34</h2>
+        <img src="images/slide_34.png" alt="Slide 34">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 35</h2>
+        <img src="images/slide_35.png" alt="Slide 35">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 36</h2>
+        <img src="images/slide_36.png" alt="Slide 36">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 37</h2>
+        <img src="images/slide_37.png" alt="Slide 37">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 38</h2>
+        <img src="images/slide_38.png" alt="Slide 38">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 39</h2>
+        <img src="images/slide_39.png" alt="Slide 39">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 40</h2>
+        <img src="images/slide_40.png" alt="Slide 40">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 41</h2>
+        <img src="images/slide_41.png" alt="Slide 41">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 42</h2>
+        <img src="images/slide_42.png" alt="Slide 42">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 43</h2>
+        <img src="images/slide_43.png" alt="Slide 43">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 44</h2>
+        <img src="images/slide_44.png" alt="Slide 44">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 45</h2>
+        <img src="images/slide_45.png" alt="Slide 45">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 46</h2>
+        <img src="images/slide_46.png" alt="Slide 46">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 47</h2>
+        <img src="images/slide_47.png" alt="Slide 47">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 48</h2>
+        <img src="images/slide_48.png" alt="Slide 48">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 49</h2>
+        <img src="images/slide_49.png" alt="Slide 49">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 50</h2>
+        <img src="images/slide_50.png" alt="Slide 50">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 51</h2>
+        <img src="images/slide_51.png" alt="Slide 51">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 52</h2>
+        <img src="images/slide_52.png" alt="Slide 52">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 53</h2>
+        <img src="images/slide_53.png" alt="Slide 53">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 54</h2>
+        <img src="images/slide_54.png" alt="Slide 54">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 55</h2>
+        <img src="images/slide_55.png" alt="Slide 55">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 56</h2>
+        <img src="images/slide_56.png" alt="Slide 56">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 57</h2>
+        <img src="images/slide_57.png" alt="Slide 57">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 58</h2>
+        <img src="images/slide_58.png" alt="Slide 58">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 59</h2>
+        <img src="images/slide_59.png" alt="Slide 59">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 60</h2>
+        <img src="images/slide_60.png" alt="Slide 60">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 61</h2>
+        <img src="images/slide_61.png" alt="Slide 61">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 62</h2>
+        <img src="images/slide_62.png" alt="Slide 62">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 63</h2>
+        <img src="images/slide_63.png" alt="Slide 63">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 64</h2>
+        <img src="images/slide_64.png" alt="Slide 64">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 65</h2>
+        <img src="images/slide_65.png" alt="Slide 65">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 66</h2>
+        <img src="images/slide_66.png" alt="Slide 66">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 67</h2>
+        <img src="images/slide_67.png" alt="Slide 67">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 68</h2>
+        <img src="images/slide_68.png" alt="Slide 68">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 69</h2>
+        <img src="images/slide_69.png" alt="Slide 69">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 70</h2>
+        <img src="images/slide_70.png" alt="Slide 70">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 71</h2>
+        <img src="images/slide_71.png" alt="Slide 71">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 72</h2>
+        <img src="images/slide_72.png" alt="Slide 72">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 73</h2>
+        <img src="images/slide_73.png" alt="Slide 73">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 74</h2>
+        <img src="images/slide_74.png" alt="Slide 74">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 75</h2>
+        <img src="images/slide_75.png" alt="Slide 75">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 76</h2>
+        <img src="images/slide_76.png" alt="Slide 76">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 77</h2>
+        <img src="images/slide_77.png" alt="Slide 77">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 78</h2>
+        <img src="images/slide_78.png" alt="Slide 78">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 79</h2>
+        <img src="images/slide_79.png" alt="Slide 79">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 80</h2>
+        <img src="images/slide_80.png" alt="Slide 80">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 81</h2>
+        <img src="images/slide_81.png" alt="Slide 81">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 82</h2>
+        <img src="images/slide_82.png" alt="Slide 82">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 83</h2>
+        <img src="images/slide_83.png" alt="Slide 83">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 84</h2>
+        <img src="images/slide_84.png" alt="Slide 84">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 85</h2>
+        <img src="images/slide_85.png" alt="Slide 85">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 86</h2>
+        <img src="images/slide_86.png" alt="Slide 86">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 87</h2>
+        <img src="images/slide_87.png" alt="Slide 87">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 88</h2>
+        <img src="images/slide_88.png" alt="Slide 88">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 89</h2>
+        <img src="images/slide_89.png" alt="Slide 89">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 90</h2>
+        <img src="images/slide_90.png" alt="Slide 90">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 91</h2>
+        <img src="images/slide_91.png" alt="Slide 91">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 92</h2>
+        <img src="images/slide_92.png" alt="Slide 92">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 93</h2>
+        <img src="images/slide_93.png" alt="Slide 93">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 94</h2>
+        <img src="images/slide_94.png" alt="Slide 94">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 95</h2>
+        <img src="images/slide_95.png" alt="Slide 95">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 96</h2>
+        <img src="images/slide_96.png" alt="Slide 96">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 97</h2>
+        <img src="images/slide_97.png" alt="Slide 97">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 98</h2>
+        <img src="images/slide_98.png" alt="Slide 98">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 99</h2>
+        <img src="images/slide_99.png" alt="Slide 99">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 100</h2>
+        <img src="images/slide_100.png" alt="Slide 100">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 101</h2>
+        <img src="images/slide_101.png" alt="Slide 101">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 102</h2>
+        <img src="images/slide_102.png" alt="Slide 102">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 103</h2>
+        <img src="images/slide_103.png" alt="Slide 103">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 104</h2>
+        <img src="images/slide_104.png" alt="Slide 104">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 105</h2>
+        <img src="images/slide_105.png" alt="Slide 105">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 106</h2>
+        <img src="images/slide_106.png" alt="Slide 106">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 107</h2>
+        <img src="images/slide_107.png" alt="Slide 107">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 108</h2>
+        <img src="images/slide_108.png" alt="Slide 108">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 109</h2>
+        <img src="images/slide_109.png" alt="Slide 109">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 110</h2>
+        <img src="images/slide_110.png" alt="Slide 110">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 111</h2>
+        <img src="images/slide_111.png" alt="Slide 111">
+        <div class="content-box"></div>
+    </div>
+    <div class="slide">
+        <h2>Slide 112</h2>
+        <img src="images/slide_112.png" alt="Slide 112">
+        <div class="content-box"></div>
+    </div>
+</body></html>

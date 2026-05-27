@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>リンク 2：OSMデータソースに基づく</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #2c3e50; }
+        .step { background: #eef; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .qa-section { background-color: #f9f9f9; padding: 15px; border-left: 5px solid #3498db; margin-top: 30px; }
+        .qa-item { margin-bottom: 30px; }
+        .qa-q { font-weight: bold; color: #2c3e50; font-size: 1.1em; }
+        .qa-a { margin-top: 10px; color: #555; }
+        .sub-points { margin-left: 20px; margin-top: 10px; }
+        .diagram-img { max-width: 100%; height: auto; margin: 20px 0; display: block; border: 1px solid #eee; }
+    </style>
+</head>
+<body>
+    <h1>リンク 2：OSMデータソースに基づく</h1>
+    <div class="step">
+        <strong>コアパス：</strong> OSM → SUMO → OpenDrive → RoadRunner → CARLA
+    </div>
+    <h2>詳細な処理フロー：</h2>
+    <ul>
+        <li><strong>データ形式変換：</strong> SUMOの `netconvert` ツールを使用して、OSMネットワークデータをOpenDRIVE形式に変換します。</li>
+        <li><strong>トポロジー再構築：</strong> SUMO変換過程で交差点ロジックや車線接続を重点的に処理し、論理的な接続性を確保します。</li>
+        <li><strong>シーンインスタンス化：</strong> RoadRunnerフローへ同期させ、物理的な視覚構築を完了します。</li>
+    </ul>
+
+    <div class="qa-section">
+        <h2>技術検証 (QA)</h2>
+        <div class="qa-item">
+            <p class="qa-q">Q: OpenStreetMap サイトから必要なエリアの OSM 地図データをエクスポートする方法は？</p>
+            <p class="qa-a">
+                A: シミュレーションシーン構築の第一歩として、以下の標準手順で OSM データを取得します。
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>エリア指定：</strong> OpenStreetMap公式サイトにアクセスし、検索バーや地図のドラッグでターゲットエリアを特定します。</li>
+                    <li><strong>データエクスポート：</strong> 上部の「エクスポート」ボタンをクリックし、範囲選択 (Bounding Box) を手動調整して必要な範囲をカバーします。</li>
+                    <li><strong>形式の取得：</strong> <code>.osm</code> という拡張子の XML ファイルをダウンロードします。</li>
+                </ul>
+                <img src="images/osm_export_screenshot.jpg" alt="OSMデータエクスポート示意図" class="diagram-img">
+            </div>
+        </div>
+
+        <div class="qa-item">
+            <p class="qa-q">Q: SUMO の netconvert ツールによる OSM データから OpenDrive への変換結果は？</p>
+            <p class="qa-a">
+                A: SUMO 変換ツールを用いることで、原始的な OSM セマンティックネットワークをシミュレーターが読み取り可能な OpenDrive 形式に変換可能です。川崎や根岸エリアの変換結果は明確で完全です。
+            </p>
+            <div class="sub-points">
+                <img src="images/sumo_conversion_result.jpg" alt="SUMO変換結果ファイル示意図" class="diagram-img">
+            </div>
+        </div>
+
+        <div class="qa-item">
+            <p class="qa-q">Q: RoadRunner を使用して生成された OpenDrive データを Scene として作成し、FBX 中間形式としてエクスポートするロジックは？</p>
+            <p class="qa-a">
+                A: RoadRunner のシーン編集環境を通じて、OpenDrive の論理トポロジーを CARLA が利用可能な高性能なシミュレーションアセットへ変換します。
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>視覚的編集とインスタンス化：</strong> <code>negishi.xodr</code> をインポートすると、3D 路網ロジック図としてレンダリングされ、トポロジーの欠落や接続エラーを直感的に確認できます。</li>
+                    <li><strong>Scene コンテナの構築：</strong> `CreateScene` コマンドにより、論理トポロジーとアセットライブラリを結合し、完全なシミュレーション Scene を形成します。</li>
+                    <li><strong>FBX エクスポート戦略：</strong> FBX 変換は重要です。座標原点のオフセットや材質情報を含み、CARLA プラグインを使用して正しい軸系で出力します。</li>
+                    <li><strong>CARLA への連携：</strong> CARLA エンジンは xodr ファイルを論理ガイドとして読み込み、FBX モデルを視覚要素として表示し、両者の整合性を保ちます。</li>
+                    <li><strong>補足（クローズドループの課題）：</strong> OSM ソースデータの道路の閉塞性 (Road Closure) が低いため、`CreateScene` を使用した際に道路端が自動で接続されず、論理クローズドループを形成できない場合があります。これに対しては RoadRunner 内での手動縫合 (Stitching) が必要となります。</li>
+                </ul>
+                <img src="images/roadrunner_scene_edit.jpg" alt="RoadRunnerシーン編集示意図" class="diagram-img">
+            </div>
+        </div>
+
+        <div class="qa-item">
+            <p class="qa-q">Q4: Carla UE Editor 環境で make import コマンドを実行し、FBX 等のリソースを Carla Editor にインポートする方法は？</p>
+            <p class="qa-a">
+                A: Unreal Engine Editor 環境下で、Makefile または手動インポートフローを使用して処理された FBX およびアセットを Carla にデプロイします。
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>Content Browser 構造：</strong> 図の Content Browser に示すように、マップリソースは <code>Content > map_package > Maps > kawasaki</code> パス下に編成されています。</li>
+                    <li><strong>アセット統合：</strong> インポート後、モデルは <code>StaticMeshActor</code> (kawasaki_Roads_Road_Layer0 等) として認識され、World Outliner に正しくマウントされます。</li>
+                    <li><strong>コンパイルとビルド：</strong> Editor 画面で `Build` オプションを介して Mesh Distance Fields をコンパイルします（右下に表示）。これは路面の衝突検知やセンサーシミュレーション（特にLiDAR）に不可欠です。</li>
+                    <li><strong>デプロイ検証：</strong> インポート後、Viewport 上で kawasaki マップが完全にロードされているか、すべての材質（LaneMarking_Yellow1 等）が期待通りにレンダリングされているか確認し、シミュレーション環境と現実の物理形態の一致を確保します。</li>
+                </ul>
+                <img src="images/ue_import_kawasaki.jpg" alt="Carla Editor インポートkawasakiマップシーン" class="diagram-img">
+            </div>
+        </div>
+    </div>
+
+        <div class="qa-item">
+            <p class="qa-q">Q5: OpenDrive データは経路計算をサポートしていますか？</p>
+            <p class="qa-a">
+                A: はい、OpenDrive 形式は設計当初より、経路計画と計算を明示的にサポートしています。以下のメカニズムによってこのコア機能を支えています。
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>道路ネットワークトポロジー (Road Network Topology):</strong> OpenDrive は厳密な <code>&lt;road&gt;</code>、<code>&lt;laneSection&gt;</code>、および <code>&lt;lane&gt;</code> 階層を定義し、<code>predecessor/successor</code> ロジックを通じてすべての車線を完全なトポロジーグラフに接続します。</li>
+                    <li><strong>幾何学的経路パラメータ化:</strong> 各道路セグメントは、解析幾何学（<code>line</code>, <code>arc</code>, <code>spiral</code>（クロソイド曲線）、<code>poly3</code> 等）によって中心線を定義しており、経路計画器は車両の当該曲線上の空間座標と方位角を直接計算できます。</li>
+                    <li><strong>接続点ロジック (Junction Logic):</strong> <code>&lt;junction&gt;</code> および <code>&lt;connection&gt;</code> を介して、複雑な交差点の通行ルールと車線変更経路を定義し、グローバル経路計画に底層の通行ロジックを提供します。</li>
+                    <li><strong>高精度路網クエリ:</strong> 経路計画アルゴリズム（A*, Dijkstra 等）は、OpenDrive 内の路網グラフ構造を直接読み取り、始点から終点までの車線レベルでの経路計算を実現できます。</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="qa-item">
+            <p class="qa-q">Q6: Autoware が OpenDrive 地図形式を直接使用せず、Lanelet2 地図形式を採用している理由は？</p>
+            <p class="qa-a">
+                A: Autoware が OpenDrive ではなく Lanelet2 を核心地図形式に選定した理由は、「リアルタイム認識と動的計画」に適した設計思想に基づいています。
+            </p>
+            <div class="sub-points">
+                <ul>
+                    <li><strong>計算効率と軽量化：</strong> OpenDrive はシミュレーション向けであり、複雑な幾何学的ロジックや 3D 属性定義を多く含むため解析負荷が高いです。対して Lanelet2 は点シーアンストポロジー（Primitives）に基づいており、ストレージサイズが非常に小さく、Autoware の計画器はメモリ内で直接効率的に動的経路探索を行うことができ、レスポンスが高速です。</li>
+                    <li><strong>動的通行ロジックのプログラム可能性：</strong> Lanelet2 は「Lanelet」メタデータ定義（優先権、制限速度、交通標識等）に基づいており、高度な認識モジュールとの対話が容易です。Autoware は簡単な幾何学演算を介して、車両が有効な Lanelet エリア内にいるかを動的に判断できます。</li>
+                    <li><strong>セマンティック階層と空間インデックス：</strong> Lanelet2 は洗練された R-tree 空間インデックスを内蔵しており、Autoware が認識マッチング（Localization）を実行する際、全地図を探索する必要がなく、ミリ秒単位で現在の Lanelet と関連する周辺道路を特定できます。</li>
+                    <li><strong>開放性とリアルタイム修正：</strong> シミュレーション (OpenDrive) は物理的一致性を重視しますが、実車 (Autoware) はシーンセマンティクスの動的更新を重視します。Lanelet2 のモジュール構造 (Point-Lanelet-Area) は、稼働中に地図をホットフィックス（一時的な道路封鎖や迂回マーキング等）することをサポートしており、巨大な物理シミュレーションモデルを再ロードする必要はありません。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <p><a href="workflow_analysis_ja.html">メインページに戻る</a></p>
+</body>
+</html>
