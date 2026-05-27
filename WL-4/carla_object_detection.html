@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>CARLA Object Detection 代码逻辑分析</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 20px; color: #333; }
+        h1 { color: #2c3e50; }
+        h2 { border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 30px; }
+        code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
+        .logic-step { margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <h1>CARLA Object Detection 代码逻辑分析</h1>
+    <p>文件路径: <code>/data/huqianqian/software/Released/self-driving-experiments-in-carla/object_detection_with_yolov3/object_detection_gpu.py</code></p>
+    
+    <h2>主要逻辑流程</h2>
+    <div class="logic-step">
+        <strong>1. 初始化配置与模型准备:</strong>
+        加载 COCO 类名和颜色，定义 YOLOv3-tiny 的权重和配置路径。如果本地缺失权重文件，会自动从网络下载。<code>load_net()</code> 使用 OpenCV 的 DNN 模块加载网络，目前硬编码设置为 CPU 后端运行。
+    </div>
+    
+    <div class="logic-step">
+        <strong>2. CARLA 环境设置 (CarlaClient 类):</strong>
+        通过 <code>CarlaClient</code> 类封装了与 CARLA 交互的逻辑：
+        <ul>
+            <li>生成并设置 RGB 摄像机传感器。</li>
+            <li>在地图上生成一辆 Model3 汽车。</li>
+            <li>设置摄像机自动侦听 (listen)，将捕获的原始图像数据传入处理缓冲区。</li>
+        </ul>
+    </div>
+    
+    <div class="logic-step">
+        <strong>3. 实时推理循环 (render 方法):</strong>
+        在主循环中，每当有新的摄像头图像：
+        <ul>
+            <li>将原始 CARLA 图像数据转换为 numpy 数组。</li>
+            <li>使用 <code>cv2.dnn.blobFromImage</code> 预处理图像。</li>
+            <li>输入到 YOLOv3-tiny 网络中进行前向传播推理。</li>
+            <li>过滤置信度低于 0.5 的检测结果，并使用非极大值抑制 (NMS) 筛选边界框。</li>
+            <li>在图像上绘制检测到的边界框和类别标签。</li>
+        </ul>
+    </div>
+    
+    <div class="logic-step">
+        <strong>4. 显示与清理:</strong>
+        使用 Pygame 创建窗口，将标注后的图像转换为 Pygame 表面并渲染。程序在异常或关闭时会执行 <code>finally</code> 块，确保 CARLA 传感器、汽车被销毁，并关闭 Pygame 和 OpenCV 窗口。
+    </div>
+</body>
+</html>

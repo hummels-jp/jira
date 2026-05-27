@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Lane Navigation PID 算法分析</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 20px; color: #333; }
+        h1 { color: #2c3e50; }
+        h2 { border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 30px; }
+        code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
+        .logic-step { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Lane Navigation PID 算法分析</h1>
+    <p>文件路径: <code>/data/huqianqian/software/Released/self-driving-experiments-in-carla/lane-navigation-with-pid/lane_navigation.py</code></p>
+    
+    <h2>算法逻辑概述</h2>
+    <div class="logic-step">
+        <strong>1. 纵向控制 (PIDLongitudinalControl):</strong>
+        基于目标速度与当前车速的差值（误差）进行 PID 计算。通过计算误差的比例（P）、积分（I）和微分（D）分量，调节车辆的油门（throttle）和刹车（brake）指令，以维持设定速度。
+    </div>
+    
+    <div class="logic-step">
+        <strong>2. 横向控制 (PIDLateralControl):</strong>
+        利用车辆当前朝向向量与目标路点方向向量之间的叉积（Cross Product）来计算横向偏差（Cross-track Error）。PID 控制器根据该角度偏差输出转向角（Steering angle），从而使车辆保持在车道中心线行驶。
+    </div>
+
+    <div class="logic-step">
+        <strong>3. 控制器集成 (PIDController):</strong>
+        将纵向和横向控制器结合，并添加了转向角平滑处理（避免转向突变）和输出限制（归一化处理），最终生成 <code>carla.VehicleControl</code> 指令。
+    </div>
+    
+    <h2>建议使用实例</h2>
+    <p>为了使该 PID 控制器在实际运行中更加稳定，建议采用以下配置和操作：</p>
+    <ul>
+        <li><strong>开启同步模式:</strong> 在 CARLA 设置中启用 <code>synchronous_mode = True</code>，并在主循环中调用 <code>world.tick()</code>，确保 PID 计算频率与模拟器步长同步。</li>
+        <li><strong>参数调优:</strong> 初始设置的 K_P=1 是一个基准，根据模拟器的反馈，如果车辆出现震荡（Oscillation），建议适当减小 <code>K_P</code> 并增加 <code>K_D</code> 来增强阻尼。</li>
+        <li><strong>路点平滑:</strong> 目前代码直接选取路点，若在弯道出现剧烈震动，建议引入前瞻距离（Look-ahead distance）平滑处理。</li>
+        <li><strong>数据记录:</strong> 取消代码中摄像头部分的注释，通过语义分割或 RGB 图像记录运行轨迹，用于验证控制效果。</li>
+    </ul>
+</body>
+</html>
