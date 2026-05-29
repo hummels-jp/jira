@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Occ 占位网络算法核心技术</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background: #f4f4f4; }
+        h1 { color: #2c3e50; padding: 20px; margin: 0; border-bottom: 2px solid #2c3e50; background: #fff; }
+        .slide { background: white; padding: 20px; border-bottom: 1px solid #ddd; 
+                 display: flex; flex-wrap: wrap; gap: 20px; }
+        h2 { width: 100%; color: #2c3e50; margin: 0 0 10px 0; }
+        img { flex: 0 0 45%; max-width: 45%; height: auto; border: 1px solid #ddd; border-radius: 4px; }
+        .content-box { flex: 1; min-width: 300px; padding: 10px; font-size: 1.1em; }
+    </style>
+</head>
+<body>
+    <h1>Occ 占位网络算法核心技术</h1>
+    <div class="slide">
+        <h2>Slide 0: Occ 占位网络算法概要</h2>
+        <img src="images/slide_0.png" alt="Occ Occupancy Network Overview">
+        <div class="content-box">
+            <h3>Q: 如何理解 Occupancy Network 在自动驾驶感知中的地位？</h3>
+            <p><strong>技术解析：</strong>此图展示了 Occupancy Network (占位网络) 作为一种范式转移的感知方案：</p>
+            <p>1. <strong>起源：</strong>源自 2018 年论文《Occupancy Networks: Learning 3D Reconstruction in Function Space》，旨在打破传统感知的边界。<br>
+            2. <strong>核心痛点：</strong>传统 3D 检测和分割过分依赖特定数据集，在面对长尾场景及大量未标注物体时，极易发生漏检，构成安全隐患。<br>
+            3. <strong>核心逻辑：</strong>将世界坐标系下的空间建模为 voxel grid，通过估计每个 voxel 的三种状态（free, occupied, unobserved）及通用物体类别 (General Objects)，实现对复杂环境的闭环建模。<br>
+            4. <strong>量化指标：</strong>目前 Occupancy 算法的最高精度已能接近 60% mIoU，在复杂障碍物感知中表现出强大的通用性。</p>
+        </div>
+    </div>
+    <div class="slide">
+        <h2>Slide 1: Occupancy Networks 核心建模方法</h2>
+        <img src="images/slide_1.png" alt="Occupancy Networks Modeling">
+        <div class="content-box">
+            <h3>Q: 相比传统 3D 表示方法，Occupancy Networks 的核心创新点是什么？</h3>
+            <p><strong>技术解析：</strong>此页面通过对比展示了 Occupancy Networks 的连续化建模思路：</p>
+            <p>1. <strong>范式对比 (Figure 1)：</strong>传统方法采用 Voxel（体素）、Point Cloud（点云）或 Mesh（网格）离散化表示 3D 空间。而 Occupancy Networks 提出了将 3D 表面定义为深度神经网络分类器 <i>f<sub>θ</sub></i> 的<strong>连续决策边界 (Continuous Decision Boundary)</strong>。<br>
+            2. <strong>多分辨率提取 (Figure 2)：</strong>该网络采用递归细分法 (Multiresolution Isosurface Extraction)：通过不断标记 occupied/unoccupied 区域，对活跃区域进行细分，直至达到所需分辨率。<br>
+            3. <strong>核心优势：</strong>这种基于神经网络的连续建模方式，突破了传统离散网格的内存限制，允许以任意分辨率提取 3D 模型，且支持利用梯度信息进行输出精细化处理。</p>
+        </div>
+    </div>
+    <div class="slide">
+        <h2>Slide 2: MonoScene 框架与 3D SSC 任务</h2>
+        <img src="images/slide_2.png" alt="MonoScene Framework">
+        <div class="content-box">
+            <h3>Q: MonoScene 如何实现从单张 RGB 图像到 3D 语义场景补全 (SSC)？</h3>
+            <p><strong>技术解析：</strong>此图展示了 CVPR 2022 提出的 MonoScene 框架，这是实现 3D 语义场景补全 (3D Semantic Scene Completion) 的开创性工作：</p>
+            <p>1. <strong>核心任务：</strong>仅依靠单张 RGB 图像，实现全场景的 3D 占用状态预测及语义分类，是自动驾驶中摆脱激光雷达依赖的关键技术。<br>
+            2. <strong>核心组件：</strong><br>
+               - <strong>FLoSP (Features Line of Sight Projection)：</strong>将 2D 特征投影至 3D 视锥空间，构建空间特征关联。<br>
+               - <strong>3D CRP (Context Relation Prior)：</strong>通过 3D 上下文关系先验，增强对遮挡区域的感知能力。<br>
+            3. <strong>监督策略：</strong>引入了创新的损失函数组合：<br>
+               - <strong>L<sub>ce</sub>：</strong>标准交叉熵损失。<br>
+               - <strong>L<sub>scal</sub> (sem/geo)：</strong>提升全局语义与几何结构的连续性。<br>
+               - <strong>L<sub>fp</sub>：</strong>基于视锥比例的约束，强制模型学习遮挡区域的类分布，有效缓解了严重遮挡下的感知丢失问题。</p>
+        </div>
+    </div>
+    <div class="slide">
+        <h2>Slide 3: OccFormer 框架架构</h2>
+        <img src="images/slide_3.png" alt="OccFormer Framework">
+        <div class="content-box">
+            <h3>Q: OccFormer 如何通过双路径 Transformer 优化 3D 语义占用预测？</h3>
+            <p><strong>技术解析：</strong>此图展示了 **ICCV 2023** 提出的 **OccFormer** 架构。它针对基于摄像头的 3D 语义占用预测任务，设计了高效的端到端 Pipeline：</p>
+            <p>1. <strong>多尺度特征与转换：</strong>利用 Image Encoder 提取多尺度 2D 特征，通过 Depth Net 和 Context Net 联合预测深度分布，实现从 2D 图像到 3D 特征空间的升维 (Lifting)。<br>
+            2. <strong>双路径 Transformer 编码器：</strong>设计了独特的双路径结构，在处理不同分辨率的空间特征时，通过 Conv 和 Dual-path Transformer Blocks 提取深层语义关联，并经由 **Multi-Scale 3D Deformable Attention** 进行空间特征整合。<br>
+            3. <strong>Transformer 占用解码器：</strong>采用 Query-based Decoder 架构，结合 Masked Attention、Self-Attention 与 FFN，将 3D Voxel Features 映射为最终的 3D 语义占用预测结果，极大提升了对复杂空间布局的建模能力。</p>
+        </div>
+    </div>
+    <div class="slide">
+        <h2>Slide 4: Flash-Occ 算法核心思想</h2>
+        <img src="images/slide_4.png" alt="Flash-Occ Algorithm">
+        <div class="content-box">
+            <h3>Q: Flash-Occ 如何解决 Occupancy Network 在车载端的部署瓶颈？</h3>
+            <p><strong>技术解析：</strong>此页面总结了 Flash-Occ 算法的轻量化核心思路，旨在解决传统 3D 卷积在车载部署中的资源消耗问题：</p>
+            <p>1. <strong>解决 3D 卷积瓶颈：</strong>传统 Occupancy Network 依赖 3D 卷积进行特征提取，导致模型计算量巨大、显存占用高。Flash-Occ 明确提出**抛弃 3D 卷积模块**，转而全面使用 2D 卷积进行高效特征提取。<br>
+            2. <strong>BEV 特征空间建模：</strong>为了进一步降低计算复杂度，Flash-Occ 放弃直接在 Voxel 空间进行建模，而是选用 **BEV (Bird's Eye View) 特征** 作为感知 3D 空间的中介，从而实现了计算开销的显著下降。<br>
+            3. <strong>通道-高度转换模块：</strong>设计了专门的 **Channel-to-Height 转换模块**，将 BEV 空间的 2D 特征映射提升至 3D 体素空间，完成了轻量化条件下的 3D 语义结果预测。</p>
+        </div>
+    </div>
+    <div class="slide">
+        <h2>Slide 5: Flash-Occ 插件式优化逻辑</h2>
+        <img src="images/slide_5.png" alt="Flash-Occ Plug-and-Play Illustration">
+        <div class="content-box">
+            <h3>Q: Flash-Occ 如何实现“即插即用”的轻量化替换？</h3>
+            <p><strong>技术解析：</strong>此图直观展示了 Flash-Occ 将复杂感知链路简化为轻量化 Pipeline 的核心逻辑：</p>
+            <p>1. <strong>替换逻辑 (Substitution)：</strong>对比上下两个流程图，Flash-Occ 通过将所有 <strong>3D-Conv</strong> 模块直接替换为 <strong>2D-Conv</strong>，成功规避了 3D 卷积带来的巨大计算开销。<br>
+            2. <strong>特征提升 (Channel-to-Height Operator)：</strong>这是系统的关键。在流程末端，Flash-Occ 引入了 <strong>Channel-to-Height Operator</strong>，将原本基于 BEV 空间的 2D 特征（红色）高效映射为 3D 语义占用的 Logits（蓝色），在保证精度的前提下极大降低了显存压力。<br>
+            3. <strong>插件式优势 (Plug-and-Play)：</strong>由于替换后的模块逻辑与原有的 Transformer/3D-Conv 框架完全兼容，Flash-Occ 实现了真正的“即插即用”，可无缝嵌入到现有的自动驾驶感知流水线中。</p>
+        </div>
+    </div>
+</body>
+</html>

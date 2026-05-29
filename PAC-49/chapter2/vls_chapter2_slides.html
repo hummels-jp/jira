@@ -93,7 +93,12 @@
         <div class="content-box">
             <h3>地图检测任务</h3>
             <p><strong>定义：</strong>实时提取车道线、路口逻辑、停止线等高精地图要素，构建行驶空间的先验地图信息。</p>
-            <p><strong>Q1: 实时在线建图的模型有哪些？</strong><br>
+            <p><strong>Q1: HDMap，Lite Map，Implicit Map 的定义和区别？</strong><br>
+            三种地图形式代表了自动驾驶感知系统对环境表征的不同抽象层次：<br>
+            1. <strong>HDMap (高精地图):</strong> 预定义的厘米级高精度离线地图，包含详尽的几何（车道线/路沿）与语义（限速/路标）信息。依赖高算力定位与复杂维护，但在结构化道路上鲁棒性极强。<br>
+            2. <strong>Lite Map (轻量地图):</strong> 旨在降低 HDMap 的数据存储与更新成本，仅保留行驶必须的稀疏特征（如车道中心线、关键路口连接关系）。相比 HDMap，更灵活且易于在云端实时更新。<br>
+            3. <strong>Implicit Map (隐式地图):</strong> 基于神经网络的神经辐射场或特征体表征。地图信息被编码在模型权重中，不再显式存储几何要素。具有极佳的场景泛化性，但缺乏可解释性，目前多作为辅助或端到端系统中的内部表征。</p>
+            <p><strong>Q2: 实时在线建图的模型有哪些？</strong><br>
             目前主流的在线高精地图构建 (Online HD Map Construction) 模型包括：<br>
             1. <strong>HDMapNet:</strong> 早期开创性工作，通过分割任务结合后处理构建局部向量化地图。<br>
             2. <strong>VectorMapNet:</strong> 首个端到端预测矢量化地图的模型，将地图元素建模为一系列点序列，极大提升了存储效率。<br>
@@ -161,7 +166,14 @@
     <div class="slide">
         <h2>Slide 12</h2>
         <img src="images/slide_12.png" alt="Slide 12">
-        <div class="content-box"></div>
+        <div class="content-box">
+            <h3>地图技术演进</h3>
+            <p><strong>Q1: HDMap，Lite Map，Implicit Map 的定义和区别？</strong><br>
+            三种地图形式代表了自动驾驶感知系统对环境表征的不同抽象层次：<br>
+            1. <strong>HDMap (高精地图):</strong> 预定义的厘米级高精度离线地图，包含详尽的几何（车道线/路沿）与语义（限速/路标）信息。依赖高算力定位与复杂维护，但在结构化道路上鲁棒性极强。<br>
+            2. <strong>Lite Map (轻量地图):</strong> 旨在降低 HDMap 的数据存储与更新成本，仅保留行驶必须的稀疏特征（如车道中心线、关键路口连接关系）。相比 HDMap，更灵活且易于在云端实时更新。<br>
+            3. <strong>Implicit Map (隐式地图):</strong> 基于神经网络的神经辐射场或特征体表征。地图信息被编码在模型权重中，不再显式存储几何要素。具有极佳的场景泛化性，但缺乏可解释性，目前多作为辅助或端到端系统中的内部表征。</p>
+        </div>
     </div>
     <div class="slide">
         <h2>Slide 13</h2>

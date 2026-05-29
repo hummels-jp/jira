@@ -1,0 +1,192 @@
+    <div class="slide">
+        <h2>Slide 11: 四类换道路径筛选结果</h2>
+        <img src="images/lane_change_comparison.jpg" alt="Lane Change Comparison">
+        <div class="content-box">
+            <p class="slide-content-text">此图详细对比了四类常用换道路径规划算法，并通过曲率分析筛选出最优方案。</p>
+            <div class="slide-qa-text">
+                <p><strong>Q: 为何 B 样条曲线 (B-Spline) 在四种换道路径筛选中脱颖而出？</strong><br>
+                A: 通过对比路径曲率 (Curvature)，各算法表现如下：<br>
+                1. <strong>Dubins 曲线</strong>: 曲率出现两次“跳变”，需车辆中途停车并突变转向，不符合实际驾驶逻辑。<br>
+                2. <strong>正余弦 (Sin) 与贝塞尔 (Bezier) 曲线</strong>: 虽满足曲率连续要求，但起始/终止点曲率不为 0，导致换道后方向盘未回正，车辆会偏离车道中心。<br>
+                3. <strong>B 样条曲线 (B-Spline)</strong>: 完美规避了上述缺陷，同时保留了路径平滑与动力学可行的优势，是目前最为理想的换道路径规划类型。</p>
+            </div>
+        </div>
+    </div>    <div class="slide">
+        <h2>Slide 13: 基于多目标评价函数筛选 B 样条换道路径簇</h2>
+        <img src="images/lane_change_evaluation.jpg" alt="Lane Change Evaluation">
+        <div class="content-box">
+            <p class="slide-content-text">此图展示了如何通过多目标评价函数 (Multi-objective Evaluation Function) 从换道路径簇中筛选最优解。</p>
+            <div class="slide-qa-text">
+                <p><strong>Q: 为什么要构建“路径簇”并使用“评价函数”进行筛选？</strong><br>
+                A: 自动驾驶在换道场景下，单一路径往往难以兼顾安全性、效率与舒适性：<br>
+                1. <strong>路径簇生成 (Path Cluster)</strong>: 系统首先在目标区域生成多条满足动力学约束的候选 B 样条路径，形成路径簇。<br>
+                2. <strong>评价维度 (Multi-objective)</strong>: 引入多目标评价函数进行加权筛选，包含：<br>
+                - <strong>碰撞风险 (Safety Cost)</strong>: 与周边障碍物的安全距离。<br>
+                - <strong>平滑度 (Smoothness Cost)</strong>: 路径曲率及其变化率，直接决定乘坐舒适度。<br>
+                - <strong>效率代价 (Efficiency Cost)</strong>: 换道过程耗时与速度保持能力。<br>
+                3. <strong>最优决策</strong>: 通过评价函数计算所有候选路径的综合分值，选取加权得分最优者作为最终执行轨迹，确保车辆在复杂交通流中实现安全、高效且平滑的换道操作。</p>
+            </div>
+        </div>
+    </div>    <div class="slide">
+        <h2>Slide 15: 局部路径规划常用评价指标</h2>
+        <img src="images/local_path_metrics.jpg" alt="Local Path Metrics">
+        <div class="content-box">
+            <p class="slide-content-text">此图探讨了局部路径规划的评价指标体系，并给出了一种基于路径长度与曲率的线性加权评估模型。</p>
+            <div class="slide-qa-text">
+                <p><strong>Q: 局部路径规划评价与轨迹规划有何本质区别，且如何构建评价函数？</strong><br>
+                A: 两者核心区别在于对“时间”信息的依赖性：<br>
+                1. <strong>区别</strong>: 轨迹规划包含时间维度，需考察加速度、加加速度对舒适性的影响；局部路径规划仅关注几何本身。<br>
+                2. <strong>指标选择</strong>: 构建了“路径长度”与“路径平均曲率”两大核心指标，分别表征换道总耗时与换道过程中的横向舒适性。<br>
+                3. <strong>数学模型 (线性加权法)</strong>:<br>
+                $f = \omega_1 f_{length} + \omega_2 f_{curvature} = \omega_1 \sum_{i=1}^{n-1} \sqrt{(x_{i+1}-x_i)^2 + (y_{i+1}-y_i)^2} + \omega_2 \frac{\sum K_i}{n}$<br>
+                该模型通过加权系数 ($\omega_1, \omega_2$) 调节路径长度与曲率的权重，实现多目标下的最优路径筛选。</p>
+            </div>
+        </div>
+    </div>    <div class="slide">
+        <h2>Slide 16: 换道路径簇结果筛选</h2>
+        <img src="images/lane_change_selection.jpg" alt="Lane Change Selection">
+        <div class="content-box">
+            <p class="slide-content-text">此图详细展示了如何通过两层循环遍历生成路径簇，并利用 3D 评价曲面筛选最优换道轨迹。</p>
+            <div class="slide-qa-text">
+                <p><strong>Q: 3D 评价曲面如何辅助完成“最优路径筛选”？</strong><br>
+                A: 筛选过程通过对路径簇的量化评估实现：<br>
+                1. <strong>路径簇生成</strong>: 以当前车位为基准，通过构建 O 点与 C 点索引的“两层循环”，生成一系列换道轨迹集合。<br>
+                2. <strong>评价指标</strong>: 综合路径长度与平均曲率，计算每条候选路径的评价函数值。<br>
+                3. <strong>3D 评价曲面分析</strong>: 右图展示了以 `idx_o` 和 `idx_c` 为自变量的评价函数分布。深蓝色的“洼地”即代表评价函数值最小的区域。系统只需通过搜索该 3D 曲面上的全局极小值，即可对应锁定最优的 `idx_o` 与 `idx_c` 参数，进而唯一确定那条兼顾高效与舒适的最佳换道轨迹。</p>
+            </div>
+        </div>
+    </div>    <div class="slide">
+        <h2>Slide 17: 利用规划路径和预测轨迹建立 ST 图</h2>
+        <img src="images/st_graph_construction.jpg" alt="ST Graph Construction">
+        <div class="content-box">
+            <p class="slide-content-text">此图为自动驾驶专题课件标题页，探讨了如何综合规划路径与预测轨迹以构建 ST 图。</p>
+            <div class="slide-qa-text">
+                <p><strong>Q: 什么是 ST 图，其在自动驾驶规划中的核心作用是什么？</strong><br>
+                A: ST 图 (Space-Time Graph) 是连接路径规划与速度规划的桥梁：<br>
+                1. <strong>基本定义</strong>: 以行驶距离 (S) 为纵轴，时间 (T) 为横轴构建的二维空间，用于表达交通场景的时间-空间占用关系。<br>
+                2. <strong>构建要素</strong>:<br>
+                - <strong>静态路径</strong>: 将规划出的路径 (Path) 作为空间参考坐标轴。<br>
+                - <strong>预测轨迹</strong>: 将周围障碍物的预测轨迹 (Predicted Trajectory) 映射到该路径坐标轴上，转化为 ST 图中的“禁行区域” (Obstacle Block)。<br>
+                3. <strong>核心作用</strong>: 将复杂的 3D 动态避障问题简化为 2D 平面内的路径规划问题。车辆只需在 ST 图中避开障碍物禁行块，即可生成安全且符合时空约束的速度规划曲线，从而实现与交通流的动态协调。</p>
+            </div>
+        </div>
+    </div>    <div class="slide">
+        <h2>Slide 19: ST 图构建及速度规划</h2>
+        <img src="images/st_graph_speed_planning.jpg" alt="ST Graph Speed Planning">
+        <div class="content-box">
+            <p class="slide-content-text">此图详细展示了如何通过构建 ST 图 (空间-时间图)，将动态避障问题转化为速度规划的搜索过程。</p>
+            <div class="slide-qa-text">
+                <p><strong>Q: 为什么说“在 ST 图搜索避障曲线的过程就是速度规划过程”？</strong><br>
+                A: ST 图实现了时空维度的逻辑映射与简化：<br>
+                1. <strong>映射逻辑</strong>: 将交通参与者在不同时刻对本车路径的占用映射为 ST 图中的“禁行区域” (蓝色与红色障碍物区域)。<br>
+                2. <strong>空间定义</strong>: 纵轴 $S$ 为路径占用长度，横轴 $T$ 为时间轴。<br>
+                3. <strong>核心结论</strong>:<br>
+                - <strong>路径规划</strong>: 只要在 ST 图中避开禁行区域，规划出一条单调递增的“黄色曲线”，即可确保车辆避让障碍物安全换道。<br>
+                - <strong>速度规划</strong>: 黄色曲线的数学定义即为本车的位移-时间关系，对其求导即可得到本车的速度序列曲线。因此，在 ST 图中寻找符合时空安全约束的避障曲线，在本质上等同于生成车辆的速度序列，从而完成速度规划的任务。</p>
+            </div>
+        </div>
+    </div>    <div class="slide">
+        <h2>Slide 20: 障碍车向 ST 图映射</h2>
+        <img src="images/obstacle_to_st_mapping.jpg" alt="Obstacle to ST Mapping">
+        <div class="content-box">
+            <p class="slide-content-text">此图详细阐述了将障碍车辆的轨迹从空间域映射至 ST 图中的技术方案。</p>
+            <div class="slide-qa-text">
+                <p><strong>Q: 如何实现障碍车辆轨迹向 ST 图的精确映射？</strong><br>
+                A: 映射过程需解决非质点障碍物的处理与投影计算问题：<br>
+                1. <strong>核心任务</strong>: 将障碍车 (蓝色) 的路径轨迹投影至本车 (黄色) 的换道路径上。<br>
+                2. <strong>技术方案</strong>:<br>
+                - <strong>四点法</strong>: 鉴于障碍车非质点，将其简化为左前、右前、左后、右后四个角点，分别计算它们距离本车路径的距离。<br>
+                - <strong>距离判定</strong>: 通过将这四个点投影到本车路径坐标系上，并与路径累积索引值进行对比。<br>
+                - <strong>阈值映射</strong>: 当计算出的距离小于预设安全阈值时，即认定该障碍物在特定时刻占用本车路径，从而在 ST 图中生成对应的蓝色“禁行块”。<br>
+                3. <strong>结果</strong>: 如右下角所示，障碍车在不同时刻的投影占用形成了 ST 图中一条倾斜的蓝色禁行带。</p>
+            </div>
+        </div>
+    </div>    <div class="slide">
+        <h2>Slide 21: 动态规划 (DP) 算法原理与三层循环结构</h2>
+        <img src="images/dp_algorithm_structure.jpg" alt="DP Algorithm Structure">
+        <div class="content-box">
+            <p class="slide-content-text">此图详细解析了动态规划 (DP) 算法在路径/速度规划中的标准实现流程与三层循环结构。</p>
+            <div class="slide-qa-text">
+                <p><strong>Q: DP 算法的三层循环结构及其求解逻辑是什么？</strong><br>
+                A: DP 算法遵循“逆向寻优，正向求解”的稳健决策思路：<br>
+                1. <strong>求解策略</strong>: 先从终点逆向推算至起点，记录每一阶段的最优子路径，实现全局最优寻优。<br>
+                2. <strong>三层循环结构</strong>:<br>
+                - <strong>第一层</strong>: 由右到左 (终点至起点) 依次遍历所有阶段。<br>
+                - <strong>第二层</strong>: 遍历第 $i$ 阶段的所有可行状态。<br>
+                - <strong>第三层</strong>: 遍历第 $i+1$ 阶段的所有状态，计算各转换代价并锁定最优子路径。<br>
+                3. <strong>工程价值</strong>: 该结构确保了算法在有限计算资源下，能从复杂的 ST 网格中高效检索出符合安全与平顺约束的最优速度序列，是自动驾驶决策规划算法的基石。</p>
+            </div>
+        </div>
+    </div>    <div class="slide">
+        <h2>Slide 22: 动态规划算法在 ST 图搜索最优曲线的应用</h2>
+        <img src="images/dp_st_graph_application.jpg" alt="DP ST Graph Application">
+        <div class="content-box">
+            <p class="slide-content-text">此图进一步探讨了动态规划算法在 ST 图搜索应用中的优化策略、颗粒度选择及编程实践。</p>
+            <div class="slide-qa-text">
+                <p><strong>Q: 动态规划在 ST 图搜索应用中需关注哪些工程细节？</strong><br>
+                A: 算法的实际落地需权衡精度与性能：<br>
+                1. <strong>搜索方向的选择</strong>: 虽然 DP 习惯使用“逆向寻优”，但在 ST 图场景下，由于最后一个阶段的 $S$ 值未确定，直接采用“正向寻优”更为直接有效。<br>
+                2. <strong>栅格化颗粒度 (Granularity) 的平衡</strong>:<br>
+                - <strong>粗颗粒度</strong>: 计算快，但会导致搜索到的路径偏离全局最优。<br>
+                - <strong>精细颗粒度</strong>: 结果更优，但代价是计算复杂度激增，导致运算时间大幅延长。<br>
+                3. <strong>数据结构工程化</strong>: 编程时应灵活运用 MATLAB 的 cell 类型或 mat 类型变量，以高效存储与调用大规模状态搜索过程中产生的海量中间数据。</p>
+            </div>
+        </div>
+    </div>    <div class="slide">
+        <h2>Slide 23: Frenet 坐标系简介</h2>
+        <img src="images/frenet_coordinate_system.jpg" alt="Frenet Coordinate System">
+        <div class="content-box">
+            <p class="slide-content-text">此图详细解释了 Frenet 坐标系在自动驾驶路径规划中的必要性及其核心定义。</p>
+            <div class="slide-qa-text">
+                <p><strong>Q: 为什么要引入 Frenet 坐标系，它与笛卡尔坐标系有何本质不同？</strong><br>
+                A: 自动驾驶场景下，传统的笛卡尔坐标系存在明显局限：<br>
+                1. <strong>笛卡尔坐标系缺陷</strong>: 道路往往具有弯曲性，难以用简单的直角坐标描述；车辆控制需求往往是“车道位置”及“横纵向距离”，笛卡尔坐标系在处理此类轨迹规划时计算极其复杂。<br>
+                2. <strong>Frenet 坐标系定义</strong>:<br>
+                - <strong>s (纵坐标)</strong>: 沿道路参考线的距离。<br>
+                - <strong>d (横坐标)</strong>: 与参考线的垂直偏移量。<br>
+                3. <strong>核心本质</strong>: Frenet 坐标系本质上是在参考路径的每一个点上建立局部笛卡尔坐标系。这种变换将弯曲道路“拉直”，极大地简化了车辆行驶轨迹的横纵向解耦计算，是路径规划算法中处理复杂道路环境的标准数学工具。</p>
+            </div>
+        </div>
+    </div>    <div class="slide">
+        <h2>Slide 24: 四类路径跟踪算法核心思想简介</h2>
+        <img src="images/tracking_algorithms_overview.jpg" alt="Tracking Algorithms Overview">
+        <div class="content-box">
+            <p class="slide-content-text">此图详细对比了自动驾驶控制层常用的四类主流轨迹跟踪算法：Pure Pursuit、Stanley、LQR 和 MPC。</p>
+            <div class="slide-qa-text">
+                <p><strong>Q: 简述这四类路径跟踪算法的核心思想及其适用场景？</strong><br>
+                A: 轨迹跟踪算法决定了车辆执行规划路径的精确度与平顺性：<br>
+                1. <strong>Pure Pursuit (纯跟踪算法)</strong>: 基于阿克曼转向几何与“预瞄点”逻辑，通过计算到达预瞄点的圆弧路径实现跟踪，原理直观，主要适用于低速场景。<br>
+                2. <strong>Stanley 算法</strong>: 直接结合车辆前轴中心的“横向误差”与“航向误差”进行反馈控制，常用于车道保持 (LKA)，具备较好的跟踪收敛性。<br>
+                3. <strong>LQR 算法 (线性二次型调节器)</strong>: 引入二次代价函数 $J = \sum (X^T Q X + u^T R u)$，通过求解状态与输入权重的最优平衡，实现快速、稳定的偏差修正与控制输入最小化，是典型的线性最优控制方案。<br>
+                4. <strong>MPC 算法 (模型预测控制)</strong>: 本质是基于车辆模型，在“预测时域” (Prediction Horizon) 内构建并求解二次规划问题，不仅满足实时最优解，还能在预测时域内显式处理各种物理约束（如转向角/速度限制），是目前工业界处理复杂动态场景下的主流高性能控制方案。</p>
+            </div>
+        </div>
+    </div>    <div class="slide">
+        <h2>Slide 25: 模型预测控制 (MPC) 的核心思想</h2>
+        <img src="images/mpc_core_concept.jpg" alt="MPC Core Concept">
+        <div class="content-box">
+            <p class="slide-content-text">此图精炼概括了模型预测控制 (MPC) 的三大核心模块：模型、预测与控制。</p>
+            <div class="slide-qa-text">
+                <p><strong>Q: 简述 MPC 实现“实时预测与最优控制”的三大核心逻辑？</strong><br>
+                A: MPC 通过将控制问题转化为实时数学优化，实现高性能控制：<br>
+                1. <strong>模型 (Model)</strong>: 建立车辆的运动学或动力学模型，并线性化为状态空间方程 $\xi(k+1) = A\xi(k) + B\Delta\tilde{u}(k)$。<br>
+                2. <strong>预测 (Prediction)</strong>: 基于模型，在“预测时域”内递推预测未来的车辆状态序列。这不仅是状态评估，更是构建优化问题的基础。<br>
+                3. <strong>控制 (Control)</strong>: 将控制问题本质转化为二次规划 (QP) 问题：在满足执行器物理约束（如 $\Delta U_{min} \le \Delta U \le \Delta U_{max}$）的前提下，寻找最优的控制输入序列 $\Delta U$，使得累计目标函数 $J$ 最小化。MPC 的强大之处在于其能在时域内显式处理各种复杂物理约束，实现最优行驶轨迹的精准跟踪。</p>
+            </div>
+        </div>
+    </div>    <div class="slide">
+        <h2>Slide 26: Lattice Planner 架构概览</h2>
+        <img src="images/lattice_planner_pipeline.jpg" alt="Lattice Planner Pipeline">
+        <div class="content-box">
+            <p class="slide-content-text">此图详细梳理了基于 Lattice Planner 的自动驾驶轨迹规划流水线，展示了从环境感知输入到最终轨迹输出的核心逻辑。</p>
+            <div class="slide-qa-text">
+                <p><strong>Q: 简述 Lattice Planner 的核心流水线架构及其数据流向？</strong><br>
+                A: 系统通过分层架构实现复杂动态环境下的轨迹解耦求解：<br>
+                1. <strong>坐标系转换 (Frenet)</strong>: 将笛卡尔坐标系映射至 Frenet 坐标系 (S, L)，实现道路“拉直”，降低规划计算维度。<br>
+                2. <strong>障碍物处理 (ST/SL 映射)</strong>: 将感知到的障碍物信息解析并投影至 ST/SL 空间，为后续碰撞检测提供时空基准。<br>
+                3. <strong>轨迹生成与校验</strong>:<br>
+                - <strong>生成</strong>: 基于运动约束与目标代价函数，分横向 (路径) 与纵向 (速度) 进行规划，随后通过代价评价体系进行融合。<br>
+                - <strong>校验</strong>: 核心环节，包括车辆运动学可行性校验与障碍物碰撞检测，确保输出轨迹既符合车辆动力学特性，又具备行驶安全性。</p>
+            </div>
+        </div>
+    </div>

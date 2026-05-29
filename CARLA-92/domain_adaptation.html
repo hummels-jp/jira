@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>领域适应 (Domain Adaptation) - 李宏毅专题课程</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .slide { margin-bottom: 60px; padding-bottom: 40px; border-bottom: 1px solid #eee; }
+        .slide-header { border-bottom: 2px solid #0056b3; margin-bottom: 20px; padding-bottom: 10px; }
+        .slide-header h1 { margin: 0; color: #0056b3; font-size: 1.8em; }
+        .container { display: flex; gap: 20px; align-items: flex-start; }
+        .image-side { flex: 1; }
+        .content-side { flex: 1; }
+        img { width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .tech-qa, .tech-quote { background: #f4f7f6; padding: 15px; border-left: 5px solid #0056b3; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <!-- Slide 1 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 1: 领域适应 (Domain Adaptation)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_title.jpg" alt="领域适应封面"></div>
+            <div class="content-side">
+                <h3>课程背景</h3>
+                <p>本幻灯片节选自<strong>李宏毅 (Hung-yi Lee)</strong> 教授关于深度学习领域中的 <strong>Domain Adaptation (领域适应)</strong> 专题课程。</p>
+                <div class="tech-qa">
+                    <strong>核心议题</strong>: 在数据分布存在差异 (Domain Shift) 的情况下，如何通过迁移学习，将模型在源域（Source Domain）上学到的知识，有效迁移至目标域（Target Domain）上。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 2: 领域差异 (Domain Shift) 基础示例</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_ml_training_testing.jpg" alt="ML 训练与测试差异示意"></div>
+            <div class="content-side">
+                <h3>ML 训练/测试鸿沟</h3>
+                <p>本幻灯片以 MNIST 手写数字分类为例，展示了典型的机器学习瓶颈：</p>
+                <ul>
+                    <li><strong>训练数据 (Training Data)</strong>: 简洁的黑底白字（如数字 4、0、1）。</li>
+                    <li><strong>测试数据 (Testing Data)</strong>: 含有噪点、笔画风格迥异的复杂背景或变体（如 2、4、2）。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>核心挑战</strong>: 即使在训练集上达到极高准确率（如 99.5%），若训练数据与测试数据分布存在明显偏差（Domain Shift），模型在目标域的表现也会大幅缩水。引用文献：<a href="http://proceedings.mlr.press/v37/ganin15.pdf" target="_blank">Ganin et al. (2015)</a>。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 3: 领域差异 - 标签分布偏差 (Label Shift)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_label_shift.jpg" alt="标签分布偏差示意"></div>
+            <div class="content-side">
+                <h3>不仅是图像，标签分布也会偏移</h3>
+                <p>除了视觉上的领域差异，训练数据与测试数据在<strong>标签分布 (Label Distribution)</strong> 上也可能存在重大差异：</p>
+                <ul>
+                    <li><strong>训练数据</strong>: 各标签（类别 1-5）样本分布均衡。</li>
+                    <li><strong>测试数据</strong>: 存在严重的数据不平衡（如类别 1 的样本占比极高）。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>致命影响</strong>: 即使模型在特征提取上表现良好，如果未对标签分布的偏移 (Label Shift) 进行处理，模型在测试集上的预测结果将倾向于“多数类”，导致对于少数类的鲁棒性崩溃。例如：同一个数字“0”的特征，在不同的数据域（分布）中，标签含义可能完全不同。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 4: 领域适应 - 半监督策略 (Semi-supervised DA)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_semi_supervised.jpg" alt="半监督领域适应示意"></div>
+            <div class="content-side">
+                <h3>基于少量标注数据的微调 (Fine-tuning)</h3>
+                <p>该图演示了在目标域拥有<strong>少量已标注数据</strong>时的领域适应策略：</p>
+                <ul>
+                    <li><strong>核心思路</strong>: 首先使用源域 (Source Domain) 的大规模标注数据训练预训练模型，随后利用目标域 (Target Domain) 的少量已标注样本进行 Fine-tune。</li>
+                    <li><strong>技术挑战</strong>: 由于目标域样本量过少，模型在进行微调时极易发生<strong>过拟合 (Overfitting)</strong>，导致模型无法泛化到目标域的未知样本中。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>解决方案提示</strong>: 在此场景下，通常需要引入正则化技术、冻结底层卷积层参数或使用特定的迁移学习算法（如 Distillation）来抑制过拟合。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 5: 领域适应 - 目标域知识类型 (Knowledge of Target Domain)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_target_knowledge_types.jpg" alt="目标域知识类型"></div>
+            <div class="content-side">
+                <h3>领域适应中的知识获取谱系</h3>
+                <p>该幻灯片定义了领域适应中关于“目标域知识”获取的连续谱系：</p>
+                <ul>
+                    <li><strong>全未标注数据 (Large amount of unlabeled data)</strong>: 纯非监督学习场景。模型仅能通过分布对齐 (Distribution Alignment) 获取目标域特征，完全依赖源域的标签信息。</li>
+                    <li><strong>少量已标注数据 (Little but labeled)</strong>: 半监督学习场景。模型不仅可以进行分布对齐，还能利用少量监督信息对目标域的类别边界进行微调，显著提升分类精度。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>结论</strong>: 目标域知识获取的程度决定了领域适应算法的选择。知识越多（标注越丰富），模型迁移的“软着陆”效果越好。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 6: 领域适应 - 核心思想 (Basic Idea)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_basic_idea.jpg" alt="领域适应核心思想示意"></div>
+            <div class="content-side">
+                <h3>学习忽略非本质特征 (Learn to Ignore Colors)</h3>
+                <p>该幻灯片阐述了领域适应的核心方法论：</p>
+                <ul>
+                    <li><strong>核心问题</strong>: 源域 (Source) 的数字为单色背景，而目标域 (Target) 包含色彩干扰。</li>
+                    <li><strong>目标</strong>: 训练一个特征提取器，迫使模型<strong>忽略背景色彩等“领域干扰项”</strong>，从而使得源域和目标域的数据在深层特征空间中呈现出相同的概率分布 (The same distribution)。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>逻辑总结</strong>: 通过对特征空间分布的强制对齐，模型得以提取出与领域无关 (Domain-invariant) 的类别特征，从而在源域训练后，直接应用于目标域。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 7: 领域对抗训练 (Domain Adversarial Training)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_adversarial_training.jpg" alt="领域对抗训练流程"></div>
+            <div class="content-side">
+                <h3>基于对抗的分布对齐</h3>
+                <p>该幻灯片展示了如何通过对抗手段实现域对齐：</p>
+                <ul>
+                    <li><strong>特征提取器 (Feature Extractor)</strong>: 提取通用特征。</li>
+                    <li><strong>标签预测器 (Label Predictor)</strong>: 基于源域标签监督训练，确保特征具有区分度。</li>
+                    <li><strong>分布可视化</strong>: 右下角的散点图直观展示了源域数据（蓝色点）与目标域数据（红色点）在对抗训练后，在深层特征空间内实现了<strong>高度重合 (Distribution Alignment)</strong>，表明模型已成功消除了域差异。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>技术洞察</strong>: 这种对抗训练方式迫使模型学习到一个共享的、领域无关的特征空间，使得目标域的数据能够被直接映射为对应的分类预测（如识别出“4”）。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 8: 领域对抗训练 - 模型架构 (DANN Architecture)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_dann_model_arch.jpg" alt="DANN 模型架构流程"></div>
+            <div class="content-side">
+                <h3>深入解析：对抗训练流</h3>
+                <p>该幻灯片细化了对抗性领域适应的架构逻辑：</p>
+                <ul>
+                    <li><strong>生成器 (Generator)</strong>: 由 Feature Extractor 构成。它的核心任务不仅是提取分类特征，还要通过对抗学习<strong>学会“欺骗”域判别器 (Fool domain classifier)</strong>。</li>
+                    <li><strong>判别器 (Discriminator)</strong>: 由 Domain Classifier 构成。它的任务是实时判别输入特征是来源于 Source Domain 还是 Target Domain。</li>
+                    <li><strong>训练博弈</strong>: 通过这种博弈，Feature Extractor 会被强制学习到对领域来源不敏感的、具备强类别区分性的通用特征。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 9: 领域对抗训练 - 实验结果 (Experimental Results)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_experimental_results.jpg" alt="领域对抗训练实验结果对比"></div>
+            <div class="content-side">
+                <h3>对抗学习迁移性能评估</h3>
+                <p>本幻灯片汇总了领域对抗训练 (DANN) 在多种经典任务下的迁移表现：</p>
+                <ul>
+                    <li><strong>核心基准</strong>: 对比了“仅在源域训练 (Source Only)”与“领域对抗 (Proposed Approach)”在 MNIST-M、SVHN、MNIST、GTSRB 数据集上的迁移准确率。</li>
+                    <li><strong>性能提升</strong>: 实验数据表明，DANN 显著提升了从 Source 到 Target 的泛化能力（如 MNIST 到 MNIST-M 提升至 81.49%），验证了该方法在跨域迁移任务中的普适性和高效率。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 10: 对抗学习的局限性 (Limitation of Adversarial Training)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_limitation.jpg" alt="对抗学习局限性"></div>
+            <div class="content-side">
+                <h3>仅分布对齐是不够的</h3>
+                <p>该幻灯片指出了单纯使用对抗学习进行特征对齐的局限性：</p>
+                <ul>
+                    <li><strong>决策边界问题</strong>: 左图展示了即便源域 (Source) 与目标域 (Target) 实现了全域对齐，但如果学习到的<strong>决策边界 (Decision Boundary)</strong> 恰好穿过了目标域的高密度区，依然会导致分类错误。</li>
+                    <li><strong>边界距离问题</strong>: 右图展示了若目标域数据距离边界过远，虽然对齐了，但模型难以在边界处做出准确的分类决策。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>深度思考</strong>: 结论表明，不仅要对齐分布，还需要让<strong>决策边界避开目标域的数据密集区</strong>，这引出了“聚类假设”与半监督领域适应等更先进的研究方向。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 11: 决策边界优化 - DIRT-T (Decision-boundary Iterative Refinement)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_dirt_t.jpg" alt="DIRT-T 架构示意"></div>
+            <div class="content-side">
+                <h3>基于熵最小化的边界精炼</h3>
+                <p>针对对抗训练无法保证边界质量的问题，<strong>DIRT-T (Decision-boundary Iterative Refinement with a Teacher)</strong> 提出了更优的解决方案：</p>
+                <ul>
+                    <li><strong>核心思想</strong>: 最小化预测结果的<strong>熵 (Entropy Minimization)</strong>。</li>
+                    <li><strong>工作机制</strong>: 
+                        <ul>
+                            <li><strong>低熵路径 (Small entropy)</strong>: 当模型对未标注数据有明确分类信心时（分布集中在某一类别），予以保留/强化（标记为正确）。</li>
+                            <li><strong>高熵路径 (Large entropy)</strong>: 当模型信心不足时（分布均匀，不确定性大），作为迭代优化的重点，迫使模型进一步精炼决策边界。</li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>技术优势</strong>: DIRT-T 通过迭代式细化，确保决策边界不穿越数据密集区，从而在无监督领域适应场景下实现更鲁棒的迁移效果。文献参考: <a href="https://arxiv.org/abs/1802.08735" target="_blank">arXiv:1802.08735</a>。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 12: 展望 - 领域适应演进 (Domain Adaptation Outlook)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_outlook.jpg" alt="领域适应演进示意"></div>
+            <div class="content-side">
+                <h3>从封闭集到通用领域适应</h3>
+                <p>该幻灯片展示了领域适应技术随场景复杂度增加的演进路径：</p>
+                <ul>
+                    <li><strong>Closed Set DA</strong>: 源域与目标域类别集合完全一致。</li>
+                    <li><strong>Partial DA</strong>: 源域包含目标域类别的超集。</li>
+                    <li><strong>Open Set DA</strong>: 双方均存在对方不包含的未知类别。</li>
+                    <li><strong>Universal DA</strong>: 处理完全不受限的类别集，是领域适应研究的前沿挑战。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>技术趋势</strong>: 工业界正逐步从 Closed Set 向 Open Set 及 Universal DA 迈进，以应对真实驾驶场景中未知物体或类别分布动态变化的复杂性。参考：<a href="https://openaccess.thecvf.com/content_CVPR_2019/html/You_Universal_Domain_Adaptation_CVPR_2019_paper.html" target="_blank">CVPR 2019 Universal DA Paper</a>。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 13 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 13: 领域适应 - 目标域知识获取连续谱系 (Extended Knowledge Types)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_target_knowledge_types_extended.jpg" alt="目标域知识类型演进图"></div>
+            <div class="content-side">
+                <h3>从“无”到“有”的知识获取过程</h3>
+                <p>该幻灯片进一步完善了领域适应中目标域知识获取的连续谱系：</p>
+                <ul>
+                    <li><strong>少量的无标注数据 (Little & unlabeled)</strong>: 极具挑战性的场景，通常依赖于生成模型或极其强力的先验假设。</li>
+                    <li><strong>大量的无标注数据 (Large amount of unlabeled data)</strong>: 标准无监督领域适应 (UDA) 的研究重点。</li>
+                    <li><strong>少量有标注数据 (Little but labeled)</strong>: 半监督领域适应，提供了确定的类别分布约束，迁移效果显著优于无监督场景。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>总结</strong>: 这条“知识获取轴线”展示了迁移难度与标注成本的权衡。研究者需根据实际业务中可获取的标注资源，在不同的迁移技术方案中做出最优选择。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 14 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 14: 领域适应 - 目标域知识获取全谱系 (Full Knowledge Spectrum)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_knowledge_full_spectrum.jpg" alt="目标域知识获取全谱系"></div>
+            <div class="content-side">
+                <h3>完整知识获取场景演进</h3>
+                <p>该幻灯片给出了领域适应中目标域知识获取的完整演进图：</p>
+                <ul>
+                    <li><strong>窝不知道 (Unknown/Empty)</strong>: 此时模型对目标域信息完全匮乏，迁移风险极大。</li>
+                    <li><strong>少量无标注数据 (Little & unlabeled)</strong>: 极具挑战性的场景，通常依赖于生成模型或极其强力的先验假设。</li>
+                    <li><strong>大量无标注数据 (Large amount of unlabeled data)</strong>: 标准无监督领域适应 (UDA) 的研究重点。</li>
+                    <li><strong>少量有标注数据 (Little but labeled)</strong>: 半监督领域适应，提供了确定的类别分布约束，迁移效果显著优于无监督场景。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>总结</strong>: 这条“知识获取轴线”展示了迁移难度与标注成本的权衡。研究者需根据实际业务中可获取的标注资源，在不同的迁移技术方案中做出最优选择。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 15 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 15: 领域泛化 (Domain Generalization)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_domain_generalization.jpg" alt="领域泛化示意"></div>
+            <div class="content-side">
+                <h3>从领域适应到领域泛化</h3>
+                <p>该幻灯片展示了比领域适应 (Domain Adaptation) 要求更高的 <strong>领域泛化 (Domain Generalization, DG)</strong>：</p>
+                <ul>
+                    <li><strong>核心定义</strong>: 在训练时，模型只能接触到有限的源域数据；在测试时，模型必须直接处理完全未见过的目标域数据，且<strong>测试期间无法访问目标域的任何数据</strong>。</li>
+                    <li><strong>直观演示</strong>: 训练阶段包含真实照片、草图、水彩画等多种数据类型，通过融合多种风格，模型学会了提取“猫”与“狗”的本质特征，从而在测试阶段对陌生的卡通风格图像也能实现准确分类。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>技术洞察</strong>: Domain Generalization 不寻求对齐（因为测试域不可知），而是寻求<strong>学习到更加鲁棒、抽象的语义特征</strong>。参考链接: <a href="https://ieeexplore.ieee.org/document/8578664" target="_blank">IEEE Explore</a>。
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

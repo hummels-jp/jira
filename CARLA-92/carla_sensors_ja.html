@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CARLA シミュレーション教育デモ - Synkrotron</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .slide { margin-bottom: 80px; padding-bottom: 60px; border-bottom: 2px solid #ddd; }
+        .slide-header { border-bottom: 3px solid #0056b3; margin-bottom: 30px; padding-bottom: 15px; }
+        .slide-header h1 { margin: 0; color: #0056b3; font-size: 2em; }
+        .container { display: flex; gap: 40px; align-items: flex-start; }
+        .image-side { flex: 1; }
+        .content-side { flex: 1; }
+        img { width: 100%; border-radius: 8px; box-shadow: 0 6px 10px rgba(0,0,0,0.15); }
+        .tech-qa { background: #f4f7f6; padding: 20px; border-left: 6px solid #0056b3; border-radius: 6px; margin-top: 20px; }
+        .slide-content-text { font-size: 1.2em; }
+        ul { padding-left: 25px; }
+        li { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+    <!-- Slide 17 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 17: Synkrotron について</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/synkrotron_about.jpg" alt="Synkrotron について"></div>
+            <div class="content-side slide-content-text">
+                <h3>会社概要</h3>
+                <p>Synkrotronは、<strong>チューリング賞受賞者である姚期智 (Andrew Chi-Chih Yao) 院士</strong>によって設立され、先端技術の最前線に拠点を置いています。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 18 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 18: CARLA 唯一の理事メンバー</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_consortium_status.jpg" alt="CARLA理事"></div>
+            <div class="content-side slide-content-text">
+                <h3>コアエコシステムのリーダーシップ</h3>
+                <ul>
+                    <li><strong>唯一の理事ステータス</strong>: CARLA の中国における唯一の理事メンバー企業です。</li>
+                    <li><strong>コミュニティの影響力</strong>: 9,500以上のStars、200万回以上のダウンロード実績。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 1 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 1: CARLA ベースのシミュレーションデータ拡張</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_simulation_overview.jpg" alt="CARLA シミュレーション"></div>
+            <div class="content-side slide-content-text">
+                <div class="tech-qa">
+                    <h3>コアバリュー</h3>
+                    <p>仮想環境において、認識モデルのトレーニングと検証を加速させます。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 2: 目次 (Table of Contents)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_toc.jpg" alt="目次"></div>
+            <div class="content-side slide-content-text">
+                <h3>カリキュラム構成</h3>
+                <ul>
+                    <li><strong>01 背景</strong></li>
+                    <li><strong>02 シミュレーションデータを用いた認識アルゴリズムの学習</strong></li>
+                    <li><strong>03 今後の展望</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 3: 自動運転センサー構成</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_sensors_config.jpg" alt="センサー構成"></div>
+            <div class="content-side slide-content-text">
+                <h3>センサーアレイの展開戦略</h3>
+                <p>マルチセンサーフュージョンにより単一障害点を排除：Lidar/Radar、カメラ、超音波センサーによる協調カバレッジ。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 4: 背景 - システムアーキテクチャ</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_background_architecture.jpg" alt="システムアーキテクチャ"></div>
+            <div class="content-side slide-content-text">
+                <h3>ソフトウェアテクノロジースタック</h3>
+                <p>認識、測位、計画、制御の完全なクローズドループ。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 5: 教師あり学習 - データフロー</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_supervised_learning.jpg" alt="教師あり学習"></div>
+            <div class="content-side slide-content-text">
+                <h3>データクローズドループ</h3>
+                <p>クリーニング、アノテーション、拡張作業が開発サイクルの80%を占めています。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 6: アノテーション効率の比較</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_labeling_efficiency.jpg" alt="アノテーション効率"></div>
+            <div class="content-side slide-content-text">
+                <h3>コストの差異</h3>
+                <p>セマンティックセグメンテーション（1.5時間）は、物体検出（20分）に比べて遥かに多くの時間を要します。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 7: センサー出力データフォーマット</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_sensor_output.jpg" alt="センサー出力"></div>
+            <div class="content-side slide-content-text">
+                <h3>マルチモーダル認識特性</h3>
+                <p>検出（Detection）、深度（Depth）、RGB、オプティカルフロー（Optical Flow）、セグメンテーション（Segmentation）等を含みます。</p>
+                <div class="slide-qa-text" style="margin-top: 15px; background: #eef; padding: 10px; border-radius: 4px; border-left: 4px solid #0056b3; font-size: 0.85em;">
+                    <strong>Q1: CARLA で一般的なカメラタイプとそのデータ内容は？</strong><br>
+                    A: 主なタイプは以下の通りです：<br>
+                    1. <strong>sensor.camera.rgb</strong>: 標準的なカラー画像を出力し、3チャネルのRGBデータを含みます。<br>
+                    2. <strong>sensor.camera.depth</strong>: 深度情報を出力し、各ピクセルが視点からの距離を保持し、通常はグレースケール値に変換されます。<br>
+                    3. <strong>sensor.camera.semantic_segmentation</strong>: ピクセルレベルのクラスラベルを出力し、道路、車、人など、異なる物体を色分けして表現します。<br>
+                    4. <strong>sensor.camera.instance_segmentation</strong>: セマンティックラベルに加えて、同一クラス内の異なるインスタンスIDをさらに区別します。<br>
+                    5. <strong>sensor.camera.optical_flow</strong>: フレーム間の動きを計算するために、各ピクセルの変位ベクトルを出力します。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 8: センサーライフサイクル</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_sensor_lifecycle.jpg" alt="センサーライフサイクル"></div>
+            <div class="content-side slide-content-text">
+                <h3>仕様とアーキテクチャ</h3>
+                <p>ライフサイクル：Setting → Spawning → Listening → Destroy。複数のクライアントが並行処理可能です。</p>
+                <div class="slide-qa-text" style="margin-top: 15px; background: #eef; padding: 10px; border-radius: 4px; border-left: 4px solid #0056b3; font-size: 0.9em;">
+                    <strong>Q1: センサーの4つのライフサイクルステージの役割は？</strong><br>
+                    A: 各ステージの機能は以下の通りです：<br>
+                    1. <strong>Setting</strong>: ブループリントライブラリをロードし、FOV、解像度、歪みなど、センサー固有のパラメータを設定します。<br>
+                    2. <strong>Spawning</strong>: センサーをインスタンス化し、車両に取り付け、空間位置と物理学的なバインドを完了させます。<br>
+                    3. <strong>Listening</strong>: データ転送チャンネルを起動し、コールバック関数を通じてセンサーがリアルタイムで収集するデータストリームを受信します。<br>
+                    4. <strong>Destroy</strong>: シミュレーション終了後、サーバーからセンサーを削除し、メモリと計算リソースを解放します。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 9: センサー設定と GUI</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_sensor_settings_ui.jpg" alt="GUI設定"></div>
+            <div class="content-side slide-content-text">
+                <h3>ビジュアルエンジニアリング</h3>
+                <p>グラフィカルユーザーインターフェースにより、センサーパラメータの柔軟な調整をサポートします。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 10: 合成データシミュレーション</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_synthetic_data.jpg" alt="合成データ"></div>
+            <div class="content-side slide-content-text">
+                <h3>合成データの利点</h3>
+                <p>低コスト、アノテーションの自動生成、シーンのカスタマイズが可能です。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11 -->
+    <div class="slide">
+        <div class="slide-header"><h1><a href="domain_adaptation_ja.html" style="text-decoration: none; color: #0056b3;">Slide 11: ドメインシフト (Domain Shift)</a></h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_domain_shift.jpg" alt="ドメインシフト"></div>
+            <div class="content-side slide-content-text">
+                <h3>重要な課題</h3>
+                <p>ソースドメインとターゲットドメインの間でデータ分布が一致せず、ドメイン適応が困難になります。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12 -->
+    <div class="slide">
+        <div class="slide-header"><h1><a href="domain_adaptation_ja.html" style="text-decoration: none; color: #0056b3;">Slide 12: ドメイン適応 (Domain Adaptation)</a></h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_da_classification.jpg" alt="ドメイン適応技術"></div>
+            <div class="content-side slide-content-text">
+                <h3>技術パラダイム</h3>
+                <p>DA（ドメイン適応）技術の分類と、教師なしDAの研究方向。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 13 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 13: ドメイン適応 - 数学的モデリング</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_domain_adaptation_math.jpg" alt="数学的原理"></div>
+            <div class="content-side slide-content-text">
+                <h3>コア理論</h3>
+                <p>特徴表現学習と分布 P → Q のアライメント原理。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 14 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 14: ドメイン適応 - DANN</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_dann_architecture.jpg" alt="DANNネットワーク"></div>
+            <div class="content-side slide-content-text">
+                <h3>教師なし手法</h3>
+                <p>敵対的トレーニングを通じてドメイン不変特徴を学習し、Gradient Reversal Layer (GRL) を用いて特徴空間をアライメントさせます。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 15 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 15: 実践ケース - DANN の検証</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_practical_case.jpg" alt="検証効果"></div>
+            <div class="content-side slide-content-text">
+                <h3>大幅な性能向上</h3>
+                <p>車両検出のAPが2.4倍に向上し、ドメインアライメントの産業的価値が証明されました。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 16 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 16: 今後の展望 - ドメインギャップ</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_future_outlook.jpg" alt="今後の展望"></div>
+            <div class="content-side slide-content-text">
+                <h3>将来の方向性</h3>
+                <p>タスク適応、スタイル拡張、および NeRF による高忠実度再構築など。</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

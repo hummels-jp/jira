@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ドメイン適応 (Domain Adaptation) - 李宏毅 (Hung-yi Lee) 教授特別講義</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .slide { margin-bottom: 60px; padding-bottom: 40px; border-bottom: 1px solid #eee; }
+        .slide-header { border-bottom: 2px solid #0056b3; margin-bottom: 20px; padding-bottom: 10px; }
+        .slide-header h1 { margin: 0; color: #0056b3; font-size: 1.8em; }
+        .container { display: flex; gap: 20px; align-items: flex-start; }
+        .image-side { flex: 1; }
+        .content-side { flex: 1; }
+        img { width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .tech-qa, .tech-quote { background: #f4f7f6; padding: 15px; border-left: 5px solid #0056b3; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <!-- Slide 1 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 1: ドメイン適応 (Domain Adaptation)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_title.jpg" alt="ドメイン適応カバー"></div>
+            <div class="content-side">
+                <h3>講義の背景</h3>
+                <p>本スライドは、<strong>李宏毅 (Hung-yi Lee)</strong> 教授による深層学習分野における <strong>Domain Adaptation (ドメイン適応)</strong> 特別講義から抜粋されたものです。</p>
+                <div class="tech-qa">
+                    <strong>主要トピック</strong>: データの分布が異なる（ドメインシフト）状況下で、転移学習を通じて、ソースドメイン（Source Domain）で学習したモデルの知識を、ターゲットドメイン（Target Domain）へ効果的に転移させる手法について学びます。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 2: ドメインシフト (Domain Shift) の基礎例</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_ml_training_testing.jpg" alt="ML 学習とテストの差の概略"></div>
+            <div class="content-side">
+                <h3>ML における学習とテストのギャップ</h3>
+                <p>本スライドでは、MNIST 手書き数字分類を例に、典型的な機械学習のボトルネックを示しています：</p>
+                <ul>
+                    <li><strong>学習データ (Training Data)</strong>: シンプルな黒背景に白文字の数字（4、0、1など）。</li>
+                    <li><strong>テストデータ (Testing Data)</strong>: ノイズを含んだり、筆致が大きく異なる複雑な背景や変形体（2、4、2など）。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>主要な課題</strong>: 学習セットで99.5%という非常に高い精度を達成しても、学習データとテストデータの分布が大きく異なる場合、ターゲットドメインでのモデルの性能は大幅に低下します。引用文献：<a href="http://proceedings.mlr.press/v37/ganin15.pdf" target="_blank">Ganin et al. (2015)</a>。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 3: ドメインシフト - ラベル分布の偏差 (Label Shift)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_label_shift.jpg" alt="ラベル分布の偏差"></div>
+            <div class="content-side">
+                <h3>画像だけでなく、ラベル分布もシフトする</h3>
+                <p>視覚的なドメインの違いに加えて、学習データとテストデータの<strong>ラベル分布 (Label Distribution)</strong> にも大きな差異が生じる可能性があります：</p>
+                <ul>
+                    <li><strong>学習データ</strong>: 各ラベル（クラス1〜5）のサンプル分布が均衡。</li>
+                    <li><strong>テストデータ</strong>: データに重大な偏り（例：クラス1のサンプル比率が極端に高い）が存在。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>深刻な影響</strong>: 特徴抽出でうまく機能していても、ラベル分布のシフト (Label Shift) に対処していない場合、モデルの予測は“多数派クラス”に引きずられ、少数派クラスに対する堅牢性が崩壊します。例えば、同じ数字「0」という特徴でも、データドメインが異なれば、意味合いが全く異なる場合があります。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 4: ドメイン適応 - 半教師あり学習戦略 (Semi-supervised DA)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_semi_supervised.jpg" alt="半教師ありドメイン適応"></div>
+            <div class="content-side">
+                <h3>少量のラベル付きデータによるファインチューニング (Fine-tuning)</h3>
+                <p>図は、ターゲットドメインに<strong>少量のラベル付きデータ</strong>が存在する場合の適応戦略を示しています：</p>
+                <ul>
+                    <li><strong>基本的な考え方</strong>: ソースドメインの大規模なラベル付きデータで事前学習を行い、その後ターゲットドメインの少量のサンプルでファインチューニングします。</li>
+                    <li><strong>技術的課題</strong>: ターゲットドメインのサンプル数が非常に少ないため、モデルは微調整中に<strong>過学習 (Overfitting)</strong> を起こしやすく、未知のデータに対する汎化能力が失われがちです。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>解決策のヒント</strong>: このシナリオでは、正則化技術、畳み込み層の凍結、または蒸留 (Distillation) 等の転移学習アルゴリズムを導入して過学習を抑制するのが一般的です。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 5: ドメイン適応 - ターゲットドメインの知識タイプ (Knowledge of Target Domain)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_target_knowledge_types.jpg" alt="ターゲットドメインの知識タイプ"></div>
+            <div class="content-side">
+                <h3>ドメイン適応における知識獲得の連続体</h3>
+                <p>本スライドは、ターゲットドメインの“知識”獲得に関する連続体（スペクトラム）を定義しています：</p>
+                <ul>
+                    <li><strong>ラベルなしデータ (Large amount of unlabeled data)</strong>: 純粋な教師なし学習。モデルは分布合わせ (Distribution Alignment) を通じてのみターゲットドメインの特徴を学習でき、ソースドメインのラベル情報に全面的に依存します。</li>
+                    <li><strong>少量のラベル付きデータ (Little but labeled)</strong>: 半教師あり学習。分布合わせに加え、少量のラベル情報でクラス境界を調整でき、分類精度を大幅に高められます。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>結論</strong>: ターゲットドメインからの知識獲得の度合いによって、適切なアルゴリズムが異なります。知識が豊富（ラベルが多い）ほど、モデルの転移は成功しやすくなります。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 6: ドメイン適応 - 基本的なアイデア (Basic Idea)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_basic_idea.jpg" alt="ドメイン適応の核心的アイデア"></div>
+            <div class="content-side">
+                <h3>本質的でない特徴を無視する (Learn to Ignore Colors)</h3>
+                <p>本スライドでは、ドメイン適応の核心的方法論を述べています：</p>
+                <ul>
+                    <li><strong>主要課題</strong>: ソースドメインは単色の背景ですが、ターゲットドメインには色という干渉が含まれます。</li>
+                    <li><strong>目的</strong>: 背景色などの“ドメインノイズ”を無視するようにモデルを強制する特徴抽出器を学習させます。結果として、ソースとターゲット双方のデータを深層特徴空間で同じ確率分布になるように整えます。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>ロジックのまとめ</strong>: 特徴空間の分布を一致させることで、モデルはドメインに依存しない（ドメイン不変）クラス特徴を抽出し、ソースで学習したものをターゲットへ直接適用できるようになります。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 7: ドメイン敵対的トレーニング (Domain Adversarial Training)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_adversarial_training.jpg" alt="ドメイン敵対的トレーニング"></div>
+            <div class="content-side">
+                <h3>敵対学習による分布アライメント</h3>
+                <p>本スライドでは、敵対的手法によるドメインアライメントを示しています：</p>
+                <ul>
+                    <li><strong>特徴抽出器 (Feature Extractor)</strong>: 共通的な特徴を抽出します。</li>
+                    <li><strong>ラベル予測器 (Label Predictor)</strong>: ソースドメインのラベルにより教師あり学習を行い、特徴の識別力を確保します。</li>
+                    <li><strong>分布の可視化</strong>: 右下の散布図は、敵対的学習によって、ソース（青点）とターゲット（赤点）が深層特徴空間で<strong>高度に重なり合っている（Distribution Alignment）</strong>様子を可視化しており、ドメイン間の差が解消されたことを示します。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>技術的知見</strong>: この敵対的トレーニングは、領域に関係なく共有される特徴空間の学習を促進します。結果、ターゲットドメインのデータが直接クラス分類（「4」といった判定）を可能にします。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 8: ドメイン敵対的トレーニング - モデルアーキテクチャ (DANN Architecture)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_dann_model_arch.jpg" alt="DANN モデルアーキテクチャ"></div>
+            <div class="content-side">
+                <h3>詳細解説：敵対的学習フロー</h3>
+                <p>本スライドは、敵対的ドメイン適応のアーキテクチャを詳細化しています：</p>
+                <ul>
+                    <li><strong>生成器 (Generator)</strong>: 特徴抽出器が構成します。分類用特徴を抽出するだけでなく、ドメイン判別器を<strong>騙す (Fool domain classifier)</strong> ことも任務です。</li>
+                    <li><strong>判別器 (Discriminator)</strong>: ドメイン分類器が構成します。入力データがソースからか、ターゲットからかを瞬時に判断します。</li>
+                    <li><strong>学習の駆け引き</strong>: この駆け引きを通じ、特徴抽出器はドメインソースに依存しない、強力な分類性能を備えた普遍的な特徴を学習します。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 9: ドメイン敵対的トレーニング - 実験結果 (Experimental Results)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_experimental_results.jpg" alt="実験結果比較"></div>
+            <div class="content-side">
+                <h3>敵対学習の転移性能評価</h3>
+                <p>本スライドでは、DANN が様々な古典的タスクでどのように機能したかを要約しています：</p>
+                <ul>
+                    <li><strong>コアベンチマーク</strong>: 「ソースのみで学習 (Source Only)」と「提案手法 (Proposed Approach)」を MNIST-M、SVHN、MNIST、GTSRB 等で比較。</li>
+                    <li><strong>性能向上</strong>: MNIST から MNIST-M への適応率が 81.49% に上昇するなど、実験データは DANN がクロスドメイン転移において汎用性と高効率を兼ね備えていることを裏付けています。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 10: 敵対的学習の限界 (Limitation of Adversarial Training)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_limitation.jpg" alt="敵対的学習の限界"></div>
+            <div class="content-side">
+                <h3>分布合わせだけでは不十分</h3>
+                <p>本スライドは、単なる敵対学習による特徴合わせの限界を指摘しています：</p>
+                <ul>
+                    <li><strong>決定境界の問題</strong>: 左図が示す通り、ソースとターゲットで全ドメイン合わせができていても、<strong>決定境界 (Decision Boundary)</strong> がターゲットドメインの高密度領域を横切っている場合、依然として誤分類が発生します。</li>
+                    <li><strong>境界距離の問題</strong>: 右図では、ターゲットデータが境界から遠すぎると、一致していてもモデルが境界付近で適切な分類判断を下せません。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>洞察</strong>: 単なる分布合わせではなく、決定境界をターゲットの高密度領域から遠ざける必要があることが示唆され、「クラスター仮定」や半教師ありドメイン適応といったさらなる研究が求められます。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 11: 決定境界の最適化 - DIRT-T</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_dirt_t.jpg" alt="DIRT-T アーキテクチャ"></div>
+            <div class="content-side">
+                <h3>エントロピー最小化による境界の洗練</h3>
+                <p>敵対学習における境界品質の問題を解消するため、<strong>DIRT-T (Decision-boundary Iterative Refinement with a Teacher)</strong> が提案されました：</p>
+                <ul>
+                    <li><strong>基本的思想</strong>: 予測結果の<strong>エントロピー (Entropy Minimization)</strong> を最小化する。</li>
+                    <li><strong>メカニズム</strong>: 
+                        <ul>
+                            <li><strong>低エントロピー (Small entropy)</strong>: モデルが確信を持って分類できた場合、そのまま強化・維持。</li>
+                            <li><strong>高エントロピー (Large entropy)</strong>: モデルの確信度が低い（不確定）場合、そこを重点的に繰り返し最適化し、境界を精緻化する。</li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>利点</strong>: 反復的な洗練により、決定境界がデータ密集エリアを通らないようにし、教師なしドメイン適応において堅牢な転移を実現します。文献: <a href="https://arxiv.org/abs/1802.08735" target="_blank">arXiv:1802.08735</a>。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 12: 展望 - ドメイン適応の進化</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_outlook.jpg" alt="ドメイン適応の進化"></div>
+            <div class="content-side">
+                <h3>クローズドセットから汎用的ドメイン適応へ</h3>
+                <p>本スライドは、技術の複雑さに応じた進化経路を示しています：</p>
+                <ul>
+                    <li><strong>Closed Set DA</strong>: 全クラス集合が完全に一致。</li>
+                    <li><strong>Partial DA</strong>: ソースがターゲットクラスのスーパーセットを含む。</li>
+                    <li><strong>Open Set DA</strong>: 双方に未知のクラスが存在。</li>
+                    <li><strong>Universal DA</strong>: 制約のないクラス集合を扱う、最先端の研究分野。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>トレンド</strong>: 産業界は、実世界の複雑な運転シナリオにおける動的な未知物体や分布変化に対応するため、Closed Set から Open Set、さらには Universal DA へと移行しています。参考：<a href="https://openaccess.thecvf.com/content_CVPR_2019/html/You_Universal_Domain_Adaptation_CVPR_2019_paper.html" target="_blank">CVPR 2019 Universal DA Paper</a>。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 13 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 13: ドメイン適応 - 知識獲得の拡張スペクトラム</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_target_knowledge_types_extended.jpg" alt="知識獲得の発展図"></div>
+            <div class="content-side">
+                <h3>“無”から“有”へ至る知識獲得プロセス</h3>
+                <p>本スライドは、知識獲得の連続体をさらに洗練させています：</p>
+                <ul>
+                    <li><strong>少量のラベルなし (Little & unlabeled)</strong>: 生成モデルや強力な事前仮定が必要な挑戦的シナリオ。</li>
+                    <li><strong>大量のラベルなし (Large amount of unlabeled data)</strong>: 標準的な教師なしドメイン適応 (UDA) の重点。</li>
+                    <li><strong>少量のラベルあり (Little but labeled)</strong>: 半教師あり学習。確実なクラス分布制約を提供し、適応性能が大幅に向上。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>まとめ</strong>: この軸は「転移難易度」と「ラベルコスト」のトレードオフを示しており、実際の業務で入手可能なラベル数に応じて適切な技術方案を選択する必要があります。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 14 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 14: ドメイン適応 - 知識獲得のフルスペクトラム</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_knowledge_full_spectrum.jpg" alt="知識獲得の全スペクトラム"></div>
+            <div class="content-side">
+                <h3>完全なる知識獲得シナリオの変遷</h3>
+                <p>ドメイン適応における知識獲得の完全な変遷を示しています：</p>
+                <ul>
+                    <li><strong>分からない (Unknown/Empty)</strong>: ターゲット情報の完全欠如。</li>
+                    <li><strong>少量のラベルなし (Little & unlabeled)</strong>: 生成モデルが必要な高難度ケース。</li>
+                    <li><strong>大量のラベルなし (Large amount of unlabeled data)</strong>: 主流のUDA研究。</li>
+                    <li><strong>少量のラベルあり (Little but labeled)</strong>: 半教師ありドメイン適応。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>まとめ</strong>: 「知識獲得の軸」は、転移難易度とアノテーション費用のトレードオフを明確化します。実業務でのリソースに基づき最適なアプローチを選択してください。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 15 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 15: ドメイン汎化 (Domain Generalization)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/da_domain_generalization.jpg" alt="ドメイン汎化"></div>
+            <div class="content-side">
+                <h3>ドメイン適応からドメイン汎化へ</h3>
+                <p>本スライドは、DAよりも要求が厳しい <strong>ドメイン汎化 (Domain Generalization, DG)</strong> についてです：</p>
+                <ul>
+                    <li><strong>定義</strong>: 学習時はソースデータのみ。テスト時には<strong>一切ターゲットデータにアクセスできない</strong>未見ドメインを扱う。</li>
+                    <li><strong>直感</strong>: 写真、スケッチ、水彩画など多種のスタイルを融合して学習し、未知のキャラクター風画像でも「猫」や「犬」を識別可能にします。</li>
+                </ul>
+                <div class="tech-qa">
+                    <strong>洞察</strong>: ドメイン汎化はアライメントを求めず、より頑健で抽象的な意味的特徴の抽出を追求します。参考: <a href="https://ieeexplore.ieee.org/document/8578664" target="_blank">IEEE Explore</a>。
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+    <div class="slide">
+        <h2>Slide 26: Lattice Planner 架构概览</h2>
+        <img src="images/lattice_planner_pipeline.jpg" alt="Lattice Planner Pipeline">
+        <div class="content-box">
+            <p class="slide-content-text">此图详细梳理了基于 Lattice Planner 的自动驾驶轨迹规划流水线，展示了从环境感知输入到最终轨迹输出的核心逻辑。</p>
+            <div class="slide-qa-text">
+                <p><strong>Q: 简述 Lattice Planner 的核心流水线架构及其数据流向？</strong><br>
+                A: 系统通过分层架构实现复杂动态环境下的轨迹解耦求解：<br>
+                1. <strong>坐标系转换 (Frenet)</strong>: 将笛卡尔坐标系映射至 Frenet 坐标系 (S, L)，实现道路“拉直”，降低规划计算维度。<br>
+                2. <strong>障碍物处理 (ST/SL 映射)</strong>: 将感知到的障碍物信息解析并投影至 ST/SL 空间，为后续碰撞检测提供时空基准。<br>
+                3. <strong>轨迹生成与校验</strong>:<br>
+                - <strong>生成</strong>: 基于运动约束与目标代价函数，分横向 (路径) 与纵向 (速度) 进行规划，随后通过代价评价体系进行融合。<br>
+                - <strong>校验</strong>: 核心环节，包括车辆运动学可行性校验与障碍物碰撞检测，确保输出轨迹既符合车辆动力学特性，又具备行驶安全性。</p>
+            </div>
+        </div>
+    </div>

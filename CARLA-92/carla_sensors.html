@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CARLA 仿真教学演示 - Synkrotron</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .slide { margin-bottom: 80px; padding-bottom: 60px; border-bottom: 2px solid #ddd; }
+        .slide-header { border-bottom: 3px solid #0056b3; margin-bottom: 30px; padding-bottom: 15px; }
+        .slide-header h1 { margin: 0; color: #0056b3; font-size: 2em; }
+        .container { display: flex; gap: 40px; align-items: flex-start; }
+        .image-side { flex: 1; }
+        .content-side { flex: 1; }
+        img { width: 100%; border-radius: 8px; box-shadow: 0 6px 10px rgba(0,0,0,0.15); }
+        .tech-qa { background: #f4f7f6; padding: 20px; border-left: 6px solid #0056b3; border-radius: 6px; margin-top: 20px; }
+        .slide-content-text { font-size: 1.2em; }
+        .slide-qa-text { font-size: 0.9em; }
+        ul { padding-left: 25px; }
+        li { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+    <!-- Slide 17 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 17: 关于深信科创 (About Synkrotron)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/synkrotron_about.jpg" alt="关于深信科创"></div>
+            <div class="content-side slide-content-text">
+                <h3>公司概况</h3>
+                <p>深信科创由<strong>姚期智院士</strong>（图灵奖获得者）孵化，总部位于科技前沿。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 18 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 18: CARLA 唯一理事单位</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_consortium_status.jpg" alt="CARLA理事"></div>
+            <div class="content-side slide-content-text">
+                <h3>核心生态领导力</h3>
+                <ul>
+                    <li><strong>唯一理事地位</strong>：CARLA 在中国唯一理事单位。</li>
+                    <li><strong>社区影响力</strong>：9500+ Stars，200 万+ 下载。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 1 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 1: 基于 CARLA 的仿真数据增强</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_simulation_overview.jpg" alt="CARLA 仿真"></div>
+            <div class="content-side slide-content-text">
+                <div class="tech-qa">
+                    <h3>核心价值</h3>
+                    <p>在虚拟环境中加速感知模型训练与验证。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 2: 目录 (Table of Contents)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_toc.jpg" alt="目录页面"></div>
+            <div class="content-side slide-content-text">
+                <h3>课程安排</h3>
+                <ul>
+                    <li><strong>01 背景</strong></li>
+                    <li><strong>02 基于仿真数据的感知算法训练</strong></li>
+                    <li><strong>03 展望</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 3: 自动驾驶传感器配置</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_sensors_config.jpg" alt="传感器配置"></div>
+            <div class="content-side slide-content-text">
+                <h3>传感器阵列部署策略</h3>
+                <p>多传感器融合消除单点失效：Lidar/Radar、Camera、Ultrasound协同覆盖。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 4: 背景 - 系统架构</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_background_architecture.jpg" alt="系统架构"></div>
+            <div class="content-side slide-content-text">
+                <h3>软件技术链</h3>
+                <p>感知、定位、规划与控制的完整闭环。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 5: 监督学习 - 数据流程</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_supervised_learning.jpg" alt="监督学习"></div>
+            <div class="content-side slide-content-text">
+                <h3>数据闭环</h3>
+                <p>清洗、标注、增强占据了研发周期 80% 的时间。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 6: 标注效率对比</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_labeling_efficiency.jpg" alt="标注效率"></div>
+            <div class="content-side slide-content-text">
+                <h3>成本差异</h3>
+                <p>语义分割（1.5小时）远高于目标检测（20分钟）。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 7: 传感器数据格式</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_sensor_output.jpg" alt="传感器输出"></div>
+            <div class="content-side slide-content-text">
+                <h3>感知特征</h3>
+                <p>包含 Detection、Depth、RGB、Optical Flow、Segmentation。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 8: 传感器生命周期</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_sensor_lifecycle.jpg" alt="传感器生命周期"></div>
+            <div class="content-side slide-content-text">
+                <h3>规范与架构</h3>
+                <p>Setting → Spawning → Listening → Destroy，多客户端并行处理。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 9: 传感器设置与 GUI</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_sensor_settings_ui.jpg" alt="GUI配置"></div>
+            <div class="content-side slide-content-text">
+                <h3>可视化工程</h3>
+                <p>图形化界面支持传感器参数灵活调整。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 10: 仿真合成数据</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_synthetic_data.jpg" alt="合成数据"></div>
+            <div class="content-side slide-content-text">
+                <h3>合成数据优势</h3>
+                <p>低成本、标注自动生成、场景可定制。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 11: 领域差异 (Domain Shift)</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_domain_shift.jpg" alt="领域差异"></div>
+            <div class="content-side slide-content-text">
+                <h3>关键痛点</h3>
+                <p>源域与目标域特征分布不一致，导致迁移难度大。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12 -->
+    <div class="slide">
+        <div class="slide-header"><h1><a href="domain_adaptation.html" style="text-decoration: none; color: #0056b3;">Slide 12: 领域适应 (Domain Adaptation)</a></h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_da_classification.jpg" alt="领域适应技术"></div>
+            <div class="content-side slide-content-text">
+                <h3>技术范式</h3>
+                <p>DA 技术分类及非监督 DA 核心研究方向。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 13 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 13: 领域适应 - 数学建模</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_domain_adaptation_math.jpg" alt="数学原理"></div>
+            <div class="content-side slide-content-text">
+                <h3>核心理论</h3>
+                <p>特征表示学习与分布 P → Q 对齐原理。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 14 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 14: 领域适应 - DANN</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_dann_architecture.jpg" alt="DANN网络"></div>
+            <div class="content-side slide-content-text">
+                <h3>非监督方法</h3>
+                <p>对抗训练学习域不变特征，利用梯度反转层 (GRL) 对齐特征空间。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 15 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 15: 实践案例 - DANN 验证</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_practical_case.jpg" alt="验证效果"></div>
+            <div class="content-side slide-content-text">
+                <h3>显著性能提升</h3>
+                <p>车辆检测 AP 提升 2.4 倍，证明了领域对齐的工业价值。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 16 -->
+    <div class="slide">
+        <div class="slide-header"><h1>Slide 16: 展望 - 领域 Gap</h1></div>
+        <div class="container">
+            <div class="image-side"><img src="images/carla_future_outlook.jpg" alt="未来展望"></div>
+            <div class="content-side slide-content-text">
+                <h3>未来方向</h3>
+                <p>任务迁移、风格增强及 NeRF 高保真重建。</p>
+                <div class="slide-qa-text" style="margin-top: 15px; background: #eef; padding: 10px; border-radius: 4px; border-left: 4px solid #0056b3;">
+                    <strong>Q1: 任务迁移、风格增强及 NeRF 高保真重建的基本概念？</strong><br>
+                    A: <strong>1. 任务迁移</strong>：通过特征对齐，将模型在仿真域学习到的感知能力直接映射至现实环境。<br>
+                    <strong>2. 风格增强</strong>：利用 GAN 等技术，将仿真图像的“虚拟风格”转换为“真实环境视觉风格”。<br>
+                    <strong>3. NeRF 重建</strong>：基于真实场景照片构建连续的高保真 3D 虚拟环境，消除空间感知差距。
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
