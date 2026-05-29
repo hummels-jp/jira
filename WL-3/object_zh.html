@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenDRIVE Objects</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 40px; background: #f4f4f4; }
+        .slide { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 30px; display: flex; gap: 30px; align-items: flex-start; }
+        .slide-image { flex: 1; }
+        .slide-image img { max-width: 100%; height: auto; border-radius: 4px; border: 1px solid #ddd; }
+        .slide-content { flex: 1; }
+        .slide-qa-text { border: 1px solid #007bff; padding: 20px; border-radius: 6px; background: #f8fbff; }
+        h2 { color: #333; margin-top: 0; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; }
+        code { background: #eee; padding: 2px 4px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div id="slides">
+        <div class="slide">
+            <div class="slide-image">
+                <img src="images/img_2311e9d645c4.jpg" alt="Slide 2">
+            </div>
+            <div class="slide-content">
+                <h2>Slide 2: 物体标记 (Object Marking)</h2>
+                <div class="slide-qa-text">
+                    <p><strong>在 OpenDRIVE 中，“物体标记”如人行横道和停止线是如何描述的？</strong></p>
+                    <p>对于道路上的非车道平面标记，OpenDRIVE 通过 <code>&lt;object&gt;</code> 元素内的 <code>&lt;markings&gt;</code> 元素进行定义：</p>
+                    <ul>
+                        <li><strong>标记类别：</strong> 涵盖了人行横道 (Crosswalks)、停止线 (Stopping-lines)、停车位 (Parking spaces) 等平面标识。</li>
+                        <li><strong>定义方法：</strong> 支持两种模式：一种是基于物体的 <code>Bounding Box</code>（边界框）定义，另一种是引用 <code>Outline Points</code>（轮廓点）进行详细建模。</li>
+                        <li><strong>坐标引用：</strong> 通过 <code>&lt;cornerReference&gt;</code> 元素引用物体的轮廓点 <code>id</code>，从而定义连接两点的直线或复杂的标记形状。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="slide-image">
+                <img src="images/img_68877f0bd4c6.jpg" alt="Slide 3">
+            </div>
+            <div class="slide-content">
+                <h2>Slide 3: 标记元素属性一览 (Attributes of the marking element)</h2>
+                <div class="slide-qa-text">
+                    <p><strong>在 OpenDRIVE 中描述“物体标记 (Marking)”时，主要的必要属性有哪些？</strong></p>
+                    <p>如表所示，为了精确表示路面标记（虚线、实线、人行横道等），OpenDRIVE 定义了一系列标准化属性：</p>
+                    <ul>
+                        <li><strong>视觉属性：</strong> <code>side</code> (边界位置)、<code>width</code> (线宽)、<code>color</code> (颜色)、<code>weight</code> (粗细等级) 决定了标记的基本外观。</li>
+                        <li><strong>物理尺寸：</strong> <code>zOffset</code> (标记厚度)、<code>lineLength</code> (实线可见部分长度)、<code>spaceLength</code> (虚线间隔长度) 构建了标记的 3D 几何特性。</li>
+                        <li><strong>位置与偏移：</strong> <code>startOffset</code> 和 <code>stopOffset</code> 定义了标记相对于边界框在横向上的起点和终点偏移，这对于实现精确的布置和分段渲染至关重要。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="slide-image">
+                <img src="images/img_cd3671150534.jpg" alt="Slide 4">
+            </div>
+            <div class="slide-content">
+                <h2>Slide 4: 轮廓点参考建模 (CornerReference Modeling)</h2>
+                <div class="slide-qa-text">
+                    <p><strong>如何使用 <code>cornerReference</code> 来构建复杂的路面标记形状？</strong></p>
+                    <p>如 XML 示例所示，OpenDRIVE 通过引用预定义的 <code>outline</code> 点来实现精确的几何结构：</p>
+                    <ul>
+                        <li><strong>核心机制：</strong> <code>cornerReference</code> 元素通过 <code>id</code> 属性直接引用 <code>outlines</code> 中定义的 <code>cornerRoad</code> 点。</li>
+                        <li><strong>几何合成：</strong> XML 示例展示了将点 0 和 1 相关联以构建第一个标记，并将点 2 和 3 相关联以构建第二个标记的方法。通过这种方式，即使是不规则的人行横道或复杂的停车区域，也可以被准确抽象为相互关联的轮廓点序列。</li>
+                        <li><strong>参数分离：</strong> 该设计将“几何点的坐标定义 (outlines)”与“逻辑标记的渲染 (markings)”完全分离，极大简化了复杂道路网络中平面标识的配置和维护。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="slide-image">
+                <img src="images/img_fccb48162144.jpg" alt="Slide 5">
+            </div>
+            <div class="slide-content">
+                <h2>Slide 5: 物体引用机制 (Object Reference)</h2>
+                <div class="slide-qa-text">
+                    <p><strong>在 OpenDRIVE 中，如何关联跨越多个道路的物体（Object Reference）？</strong></p>
+                    <p>对于跨越多个车道或道路的物体（如人行横道），OpenDRIVE 使用 <code>&lt;objectReference&gt;</code> 元素来建立逻辑连接：</p>
+                    <ul>
+                        <li><strong>主要目的：</strong> 在一条道路上定义物体，而在其他交叉道路上引用其唯一 <code>ID</code>，从而避免重复建模。</li>
+                        <li><strong>应用场景：</strong> 如果物体（例如人行横道）跨越了多条道路，模拟系统通过这种引用机制，能使所有相关道路正确识别物理/逻辑障碍物。</li>
+                        <li><strong>灵活性：</strong> 结合 <code>laneValidity</code> 元素，开发人员可以精确指定该引用在哪些车道区间有效，从而大幅提高复杂交叉口建模的效率和可维护性。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

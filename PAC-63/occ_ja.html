@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Occ（オキュパンシー）ネットワークアルゴリズムの核心技術</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background: #f4f4f4; }
+        h1 { color: #2c3e50; padding: 20px; margin: 0; border-bottom: 2px solid #2c3e50; background: #fff; }
+        .slide { background: white; padding: 20px; border-bottom: 1px solid #ddd; 
+                 display: flex; flex-wrap: wrap; gap: 20px; }
+        h2 { width: 100%; color: #2c3e50; margin: 0 0 10px 0; }
+        img { flex: 0 0 45%; max-width: 45%; height: auto; border: 1px solid #ddd; border-radius: 4px; }
+        .content-box { flex: 1; min-width: 300px; padding: 10px; font-size: 1.1em; }
+    </style>
+</head>
+<body>
+    <h1>Occ（オキュパンシー）ネットワークアルゴリズムの核心技術</h1>
+    <div class="slide">
+        <h2>Slide 0: Occ オキュパンシーネットワークアルゴリズムの概要</h2>
+        <img src="images/slide_0.png" alt="Occ Occupancy Network Overview">
+        <div class="content-box">
+            <h3>Q: 自動運転における「Occupancy Network」の重要性をどう理解すべきか？</h3>
+            <p><strong>技術解析：</strong>この図は、パラダイムシフトとなる認識ソリューションとしての「Occupancy Network」を示しています：</p>
+            <p>1. <strong>起源：</strong>2018年の論文『Occupancy Networks: Learning 3D Reconstruction in Function Space』に由来し、従来の認識の境界を打ち破ることを目的としています。<br>
+            2. <strong>主要な課題：</strong>従来の3D検出やセグメンテーションは特定のデータセットに過度に依存しており、ロングテールなシナリオや未ラベルの大量の物体に直面した場合、検出漏れが発生しやすく、安全上のリスクとなります。<br>
+            3. <strong>核心ロジック：</strong>ワールド座標系での空間をボクセルグリッド（voxel grid）としてモデル化し、各ボクセルの3つの状態（free, occupied, unobserved）と一般的な物体カテゴリ（General Objects）を推定することで、複雑な環境のクローズドループモデリングを実現します。<br>
+            4. <strong>定量指標：</strong>現在、Occupancyアルゴリズムの最高精度はmIoUで60%に迫っており、複雑な障害物認識において強力な汎用性を示しています。</p>
+        </div>
+    </div>
+    <div class="slide">
+        <h2>Slide 1: Occupancy Networksの核心的なモデリング手法</h2>
+        <img src="images/slide_1.png" alt="Occupancy Networks Modeling">
+        <div class="content-box">
+            <h3>Q: 従来の3D表現手法と比較した、Occupancy Networksの核心的な革新点は？</h3>
+            <p><strong>技術解析：</strong>このページでは、Occupancy Networksの連続的なモデリング思考を比較展示しています：</p>
+            <p>1. <strong>パラダイム比較 (Figure 1)：</strong>従来の手法は、ボクセル（Voxel）、点群（Point Cloud）、またはメッシュ（Mesh）を使用して3D空間を離散的に表現します。対照的に、Occupancy Networksは3D表面をディープニューラルネットワーク分類器 <i>f<sub>θ</sub></i> の<strong>連続的な決定境界 (Continuous Decision Boundary)</strong> として定義します。<br>
+            2. <strong>多解像度抽出 (Figure 2)：</strong>このネットワークは再帰的細分化手法 (Multiresolution Isosurface Extraction) を採用しています。occupied/unoccupied領域を継続的にラベル付けすることで、必要な解像度に達するまでアクティブな領域を細分化します。<br>
+            3. <strong>核心的な利点：</strong>このニューラルネットワークに基づいた連続モデリング方式は、従来の離散グリッドのメモリ制限を突破し、任意の解像度で3Dモデルを抽出可能にします。また、勾配情報を利用して出力を精緻化することも可能です。</p>
+        </div>
+    </div>
+    <div class="slide">
+        <h2>Slide 2: MonoSceneフレームワークと3D SSCタスク</h2>
+        <img src="images/slide_2.png" alt="MonoScene Framework">
+        <div class="content-box">
+            <h3>Q: MonoSceneは、単一のRGB画像から3Dセマンティックシーン補完 (SSC) をどのように実現するか？</h3>
+            <p><strong>技術解析：</strong>この図は、CVPR 2022で提案された「MonoScene」フレームワークを示しており、3Dセマンティックシーン補完 (3D Semantic Scene Completion) を実現する先駆的な研究です：</p>
+            <p>1. <strong>核心タスク：</strong>単一のRGB画像のみに頼り、全シーンの3D占有状態予測とセマンティック分類を実現します。これは自動運転においてLiDARへの依存を脱却するための鍵となる技術です。<br>
+            2. <strong>主要コンポーネント：</strong><br>
+               - <strong>FLoSP (Features Line of Sight Projection)：</strong>2D特徴量を3D視錐台空間に投影し、空間特徴の関連付けを構築します。<br>
+               - <strong>3D CRP (Context Relation Prior)：</strong>3Dコンテキスト関係の事前知識を通じ、遮蔽された領域に対する認識能力を強化します。<br>
+            3. <strong>監視戦略：</strong>革新的な損失関数の組み合わせを導入しています：<br>
+               - <strong>L<sub>ce</sub>：</strong>標準的なクロスエントロピー損失。<br>
+               - <strong>L<sub>scal</sub> (sem/geo)：</strong>グローバルなセマンティクスと幾何学的構造の連続性を向上させます。<br>
+               - <strong>L<sub>fp</sub>：</strong>視錐台の比率に基づいた制約。モデルに遮蔽領域のクラス分布を学習させ、重大な遮蔽下での認識欠落を効果的に緩和します。</p>
+        </div>
+    </div>
+    <div class="slide">
+        <h2>Slide 3: OccFormerフレームワーク構成</h2>
+        <img src="images/slide_3.png" alt="OccFormer Framework">
+        <div class="content-box">
+            <h3>Q: OccFormerは、デュアルパスTransformerを通じてどのように3Dセマンティック占有予測を最適化するか？</h3>
+            <p><strong>技術解析：</strong>この図は、**ICCV 2023**で提案された **OccFormer** アーキテクチャを示しています。カメラベースの3Dセマンティック占有予測タスクをターゲットとし、効率的なエンドツーエンドのパイプラインを設計しました：</p>
+            <p>1. <strong>マルチスケール特徴量と変換：</strong>Image Encoderを利用してマルチスケールな2D特徴量を抽出し、Depth NetとContext Netを連携させて深度分布を予測することで、2D画像から3D特徴空間への昇格 (Lifting) を実現します。<br>
+            2. <strong>デュアルパスTransformerエンコーダー：</strong>ユニークなデュアルパス構造を設計しました。解像度の異なる空間特徴を処理する際、ConvとDual-path Transformer Blocksを通じて深いセマンティック関連性を抽出し、**Multi-Scale 3D Deformable Attention** を経て空間特徴を統合します。<br>
+            3. <strong>Transformer占有デコーダー：</strong>Query-based Decoderアーキテクチャを採用し、Masked Attention、Self-Attention、FFNを組み合わせることで、3D Voxel Featuresを最終的な3Dセマンティック占有予測結果にマッピングし、複雑な空間レイアウトに対するモデリング能力を大幅に向上させました。</p>
+        </div>
+    </div>
+    <div class="slide">
+        <h2>Slide 4: Flash-Occアルゴリズムの核心思想</h2>
+        <img src="images/slide_4.png" alt="Flash-Occ Algorithm">
+        <div class="content-box">
+            <h3>Q: Flash-Occは、Occupancy Networkの車載展開におけるボトルネックをどう解決するか？</h3>
+            <p><strong>技術解析：</strong>このページでは、Flash-Occアルゴリズムの軽量化の核心的な考え方をまとめています。車載展開における従来の3D畳み込みの計算リソース消費の問題を解決することを目的としています：</p>
+            <p>1. <strong>3D畳み込みのボトルネックの解決：</strong>従来のOccupancy Networkは特徴抽出に3D畳み込みに依存しており、計算量が膨大でメモリ消費も激しいという課題がありました。Flash-Occは<strong>3D畳み込みモジュールを全面的に廃止</strong>し、効率的な特徴抽出のために全て2D畳み込みを使用することを明示しました。<br>
+            2. <strong>BEV特徴空間でのモデリング：</strong>計算の複雑性をさらに低減するため、Flash-OccはVoxel空間で直接モデリングすることをやめ、3D空間を認識する媒介として **BEV (Bird's Eye View) 特徴量** を選択することで、計算オーバーヘッドの劇的な低下を実現しました。<br>
+            3. <strong>チャンネル-高さ変換モジュール：</strong>特殊な **Channel-to-Height 変換モジュール** を設計しました。BEV空間の2D特徴量を3Dボクセル空間へと持ち上げることで、軽量化された条件下での3Dセマンティック結果予測を完遂させました。</p>
+        </div>
+    </div>
+    <div class="slide">
+        <h2>Slide 5: Flash-Occプラグイン式最適化ロジック</h2>
+        <img src="images/slide_5.png" alt="Flash-Occ Plug-and-Play Illustration">
+        <div class="content-box">
+            <h3>Q: Flash-Occは、どのように「即座に使える（Plug-and-Play）」軽量化置換を実現するか？</h3>
+            <p><strong>技術解析：</strong>この図は、Flash-Occが複雑な認識リンクを軽量なパイプラインに簡略化する核心的なロジックを直感的に示しています：</p>
+            <p>1. <strong>置換ロジック (Substitution)：</strong>上下2つのフローチャートを比較すると、Flash-Occはすべての <strong>3D-Conv</strong> モジュールを <strong>2D-Conv</strong> に直接置き換えることで、3D畳み込みに伴う巨大な計算オーバーヘッドを回避することに成功しました。<br>
+            2. <strong>特徴量昇格 (Channel-to-Height Operator)：</strong>これがシステムの肝です。フローの終端において、Flash-Occは <strong>Channel-to-Height Operator</strong> を導入し、本来BEV空間に基づいていた2D特徴量（赤色）を効率的に3Dセマンティック占有Logits（青色）にマッピングします。精度を維持したまま、メモリ負荷を劇的に低減させました。<br>
+            3. <strong>プラグイン式の利点 (Plug-and-Play)：</strong>置換後のモジュールロジックは既存のTransformer/3D-Convフレームワークと完全に互換性があるため、Flash-Occは真の意味での「プラグイン（即座に組み込み可能）」を実現しました。既存の自動運転認識パイプラインにシームレスに組み込むことができます。</p>
+        </div>
+    </div>
+</body>
+</html>

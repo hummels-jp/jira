@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenDRIVE Objects</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 40px; background: #f4f4f4; }
+        .slide { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 30px; display: flex; gap: 30px; align-items: flex-start; }
+        .slide-image { flex: 1; }
+        .slide-image img { max-width: 100%; height: auto; border-radius: 4px; border: 1px solid #ddd; }
+        .slide-content { flex: 1; }
+        .slide-qa-text { border: 1px solid #007bff; padding: 20px; border-radius: 6px; background: #f8fbff; }
+        h2 { color: #333; margin-top: 0; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; }
+        code { background: #eee; padding: 2px 4px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div id="slides">
+        <div class="slide">
+            <div class="slide-image">
+                <img src="images/img_2311e9d645c4.jpg" alt="Slide 2">
+            </div>
+            <div class="slide-content">
+                <h2>Slide 2: 物体マーキング (Object Marking)</h2>
+                <div class="slide-qa-text">
+                    <p><strong>OpenDRIVE において横断歩道や停止線などの「物体マーキング」はどのように記述されますか？</strong></p>
+                    <p>道路上の非車線平面マーキングについては、OpenDRIVE では <code>&lt;object&gt;</code> 要素内の <code>&lt;markings&gt;</code> 要素を使用して定義されます：</p>
+                    <ul>
+                        <li><strong>マーキングのカテゴリ：</strong> 横断歩道 (Crosswalks)、停止線 (Stopping-lines)、駐車スペース (Parking spaces) などの平面標識を網羅します。</li>
+                        <li><strong>定義方法：</strong> 物体に基づく <code>Bounding Box</code>（境界ボックス）による定義、または <code>Outline Points</code>（輪廓点）を参照した詳細なモデリングの2つのモードをサポートしています。</li>
+                        <li><strong>座標参照：</strong> <code>&lt;cornerReference&gt;</code> 要素を使用して物体の輪廓点の ID を参照することで、2点を結ぶ直線や複雑なマーキング形状を定義します。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="slide-image">
+                <img src="images/img_68877f0bd4c6.jpg" alt="Slide 3">
+            </div>
+            <div class="slide-content">
+                <h2>Slide 3: マーキング要素の属性一覧 (Attributes of the marking element)</h2>
+                <div class="slide-qa-text">
+                    <p><strong>OpenDRIVE で「物体マーキング (Marking)」を記述する際に必要な主要属性は何ですか？</strong></p>
+                    <p>表に示す通り、路面マーキング（破線、実線、横断歩道など）を正確に表現するために、OpenDRIVE では一連の標準化された属性が定義されています：</p>
+                    <ul>
+                        <li><strong>視覚属性：</strong> <code>side</code> (境界位置)、<code>width</code> (線の幅)、<code>color</code> (色)、<code>weight</code> (太さのランク) がマーキングの基本的な外観を決定します。</li>
+                        <li><strong>物理サイズ：</strong> <code>zOffset</code> (マーキングの厚さ)、<code>lineLength</code> (実線の可視部分の長さ)、<code>spaceLength</code> (破線の隙間の長さ) がマーキングの3D幾何学的特性を構築します。</li>
+                        <li><strong>位置とオフセット：</strong> <code>startOffset</code> と <code>stopOffset</code> は境界ボックスに対するマーキングの横方向の開始点と終了点オフセットを定義し、正確な配置やセグメントごとのレンダリングを実現するために不可欠です。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="slide-image">
+                <img src="images/img_cd3671150534.jpg" alt="Slide 4">
+            </div>
+            <div class="slide-content">
+                <h2>Slide 4: 輪廓点参照モデリング (CornerReference Modeling)</h2>
+                <div class="slide-qa-text">
+                    <p><strong><code>cornerReference</code> を使用して複雑な路面マーキングの形状を構築するにはどうすればよいですか？</strong></p>
+                    <p>XML の例に示すように、OpenDRIVE では事前に定義された <code>outline</code> 点を参照することで正確な幾何学構成を実現しています：</p>
+                    <ul>
+                        <li><strong>コアメカニズム：</strong> <code>cornerReference</code> 要素は <code>id</code> 属性を通じて <code>outlines</code> で定義された <code>cornerRoad</code> 点を直接参照します。</li>
+                        <li><strong>幾何学的合成：</strong> XML の例では、点 0 と 1 を関連付けて最初のマーキングを構築し、点 2 と 3 を関連付けて2番目のマーキングを構築する方法を示しています。この方法により、不規則な横断歩道や複雑な駐車エリアであっても、相互に関連付けられた輪廓点のシーケンスとして正確に抽象化できます。</li>
+                        <li><strong>パラメータの分離：</strong> この設計により、「幾何学的な点の座標定義 (outlines)」と「論理的なマーキングのレンダリング (markings)」が完全に分離され、複雑な道路網における平面標識の設定とメンテナンスが大幅に簡素化されます。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="slide-image">
+                <img src="images/img_fccb48162144.jpg" alt="Slide 5">
+            </div>
+            <div class="slide-content">
+                <h2>Slide 5: 物体参照メカニズム (Object Reference)</h2>
+                <div class="slide-qa-text">
+                    <p><strong>OpenDRIVE において、複数の道路にまたがる物体をどのように関連付けますか（Object Reference）？</strong></p>
+                    <p>複数の車線や道路にまたがる物体（横断歩道など）に対して、OpenDRIVE は <code>&lt;objectReference&gt;</code> 要素を使用して論理的な接続を確立します：</p>
+                    <ul>
+                        <li><strong>主な目的：</strong> ある道路で物体を定義し、他の交差道路では一意の <code>ID</code> を参照することで、重複したモデリングを回避します。</li>
+                        <li><strong>適用シナリオ：</strong> 物体（例：横断歩道）が複数の道路にまたがる場合、シミュレーションシステムはこの参照メカニズムを通じて、すべての関連道路で物理的／論理的な障害物を正しく認識させることができます。</li>
+                        <li><strong>柔軟性：</strong> <code>laneValidity</code> 要素と組み合わせることで、開発者はその参照がどの車線区間で有効かを正確に指定でき、複雑な交差点のモデリング効率と保守性が大幅に向上します。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
