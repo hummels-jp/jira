@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenDRIVE Object Types</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 40px; background: #f4f4f4; line-height: 1.6; }
+        .slide { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        h1 { color: #333; }
+        h2 { color: #007bff; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 30px; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; }
+        code { background: #eee; padding: 2px 4px; border-radius: 4px; font-family: monospace; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f8f8f8; }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <h1>OpenDRIVE Object 类别定义规范</h1>
+        <p>在 OpenDRIVE 格式中，<strong>Object（对象）</strong> 主要用于描述道路上或道路周边的所有固定或临时物体（如交通标志、路灯、护栏、树木、建筑物等）。这些对象对于自动驾驶的感知仿真和地图定位至关重要。</p>
+        <p>在 OpenDRIVE 的 <code>&lt;objects&gt;</code> 标签下，Object 主要通过 <code>type</code> 属性和其对应的三维几何参数来定义。我们可以将 OpenDRIVE 中的 Object 划分为以下几大类别：</p>
+
+        <h2>1. 交通控制与指示类 (Traffic Control & Guidance)</h2>
+        <ul>
+            <li><code>pole</code>: 立杆/电线杆，用于悬挂红绿灯、指示牌的杆状物。</li>
+            <li><code>gantry</code>: 门架，横跨道路的交通信息牌门架。</li>
+            <li><code>street lamp</code> / <code>lamp</code>: 路灯，道路照明设施。</li>
+            <li><code>traffic island</code>: 交通安全岛，用于分隔车流或供行人避让的几何实体。</li>
+            <li><code>retaining wall</code>: 挡土墙/隔音墙，道路两侧的墙体结构。</li>
+        </ul>
+
+        <h2>2. 道路安全与防护类 (Road Safety & Barriers)</h2>
+        <ul>
+            <li><code>barrier</code>: 护栏/隔离带，如中央分隔带的水泥护栏或金属波形护栏。</li>
+            <li><code>guard rail</code>: 防撞护栏，道路边缘防止车辆冲出路基的护栏。</li>
+            <li><code>fence</code>: 围栏/栅栏，道路外围的网状或木质隔离栅。</li>
+            <li><code>kerb</code>: 车道边缘石/马路牙子，车道与人行道之间的交界石。</li>
+        </ul>
+
+        <h2>3. 自然与环境景观类 (Environment & Vegetation)</h2>
+        <ul>
+            <li><code>tree</code>: 树木，单棵树木。</li>
+            <li><code>shrub</code>: 灌木丛，成片的低矮植被。</li>
+            <li><code>building</code>: 建筑物，道路周边的房屋、收费站房、地标建筑等。</li>
+        </ul>
+
+        <h2>4. 各种标志、标线与地面物体 (Surfaces & Ground Objects)</h2>
+        <ul>
+            <li><code>crosswalk</code>: 人行横道/斑马线，常作为一个 Object 区域定义，以便进行行人冲突检测。</li>
+            <li><code>pothole</code>: 坑洼，路面破损、凹坑。</li>
+            <li><code>bump</code>: 减速带，凸起于路面的减速设施。</li>
+            <li><code>drain</code>: 排水沟/雨水箅子，路边的排水设施。</li>
+        </ul>
+
+        <h2>5. 其他与通用占位符 (Miscellaneous & Standard Generic)</h2>
+        <ul>
+            <li><code>parking space</code>: 停车位，路侧或停车场的标准车位。</li>
+            <li><code>patch</code>: 路面修补块，路面上的不同材质拼接或修补区域。</li>
+            <li><code>none</code> / <code>unknown</code>: 未明确分类的通用三维物体。</li>
+        </ul>
+
+        <h2>核心属性说明</h2>
+        <table>
+            <tr><th>属性名称</th><th>说明</th></tr>
+            <tr><td><code>s</code> / <code>t</code></td><td>基于道路参考线的局部坐标（S：纵向里程，T：横向偏移）。</td></tr>
+            <tr><td><code>zOffset</code></td><td>相对路面的高度偏移（解决 Z 轴垂直定位）。</td></tr>
+            <tr><td><code>length</code> / <code>width</code> / <code>height</code></td><td>对象自身的三维尺寸（长、宽、高）。</td></tr>
+            <tr><td><code>hdg</code> / <code>pitch</code> / <code>roll</code></td><td>对象的朝向角（Heading）、俯仰角（Pitch）和翻滚角（Roll）。</td></tr>
+        </table>
+
+        <p><em>注意：交通信号灯（Traffic Lights）和交通标志牌（Traffic Signs）在 OpenDRIVE 中有独立于 <code>&lt;objects&gt;</code> 的专用标签——<code>&lt;signals&gt;</code>。</em></p>
+    </div>
+</body>
+</html>

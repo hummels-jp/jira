@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenDRIVE 横断歩道モデリング</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 20px; background: #f4f4f4; }
+        .slide { display: flex; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .slide-left { flex: 1; padding-right: 20px; }
+        .slide-right { flex: 1; border-left: 2px solid #eee; padding-left: 20px; }
+        img { width: 100%; border-radius: 4px; }
+        .slide-qa-text { border: 2px solid #0078d7; padding: 15px; border-radius: 6px; background: #f0f8ff; }
+        h2 { color: #333; }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="slide-left">
+            <h2>スライド 1: 横断歩道の概要</h2>
+            <img src="images/img_4d5efe64865f.jpg" alt="横断歩道の図">
+        </div>
+        <div class="slide-right">
+            <div class="slide-qa-text">
+                <p><strong>Q: OpenDRIVE において横断歩道 (Crosswalk) をどのように正規化モデリングするか？</strong></p>
+                <p>A: OpenDRIVE では、横断歩道は通常 <code>&lt;object&gt;</code> カテゴリ下の <code>type="crosswalk"</code> として定義されます。<code>&lt;outline&gt;</code> または <code>&lt;cornerReference&gt;</code> を通じて、基準線座標系 (s, t) における地理的輪郭を定義し、車線論理レイヤーとの厳密な整合性を確保します。CARLA Town10 HD などの標準地図では、正しく格納された <code>type="crosswalk"</code> データはシミュレーターによって解釈され、レンダリングレイヤー上で正しく表示されることで、歩行者の通行に関する物理的制約を実現します。</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide">
+        <div class="slide-left">
+            <h2>スライド 2: OpenDRIVE モデリングの原則 - オブジェクトと車道の分離</h2>
+            <img src="images/img_8510f3086305.jpg" alt="OpenDRIVE の分離">
+        </div>
+        <div class="slide-right">
+            <div class="slide-qa-text">
+                <p><strong>Q: なぜ XML の &lt;lanes&gt; 領域で crosswalk というキーワードが検索できないのか？</strong></p>
+                <p>A: これが OpenDRIVE モデリングの核となる論理です：<strong>オブジェクトレイヤー (Object Layer) と車線レイヤー (Lane Layer) は分離（デカップリング）されています</strong>。</p>
+                <ul>
+                    <li><code>&lt;lanes&gt;</code> セクションは、路面の車線論理、幅の多項式、および車線線の属性を定義します（図参照）。</li>
+                    <li><code>&lt;objects&gt;</code> セクションは、横断歩道 (Crosswalk)、標識などの道路付帯物を定義します。</li>
+                    <li>この設計により、横断歩道などの交通施設は空間的に道路表面に付着しますが、車線のトポロジー接続論理を妨げることはありません。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide">
+        <div class="slide-left">
+            <h2>スライド 3: RoadRunner 環境での地図レンダリングとオブジェクトレイヤー</h2>
+            <img src="images/img_28428d970887.jpg" alt="RoadRunner 地図レンダリング">
+        </div>
+        <div class="slide-right">
+            <div class="slide-qa-text">
+                <p><strong>Q: RoadRunner またはシミュレーションエンジンにおいて、横断歩道が正しくレンダリングされるようにするにはどうすればよいか？</strong></p>
+                <p>A: 核となる前提は、OpenDRIVE データに明確な意味的注釈が含まれていることです：</p>
+                <ul>
+                    <li><strong>自動レンダリング論理</strong>：OpenDRIVE データ内で <code>type="crosswalk"</code> を持つ <code>&lt;object&gt;</code> 要素が明確に定義されている場合、レンダリングエンジン（RoadRunner や CARLA など）はこれを自動的に認識し、対応する横断歩道をレンダリングします。</li>
+                    <li><strong>必要条件</strong>：このタグが欠落しているか、属性名が誤っている場合（例：<code>type</code> ではなく <code>name</code> を使用している場合）、レンダリング器は自動生成論理をトリガーできず、横断歩道がシーン内で表示されません。</li>
+                    <li><strong>QA 關鍵点</strong>：モデリング納品前に、すべての横断歩道オブジェクトに <code>type="crosswalk"</code> 属性が設定されているかをグローバルチェックする必要があります。これがシミュレーション環境での自動レンダリングを実現するための重要な設定です。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide">
+        <div class="slide-left">
+            <h2>スライド 4: CARLA Town10 HD 地図レンダリングと資産チェック</h2>
+            <img src="images/img_6c7cf60912e7.jpg" alt="CARLA Town10 HD Render">
+        </div>
+        <div class="slide-right">
+            <div class="slide-qa-text">
+                <p><strong>Q: Unreal Engine (CARLA) において Town10 HD などの地図レンダリングの整合性をどのように検証するか？</strong></p>
+                <p>A: 図に示すように、Unreal Editor の 3D ビューポートと <code>Content Browser</code> を通じて総合的な検証が可能です：</p>
+                <ul>
+                    <li><strong>シーン直観的チェック</strong>：3D ビューポートで道路網のジオメトリを確認し、OpenDRIVE で定義されたトポロジーと一致しているかを確認します。</li>
+                    <li><strong>コンテンツパッケージ照合</strong>：<code>Content Browser</code> から <code>map_package/Maps/town10</code> に移動し、すべての必要なテクスチャ（例：<code>LaneMarking_Diff</code>, <code>Road_Diff</code>）および資産参照が準備されているかを確認します。</li>
+                    <li><strong>QA 關鍵点</strong>：シーン要素が欠落している場合は、Content Browser 内の OpenDRIVE リソースリンクが切断されていないか、および関連するマテリアルテクスチャが正しく読み込まれているかを重点的に確認してください。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide">
+        <div class="slide-left">
+            <h2>スライド 5: OpenDRIVE トポロジー接続 (Link)</h2>
+            <img src="images/img_d3c718f84e6c.jpg" alt="OpenDRIVE トポロジー接続">
+        </div>
+        <div class="slide-right">
+            <div class="slide-qa-text">
+                <p><strong>Q: OpenDRIVE は道路間の論理的な接続関係をどのように定義するか？</strong></p>
+                <p>A: <code>&lt;link&gt;</code> 要素を使用して道路トポロジーを定義します：</p>
+                <ul>
+                    <li><code>predecessor</code>: 前の道路を指します (例: <code>elementId="1000000019"</code>)。</li>
+                    <li><code>successor</code>: 次の道路または交差点を指します (例: <code>elementId="4"</code> の <code>junction</code>)。</li>
+                    <li><strong>特記事項</strong>: Carla Town01 OpenDrive 地図では、<code>type="crosswalk"</code> の明示的なオブジェクト定義が欠如しているため、Carla シミュレーション環境では交差点の横断歩道を自動レンダリングできず、歩行者の通行論理も付与されません。</li>
+                    <li>これらの接続は、シミュレーションにおける<strong>交通流向図 (Connectivity Graph)</strong> を定義し、車両が道路網内で合法的な進行経路を自動的に見つけられるようにします。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide">
+        <div class="slide-left">
+            <h2>スライド 6: Carla Town01 における横断歩道レンダリング失敗の原因</h2>
+            <img src="images/img_d661d9d58289.jpg" alt="Carla Town01 解析">
+        </div>
+        <div class="slide-right">
+            <div class="slide-qa-text">
+                <p><strong>Q: Carla シミュレーション環境で Carla Town01 の横断歩道が自動レンダリングされないのはなぜか？</strong></p>
+                <p>A: その根本原因は OpenDRIVE データ内の意味的注釈の欠如にあります：</p>
+                <ul>
+                    <li><strong>データの欠如</strong>：調査の結果、Carla Town01 に対応する OpenDRIVE データには <code>type="crosswalk"</code> のタグ定義が欠如していることが判明しました。</li>
+                    <li><strong>影響</strong>：この意味属性が欠如しているため、レンダリングエンジン（CARLA など）は地図を解析する際、「横断歩道」オブジェクトとして識別できず、結果として対応する横断歩道の実体が自動生成されません。</li>
+                    <li><strong>QA 關鍵点</strong>：このような明示的な意味定義が欠如している地図は、後処理段階で手動による補完やスクリプトによる強化を行い、不足している <code>type="crosswalk"</code> 意味情報を追加する必要があります。これを行わないと、シミュレーション内の歩行者や車両の通行論理が完全に機能しなくなります。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide">
+        <div class="slide-left">
+            <h2>スライド 7: RoadRunner 地図レンダリングとオブジェクトレイヤー</h2>
+            <img src="images/img_fafdee435c39.jpg" alt="OpenDRIVE Viewer マップ読み込み">
+        </div>
+        <div class="slide-right">
+            <div class="slide-qa-text">
+                <p><strong>Q: RoadRunner で .xodr データを読み込む際、シーン資産を効率的に管理するには？</strong></p>
+                <p>A: 図に示すように、RoadRunner の <code>Library Browser</code> は構造化された資産ビューを提供します：</p>
+                <ul>
+                    <li><strong>シーン読み込み</strong>：<code>Maps</code> フォルダを通じて、<code>NOA_CITYWAY_V3.0</code> などの OpenDRIVE 地図ファイルを直接プレビューおよび読み込むことができます。</li>
+                    <li><strong>交差点管理</strong>：Browser 内には、定義済みの交差点資産（例：<code>4cross_junction</code>）が明確にリストアップされており、これは複雑な道路網のトポロジー整合性を維持するために不可欠です。</li>
+                    <li><strong>QA 關鍵点</strong>：Browser 内で資産リストとレンダリングビューを比較することで、地図内の論理ノード (Junctions) と物理道路が1対1で対応しているかを迅速に検証し、ID 競合やトポロジー断裂によるシミュレーションエラーを排除できます。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide">
+        <div class="slide-left">
+            <h2>スライド 8: 複雑な道路網の解析と冗長処理</h2>
+            <img src="images/img_d122fb6c702b.jpg" alt="RoadRunner 資産読み込み">
+        </div>
+        <div class="slide-right">
+            <div class="slide-qa-text">
+                <p><strong>Q: 川崎 DGM の地図においてレンダリング中に歩道データが見つからないのはなぜか？</strong></p>
+                <p>A: 技術的分析の結果、以下の原因が判明しました：</p>
+                <ul>
+                    <li><strong>意味的データの欠如</strong>：川崎 DGM の OpenDRIVE データには <code>type="crosswalk"</code> の明示的な定義が欠如しています。</li>
+                    <li><strong>レンダリングへの影響</strong>：この意味タグが欠如しているため、解析エンジンはこれを横断歩道オブジェクトとして識別できず、最終的なレンダリング結果で横断歩道の実体を生成できません。</li>
+                    <li><strong>QA 關鍵点</strong>：このデータセットは、後処理の意味強化スクリプトを通じて、関連する幾何オブジェクトに <code>type="crosswalk"</code> 属性を補完し、シミュレーション環境の整合性を確保する必要があります。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide">
+        <div class="slide-left">
+            <h2>スライド 9: Unreal Engine 環境での地図資産解析</h2>
+            <img src="images/img_def0582f99c1.jpg" alt="Unreal Engine マップ資産">
+        </div>
+        <div class="slide-right">
+            <div class="slide-qa-text">
+                <p><strong>Q: Unreal Engine (CARLA) で地図を読み込む際、資産解析の完全性をどのように検証するか？</strong></p>
+                <p>A: 図に示すように、Unreal Editor の <code>Content Browser</code> で地図パッケージ構造を直感的に確認できます：</p>
+                <ul>
+                    <li><strong>資産ディレクトリ</strong>：<code>map_package/Maps/kawasaki</code> に移動することで、現在の地図に関連するすべてのテクスチャ、マテリアル、および OpenDrive データの参照を確認できます。</li>
+                    <li><strong>論理チェック</strong>：Content Browser 内に対応する OpenDrive リソースが存在するか、および適切なマテリアル（例：<code>Asphalt_Diff</code>, <code>LaneMarking</code>）が正しく関連付けられているかを確認します。</li>
+                    <li><strong>QA 關鍵点</strong>：エディタのレンダリングで路面欠損や横断歩道の不表示などの問題が発生した場合、まず Content Browser 内の OpenDRIVE 参照が正しく解析されているかを確認し、リソースパスのマッピングに誤りがないかをチェックしてください。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide">
+        <div class="slide-left">
+            <h2>スライド 10: Objects 要素の精細化モデリング</h2>
+            <img src="images/img_4a2355f1cf96.jpg" alt="OpenDRIVE Objects モデリング">
+        </div>
+        <div class="slide-right">
+            <div class="slide-qa-text">
+                <p><strong>Q: "type='crosswalk'" を検索してもテキストが見つからないと表示されるのに、XML には定義が明確にあるのはなぜか？</strong></p>
+                <p>A: これは OpenDRIVE モデリングの2つの重要なポイントを示しています：</p>
+                <ul>
+                    <li><strong>属性の分離</strong>: XML コードで見ているのは実際には <code>&lt;object name="Crosswalk" ...&gt;</code> であり、属性名は <code>type</code> ではなく <code>name</code> です。カスタムまたは特定の OpenDRIVE 変種では、<code>name</code> は人間が読み取るための識別子として使用され、<code>type</code> はより深い論理ノードまたはサブ属性で定義されている可能性があります。</li>
+                    <li><strong>正確な検索論理</strong>: 検索ツールがマッチングできないのは、通常、検索パターンが一致していないためです（例：XML 属性の引用符形式、隠れたスペースの存在、または検索範囲の制限）。</li>
+                    <li><strong>モデリング規範への提言</strong>: 厳密な OpenDRIVE モデルは、<code>name</code> 属性だけに依存するのではなく、<code>&lt;object type="crosswalk"&gt;</code> の標準形式に従うべきです。これにより、シミュレーションツール（CARLA など）が自動的に正しく解析し、「横断歩道」という交通行動論理を付与できるようになります。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide">
+        <div class="slide-left">
+            <h2>スライド 11: 道路オブジェクトの意味的定義 (Semantic Objects)</h2>
+            <img src="images/img_527d9aaf0ebc.jpg" alt="意味的 OpenDRIVE オブジェクト">
+        </div>
+        <div class="slide-right">
+            <div class="slide-qa-text">
+                <p><strong>Q: なぜ ODRViewer のサイドバーに "93 Crosswalk" 等の項目が明確に表示されているのか？</strong></p>
+                <p>A: この提示方法は OpenDRIVE の核心的価値、すなわち<strong>意味的地図 (Semantic Mapping)</strong> を明らかにしています：</p>
+                <ul>
+                    <li><strong>意味的バインディング</strong>: 単純な幾何学的図形とは異なり、"Crosswalk" は特定の ID (93) を持つオブジェクトとしてマークされています。シミュレーションエンジンはこのタグを読み取ると、「歩行者の通行」という交通論理を付与します。</li>
+                    <li><strong>シミュレーション表示の欠如</strong>: 根岸交差点の OpenDrive データでは、幾何学的オブジェクトは存在しますが <code>type="crosswalk"</code> 属性が正しく定義されていないため、この横断歩道は Carla シミュレーション環境で自動レンダリングされず、論理機能も付与されません。</li>
+                    <li><strong>空間的関連付け</strong>: ODRViewer は、これらの論理オブジェクトを基礎となる <code>Road 26 / Lane 1</code> 関連付けることができ、シミュレーション内でのコンテキスト計算を実現します。</li>
+                    <li><strong>検証の必要性</strong>: モデリング完了後、Viewer を通じてこのような意味的リストを確認することは、地図内のすべての非幾何学的オブジェクトが正しく定義されていることを保証するための重要な QA 手順です。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide">
+        <div class="slide-left">
+            <h2>スライド 12: RoadRunner プロジェクト読み込みとシーンの視覚化</h2>
+            <img src="images/img_36f8eb393331.jpg" alt="RoadRunner シーン視覚化">
+        </div>
+        <div class="slide-right">
+            <div class="slide-qa-text">
+                <p><strong>Q: なぜ OSM から変換された OpenDRIVE 地図がレンダリング時に異常を示すのか？</strong></p>
+                <p>A: RoadRunner に読み込んだ <code>negishi.xodr</code> を分析した結果、主に以下の2つの核心的な問題が存在します：</p>
+                <ul>
+                    <li><strong>道路網データが閉じていない</strong>：元の OSM データの変換精度の限界やデータ不足により、OpenDRIVE の道路網トポロジー構造に閉じていないブレークポイントが存在し、一貫性のあるレンダリング面を生成できません。</li>
+                    <li><strong>意味的データの欠如</strong>：変換生成された OpenDRIVE データには <code>type="crosswalk"</code> のタグ定義が完全に欠如しており、シミュレーションエンジンが横断歩道を識別・レンダリングできません。</li>
+                    <li><strong>制作への提言</strong>：OSM 変換ワークフローのポスト処理を最適化する必要があります。まず修復スクリプトで道路網ノードを閉じ、次に不足している意味的タグを補完することで、地図がシミュレーションエンジンのレンダリングおよび論理要件を満たすようにする必要があります。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

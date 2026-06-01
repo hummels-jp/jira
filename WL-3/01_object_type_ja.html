@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenDRIVE オブジェクトタイプ定義仕様</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 40px; background: #f4f4f4; line-height: 1.6; }
+        .slide { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        h1 { color: #333; }
+        h2 { color: #007bff; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 30px; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; }
+        code { background: #eee; padding: 2px 4px; border-radius: 4px; font-family: monospace; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f8f8f8; }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <h1>OpenDRIVE オブジェクトタイプ定義仕様</h1>
+        <p>OpenDRIVE 形式において、<strong>Object（オブジェクト）</strong> は、道路上または道路周辺にあるすべての固定・一時的な物体（交通標識、街灯、ガードレール、樹木、建物など）を記述するために使用されます。これらのオブジェクトは、自動運転の知覚シミュレーションや地図上での位置特定において非常に重要です。</p>
+        <p>OpenDRIVE の <code>&lt;objects&gt;</code> タグの下で、オブジェクトは主に <code>type</code> 属性とその3次元幾何学パラメーターによって定義されます。OpenDRIVE のオブジェクトは、主に以下のカテゴリーに分類されます：</p>
+
+        <h2>1. 交通制御および案内 (Traffic Control & Guidance)</h2>
+        <ul>
+            <li><code>pole</code>: 支柱/電柱。信号機や標識を吊り下げるポール。</li>
+            <li><code>gantry</code>: 門型標識。道路を横断する交通情報掲示板などの構造物。</li>
+            <li><code>street lamp</code> / <code>lamp</code>: 街灯。道路照明施設。</li>
+            <li><code>traffic island</code>: 交通安全島。交通流を分離したり、歩行者が待避したりするための幾何学的実体。</li>
+            <li><code>retaining wall</code>: 擁壁/防音壁。道路の両側の壁構造。</li>
+        </ul>
+
+        <h2>2. 道路安全および防護 (Road Safety & Barriers)</h2>
+        <ul>
+            <li><code>barrier</code>: 防護柵/中央分離帯。コンクリート製や金属製のガードレールなど。</li>
+            <li><code>guard rail</code>: ガードレール。路外逸脱を防ぐための道路端の保護柵。</li>
+            <li><code>fence</code>: フェンス/柵。道路の外周にある金網や木製の柵。</li>
+            <li><code>kerb</code>: 縁石/歩車道境界ブロック。車道と歩道の境界にある石。</li>
+        </ul>
+
+        <h2>3. 自然および景観 (Environment & Vegetation)</h2>
+        <ul>
+            <li><code>tree</code>: 樹木。単一の樹木。</li>
+            <li><code>shrub</code>: 低木/茂み。密集した低植生。</li>
+            <li><code>building</code>: 建物。道路周辺の家屋、料金所、ランドマークなどの建築物。</li>
+        </ul>
+
+        <h2>4. 標識、マーキング、および路面物体 (Surfaces & Ground Objects)</h2>
+        <ul>
+            <li><code>crosswalk</code>: 横断歩道。歩行者衝突検知を行うためのオブジェクト領域として定義されることが多い。</li>
+            <li><code>pothole</code>: ポットホール。路面の損傷、凹み。</li>
+            <li><code>bump</code>: 段差/ハンプ。減速を目的とした路面の凸部。</li>
+            <li><code>drain</code>: 排水溝/グレーチング。路端の排水施設。</li>
+        </ul>
+
+        <h2>5. その他および汎用プレースホルダー (Miscellaneous & Standard Generic)</h2>
+        <ul>
+            <li><code>parking space</code>: 駐車スペース。路側や駐車場の標準的な駐車区画。</li>
+            <li><code>patch</code>: 補修パッチ。異なる材質による路面の継ぎ目や補修箇所。</li>
+            <li><code>none</code> / <code>unknown</code>: 分類未定の汎用的な3次元物体。</li>
+        </ul>
+
+        <h2>主要属性リスト</h2>
+        <table>
+            <tr><th>属性名</th><th>説明</th></tr>
+            <tr><td><code>s</code> / <code>t</code></td><td>道路基準線に基づくローカル座標 (S: 縦断里程, T: 横断オフセット)。</td></tr>
+            <tr><td><code>zOffset</code></td><td>路面に対する高さ方向のオフセット (Z軸方向の垂直位置)。</td></tr>
+            <tr><td><code>length</code> / <code>width</code> / <code>height</code></td><td>オブジェクト自体の3次元サイズ (長さ、幅、高さ)。</td></tr>
+            <tr><td><code>hdg</code> / <code>pitch</code> / <code>roll</code></td><td>オブジェクトの姿勢角 (Heading: 方位角, Pitch: 俯仰角, Roll: ロール角)。</td></tr>
+        </table>
+
+        <p><em>注意: 交通信号灯 (Traffic Lights) と交通標識 (Traffic Signs) は、OpenDRIVE において <code>&lt;objects&gt;</code> とは独立した専用タグ <code>&lt;signals&gt;</code> で定義されます。</em></p>
+    </div>
+</body>
+</html>
