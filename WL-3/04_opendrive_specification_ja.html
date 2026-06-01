@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenDRIVE データ構造仕様</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 40px; background: #f4f4f4; line-height: 1.6; }
+        .container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
+        h2 { color: #007bff; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 30px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f8f8f8; color: #333; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        pre { background: #eee; padding: 10px; border-radius: 4px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>OpenDRIVE データ構造仕様</h1>
+        
+        <h2>1. コアデータブロック (Core Data Blocks)</h2>
+        <p>OpenDRIVE ファイルは、道路網の幾何学論理、物理施設、およびトポロジー関係を管理する複数のデータブロックから構成されています。</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>ブロック</th>
+                    <th>機能</th>
+                    <th>主な内容</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Header</strong></td><td>グローバル定義</td><td>座標原点、投影法、バージョン情報。</td></tr>
+                <tr><td><strong>Roads</strong></td><td>幾何学的基準</td><td>参照線 (Reference Line)、幾何学多項式定義。</td></tr>
+                <tr><td><strong>Lanes</strong></td><td>車線論理</td><td>車線トポロジー、幅、線種属性、速度制限、通行ルール。</td></tr>
+                <tr><td><strong>Junctions</strong></td><td>交差点管理</td><td>道路接続論理、フェーズ制御の参照。</td></tr>
+                <tr><td><strong>Objects</strong></td><td>物体定義</td><td>静的物体の幾何学形状、意味的属性、衝突判定用バウンディングボックス。</td></tr>
+                <tr><td><strong>Signals</strong></td><td>交通指示</td><td>標識、信号機の位置、種類、論理制御。</td></tr>
+            </tbody>
+        </table>
+
+        <h2>2. オブジェクトタイプ仕様 (Object Classifications)</h2>
+        <p><code>&lt;objects&gt;</code> ブロックでは、<code>type</code> 属性を使用して静的な交通用物体を定義します。主なタイプ仕様は以下の通りです：</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>オブジェクトタイプ (Type)</th>
+                    <th>主要な記述</th>
+                    <th>幾何学的特徴</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><code>crosswalk</code></td><td>横断歩道</td><td>平面領域、BoundingBox または Outline。</td></tr>
+                <tr><td><code>pole</code></td><td>支柱/電柱</td><td>垂直な実体、標識や灯具の支持。</td></tr>
+                <tr><td><code>barrier</code></td><td>ガードレール/防護柵</td><td>体積を持つ線状の障害物。</td></tr>
+                <tr><td><code>building</code></td><td>建物</td><td>静的で複雑な幾何学的輪郭。</td></tr>
+                <tr><td><code>street lamp</code></td><td>街灯</td><td>垂直な照明施設。</td></tr>
+                <tr><td><code>traffic island</code></td><td>交通安全島</td><td>路面上の分離用平面領域。</td></tr>
+                <tr><td><code>pothole</code></td><td>ポットホール</td><td>路面損傷のマーキング。</td></tr>
+                <tr><td><code>parking space</code></td><td>駐車スペース</td><td>路面上の駐車エリア。</td></tr>
+            </tbody>
+        </table>
+
+        <h2>3. crosswalk (横断歩道) の構造と例</h2>
+        <p>OpenDRIVE において <code>crosswalk</code> は平面オブジェクトとして定義されます。<code>&lt;outline&gt;</code> によって正確な幾何学的多角形を定義するか、<code>&lt;border&gt;</code> によってその境界を定義します。</p>
+        <p><strong>基本構造：</strong></p>
+        <pre><code>&lt;object type="crosswalk" id="101" s="50.0" t="0.0"&gt;
+    &lt;outlines&gt;
+        &lt;outline&gt;
+            &lt;cornerRoad s="0.0" t="0.0" dz="0.0"/&gt;
+            &lt;cornerRoad s="5.0" t="0.0" dz="0.0"/&gt;
+            &lt;cornerRoad s="5.0" t="2.0" dz="0.0"/&gt;
+            &lt;cornerRoad s="0.0" t="2.0" dz="0.0"/&gt;
+        &lt;/outline&gt;
+    &lt;/outlines&gt;
+&lt;/object&gt;</code></pre>
+        <ul>
+            <li><strong>主要属性</strong>：<code>s</code> および <code>t</code> は、道路基準線に対する当該オブジェクトの開始基準点を定義します。</li>
+            <li><strong>幾何構成</strong>：<code>cornerRoad</code> を介して一連の頂点を定義し、それらを閉じることで横断歩道の平面輪郭が形成されます。</li>
+            <li><strong>シミュレーション上の意義</strong>：シミュレーターはこの構造を読み込み、衝突検知機能を持つ平面ジオメトリを生成し、歩行者の通行論理を物理的にマップします。</li>
+        </ul>
+
+        <h2>4. OpenStreetMap (OSM) 道路網記述構造</h2>
+        <p>OpenStreetMap はトポロジーに基づいたグラフ構造を使用して道路網を記述します。その核心は Node (点)、Way (線)、Relation (関係) で構成され、OpenDRIVE のパス/車線モデルとは本質的に異なります。</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>OSM 要素</th>
+                    <th>記述内容</th>
+                    <th>対応関係</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Node</strong></td><td>地理座標点 (Lat/Lon)</td><td>物理的な位置を定義（OpenDRIVEの参照点に類似）。</td></tr>
+                <tr><td><strong>Way</strong></td><td>順序付きノードリスト</td><td>道路線や道路領域、ノードの順序接続により形状を形成。</td></tr>
+                <tr><td><strong>Relation</strong></td><td>論理的結合と制約</td><td>複数の Way を組み合わせて複雑な論理道路や領域を定義。</td></tr>
+                <tr><td><strong>Tags</strong></td><td>意味的キー・値ペア</td><td>道路種別、速度制限、通行権限の定義。</td></tr>
+            </tbody>
+        </table>
+        <p><em>注: OSM は工学的な幾何モデルではなくグラフデータであるため、OSM から OpenDRIVE への変換時には、車線中心線の計算やトポロジーの結合、意味的マッピングのための複雑なアルゴリズムが必要となり、これが変換プロセスで路網が不閉合になる主な原因です。</em></p>
+
+        <h2>5. OpenStreetMap (OSM) 道路付帯物タイプ (Highway Features)</h2>
+        <p>OSM において、道路付帯物は Node や Way 上の特定の <code>Key=Value</code> タグによって定義されます。</p>
+        <ul>
+            <li><strong>歩行者・交通施設</strong>：<code>crossing=zebra</code> (横断歩道), <code>traffic_signals=yes</code> (信号機), <code>traffic_sign=*</code> (交通標識)。</li>
+            <li><strong>物理路面・構造</strong>：<code>kerb=*</code> (縁石), <code>barrier=*</code> (防護柵/ボラード), <code>surface=*</code> (路面材質)。</li>
+            <li><strong>環境・景観</strong>：<code>natural=tree</code> (樹木), <code>building=yes</code> (建物), <code>street_lamp=yes</code> (街灯)。</li>
+        </ul>
+        <p><em>注: OSM のタグ体系は非常に広範囲で可変性が高いため、OpenDRIVE の <code>&lt;objects&gt;</code> にマッピングする際は、標準化されていないタグ値を処理するための変換ルール表を構築する必要があります。</em></p>
+
+        <h2>6. OpenStreetMap (OSM) 横断歩道 (Crossing) の記述と例</h2>
+        <p>OSM では、通常 Way に <code>highway=crossing</code> タグを付加し、<code>crossing=zebra</code> と組み合わせることで横断歩道を表します。</p>
+        <pre><code>&lt;way id="5001"&gt;
+    &lt;nd ref="1001"/&gt;
+    &lt;nd ref="1002"/&gt;
+    &lt;tag k="highway" v="crossing"/&gt;
+    &lt;tag k="crossing" v="zebra"/&gt;
+    &lt;tag k="width" v="3.0"/&gt;
+    &lt;tag k="tactile_paving" v="yes"/&gt;
+&lt;/way&gt;</code></pre>
+        <ul>
+            <li><strong>マーキング手法</strong>：<code>highway=crossing</code> で横断施設であることを定義し、<code>crossing=zebra</code> で意味的タイプを明確化します。</li>
+            <li><strong>変換上の課題</strong>：OpenDRIVE への変換時、Way の線型とノードの関連性に基づき、<code>&lt;object type="crosswalk"&gt;</code> としてマッピングし、基準線座標系でのオフセット (s, t) を算出する必要があります。</li>
+        </ul>
+
+        <h2>7. negishi.osm における実測データ統計</h2>
+        <p><code>negishi.osm</code> のデータ監査を通じて、斑点標識 (crossing) や建物などのアノテーション完備度が確認されました。</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>オブジェクトカテゴリ</th>
+                    <th>出現回数</th>
+                    <th>評価</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>横断歩道 (crossing)</td><td>73</td><td>高 (完備)</td></tr>
+                <tr><td>建物 (building)</td><td>232</td><td>高 (完備)</td></tr>
+                <tr><td>信号機 (traffic_signals)</td><td>26</td><td>中</td></tr>
+                <tr><td>防護柵 (barrier)</td><td>6</td><td>低</td></tr>
+                <tr><td>縁石/街灯</td><td>0</td><td>無 (欠如)</td></tr>
+            </tbody>
+        </table>
+        <p><strong>結論：</strong> 斑点標識の幾何学的マッピングの実現可能性は高いですが、路面のエッジ拘束 (kerb) や照明 (street_lamp) データの不足により、物理的なエッジシミュレーションには後処理での自動補完が必要になる場合があります。</p>
+
+        <h2>8. Map_Sendai.xodr 意味的アノテーション分析</h2>
+        <p><code>Map_Sendai.xodr</code> のデータ監査により、大量のオブジェクトが存在するものの、変換スクリプトの不備により意味的タグが機能していないことが判明しました。</p>
+        <ul>
+            <li><strong>現象</strong>：76 個の <code>&lt;object&gt;</code> が定義されていますが、<code>type</code> 属性のほとんどが誤って <code>"none"</code> に設定されています。</li>
+            <li><strong>影響</strong>：シミュレーターが横断歩道や車線マーカーの交通論理を認識できず、シミュレーション内で機能しません。</li>
+            <li><strong>修復パス</strong>：ファイル内の <code>name</code> 属性（例：<code>Stencil_ArrowType...</code>）をマッピングキーとして利用し、<code>type="none"</code> を適切な意味的クラスに修正するバッチスクリプトを作成します。</li>
+        </ul>
+
+        <h2>10. 付帯物タイプの統計と OpenDRIVE 仕様の比較分析</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>オブジェクト名 (Map Name)</th>
+                    <th>頻度</th>
+                    <th>推奨 OpenDRIVE タイプ</th>
+                    <th>評価</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><code>Stencil_ArrowType...</code></td><td>27</td><td><code>roadMark</code></td><td>幾何形状に基づく分類が必要。</td></tr>
+                <tr><td><code>StopLine</code></td><td>10</td><td><code>stopLine</code></td><td>現時点で none となっているため修正が必要。</td></tr>
+                <tr><td><code>ChevronRegionGermany</code></td><td>10</td><td><code>trafficIsland</code></td><td>安全島の定義に準拠するか再確認。</td></tr>
+                <tr><td><code>Crosswalk</code></td><td>4</td><td><code>crosswalk</code></td><td>type 属性の明示的設定が必要。</td></tr>
+            </tbody>
+        </table>
+        <p><strong>コンプライアンス上の提言：</strong> <code>StopLine</code> や <code>Crosswalk</code> などの重要なオブジェクトは、必ず <code>type</code> を明示的に指定する必要があります。これを怠ると、シミュレーションエンジン上で幾何学的制約ロジックが失われ、単なる画像表示に留まってしまいます。</p>
+    </div>
+</body>
+</html>
