@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Tesla BEV Architecture</title>
+    <style>
+        body { font-family: 'Helvetica Neue', sans-serif; margin: 20px; }
+        .container { display: flex; flex-direction: column; gap: 40px; }
+        .slide { border: 1px solid #ccc; padding: 20px; }
+        .slide-content { display: flex; gap: 20px; margin-top: 20px; }
+        .slide-qa-text { border: 2px solid #007bff; padding: 15px; background-color: #f0f8ff; flex: 1; }
+        .slide-img { flex: 1; }
+        .slide-img img { width: 100%; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <div class="slide">
+            <h1>Slide 1: Multi-Camera Feature Aggregation</h1>
+            <p>Addressing the core challenge of aggregating features extracted from multiple visual cameras.</p>
+            
+            <div class="slide-content">
+                <div class="slide-img">
+                    <img src="images/multi_camera_fusion.jpg" alt="Multi-Camera Fusion Challenges">
+                </div>
+                <div class="slide-qa-text">
+                    <h3>What do you see in this image?</h3>
+                    <p>This slide highlights the fundamental problems encountered when aggregating multi-camera features:</p>
+                    <ul>
+                        <li><strong>核心问题 1 (Problem 1):</strong> 跨摄像头的融合 (Across-camera fusion) 以及追踪器 (tracker) 的逻辑难以显式编写。</li>
+                        <li><strong>核心问题 2 (Problem 2):</strong> 图像空间并非输出的正确空间 (Image space is not the right output space) —— 这正是 BEV 空间发挥作用的逻辑起点。</li>
+                        <li><strong>结论：</strong> 必须从基于图像的感知迁移到统一的 BEV 空间，以简化融合与下游任务逻辑。</li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- End of slide 1 -->
+        
+        <div class="slide">
+            <h1>Slide 2: Projection to High-Dimensional Representation</h1>
+            <p>Visualizing the mapping of camera images into a unified high-dimensional feature space.</p>
+            
+            <div class="slide-content">
+                <div class="slide-img">
+                    <img src="images/projection_representation.jpg" alt="Projection to Feature Space">
+                </div>
+                <div class="slide-qa-text">
+                    <h3>What do you see in this image?</h3>
+                    <p>This slide demonstrates the fundamental outcome of the BEV process: mapping multiple camera inputs into a unified 3D representation:</p>
+                    <ul>
+                        <li><strong>核心结论：</strong> 基本上就是通过投影映射得到高维特征空间表示 (Projection mapping to high-dimensional feature space representation).</li>
+                        <li><strong>视觉呈现：</strong> 多摄像头输入的原始数据（周围环境）被融合并映射至一个共享的 3D 俯视图空间（BEV map），不仅定位了物体（彩色的车），还重建了路面结构。</li>
+                        <li><strong>重要性：</strong> 此高维表示直接服务于下游的端到端驾驶任务（感知、预测与规划）。</li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- End of slide 2 -->
+        
+        <div class="slide">
+            <h1>Slide 3: The Core Value of BEV</h1>
+            <p>Summarizing the motivation and core challenges that BEV perception aims to address.</p>
+            
+            <div class="slide-content">
+                <div class="slide-img">
+                    <img src="images/bev_problem.jpg" alt="BEV Core Value">
+                </div>
+                <div class="slide-qa-text">
+                    <h3>What do you see in this image?</h3>
+                    <p>This slide encapsulates "What problem BEV solves," often referred to as the "God's Eye View Aura":</p>
+                    <ul>
+                        <li><strong>核心问题：</strong> 自动驾驶视觉任务的核心是多传感器融合，而 BEV 提供了最高效的融合空间。</li>
+                        <li><strong>融合层次：</strong>
+                            <ul>
+                                <li><strong>前融合 (Early Fusion)：</strong> 在数据层直接进行像素或原始数据的堆叠。<em>优点：保留信息丰富；缺点：对传感器位姿同步要求极高，计算量极大。</em></li>
+                                <li><strong>后融合 (Late Fusion)：</strong> 各传感器各自感知后在决策层进行结果汇总。<em>优点：易于实现；缺点：丢失中间特征信息，难以处理遮挡与复杂场景。</em></li>
+                                <li><strong>特征融合 (Feature Fusion)：</strong> 现代 BEV 的核心，在特征图空间进行交互。<em>优点：平衡了信息保留与计算效率，能够自适应学习跨视角/跨传感器的一致性。</em></li>
+                            </ul>
+                        </li>
+                        <li><strong>BEV 的优势：</strong>
+                            <ul>
+                                <li>将多传感器特征汇总至统一的 3D 空间。</li>
+                                <li>支持直接在该空间上进行预测、分析与决策。</li>
+                                <li>极大地简化了下游任务的拓展逻辑。</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- End of slide 3 -->
+        
+        <div class="slide">
+            <h1>Slide 4: 3D vs 4D BEV</h1>
+            <p>Exploring the transition from 3D spatial BEV to 4D spatiotemporal feature representation.</p>
+            
+            <div class="slide-content">
+                <div class="slide-img">
+                    <img src="images/3d_vs_4d.jpg" alt="3D vs 4D BEV">
+                </div>
+                <div class="slide-qa-text">
+                    <h3>What do you see in this image?</h3>
+                    <p>This slide introduces the concept of extending 3D BEV features into the 4D spatiotemporal domain:</p>
+                    <ul>
+                        <li><strong>从 3D 到 4D：</strong> 将时间维度纳入考量，构建包含时序信息的 4D 特征空间。</li>
+                        <li><strong>4D 的优势：</strong>
+                            <ul>
+                                <li><strong>预测能力：</strong> 更准确地预测物体速度与未来轨迹。</li>
+                                <li><strong>检测增强：</strong> 通过时序累积提升对遮挡物体的检测能力。</li>
+                                <li><strong>“猜想”功能：</strong> 基于历史时序特征对未来状态进行推理与预测。</li>
+                            </ul>
+                        </li>
+                        <li><strong>Q1: BEVFormer 如何实现时序特征？</strong>
+                            <ul>
+                                <li><strong>时序查询 (Temporal Queries)：</strong> 将上一时刻的 BEV 特征作为历史查询，与当前帧的 BEV 空间特征进行关联。</li>
+                                <li><strong>自运动补偿 (Ego-motion Compensation)：</strong> 利用车辆里程计数据（平移/旋转）对上一时刻的特征图进行空间坐标系的对齐 (Warping)。</li>
+                                <li><strong>时序注意力机制 (Temporal Attention)：</strong> 使用 Deformable Attention 在对齐后的历史特征图中寻找匹配点，从而完成时序信息的隐式融合。</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- End of slide 4 -->
+        
+        <div class="slide">
+            <h1>Slide 5: Feature Alignment Challenges</h1>
+            <p>Addressing the critical necessity and methodology of feature alignment in multi-sensor BEV perception.</p>
+            
+            <div class="slide-content">
+                <div class="slide-img">
+                    <img src="images/alignment_challenges.jpg" alt="Feature Alignment Challenges">
+                </div>
+                <div class="slide-qa-text">
+                    <h3>What do you see in this image?</h3>
+                    <p>This slide outlines the fundamental challenges in ensuring feature alignment across time, space, and sensors during the BEV feature fusion process:</p>
+                    <ul>
+                        <li><strong>自身运动补偿 (Ego-motion compensation)：</strong> 车体处于持续运动中，必须对齐不同时刻采集的特征。</li>
+                        <li><strong>时间差异 (Temporal misalignment)：</strong> 不同传感器之间可能存在时间不同步，需对齐此类时序信息。</li>
+                        <li><strong>空间差异 (Spatial misalignment)：</strong> 各类传感器数据必须最终统一映射至同一空间坐标系。</li>
+                        <li><strong>核心结论：</strong> 复杂的对齐逻辑不应由人工编写规则实现，而应由模型自主学习完成。</li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- End of slide 5 -->
+        
+        <div class="slide">
+            <h1>Slide 6: BEV 最终得到了什么</h1>
+            <p>Summarizing the core output and defining characteristics of the Bird's Eye View representation.</p>
+            
+            <div class="slide-content">
+                <div class="slide-img">
+                    <img src="images/bev_final_output.jpg" alt="BEV 最终得到什么">
+                </div>
+                <div class="slide-qa-text">
+                    <h3>What do you see in this image?</h3>
+                    <p>This slide summarizes what the BEV process ultimately achieves and highlights a key transition in research:</p>
+                    <ul>
+                        <li><strong>上帝视角重构：</strong> 构建了一个大小自定义的特征空间，即 BEV 特征网格。</li>
+                        <li><strong>精度可控：</strong> 网格间距（分辨率）由设计者定义，直接决定了感知的精度。</li>
+                        <li><strong>全局预测：</strong> 在此统一特征空间中，具备了全局视野，方便后续的预测与规划任务。</li>
+                        <li><strong>核心难点与转折：</strong> 如何在保持感知的“细致度”与“计算成本”之间取得平衡？——这也是 BEVFormer 等算法演进的动力。</li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- End of slide 6 -->
+        
+        <div class="slide">
+            <h1>Slide 7: BEVFormer Overview</h1>
+            <p>Introducing the fundamental BEVFormer framework for camera-based perception.</p>
+            
+            <div class="slide-content">
+                <div class="slide-img">
+                    <img src="images/bevformer.jpg" alt="BEVFormer Overview">
+                </div>
+                <div class="slide-qa-text">
+                    <h3>What do you see in this image?</h3>
+                    <p>This slide outlines the <strong>BEVFormer</strong> framework, which established a standard paradigm for pure-vision BEV perception:</p>
+                    <ul>
+                        <li><strong>一个核心：</strong> 纯视觉解决方案，通过多视角摄像头进行特征融合。</li>
+                        <li><strong>两个策略：</strong> 利用 Attention 对齐时间与空间维度的特征。</li>
+                        <li><strong>三个节约：</strong> 通过 Attention 计算简化、特征映射简化及粗粒度特征空间，实现高效推理。</li>
+                        <li><strong>核心框架：</strong> 时间维度 + 空间维度 + Deformable Attention 的组合奠定了现代 BEV 框架的基础。</li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- End of slide 7 -->
+        
+        <div class="slide">
+            <h1>Slide 8: BEVFormer 输入数据格式</h1>
+            <p>Defining the tensor dimensions and input structure for the BEVFormer model.</p>
+            
+            <div class="slide-content">
+                <div class="slide-img">
+                    <img src="images/input_format.jpg" alt="BEVFormer Input Format">
+                </div>
+                <div class="slide-qa-text">
+                    <h3>What do you see in this image?</h3>
+                    <p>This slide specifies the input tensor configuration required for BEVFormer:</p>
+                    <ul>
+                        <li><strong>核心张量维度：</strong> <code>(bs, queue, cam, C, H, W)</code>。</li>
+                        <li><strong>参数解析：</strong>
+                            <ul>
+                                <li><code>bs</code>: Batch Size。</li>
+                                <li><code>queue</code>: 连续帧序列长度（主要用于处理遮挡问题）。</li>
+                                <li><code>cam</code>: 每帧包含的相机图像数量（如 nuScenes 数据集为 6 个）。</li>
+                                <li><code>C, H, W</code>: 图片特征维度（通道数、高度、宽度）。</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- End of slide 8 -->
+        
+        <div class="slide">
+            <h1>Slide 9: BEVFormer 传感器配置</h1>
+            <p>Illustrating the specific sensor layout utilized by the BEVFormer model.</p>
+            
+            <div class="slide-content">
+                <div class="slide-img">
+                    <img src="images/cam_setup.jpg" alt="BEVFormer Sensor Layout">
+                </div>
+                <div class="slide-qa-text">
+                    <h3>What do you see in this image?</h3>
+                    <p>This slide highlights the specific sensor configuration for BEVFormer, emphasizing that it relies exclusively on visual camera data:</p>
+                    <ul>
+                        <li><strong>核心约束：</strong> 尽管车辆配备了多种传感器（如 Radar 和 Lidar），但 BEVFormer 仅使用 6 个视觉摄像头 (CAM) 的数据流。</li>
+                        <li><strong>摄像头布局：</strong>
+                            <ul>
+                                <li>前方：Front</li>
+                                <li>前侧：Front Left / Front Right</li>
+                                <li>后侧：Back Left / Back Right</li>
+                                <li>后方：Back</li>
+                            </ul>
+                        </li>
+                        <li><strong>视觉感知优势：</strong> 证明了在不依赖昂贵激光雷达的情况下，仅通过多目视觉融合即可实现高质量的 BEV 感知。</li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- End of slide 9 -->
+        
+        <div class="slide">
+            <h1>Slide 10: BEVFormer Backbone</h1>
+            <p>Analyzing the feature extraction stage within the BEVFormer architecture.</p>
+            
+            <div class="slide-content">
+                <div class="slide-img">
+                    <img src="images/backbone.jpg" alt="BEVFormer Backbone">
+                </div>
+                <div class="slide-qa-text">
+                    <h3>What do you see in this image?</h3>
+                    <p>This slide details the Backbone component of BEVFormer, emphasizing its role as the initial feature extraction stage:</p>
+                    <ul>
+                        <li><strong>核心功能：</strong> 分别从 6 个视角提取图像特征，为后续空间注意力机制 (Spatial Attention) 提供输入。</li>
+                        <li><strong>灵活性：</strong> 该阶段对 Backbone 的选择没有严格限制，几乎任何主流网络均可应用。</li>
+                        <li><strong>性能考量：</strong> 虽然结构通用，但为了实现实时感知，通常偏好选择具有较高推理速度的模型。</li>
+                        <li><strong>关键逻辑：</strong> 在 BEV 特征空间中的每一个采样点，都需要向这些提取到的多视图特征进行采样。</li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- End of slide 10 -->
+        
+        <div class="slide">
+            <h1>Slide 11: 时间注意力模块 (Temporal Attention)</h1>
+            <p>Exploring how BEVFormer utilizes temporal information to enhance perception.</p>
+            
+            <div class="slide-content">
+                <div class="slide-img">
+                    <img src="images/temporal_attention.jpg" alt="Temporal Attention">
+                </div>
+                <div class="slide-qa-text">
+                    <h3>What do you see in this image?</h3>
+                    <p>This slide explains the <strong>Temporal Attention</strong> mechanism in BEVFormer, which acts similarly to RNNs for history utilization:</p>
+                    <ul>
+                        <li><strong>RNN-like Paradigm:</strong> 像处理时序序列一样，利用前面时刻的特征来增强当前时刻的表达能力。</li>
+                        <li><strong>动态偏移对齐：</strong> 由于车体和物体在不同时间帧内存在位置偏移，不能直接相加，需要寻找历史中最匹配的特征点。</li>
+                        <li><strong>Deformable Attention 的角色：</strong> 作为实现这种“在历史中寻找并采样”的“硬通货”，高效完成了跨帧特征对齐的任务。</li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- End of slide 11 -->
+        
+        <div class="slide">
+            <h1>Slide 12: Deformable Attention [2]</h1>
+            <p>Architectural details of the Deformable Attention module from ICLR 2021.</p>
+            
+            <div class="slide-content">
+                <div class="slide-img">
+                    <img src="images/deformable_attention_detail.jpg" alt="Deformable Attention Module">
+                </div>
+                <div class="slide-qa-text">
+                    <h3>What do you see in this image?</h3>
+                    <p>This image provides a granular breakdown of the <strong>Deformable Attention module</strong>, which serves as the core mechanism for efficient feature sampling:</p>
+                    <ul>
+                        <li><strong>核心组件：</strong> Query Feature 通过 Linear 映射出两个关键分支：
+                            <ul>
+                                <li><strong>Sampling Offsets (采样偏移量)：</strong> 决定在输入特征图中“去哪里采样”。</li>
+                                <li><strong>Attention Weights (注意力权重)：</strong> 决定“对不同采样点给予多大关注度”。</li>
+                            </ul>
+                        </li>
+                        <li><strong>运作流程：</strong>
+                            <ul>
+                                <li>通过参考点 (Reference Point) 与学习到的 Offset 确定最终的采样位置。</li>
+                                <li>在多 Head 结构中分别执行采样与 Aggregate 操作。</li>
+                                <li>将各 Head 的聚合结果进行最终 Linear 映射，产出最终特征输出。</li>
+                            </ul>
+                        </li>
+                        <li><strong>贡献：</strong> 该模块证明了通过学习偏移量而非全局注意力计算，能够以极低的代价获得极高的建模能力。</li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- End of slide 12 -->
+        
+        <div class="slide">
+            <h1>Slide 13: 空间注意力模块 (Spatial Attention)</h1>
+            <p>Explaining how BEVFormer leverages spatial attention to aggregate multi-view features efficiently.</p>
+            
+            <div class="slide-content">
+                <div class="slide-img">
+                    <img src="images/spatial_attention.jpg" alt="Spatial Attention Module">
+                </div>
+                <div class="slide-qa-text">
+                    <h3>What do you see in this image?</h3>
+                    <p>This slide details the <strong>Spatial Attention</strong> module, which addresses the challenge of mapping 3D BEV queries to relevant 2D image features:</p>
+                    <ul>
+                        <li><strong>融合机制：</strong> 将多视角特征融合的过程，转化为 Query 遍历所有视角并精准搜索有用信息的过程。</li>
+                        <li><strong>投影参考：</strong> 3D 空间点的投影点仅作为参考 (Reference)，用于确定大致区域。</li>
+                        <li><strong>局部采样策略：</strong> 在投影点的基础上，围绕该局部邻域进行特征采样，而非硬性对应单一坐标。</li>
+                        <li><strong>Deformable 思路：</strong> 核心逻辑依然是 Deformable Attention 的“由局部到采样点，再到全局聚合” (Local -> Point -> Global)，极大地增强了对遮挡或内外参偏差的鲁棒性。</li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- End of slide 13 -->
+        
+        <div class="slide">
+            <h1>Slide 14: 空间注意力计算效率</h1>
+            <p>Analyzing the optimization of spatial attention computational complexity in BEVFormer.</p>
+            
+            <div class="slide-content">
+                <div class="slide-img">
+                    <img src="images/spatial_attention_efficiency.jpg" alt="Spatial Attention Efficiency">
+                </div>
+                <div class="slide-qa-text">
+                    <h3>What do you see in this image?</h3>
+                    <p>This slide highlights a critical optimization in BEVFormer, showing how it reduces the computational load of spatial attention:</p>
+                    <ul>
+                        <li><strong>原始挑战：</strong> 若 BEV 特征空间为 200x200，则存在 4 万 (4W) 个 Query。直接与 6 个视角特征算 Attention 极其缓慢。</li>
+                        <li><strong>优化策略：</strong> 利用预先计算的投影关系，针对每一个视角仅选择与之相关的 Query 子集，而非全图扫描。</li>
+                        <li><strong>性能收益：</strong> 理论上能将计算量从 4 万 (4W) 降低至大约 6000 个（依据原作者数据），实现了数量级的推理加速。</li>
+                        <li><strong>设计理念：</strong> 高效的 BEV 模型设计不仅是网络结构本身，更在于对 Attention 计算开销的精细化治理。</li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- End of slide 14 -->
+        
+        <div class="slide">
+            <h1>Slide 15: BEV 模型后续拓展升级</h1>
+            <p>Exploring advanced architectural enhancements for high-performance BEV perception systems.</p>
+            
+            <div class="slide-content">
+                <div class="slide-img">
+                    <img src="images/extensions.jpg" alt="BEV Extensions">
+                </div>
+                <div class="slide-qa-text">
+                    <h3>What do you see in this image?</h3>
+                    <p>This slide outlines key directions for upgrading and scaling up BEV perception models to achieve higher accuracy:</p>
+                    <ul>
+                        <li><strong>多尺度特征图 (Multi-scale Feature Maps)：</strong> 通过引入多尺度特征融合，显著提升对不同距离物体（尤其是远距离小目标）的感知能力。</li>
+                        <li><strong>Corner Pool (针对检测)：</strong> 专门引入角点池化机制，更精准地定位目标边界，从而提高物体检测的 bounding box 精度。</li>
+                        <li><strong>突出角点特征：</strong> 对特征图中的关键角点进行增强，强化物体形状表征。</li>
+                        <li><strong>Backbone 更强：</strong> 换用参数量更大、表达能力更强的 Backbone（如 Swin Transformer 或大型 ViT），提供更扎实的特征提取基础。</li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- End of slide 15 -->
+        
+        <div class="slide">
+            <h1>Slide 16: BEV 模型后续拓展 (II)</h1>
+            <p>Further architectural optimizations and detection head strategies for BEV systems.</p>
+            
+            <div class="slide-content">
+                <div class="slide-img">
+                    <img src="images/bev_extensions_2.jpg" alt="BEV Extensions II">
+                </div>
+                <div class="slide-qa-text">
+                    <h3>What do you see in this image?</h3>
+                    <p>This slide focuses on practical optimization strategies for offsets prediction and detection head integration:</p>
+                    <ul>
+                        <li><strong>卷积核优化：</strong> 偏置量 (Offset) 的预测可以使用更大的卷积核（如 3x3），以捕捉更宽范围的空间语义。</li>
+                        <li><strong>检测器集成：</strong> BEV 框架具有高度兼容性，可集成多种检测 head 进行集成 (Ensemble)，从而综合各类检测头的优势。</li>
+                        <li><strong>检测范式对比：</strong>
+                            <ul>
+                                <li><strong>Anchor-based:</strong> 适合大目标（如车辆），在缓解遮挡问题上有优势。</li>
+                                <li><strong>Anchor-free (DETR-based):</strong> 基于匈牙利算法匹配，对小目标（如行人）更友好，召回率更高。</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- End of slide 16 -->
+        
+        <div class="slide">
+            <h1>Slide 17: 时间与空间顺序</h1>
+            <p>Analyzing the sequential processing of temporal and spatial attention mechanisms.</p>
+            
+            <div class="slide-content">
+                <div class="slide-img">
+                    <img src="images/temporal_spatial_order.jpg" alt="Temporal and Spatial Order">
+                </div>
+                <div class="slide-qa-text">
+                    <h3>What do you see in this image?</h3>
+                    <p>This slide illustrates the design philosophy behind the sequence of attention modules in BEVFormer:</p>
+                    <ul>
+                        <li><strong>“先时间，再空间”原则：</strong> 模型设计优先考虑时间维度。因为历史时刻的 BEV 包含大量已累积的丰富信息。</li>
+                        <li><strong>利用先验知识：</strong> 将历史信息作为一种“先验”，在此基础上进一步融合当前帧特征，从而构建出更准确的当前 BEV 表达。</li>
+                        <li><strong>迭代优化：</strong> 上述融合过程会重复多次（如 6 次），通过层叠的 Attention 模块不断迭代，最终得到高质量的 BEV 空间特征。</li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- End of slide 17 -->
+        
+        <div class="slide">
+            <h1>Slide 18: BEV 特征应用 (Applications)</h1>
+            <p>Leveraging BEV features for diverse autonomous driving perception tasks.</p>
+            
+            <div class="slide-content">
+                <div class="slide-img">
+                    <img src="images/bev_applications.jpg" alt="BEV Feature Applications">
+                </div>
+                <div class="slide-qa-text">
+                    <h3>What do you see in this image?</h3>
+                    <p>This slide details how versatile BEV features ($B_t \in \mathbb{R}^{H \times W \times C}$) are repurposed for core perception tasks:</p>
+                    <ul>
+                        <li><strong>核心优势：</strong> BEV 特征图本质上是通用的 2D 特征，这使得现有的 2D 感知方法只需少量修改即可迁移至 3D 任务。</li>
+                        <li><strong>3D 目标检测 (3D Detection)：</strong> 基于 Deformable DETR 设计端到端 Head，直接预测 3D Bounding Box 和速度，无需繁琐的 NMS 后处理。</li>
+                        <li><strong>地图分割 (Map Segmentation)：</strong> 借鉴 Panoptic SegFormer 的 Mask Decoder 与固定类别查询 (Class-fixed queries)，实现对车、路面（可行驶区域）、车道线等类别的语义分割。</li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- End of slide 18 -->
+    </div>
+</body>
+</html>

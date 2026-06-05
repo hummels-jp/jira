@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lane Detection Documentation</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .slide-container { display: flex; gap: 20px; padding: 20px; border-bottom: 1px solid #ccc; align-items: flex-start; }
+        .image-col { flex: 1; }
+        .qa-col { flex: 1; }
+        .slide-qa-text { border: 1px solid #007bff; padding: 15px; background-color: #f8f9fa; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Lane Detection Standards</h1>
+    
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 1</h3>
+            <img src="images/lane_detection.png" alt="Deep Lane Detection" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 1: Deep Lane Detection</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This image showcases the output results of our deep lane detection project, illustrating real-time lane tracking on road scenes.</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 2</h3>
+            <img src="images/lane_detection_dataset.png" alt="Dataset Introduction" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 2: Dataset Introduction</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide introduces common lane detection datasets like CULane and Tusimple, highlighting their characteristics and providing a benchmark overview for domestic lane detection research.</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 3</h3>
+            <img src="images/lane_detection_augmentation.png" alt="Data Augmentation" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 3: Data Augmentation</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide illustrates data augmentation techniques, primarily focusing on geometric transformations such as translation and minor rotations to improve model robustness.</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 4</h3>
+            <img src="images/lane_detection_label_extension.png" alt="Label Extension" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 4: Label Extension</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide discusses techniques for extending incomplete lane annotations. It proposes using linear regression to extrapolate and complete lane segments that do not extend to the full length in the original dataset.</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 5</h3>
+            <img src="images/lane_detection_output_format.png" alt="Output Label Format" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 5: Output Label Format</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide explains the output label format for the lane detection model. It specifies that the output is a [4,18] matrix, representing specific coordinates for 4 lane lines across 18 distinct vertical positions, noting that the binary mask images often contain hidden information accessible only through source code.</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 6</h3>
+            <img src="images/lane_detection_architecture.png" alt="Model Architecture" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 6: Model Architecture</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide illustrates the deep lane detection network architecture, detailing the main branch (ResBlocks + FC/Reshape/Selecting) and the auxiliary segmentation branch, which is active only during training to enhance feature learning.</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 7</h3>
+            <img src="images/lane_detection_task_analysis.png" alt="Task Analysis" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 7: Task Analysis</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide illustrates the core task analysis strategy for deep lane detection, which involves flattening the height and width dimensions into a grid format to perform row-based lane prediction.</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 8</h3>
+            <img src="images/lane_detection_loss_function.png" alt="Loss Functions" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 8: Loss Functions</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide details the loss functions used for model training: 1. Focal Loss for classification, 2. Similarity Loss (L_sim) to ensure smoothness between adjacent positions, and 3. Shape Loss (L_shp) based on expectation values, which helps refine the predicted lane coordinates.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

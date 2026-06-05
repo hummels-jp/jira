@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>OSM Data Integration</title>
+    <style>
+        body { font-family: 'Helvetica Neue', sans-serif; margin: 20px; }
+        .container { display: flex; flex-direction: column; gap: 40px; }
+        .slide { border: 1px solid #ccc; padding: 20px; }
+        .slide-content { display: flex; gap: 20px; margin-top: 20px; }
+        .slide-qa-text { border: 2px solid #007bff; padding: 15px; background-color: #f0f8ff; flex: 1; }
+        .slide-img { flex: 1; }
+        .slide-img img { width: 100%; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="slide">
+            <h1>Slide 1: OSM 道路附属对象标签分类 (Roadside Objects)</h1>
+            <p>基于自动驾驶与高精地图需求的 OSM 标签分类速查。</p>
+            
+            <div class="slide-content">
+                <div class="slide-img">
+                    <img src="images/img_979544728f4d.jpg" alt="OSM Roadside Objects">
+                </div>
+                <div class="slide-qa-text">
+                    <h3>OSM 关键标签分类索引</h3>
+                    <ul>
+                        <li><strong>交通标志:</strong> <code>traffic_sign=*</code>, <code>highway=stop/give_way</code></li>
+                        <li><strong>交通信号灯:</strong> <code>highway=traffic_signals</code></li>
+                        <li><strong>基础设施:</strong> <code>highway=street_lamp</code>, <code>barrier=guard_rail</code></li>
+                        <li><strong>道路约束:</strong> <code>barrier=kerb</code>, <code>traffic_calming=*</code></li>
+                        <li><strong>其他:</strong> <code>highway=crossing/bus_stop</code>, <code>railway=level_crossing</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- End of slide 1 -->
+
+        <div class="slide">
+            <h1>Slide 2: 自动驾驶高价值对象优先级</h1>
+            <p>工程中用于 OpenDRIVE/Lanelet2 转换的核心提取对象。</p>
+            
+            <div class="slide-content">
+                <div class="slide-img">
+                    <img src="images/img_979544728f4d.jpg" alt="High Priority Objects">
+                </div>
+                <div class="slide-qa-text">
+                    <h3>核心提取 Key 列表</h3>
+                    <p>自动驾驶地图开发中最常提取的 OSM 属性：</p>
+                    <ul>
+                        <li><code>highway</code>, <code>traffic_sign</code>, <code>traffic_signals</code></li>
+                        <li><code>crossing</code>, <code>barrier</code>, <code>kerb</code></li>
+                        <li><code>traffic_calming</code>, <code>railway</code>, <code>public_transport</code></li>
+                        <li><code>amenity</code>, <code>road_marking</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- End of slide 2 -->
+    </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>OSM 道路付帯施設タグ分類インデックス</title>
+    <style>
+        body { font-family: 'Helvetica Neue', sans-serif; margin: 20px; line-height: 1.6; }
+        .container { display: flex; flex-direction: column; gap: 20px; }
+        .slide { border: 1px solid #ccc; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>OSM 道路付帯施設タグ分類インデックス</h1>
+        
+        <div class="slide">
+            <h2>1. 交通標識 (Traffic Signs)</h2>
+            <table>
+                <tr><th>Key</th><th>Value例</th><th>説明</th></tr>
+                <tr><td><code>traffic_sign</code></td><td><code>JP:323</code></td><td>日本の交通標識コード</td></tr>
+                <tr><td><code>traffic_sign</code></td><td><code>DE:274-50</code></td><td>ドイツ制限速度50km/h</td></tr>
+                <tr><td><code>highway</code></td><td><code>give_way</code></td><td>譲れ</td></tr>
+                <tr><td><code>highway</code></td><td><code>stop</code></td><td>一時停止</td></tr>
+            </table>
+        </div>
+
+        <div class="slide">
+            <h2>2. 交通信号機 (Traffic Lights)</h2>
+            <table>
+                <tr><th>Key</th><th>Value</th></tr>
+                <tr><td><code>highway</code></td><td><code>traffic_signals</code></td></tr>
+                <tr><td><code>traffic_signals:direction</code></td><td><code>forward</code></td></tr>
+                <tr><td><code>crossing</code></td><td><code>traffic_signals</code></td></tr>
+            </table>
+        </div>
+
+        <div class="slide">
+            <h2>3. 主要交通施設と優先順位</h2>
+            <p>自動運転地図開発で最も一般的に抽出される OSM Key です：</p>
+            <pre><code>highway, traffic_sign, traffic_signals, crossing, barrier, kerb, traffic_calming, railway, public_transport, amenity, road_marking</code></pre>
+            <p>これらのタグは、道路付帯施設 (Road Furniture) および静的交通制御施設の中核情報を網羅しています。</p>
+        </div>
+    </div>
+</body>
+</html>

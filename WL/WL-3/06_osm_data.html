@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>OSM Roadside Objects Classification</title>
+    <style>
+        body { font-family: 'Helvetica Neue', sans-serif; margin: 20px; line-height: 1.6; }
+        .container { display: flex; flex-direction: column; gap: 20px; }
+        .slide { border: 1px solid #ccc; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>OSM 道路附属对象标签分类索引</h1>
+        
+        <div class="slide">
+            <h2>1. 交通标志 (Traffic Signs)</h2>
+            <table>
+                <tr><th>Key</th><th>Value示例</th><th>说明</th></tr>
+                <tr><td><code>traffic_sign</code></td><td><code>JP:323</code></td><td>日本交通标志编码</td></tr>
+                <tr><td><code>traffic_sign</code></td><td><code>DE:274-50</code></td><td>德国限速50</td></tr>
+                <tr><td><code>highway</code></td><td><code>give_way</code></td><td>让行标志</td></tr>
+                <tr><td><code>highway</code></td><td><code>stop</code></td><td>停车标志</td></tr>
+            </table>
+        </div>
+
+        <div class="slide">
+            <h2>2. 交通信号灯 (Traffic Lights)</h2>
+            <table>
+                <tr><th>Key</th><th>Value</th></tr>
+                <tr><td><code>highway</code></td><td><code>traffic_signals</code></td></tr>
+                <tr><td><code>traffic_signals:direction</code></td><td><code>forward</code></td></tr>
+                <tr><td><code>crossing</code></td><td><code>traffic_signals</code></td></tr>
+            </table>
+        </div>
+
+        <div class="slide">
+            <h2>4. OSM オブジェクト要素とタグ分類</h2>
+            <p>OSM で定義される主要な道路付帯オブジェクトとそのマッピング：</p>
+            <table>
+                <tr><th>オブジェクト要素</th><th>主キー (Key)</th><th>代表値 (Value)</th></tr>
+                <tr><td>交通信号</td><td><code>highway</code></td><td><code>traffic_signals</code></td></tr>
+                <tr><td>交通標識</td><td><code>traffic_sign</code></td><td><code>JP:323</code>, <code>maxspeed:40</code></td></tr>
+                <tr><td>横断歩道</td><td><code>highway</code></td><td><code>crossing</code></td></tr>
+                <tr><td>縁石</td><td><code>barrier</code></td><td><code>kerb</code></td></tr>
+                <tr><td>防護柵</td><td><code>barrier</code></td><td><code>guard_rail</code></td></tr>
+                <tr><td>街灯</td><td><code>highway</code></td><td><code>street_lamp</code></td></tr>
+                <tr><td>交通鎮静化</td><td><code>traffic_calming</code></td><td><code>bump</code>, <code>cushion</code></td></tr>
+                <tr><td>踏切</td><td><code>railway</code></td><td><code>level_crossing</code></td></tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
