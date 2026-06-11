@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Autonomous Tech Documentation</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .slide-container { display: flex; gap: 20px; padding: 20px; border-bottom: 1px solid #ccc; align-items: flex-start; }
+        .image-col { flex: 1; }
+        .qa-col { flex: 1; }
+        .slide-qa-text { border: 1px solid #007bff; padding: 15px; background-color: #f8f9fa; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Autonomous Driving AI Development</h1>
+    
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 1</h3>
+            <img src="images/autonomous_tech_s1.png" alt="Autonomous Tech Overview" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 1: Overview</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This image introduces a TIER IV tech talk on "The Frontiers of Autonomous Driving AI Development and the Skills Required for Engineers in the Field," held on May 25, 2026.</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 2</h3>
+            <img src="images/autonomous_tech_s2.png" alt="Speakers" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 2: Speakers</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide introduces the three guest speakers who are experts at the forefront of development:</p>
+                <ul>
+                    <li><strong>斉藤 之寛 (Saito Yukihiro):</strong> E2E, MLOps, VLA, Reinforcement Learning, 3D GS</li>
+                    <li><strong>梅田 弾 (Umeda Dan):</strong> VLM, Data Synthesis, Active Learning, AutoLabeling</li>
+                    <li><strong>橘川 雄樹 (Kikkawa Yuki):</strong> Data Operations</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 3</h3>
+            <img src="images/autonomous_tech_s3.png" alt="Evolution of Autonomous Driving Technology" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 3: Evolution of Autonomous Driving</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide illustrates the shift from <strong>AV 1.0</strong> (based on sensor data and HD Maps with rule-based design) to <strong>AV 2.0</strong> (centered on End-to-End AI), broken down into three major technological shifts:</p>
+                <ul>
+                    <li><strong>Shift ① (2012~):</strong> CNN-based (Camera/LiDAR/RADAR)</li>
+                    <li><strong>Shift ② (2017~):</strong> CNN/Transformer-based (+ HDMap)</li>
+                    <li><strong>Shift ③ (2023~):</strong> Transformer/LLM-based (End-to-End AI)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 4</h3>
+            <img src="images/autonomous_tech_s4.png" alt="AV 1.0 vs AV 2.0" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 4: AV 1.0 vs AV 2.0</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide compares AV 1.0 and AV 2.0 (E2E) systems:</p>
+                <ul>
+                    <li><strong>AV 1.0:</strong> Rule-based systems, expensive high-cost sensors, low scalability, manual rule engineering, validation via on-road testing.</li>
+                    <li><strong>AV 2.0:</strong> Data-driven reactive simulators and E2E trainable stacks, affordable hardware, high scalability, learned behavior from human driving, validation via offline simulation.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 5</h3>
+            <img src="images/autonomous_tech_s5.png" alt="Types of Autonomous Driving Systems" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 5: System Types & Trade-offs</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide categorizes autonomous driving system types and illustrates their performance trade-offs along axes of interpretability, availability, and adaptability:</p>
+                <ul>
+                    <li><strong>Robotics Approach (AV 1.0):</strong> High interpretability.</li>
+                    <li><strong>Perception AI + Planning AI (AV 2.0):</strong> Moderate performance.</li>
+                    <li><strong>E2E AI (AV 2.0):</strong> High availability and adaptability, but lower interpretability ("black-box").</li>
+                </ul>
+                <p>The goal is to expand ML-based coverage to improve availability and reduce operational costs.</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 6</h3>
+            <img src="images/autonomous_tech_s6.png" alt="AV 2.0 Hybrid Architecture" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 6: AV 2.0 Hybrid Architecture</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide introduces the <strong>AV 2.0 Hybrid Architecture</strong>, a framework that flexibly combines traditional robotics (AV 1.0) and E2E methods (AV 2.0):</p>
+                <ul>
+                    <li>Supports a wide range of approaches from robotics to E2E, allowing design and selection based on the deployment environment.</li>
+                    <li>Coordinates E2E and robotics (rule-based) approaches to achieve both high performance and system safety.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 7</h3>
+            <img src="images/autonomous_tech_s7.png" alt="AI Models in Autonomous Driving" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 7: AI Model Types</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide provides a comprehensive overview of AI models in autonomous driving, categorizing them into three primary types based on their architecture and functionality:</p>
+                <ul>
+                    <li><strong>Perception AI (e.g., Mobileye):</strong> Uses AI for perception only, with human-written rules for decision/control. High interpretability/safety, low dev cost.</li>
+                    <li><strong>Perception AI + Planning AI (e.g., Waymo):</strong> AI for both perception and planning/prediction. Highly interpretable, allows rule-based safety integration.</li>
+                    <li><strong>End-to-End AI (e.g., Tesla / Wayve):</strong> Integrates sensing to control into a single model (Transformer-based or VLA). Optimizes performance but presents challenges for traditional safety validation due to its "black-box" nature.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 8</h3>
+            <img src="images/autonomous_tech_s8.png" alt="Planning AI (Diffusion Planner)" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 8: Planning AI (Diffusion Planner)</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide introduces the <strong>Planning AI (Diffusion Planner)</strong>, which uses Diffusion Transformer technology to rapidly infer vehicle trajectories based on route information, environmental perception, and map data:</p>
+                <ul>
+                    <li><strong>Mechanism:</strong> Integrates data from Sensing, Map, Localization, Mission Planning, Perception, and Vehicle Status via an Encoder into a Diffusion Transformer.</li>
+                    <li><strong>Process:</strong> Performs denoising steps to generate stable trajectories for both moving objects and the ego-vehicle.</li>
+                    <li><strong>Performance:</strong> Achieving fast inference speeds of approximately 10-15 msec on an NVIDIA RTX4080.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 9</h3>
+            <img src="images/autonomous_tech_s9.png" alt="Planning AI Learning Workflow" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 9: Planning AI Learning Workflow</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide outlines the learning workflow for Planning AI, consisting of three progressive stages:</p>
+                <ul>
+                    <li><strong>1. Simulation + Real Data (Foundation):</strong> Initial acquisition of basic driving knowledge.</li>
+                    <li><strong>2. High-Quality Small-Scale Real Data (SFT - Environment Adaptation):</strong> Fine-tuning for specific environments.</li>
+                    <li><strong>3. Post-Training via Reinforcement Learning (Fine-tuning):</strong> Final micro-adjustments to optimize behavior.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 10</h3>
+            <img src="images/autonomous_tech_s10.png" alt="Data Noise Example" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 10: Data Noise Examples</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide illustrates examples of "noisy data" in autonomous driving datasets, which can lead to counter-intuitive model behaviors:</p>
+                <ul>
+                    <li><strong>Scenario A:</strong> The vehicle accelerates despite the detection output showing a car ahead.</li>
+                    <li><strong>Scenario B:</strong> The vehicle brakes despite the detection output showing no obstacles ahead.</li>
+                </ul>
+                <p>It emphasizes the importance of reducing data bias and ensuring data uniformity in the learning process to prevent such errors.</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 11</h3>
+            <img src="images/autonomous_tech_s11.png" alt="Reinforcement Learning (DPO) Detail" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 11: Reinforcement Learning (DPO)</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide provides a more detailed look at the <strong>Reinforcement Learning (DPO)</strong> post-training phase:</p>
+                <ul>
+                    <li><strong>Left View:</strong> Visualizes the fine-tuning process using DPO (Direct Preference Optimization).</li>
+                    <li><strong>Right View:</strong> Shows a visual comparison of changes before and after the fine-tuning process.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 12</h3>
+            <img src="images/autonomous_tech_s12.png" alt="End to End AI (BEVFusion + Diffusion Planner)" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 12: End to End AI (BEVFusion + Diffusion Planner)</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide illustrates the comprehensive <strong>End to End AI</strong> pipeline integrating <strong>BEVFusion</strong> and <strong>Diffusion Planner</strong>:</p>
+                <ul>
+                    <li><strong>Pipeline:</strong> Integrates data from Sensing, Map, Localization, Mission Planning, Vehicle Status, and BEVFusion features.</li>
+                    <li><strong>Core Components:</strong> These inputs are processed through an Encoder and fed into a Diffusion Transformer for trajectory generation.</li>
+                    <li><strong>Output:</strong> Generates unified trajectory predictions, including moving objects, ego-vehicle path, and turn signals, using a denoising process.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 13</h3>
+            <img src="images/autonomous_tech_s13.png" alt="End to End AI (Alpamayo)" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 13: End to End AI (Alpamayo)</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide presents <strong>Alpamayo</strong>, an End-to-End AI approach that leverages large language models (LLMs) to perform complex reasoning tasks:</p>
+                <ul>
+                    <li><strong>Functionality:</strong> Utilizes LLMs to generate high-level navigation instructions (e.g., "Keep lane to stay right of the traffic island").</li>
+                    <li><strong>Trajectory Inference:</strong> Concurrently infers driving trajectories based on these language-guided instructions, demonstrating a sophisticated integration of natural language understanding and motion planning in autonomous driving.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 14</h3>
+            <img src="images/autonomous_tech_s14.png" alt="Simulator for End to End AI" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 14: Simulator for End to End AI</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide introduces the simulator ecosystem supporting End-to-End AI development, centered around the <strong>Autoware</strong> integration:</p>
+                <ul>
+                    <li><strong>Carla (Simulation Hub):</strong> Acts as the integration platform with Autoware, offering high extensibility and strong community support.</li>
+                    <li><strong>Traffic Engine:</strong> Simulates agent dynamics using TeraSim/Sumo, controlling traffic flow.</li>
+                    <li><strong>Renderer:</strong> Uses core technologies like 3DGS, Cosmos-Drive, NuRec, and game engines to reconstruct the real world as digital twins.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 15</h3>
+            <img src="images/autonomous_tech_s15.png" alt="Traffic Engine" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 15: Traffic Engine</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide highlights the capabilities of the <strong>Traffic Engine</strong> in simulating complex scenarios:</p>
+                <ul>
+                    <li><strong>Hand-crafted Scenarios:</strong> Allows for the creation of specific, controlled testing scenarios.</li>
+                    <li><strong>Random Simulation (TeraSim/Sumo):</strong> Enables large-scale random testing by simulating traffic flow, helping to stress-test the AI model in diverse, unpredictable conditions.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 16</h3>
+            <img src="images/autonomous_tech_s16.png" alt="3DGS + Physics Engine" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 16: 3DGS + Physics Engine</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide showcases the integration of <strong>3D Gaussian Splatting (3DGS)</strong> with a <strong>Physics Engine (Unreal Engine)</strong>:</p>
+                <ul>
+                    <li><strong>Rendering:</strong> Uses 3DGS to achieve high-fidelity rendering, allowing for realistic reconstruction of driving environments.</li>
+                    <li><strong>Physics:</strong> Combines this with a physics engine to simulate realistic vehicle dynamics and interactions, creating a robust simulation environment for AV testing.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 17</h3>
+            <img src="images/autonomous_tech_s17.png" alt="3DGS + Physics Engine Visualization" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 17: 3DGS + Physics Engine (Detail)</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide provides a side-by-side view comparing simulated data with real-world road scenes:</p>
+                <ul>
+                    <li><strong>Top:</strong> Displays the rendered environment generated through 3DGS and the physics engine.</li>
+                    <li><strong>Bottom:</strong> Displays the corresponding real-world camera view, demonstrating the high accuracy and fidelity of the environment reconstruction.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 18</h3>
+            <img src="images/autonomous_tech_s18.png" alt="Engineering Skills Overview" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 18: Engineering Skills Overview</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide introduces the second part of the presentation, focusing on the engineering skills required for autonomous driving AI development, specifically in the domains of:</p>
+                <ul>
+                    <li><strong>VLM (Vision-Language Models)</strong></li>
+                    <li><strong>Data Synthesis</strong></li>
+                    <li><strong>Active Learning</strong></li>
+                    <li><strong>AutoLabeling</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 19</h3>
+            <img src="images/autonomous_tech_s19.png" alt="Speaker Profile: Dan Umeda" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 19: Speaker Profile - Dan Umeda</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide presents the professional profile of <strong>Dan Umeda</strong>:</p>
+                <ul>
+                    <li><strong>Role:</strong> Co-MLOps Principal AI Engineer at TIER IV.</li>
+                    <li><strong>Experience:</strong> Focused on DNN acceleration, Edge AI, and leading AI development within the Co-MLOps framework.</li>
+                    <li><strong>Expertise:</strong> Active contributor to technical meetups and conferences, with extensive presentations on Edge AI optimization, data anonymization, and dataset infrastructure (e.g., NVIDIA Cosmos).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 20</h3>
+            <img src="images/autonomous_tech_s20.png" alt="Development Environment Scope" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 20: Development Environment Scope</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide defines the development environment and the focus scope for the presentation regarding "AI-based Autonomous Driving":</p>
+                <ul>
+                    <li><strong>Process Scope:</strong> The presentation specifically highlights the <strong>Data Selection</strong> and <strong>Annotation</strong> phases within the overall pipeline (Collection -> Selection -> Annotation -> Training -> Evaluation -> Deployment).</li>
+                    <li><strong>Ecosystem:</strong> Leverages an open approach including OSS Community, Development Partners, and OEM/Tier1 collaborations.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 21</h3>
+            <img src="images/autonomous_tech_s21.png" alt="Co-MLOps Ecosystem" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 21: Co-MLOps Ecosystem</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide explains the <strong>Co-MLOps</strong> ecosystem, which serves as a shared space for data and AI technologies:</p>
+                <ul>
+                    <li><strong>Collaborative Loop:</strong> Integrates TIER IV and Platform Partners into a cycle of Active Learning, Data Sharing, Annotation, and Training.</li>
+                    <li><strong>Community Benefit:</strong> As more Fleet Partners, OEMs, and Tier 1 suppliers join globally, the "Reference AI" continuously improves, benefiting all ADAS and AD developers.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 22</h3>
+            <img src="images/autonomous_tech_s22.png" alt="Co-MLOps Active Learning Pipeline" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 22: Co-MLOps Active Learning Pipeline</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide details the <strong>Co-MLOps Active Learning Pipeline</strong>, which integrates AI throughout the entire development process for Physical AI:</p>
+                <ul>
+                    <li><strong>Core Loop:</strong> Privacy Anonymization, Value Scoring (Uncertainty Estimation), Auto-Annotation (Ensemble Foundation Model), Data Meta-tagging (VLM), Synthetic Data Generation, Quality Assessment, and Similarity Judgement (Embedding/GMM).</li>
+                    <li><strong>Goal:</strong> Realizing a comprehensive data infrastructure for the development of robust Physical AI.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 23</h3>
+            <img src="images/autonomous_tech_s23.png" alt="Value Scoring via Uncertainty & Reasoning" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 23: Value Scoring via Uncertainty & Reasoning</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>This slide discusses how to implement <strong>Value Scoring</strong> through uncertainty estimation and reasoning:</p>
+                <ul>
+                    <li><strong>Edge-Case Handling:</strong> Essential for addressing "unknown scenes" (e.g., bad weather, backlight, rare objects) where misjudgments can cause fatal accidents; efficiency in learning rare data is key.</li>
+                    <li><strong>Evidence-Based Improvement:</strong> Improves data collection and learning efficiency by verbalizing "why" a data point is considered high-uncertainty (reasoning).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

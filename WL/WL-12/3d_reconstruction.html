@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>动态街景重建技术</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .slide-container { display: flex; gap: 20px; padding: 20px; border-bottom: 1px solid #ccc; align-items: flex-start; }
+        .image-col { flex: 1; }
+        .qa-col { flex: 1; }
+        .slide-qa-text { border: 1px solid #007bff; padding: 15px; background-color: #f8f9fa; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>动态街景重建技术</h1>
+    
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 1</h3>
+            <img src="images/3d_reconstruction_s1.jpg" alt="动态街景重建技术" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 1: Overview</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>该图像是中国图学学会“奋发图强”博士生Workshop（2025年度第五期，总第21期）的演讲封面。主题为<strong>“面向自动驾驶仿真的动态街景重建技术”</strong>，演讲者为浙江大学的彭思达。</p>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 2</h3>
+            <img src="images/3d_reconstruction_s2.jpg" alt="研究目标" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 2: 研究目标</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>本研究的核心目标是：<strong>基于路采数据的动态街景高精建模与重渲染。</strong></p>
+                <p>通过处理路采的原始视频数据，实现对复杂城市环境的数字化：</p>
+                <ul>
+                    <li><strong>输入：</strong> 车辆行驶过程中采集的连续多视点图像数据。</li>
+                    <li><strong>过程/输出：</strong> 经过算法处理，构建出包含动态物体（如车辆）和静态环境的<strong>动态三维街景</strong>模型。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 3</h3>
+            <img src="images/3d_reconstruction_s3.jpg" alt="研究挑战" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 3: 研究挑战</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>本研究在“基于路采数据的动态街景高精建模与重渲染”过程中，重点解决了以下三个核心技术难题：</p>
+                <ul>
+                    <li><strong>问题1：动态表征难</strong> —— 如何准确建模街景中的动态物体（如车辆、行人）。</li>
+                    <li><strong>问题2：重建质量差</strong> —— 如何提升三维重建模型的细节保真度和清晰度。</li>
+                    <li><strong>问题3：渲染视角小</strong> —— 如何解决传统方法在新视角合成时受限的问题，实现自由视点渲染。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 4</h3>
+            <img src="images/3d_reconstruction_s4.jpg" alt="研究成果" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 4: 研究成果</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>针对前述三个挑战，本研究提出了对应的解决方案，并发表于 <strong>CVPR 2025</strong>：</p>
+                <ul>
+                    <li><strong>动态表征难 -> FreeTimeGS：</strong> 最早实现任意动态街景重建的工作之一。</li>
+                    <li><strong>重建质量差 -> PromptDA：</strong> 高精深度估计，已被集成进 transformers 算法库。</li>
+                    <li><strong>渲染视角小 -> StreetCrafter：</strong> 引入视频生成模型辅助街景重建，被多个媒体转发宣传。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 5</h3>
+            <img src="images/3d_reconstruction_s5.jpg" alt="研究成果：FreeTimeGS" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 5: 研究成果 - FreeTimeGS</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>本页重点介绍了研究成果之一：<strong>FreeTimeGS (CVPR 2025)</strong>。</p>
+                <p>这是针对前述“动态表征难”问题提出的解决方案：</p>
+                <ul>
+                    <li><strong>核心思路：</strong> 使用高斯基元（Gaussian primitives）进行建模，使其能够表示“任意时间、任意位置”的状态。</li>
+                    <li><strong>创新点：</strong> 实现了最早期的任意动态街景三维重建工作之一，通过高斯点云的动态演化来精确捕捉运动物体。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 6</h3>
+            <img src="images/3d_reconstruction_s6.jpg" alt="绕过 3D Box 标注" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 6: 解决 3D Box 标注依赖</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>本研究旨在解决自动驾驶街景建模中<strong>“如何绕过 3D Box 标注”</strong>的问题：</p>
+                <ul>
+                    <li><strong>现状：</strong> 现有的 SOTA（State-of-the-Art）算法严重依赖于对动态物体进行 3D 包围框（Bounding Box）标注。</li>
+                    <li><strong>痛点：</strong> 手动或自动化进行 3D Box 标注的成本极高，且难以对场景中的全部物体实现准确标注，限制了规模化应用。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 7</h3>
+            <img src="images/3d_reconstruction_s7.jpg" alt="基于四维高斯的前后景统一建模" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 7: 解决思路 - 四维高斯统一建模</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>本页介绍了一种创新的<strong>“基于四维高斯（4D Gaussian）的前后景统一建模”</strong>解决思路：</p>
+                <ul>
+                    <li><strong>核心理念：</strong> 不再人为区分前后景，而是通过四维高斯技术对整个动态场景进行统一建模。</li>
+                    <li><strong>涵盖要素：</strong> 成功整合了以下三个关键组件：
+                        <ul>
+                            <li><strong>静态背景：</strong> 城市街道建筑等。</li>
+                            <li><strong>动态前景：</strong> 街道上的行人、车辆等运动物体。</li>
+                            <li><strong>动态光照：</strong> 场景中随时间变化的光影效果。</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 8</h3>
+            <img src="images/3d_reconstruction_s8.jpg" alt="四维高斯原理" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 8: 技术原理 - 四维高斯</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>本页阐述了<strong>“四维高斯（4D Gaussian）”</strong>的数学表达与物理构成，旨在实现动态场景的高效表征：</p>
+                <ul>
+                    <li><strong>构成三要素：</strong>
+                        <ul>
+                            <li><strong>三维高斯（3D Gaussians）：</strong> 空间中的基础体素表征。</li>
+                            <li><strong>随时间的运动：</strong> 通过运动函数建模物体在时间维度上的位置/状态变化。</li>
+                            <li><strong>时序窗口（Temporal Window）：</strong> 为不同时刻的渲染提供时间上下文。</li>
+                        </ul>
+                    </li>
+                    <li><strong>数学表达：</strong> 利用概率密度函数 <em>p(x, y, z, t)</em> 来联合描述空间坐标与时间参数。</li>
+                    <li><strong>背景引用：</strong> 本原理源自 SIGGRAPH 2024 论文《4D-Rotor Gaussian Splatting: Towards Efficient Novel View Synthesis for Dynamic Scenes》。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 9</h3>
+            <img src="images/3d_reconstruction_s9.jpg" alt="快速运动物体建模难点" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 9: 难点 - 快速运动物体建模</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>本页指出了在动态场景重建中遇到的一个技术难点：<strong>如何建模快速运动的物体。</strong></p>
+                <ul>
+                    <li><strong>现状与痛点：</strong> 已有的四维高斯（4D Gaussian）方法多采用 [R; T] 矩阵来建模 Motion（运动），但这种方式在参数优化上非常困难，导致对于复杂快速运动的物体，重建效果较差，容易产生形变或伪影。</li>
+                    <li><strong>参考背景：</strong> 该问题分析源自 ICLR 2024 论文《Real-time Photorealistic Dynamic Scene Representation and Rendering with 4D Gaussian Splatting》。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 10</h3>
+            <img src="images/3d_reconstruction_s10.jpg" alt="基于线性运动的四维高斯" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 10: 解决思路 - 基于线性运动的四维高斯</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>本页介绍了一种针对快速运动物体建模的解决方案：<strong>基于线性运动（Linear Motion）的四维高斯</strong>。</p>
+                <ul>
+                    <li><strong>核心逻辑：</strong> 在任意时刻的任意位置定义高斯，并为每个高斯赋予线性运动（Velocity）参数。</li>
+                    <li><strong>数学模型：</strong> 通过公式 μₓ(t) = μₓ + v · (t - μₜ) 来描述高斯中心点随时间的线性移动。</li>
+                    <li><strong>建模外观：</strong> 使用 4DSH（四维球面谐波）来建模物体随视角和时间变化的外观。</li>
+                    <li><strong>实验验证：</strong> 实验证明 FreeTimeGS 能极其有效地建模复杂的动态运动物体。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-container">
+        <div class="image-col">
+            <h3 style="margin-top: 0;">Slide 11</h3>
+            <img src="images/3d_reconstruction_s11.jpg" alt="实验结果" style="width: 100%; border: 1px solid #999;">
+        </div>
+        <div class="qa-col">
+            <h2>Slide 11: 实验结果</h2>
+            <div class="slide-qa-text">
+                <p><strong>What do you see in this image?</strong></p>
+                <p>本页展示了 FreeTimeGS 在真实城市道路交通场景中的实验结果：</p>
+                <ul>
+                    <li><strong>展示内容：</strong> 提供了一段实车采集的城市街景视频，展示了系统对复杂动态交通流的高保真重建与渲染能力。</li>
+                    <li><strong>视觉效果：</strong> 在包含多辆运动车辆的真实路况中，FreeTimeGS 展现了稳定的场景构建和清晰的物体动态还原效果，证明了该方法在处理真实世界动态环境下的有效性和鲁棒性。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
