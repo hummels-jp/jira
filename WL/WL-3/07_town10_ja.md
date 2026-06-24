@@ -1035,6 +1035,12 @@
 
 > 注：数値は科学記数法を用いる（例：`e+1` は ×10¹、`e-6` は ×10⁻⁶ を表す）。以降の 8.2 各オブジェクト種別の例のフィールドの意味はこれと同じである。
 
+##### 実際のデータ表示
+
+下図は [odrviewer.io](https://odrviewer.io) で `Town10HD_Opt_reference.xodr` を読み込んだ後の、`Road 41` 上の StopLine オブジェクト（`id=992` / `id=998`）の実際のレンダリング結果である（図中の青くハイライトされた区間が Road 41、Spotlight には選択点の `s/t` と世界座標 `x/y/z` が表示される）：
+
+![Town10 Road 41 StopLine の OpenDRIVE viewer における実際のレンダリング](images/town10_stopline_road41.jpg)
+
 ### 8.2 その他のオブジェクト種別の統一処理
 以下のオブジェクト種別は `Town10HD_Opt_reference.xodr` ではいずれも `<object>` 要素として出現し、処理方法は `StopLine` と同様である。
 
@@ -1071,6 +1077,12 @@
 | `length` | `1.9404705441447103e+1` (≈19.40 m) | オブジェクト長さ（メートル）、すなわち横断歩道が道路を横断するスパン。 |
 
 > 注：この例は自己閉合構造で `outline` 子要素を持たず、幾何範囲は `s/t/hdg` と `width/length` で共に確定される。`outline` が存在する場合、その `cornerLocal` の `u/v/z` の意味は 8.1 節と同じである。
+
+##### 実際のデータ表示
+
+下図は [odrviewer.io](https://odrviewer.io) で `Town10HD_Opt_reference.xodr` を読み込んだ後の、`Road 24` 上の ContinentalCrosswalk オブジェクト（`id=1140`）の実際のレンダリング結果である（図中の青いハイライトがこの横断歩道、右上の Spotlight に `Object 'ContinentalCrosswalk'`、`Type 'crosswalk'` および選択点の `s/t` と世界座標 `x/y/z` が表示される）：
+
+![Town10 Road 24 ContinentalCrosswalk の OpenDRIVE viewer における実際のレンダリング](images/town10_continentalcrosswalk_road24.jpg)
 
 #### 8.2.2 LadderCrosswalk はしご型横断歩道
 - もう一つの歩行者横断形式で、通常より目立つ道路横断標示に用いる。
@@ -1117,6 +1129,20 @@
 
 > 注：この例の `outline` は 5 個の `cornerLocal` を含み、始終点の頂点座標が同一であることが多角形の閉合を表す。フィールドの意味は 8.1 節と同じである。
 
+##### 実際のデータ表示
+
+**① OpenDRIVE viewer（odrviewer.io）でのレンダリング結果**
+
+下図は [odrviewer.io](https://odrviewer.io) で `Town10HD_Opt_reference.xodr` を読み込んだ後の、`Road 469` 上の LadderCrosswalk オブジェクト（`id=1139`）の実際のレンダリング結果である（図中の青いハイライトがこのはしご型横断歩道で、カーブに沿って格子状のストライプが並ぶ。右上の Spotlight に `Object 'LadderCrosswalk'`、`Type 'crosswalk'` および選択点の `s/t` と世界座標 `x/y/z` が表示される）：
+
+![Town10 Road 469 LadderCrosswalk の OpenDRIVE viewer における実際のレンダリング](images/town10_laddercrosswalk_road469.jpg)
+
+**② RoadRunner（生成元）でのレンダリング結果**
+
+下図は RoadRunner（MathWorks RoadRunner R2023b）で同じ `Town10` シーンを開いた際の、カーブ部のはしご型横断歩道のレンダリング結果である（赤枠でハイライトされた箇所が一つの LadderCrosswalk オブジェクトで、右側の Attributes パネルに `Name=LadderCrosswalk`、`Object Type=crosswalk` が表示される。地図生成元におけるこのオブジェクトの元の外観を示す）：
+
+![Town10 LadderCrosswalk はしご型横断歩道の RoadRunner における実際のレンダリング](images/town10_laddercrosswalk_roadrunner.jpg)
+
 #### 8.2.3 Stencil_ArrowType4R 右折矢印
 - 路面の誘導矢印標示で、右折車線または右折誘導方向を表す。
 - 解析方法は `StopLine` と同様で、`s/t/hdg` で矢印の位置と向きを得られる。
@@ -1150,6 +1176,20 @@
 
 > 注：この例は自己閉合構造で `outline` 子要素を持たず、矢印の位置と向きは `s/t/hdg` で確定され、幾何寸法は `width/length` で与えられる。`outline` が存在する場合、その `cornerLocal` の `u/v/z` の意味は 8.1 節と同じである。
 
+##### 実際のデータ表示
+
+**① OpenDRIVE viewer（odrviewer.io）でのレンダリング結果**
+
+下図は [odrviewer.io](https://odrviewer.io) で `Town10HD_Opt_reference.xodr` を読み込んだ後の、`Road 5` 上の Stencil_ArrowType4R 右折矢印オブジェクトの実際のレンダリング結果である（図中の青いハイライトがこのカーブ車線で、車線に沿って並ぶオレンジの矢印が一連の右折誘導矢印である。右上の Spotlight に `Object 'Stencil_ArrowType4R'`、`Type '-1'` および選択点の `s/t` と世界座標 `x/y/z` が表示され、左側のリストにはこの区間下の `1028`/`1029` の 2 つの Stencil_ArrowType4R オブジェクトが確認できる）：
+
+![Town10 Road 5 Stencil_ArrowType4R 右折矢印の OpenDRIVE viewer における実際のレンダリング](images/town10_arrowtype4r_road5.jpg)
+
+**② RoadRunner（生成元）でのレンダリング結果**
+
+下図は RoadRunner（MathWorks RoadRunner R2023b）で同じ `Town10` シーンを開いた際の、路面右折誘導矢印のレンダリング結果である（白いカーブ矢印が Stencil_ArrowType4R 標示で、地図生成元におけるこのオブジェクトの元の外観を示す）：
+
+![Town10 Stencil_ArrowType4R 右折矢印の RoadRunner における実際のレンダリング](images/town10_arrowtype4r_roadrunner.jpg)
+
 #### 8.2.4 Stencil_ArrowType4L 左折矢印
 - 路面の誘導矢印標示で、左折車線または左折誘導方向を表す。
 - 構造は `Stencil_ArrowType4R` と同じで、解析も同様に汎用フィールドを再利用する。
@@ -1181,6 +1221,20 @@
 | `length` | `1.8969955418501385e+0` (≈1.90 m) | オブジェクト長さ（メートル）、すなわち矢印の道路方向に沿った寸法。 |
 
 > 注：この例は自己閉合構造で `outline` 子要素を持たず、構造は `Stencil_ArrowType4R` と同じである。`hdg≈π` はその向きが右折矢印と反対であることを表す。`outline` が存在する場合、その `cornerLocal` の `u/v/z` の意味は 8.1 節と同じである。
+
+##### 実際のデータ表示
+
+**① OpenDRIVE viewer（odrviewer.io）でのレンダリング結果**
+
+下図は [odrviewer.io](https://odrviewer.io) で `Town10HD_Opt_reference.xodr` を読み込んだ後の、`Road 18` 上の Stencil_ArrowType4L 左折矢印オブジェクト（`id=1036`）の実際のレンダリング結果である（図中の青いハイライトがこの区間の車線で、路面のオレンジの矢印が左折誘導矢印である。右上の Spotlight に `Object 'Stencil_ArrowType4L'`、`Type '-1'` が表示され、左側のリストにはこの区間下の `1036` などのオブジェクトが確認できる）：
+
+![Town10 Road 18 Stencil_ArrowType4L 左折矢印の OpenDRIVE viewer における実際のレンダリング](images/town10_arrowtype4l_road18.jpg)
+
+**② RoadRunner（生成元）でのレンダリング結果**
+
+下図は RoadRunner（MathWorks RoadRunner R2023b）で同じ `Town10` シーンを開いた際の、路面左折誘導矢印のレンダリング結果である（白いカーブ矢印が Stencil_ArrowType4L 標示で、地図生成元におけるこのオブジェクトの元の外観を示す）：
+
+![Town10 Stencil_ArrowType4L 左折矢印の RoadRunner における実際のレンダリング](images/town10_arrowtype4l_roadrunner.jpg)
 
 #### 8.2.5 SignPost_10ft 標識ポール
 - 路側の支柱オブジェクトで、通常交通標識や道路標識の情報を担うために用いる。
@@ -1216,6 +1270,20 @@
 
 > 注：路面標示類オブジェクトと異なり、支柱は `height` で鉛直寸法を表現する。この例は自己閉合構造で `outline` 子要素を持たず、位置は `s/t/zOffset` で確定され、幾何寸法は `height/width/length` で与えられる。
 
+##### 実際のデータ表示
+
+**① OpenDRIVE viewer（odrviewer.io）でのレンダリング結果**
+
+下図は [odrviewer.io](https://odrviewer.io) で `Town10HD_Opt_reference.xodr` を読み込んだ後の、`Road 12` 上の SignPost_10ft 標識ポールオブジェクト（`id=1007`）の実際のレンダリング結果である（図中の青いハイライトがこの区間で、支柱は路側に位置する。右上の Spotlight に `Object 'SignPost_10ft'`、`Type '-1'` および選択点の `s/t` と世界座標 `x/y/z` が表示され、左側のリストにはこの区間下の `1007 SignPost_10ft` オブジェクトが確認できる）：
+
+![Town10 Road 12 SignPost_10ft 標識ポールの OpenDRIVE viewer における実際のレンダリング](images/town10_signpost_road12.jpg)
+
+**② RoadRunner（生成元）でのレンダリング結果**
+
+下図は RoadRunner（MathWorks RoadRunner R2023b）で同じ `Town10` シーンを開いた際の、交差点付近の路側標識ポールのレンダリング結果である（路側の菱形/立った標識板が SignPost 支柱で、地図生成元におけるこのオブジェクトの元の外観を示す）：
+
+![Town10 SignPost_10ft 標識ポールの RoadRunner における実際のレンダリング](images/town10_signpost_roadrunner.jpg)
+
 #### 8.2.6 Stencil_STOP 路面 STOP 文字
 - 車両の停止を示す路面の「STOP」文字。
 - 解析方法は他の路面標示と同様で、主に位置、方向、輪郭に着目する。
@@ -1247,6 +1315,20 @@
 | `length` | `2.2614954056514591e+0` (≈2.26 m) | オブジェクト長さ（メートル）、すなわち文字の道路方向に沿った寸法。 |
 
 > 注：この例は自己閉合構造で `outline` 子要素を持たず、位置と向きは `s/t/hdg` で確定され、幾何寸法は `width/length` で与えられる。`outline` が存在する場合、その `cornerLocal` の `u/v/z` の意味は 8.1 節と同じである。
+
+##### 実際のデータ表示
+
+**① OpenDRIVE viewer（odrviewer.io）でのレンダリング結果**
+
+下図は [odrviewer.io](https://odrviewer.io) で `Town10HD_Opt_reference.xodr` を読み込んだ後の、`Road 11` 上の Stencil_STOP 路面 STOP 文字オブジェクト（`id=1072`）の実際のレンダリング結果である（図中の青いハイライトがこの区間で、青い小ブロックが STOP 文字の位置である。右上の Spotlight に `Object 'Stencil_STOP'`、`Type '-1'` および選択点の `s/t` と世界座標 `x/y/z` が表示され、左側のリストにはこの区間下の `1072 Stencil_STOP` オブジェクトが確認できる）：
+
+![Town10 Road 11 Stencil_STOP 路面 STOP 文字の OpenDRIVE viewer における実際のレンダリング](images/town10_stencilstop_road11.jpg)
+
+**② RoadRunner（生成元）でのレンダリング結果**
+
+下図は RoadRunner（MathWorks RoadRunner R2023b）で同じ `Town10` シーンを開いた際の、交差点流入路の路面 STOP 文字のレンダリング結果である（赤い路面上の白い「STOP」文字が Stencil_STOP 標示で、地図生成元におけるこのオブジェクトの元の外観を示す）：
+
+![Town10 Stencil_STOP 路面 STOP 文字の RoadRunner における実際のレンダリング](images/town10_stencilstop_roadrunner.jpg)
 
 #### 8.2.7 SolidSingleWhite 単白実線区
 - 実線区域または分離区域の路面標示を表す。
@@ -1303,6 +1385,20 @@
 | `cornerLocal` `z` | `0.0000000000000000e+0` | 頂点の垂直方向の高さ座標（メートル）。 |
 
 > 注：この例の `outline` は 17 個の `cornerLocal` を含み、曲線に沿って順に並び、弧状の実線区の境界を描き出す。各 `cornerLocal` の `z` 値は位置に応じて微小に変化し、路面のわずかな起伏を反映する。フィールドの意味は 8.1 節と同じである。
+
+##### 実際のデータ表示
+
+**① OpenDRIVE viewer（odrviewer.io）でのレンダリング結果**
+
+下図は [odrviewer.io](https://odrviewer.io) で `Town10HD_Opt_reference.xodr` を読み込んだ後の、`Road 707` 上の SolidSingleWhite 単白実線区オブジェクト（`id=1004`）の実際のレンダリング結果である（図中の青いハイライトのブロックが `outline` 多角形で描かれた実線区である。右上の Spotlight に `Object 'SolidSingleWhite'`、`Type '-1'` が表示され、左側のリストにはこの区間下の `1004 SolidSingleWhite` オブジェクトが確認できる）：
+
+![Town10 Road 707 SolidSingleWhite 単白実線区の OpenDRIVE viewer における実際のレンダリング](images/town10_solidsinglewhite_road707.jpg)
+
+**② RoadRunner（生成元）でのレンダリング結果**
+
+下図は RoadRunner（MathWorks RoadRunner R2023b）で同じ `Town10` シーンを開いた際の、交差点コーナー部の単白実線区のレンダリング結果である（路面の白い実線ブロックが SolidSingleWhite 標示で、地図生成元におけるこのオブジェクトの元の外観を示す）：
+
+![Town10 SolidSingleWhite 単白実線区の RoadRunner における実際のレンダリング](images/town10_solidsinglewhite_roadrunner.jpg)
 
 #### 8.2.8 ChevronRegion 山形導流帯
 - 導流帯または分離区域の「山形」路面標示を表す。
