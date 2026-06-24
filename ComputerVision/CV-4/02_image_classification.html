@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>02_图像分类任务 - 精准对齐版</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; margin: 40px; background-color: #f4f4f4; }
+        .nav-float { position: fixed; right: 20px; top: 20px; background: white; padding: 10px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto; font-size: 0.8em; z-index: 1000; }
+        .nav-float a { display: block; color: #0056b3; text-decoration: none; margin-bottom: 5px; }
+        .nav-float a:hover { text-decoration: underline; }
+        .slide-container { display: flex; background: white; margin-bottom: 30px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .image-col { flex: 1; padding-right: 20px; }
+        .qa-col { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .slide-block { border: 2px solid #0056b3; padding: 15px; border-radius: 8px; background-color: #e7f1ff; margin-bottom: 10px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        img { width: 100%; border: 1px solid #999; border-radius: 4px; }
+        h2 { margin-top: 0; color: #0056b3; font-size: 1.1em; }
+    </style>
+</head>
+<body>
+<div class="nav-float">
+    <select onchange="window.location.href=this.value; window.location.reload();">
+        <option value="">快速跳转...</option>
+        <script>
+            for (let i = 1; i <= 18; i++) {
+                document.write('<option value="#slide' + i + '">Slide ' + i + '</option>');
+            }
+        </script>
+    </select>
+</div>
+
+
+    </div>
+</div>
+<div class="slide-container">
+    <div class="image-col" id="slide1">
+        <img src="images/slide-1.png" alt="Slide 1">
+    </div>
+    <div class="qa-col">
+        <div class="slide-block">
+            <h2>Slide 1-A (上)</h2>
+            <p><strong>讲师:</strong> 鲁鹏<br><strong>单位:</strong> 北京邮电大学 计算机学院 智能科学与技术中心</p>
+        </div>
+        <div class="slide-block">
+            <h2>Slide 1-B (下)</h2>
+            <p><strong>核心大纲:</strong></p>
+            <ol>
+                <li>什么是图像分类任务及其应用场合？</li>
+                <li>图像分类任务的难点。</li>
+                <li>基于规则的方法是否可行？</li>
+                <li>什么是数据驱动的图像分类范式？</li>
+                <li>常用的分类任务评价指标。</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <div class="image-col" id="slide2">
+        <img src="images/slide-2.png" alt="Slide 2">
+    </div>
+    <div class="qa-col">
+        <div class="slide-block">
+            <h2>Slide 2-A (上)</h2>
+            <p><strong>课程大纲聚焦:</strong></p>
+            <ol>
+                <li style="font-weight:bold;">什么是图像分类任务及其应用场合？</li>
+                <li style="color:#888;">图像分类任务的难点。</li>
+                <li style="color:#888;">基于规则的方法是否可行？</li>
+                <li style="color:#888;">数据驱动的图像分类范式。</li>
+                <li style="color:#888;">常用的分类任务评价指标。</li>
+            </ol>
+        </div>
+        <div class="slide-block">
+            <h2>Slide 2-B (下)</h2>
+            <p><strong>定义：</strong> 计算机视觉的核心任务。</p>
+            <p><strong>目标：</strong> 根据图像所反映的<strong>不同特征</strong>，将不同类别的图像<strong>区分</strong>开来。</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <div class="image-col" id="slide3">
+        <img src="images/slide-3.png" alt="Slide 3">
+    </div>
+    <div class="qa-col">
+        <div class="slide-block">
+            <h2>Slide 3-A (上)</h2>
+            <p><strong>定义:</strong> 从已知标签集合中，为输入图像选定一个类别。</p>
+            <p><strong>过程演示:</strong><br>1. 输入：包含特定物体的图像 (如：狗)<br>2. 映射：图像 -> 类别标签 {狗, 猫, 卡车, ...}</p>
+        </div>
+        <div class="slide-block">
+            <h2>Slide 3-B (下)</h2>
+            <p><strong>案例：</strong> 绿玉藤 (Strongylodon macrobotrys)。</p>
+            <p><strong>核心点：</strong> 介绍该稀有植物（原产菲律宾雨林，呈独特蓝绿色，濒危物种）。</p>
+            <p><strong>分类应用：</strong> 展示图像分类在物种识别、珍稀植物保育中的实际应用。</p>
+            <p><strong>Q1 图像分类有哪些应用场合：</strong></p>
+            <ul>
+                <li>安防监控（人脸识别、异常行为检测）</li>
+                <li>医疗影像（病灶识别、辅助诊断）</li>
+                <li>自动驾驶（行人/障碍物识别、交通标志分类）</li>
+                <li>工业检测（产品缺陷检测、分类）</li>
+                <li>内容审核（暴力/敏感图片过滤）</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <div class="image-col" id="slide4">
+        <img src="images/slide-4.png" alt="Slide 4">
+    </div>
+    <div class="qa-col">
+        <div class="slide-block">
+            <h2>Slide 4-A (上)</h2>
+            <p><strong>案例：</strong> 贝灵顿梗犬 (Bedlington Terrier)。</p>
+            <p><strong>描述：</strong> 介绍了犬种起源 (英国)、历史用途 (猎狐、兔、獾)、培育背景及现代特征 (敏捷、耐力)，作为物体识别的实例。</p>
+        </div>
+        <div class="slide-block">
+            <h2>Slide 4-B (下)</h2>
+            <p><strong>课程大纲：</strong></p>
+            <ol>
+                <li>什么是图像分类任务及其应用场合？</li>
+                <li style="font-weight:bold; color:#0056b3;">图像分类任务的难点？</li>
+                <li>基于规则的方法是否可行？</li>
+                <li>什么是数据驱动的图像分类范式？</li>
+                <li>常用的分类任务评价指标。</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <div class="image-col" id="slide5">
+        <img src="images/slide-5.png" alt="Slide 5">
+    </div>
+    <div class="qa-col">
+        <div class="slide-block">
+            <h2>Slide 5-A (上)</h2>
+            <p><strong>概述：</strong> 本页引出图像分类任务在实际应用中面临的诸多挑战。</p>
+        </div>
+        <div class="slide-block">
+            <h2>Slide 5-B (下)</h2>
+            <p><strong>核心内容：</strong> 跨越“语义鸿沟”，建立图像像素到高层语义的映射。</p>
+            <p><strong>直观对比：</strong><br>1. 我们看到的：直观的场景图像。<br>2. 机器看到的：像素数据的数值矩阵。</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <div class="image-col" id="slide6">
+        <img src="images/slide-6.png" alt="Slide 6">
+    </div>
+    <div class="qa-col">
+        <div class="slide-block">
+            <h2>Slide 6-A (上)</h2>
+            <p><strong>核心内容：</strong> 探讨视角对视觉感知的影响。</p>
+            <p><strong>案例：</strong> 米开朗基罗 (Michelangelo) 雕塑头像的三种视角展示。</p>
+            <p><strong>来源：</strong> S. Lazebnik</p>
+        </div>
+        <div class="slide-block">
+            <h2>Slide 6-B (下)</h2>
+            <p><strong>核心内容：</strong> 探讨光照变化对视觉感知的影响。</p>
+            <p><strong>案例：</strong> 同一场景在不同光照条件下的拍摄序列图。</p>
+            <p><strong>来源：</strong> J. Koenderink</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <div class="image-col" id="slide7">
+        <img src="images/slide-7.png" alt="Slide 7">
+    </div>
+    <div class="qa-col">
+        <div class="slide-block">
+            <h2>Slide 7-A (上)</h2><p><strong>视觉案例：</strong> 不同身高人手持电脑的对比。<br><strong>核心点：</strong> 同一物体在不同尺度下呈现的视觉特征差异极大。</p>
+        </div>
+        <div class="slide-block">
+            <h2>Slide 7-B (下)</h2><p><strong>视觉案例：</strong> 部分遮挡的猫与沙发。<br><strong>核心点：</strong> 目标物体部分被遮挡时，如何提取完整特征进行识别。</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <div class="image-col" id="slide8">
+        <img src="images/slide-8.png" alt="Slide 8">
+    </div>
+    <div class="qa-col">
+        <div class="slide-block">
+            <h2>Slide 8-A (上)</h2><p><strong>视觉案例：</strong> 不同姿态的猫。<br><strong>核心点：</strong> 姿态的非刚性变换导致像素表现差异巨大。</p>
+        </div>
+        <div class="slide-block">
+            <h2>Slide 8-B (下)</h2><p><strong>视觉案例：</strong> 雪地里的北极狐。<br><strong>核心点：</strong> 目标与背景在颜色或纹理高度相似时，分割与识别极具挑战。</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <div class="image-col" id="slide9">
+        <img src="images/slide-9.png" alt="Slide 9">
+    </div>
+    <div class="qa-col">
+        <div class="slide-block">
+            <h2>Slide 9-A (上)</h2><p><strong>视觉案例：</strong> 各种样式的椅子。<br><strong>核心点：</strong> 同一类别的物体在形态、材质和构造上存在巨大的类内多样性。</p>
+        </div>
+        <div class="slide-block">
+            <h2>Slide 9-B (下)</h2><p><strong>视觉案例：</strong> 戏水鸟的头部模糊。<br><strong>核心点：</strong> 物体高速运动导致图像细节丢失，增加检测难度。</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <div class="image-col" id="slide10">
+        <img src="images/slide-10.png" alt="Slide 10">
+    </div>
+    <div class="qa-col">
+        <div class="slide-block">
+            <h2>Slide 10-A (上)</h2><p><strong>量级：</strong> 约 10,000 到 30,000 种类别。<br><strong>核心点：</strong> 处理大规模数据集的复杂性挑战。</p>
+        </div>
+        <div class="slide-block">
+            <h2>Slide 10-B (下)</h2><p><strong>议题：</strong> 基于规则的方法是否可行？<br><strong>核心：</strong> 开始探讨传统方法的局限性。</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <div class="image-col" id="slide11">
+        <img src="images/slide-11.png" alt="Slide 11">
+    </div>
+    <div class="qa-col">
+        <div class="slide-block">
+            <h2>Slide 11-A (上)</h2><p><strong>核心：</strong> 试图通过硬编码规则识别物体（如：猫），但在面对多变视觉特征时极其困难，无法穷尽逻辑。</p>
+        </div>
+        <div class="slide-block">
+            <h2>Slide 11-B (下)</h2><p><strong>尝试：</strong> 通过提取边缘、角点特征进行识别。<br><strong>结论：</strong> 无法归纳物体本质，面对复杂场景结果不可预测。</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <div class="image-col" id="slide12">
+        <img src="images/slide-12.png" alt="Slide 12">
+    </div>
+    <div class="qa-col">
+        <div class="slide-block">
+            <h2>Slide 12-A (上)</h2><p><strong>痛点：</strong> 极其困难，扩展性极差。</p>
+        </div>
+        <div class="slide-block">
+            <h2>Slide 12-B (下)</h2><p>1. 定义与应用<br>2. 难点<br>3. 基于规则的方法<br>4. <strong>数据驱动范式</strong><br>5. 评价指标</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <div class="image-col" id="slide13">
+        <img src="images/slide-13.png" alt="Slide 13">
+    </div>
+    <div class="qa-col">
+        <div class="slide-block">
+            <h2>Slide 13-A (上)</h2><p><strong>流程：</strong> 1. 数据集构建 2. 分类器设计与学习 3. 分类器决策。</p>
+        </div>
+        <div class="slide-block">
+            <p><strong>Slide 13-B (下) 流程描述：</strong></p>
+            <p><strong>训练阶段：</strong></p>
+            <ul>
+                <li><strong>图像：</strong> 输入海量标注数据。</li>
+                <li><strong>特征：</strong> 将原始像素转化为计算机可处理的特征表示。</li>
+                <li><strong>模型：</strong> 通过数学函数建立输入到类别的映射，并初始化参数。</li>
+                <li><strong>损失：</strong> 定义损失函数，度量模型输出与真实标签的差异。</li>
+                <li><strong>优化：</strong> 利用梯度下降等方法迭代更新模型参数，最小化损失。</li>
+            </ul>
+            <p><strong>推理阶段：</strong> 输入新图像，通过训练好的模型直接输出类别预测结果。</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <div class="image-col" id="slide14">
+        <img src="images/slide-14.png" alt="Slide 14">
+    </div>
+    <div class="qa-col">
+        <div class="slide-block">
+            <h2>Slide 14-A (上)</h2><p><strong>表示：</strong> 像素表示、全局特征、局部特征、特征+词袋模型。</p>
+        </div>
+        <div class="slide-block">
+            <h2>Slide 14-B (下)</h2><p><strong>模型：</strong> 线性、SVM、神经网络、随机森林等。</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <div class="image-col" id="slide15">
+        <img src="images/slide-15.png" alt="Slide 15">
+    </div>
+    <div class="qa-col">
+        <div class="slide-block">
+            <h2>Slide 15-A (上)</h2><p><strong>函数：</strong> 0-1损失、SVM多类损失、交叉熵损失。</p>
+        </div>
+        <div class="slide-block">
+            <h2>Slide 15-B (下)</h2><p><strong>方法：</strong> 一阶（SGD等）与二阶（牛顿法、L-BFGS）。</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <div class="image-col" id="slide16">
+        <img src="images/slide-16.png" alt="Slide 16">
+    </div>
+    <div class="qa-col">
+        <div class="slide-block">
+            <h2>Slide 16-A (上)</h2><p><strong>关键：</strong> 数据预处理、增强、正则化 (Dropout)、超参数调优。</p>
+            <p><strong>Q1 欠拟合与过拟合：</strong></p>
+            <ul>
+                <li><strong>欠拟合 (Underfitting)：</strong> 模型在训练集上表现不佳，未能捕捉到数据背后的复杂模式。</li>
+                <li><strong>过拟合 (Overfitting)：</strong> 模型在训练集上表现优异，但在测试集（未知数据）上泛化能力差，过度拟合了训练数据中的噪声。</li>
+            </ul>
+        </div>
+        <div class="slide-block">
+            <h2>Slide 16-B (下)</h2><p>1-4. 内容回顾<br>5. <strong>评价指标分析</strong></p>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <div class="image-col" id="slide17">
+        <img src="images/slide-17.png" alt="Slide 17">
+    </div>
+    <div class="qa-col">
+        <div class="slide-block">
+            <h2>Slide 17-A (上)</h2><p><strong>基础：</strong> 正确率 (Accuracy) 与 错误率 (Error Rate)。</p>
+        </div>
+        <div class="slide-block">
+            <h2>Slide 17-B (下)</h2><p><strong>指标：</strong> Top-1 与 Top-5 准确率。</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <div class="image-col" id="slide18">
+        <img src="images/slide-18.png" alt="Slide 18">
+    </div>
+    <div class="qa-col">
+        <div class="slide-block">
+            <h2>Slide 18-A (上)</h2><p><strong>总结：</strong> 设计之旅开启！</p>
+        </div>
+        <div class="slide-block">
+            <h2>Slide 18-B (下)</h2><p><strong>说明：</strong> (页面暂缺/致谢页)。</p>
+        </div>
+    </div>
+</div>
+</body></html>
