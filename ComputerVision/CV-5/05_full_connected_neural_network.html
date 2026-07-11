@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>全连接神经网络：训练与优化</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; margin: 40px; }
+        .nav-header { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+        .nav-header select { padding: 10px; font-size: 14px; border-radius: 5px; cursor: pointer; border: 1px solid #0052CC; background: #fff; }
+        .slide-container { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 40px; }
+        .image-side { flex: 1; position: relative; }
+        .image-side img { width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 10px; }
+        .slide-number { font-weight: bold; color: #0052CC; margin-bottom: 5px; display: block; font-size: 1.2em; }
+        .text-side { flex: 1; display: flex; flex-direction: column; gap: 15px; }
+        .slide-block { border: 2px solid #0052CC; padding: 20px; border-radius: 8px; background-color: #F4F5F7; }
+        h1 { color: #0052CC; text-align: center; }
+        h2 { margin-top: 0; color: #0052CC; }
+    </style>
+</head>
+<body>
+
+    <div class="nav-header">
+        <select id="slideSelector" onchange="jumpToSlide(this.value)">
+            <option value="">-- 快速跳转 Slide --</option>
+            <option value="slide1">Slide 1: 梯度下降问题</option>
+            <option value="slide2">Slide 2: 动量法与鞍点</option>
+            <option value="slide3">Slide 3: 自适应梯度法</option>
+            <option value="slide4">Slide 4: AdaGrad 算法</option>
+            <option value="slide5">Slide 5: RMSProp 算法</option>
+            <option value="slide6">Slide 6: Adam 算法</option>
+            <option value="slide7">Slide 7: 随机权值初始化</option>
+            <option value="slide8">Slide 8: Xavier 初始化</option>
+            <option value="slide9">Slide 9: BN 与初始化对比</option>
+            <option value="slide10">Slide 10: BN 与梯度消失</option>
+            <option value="slide11">Slide 11: BN 算法流程</option>
+            <option value="slide12">Slide 12: 过拟合现象</option>
+            <option value="slide13">Slide 13: 过拟合与欠拟合</option>
+            <option value="slide14">Slide 14: 优化与泛化</option>
+            <option value="slide15">Slide 15: L2 正则化</option>
+            <option value="slide16">Slide 16: 随机失活 (Dropout)</option>
+            <option value="slide16">Slide 16: 随机失活 (Dropout)</option>
+            <option value="slide17">Slide 17: 超参数定义</option>
+            <option value="slide18">Slide 18: 学习率设置</option>
+            <option value="slide19">Slide 19: 超参数优化方法</option>
+        </select>
+    </div>
+...
+    <!-- Slide 19: 超参数优化 -->
+    <div class="slide-container" id="slide19">
+        <div class="image-side">
+            <span class="slide-number">Slide 19</span>
+            <img src="images/hyperparameter_optimization.jpg" alt="超参数优化方法">
+        </div>
+        <div class="text-side">
+            <div class="slide-block">
+                <h2>超参数优化方法</h2>
+                <p><strong>如何寻找最优超参数配置？</strong></p>
+                <ul>
+                    <li><strong>网格搜索法 (Grid Search)：</strong> 将超参数空间划分为网格，遍历所有可能的组合，在验证集上评估性能，选择最优组合。</li>
+                    <li><strong>随机搜索法 (Random Search)：</strong> 在参数空间内随机采样点，评估每个点的模型性能，选择最优值。</li>
+                </ul>
+                <p><strong>核心思考：</strong> 搜索策略的选择直接影响训练效率。通常随机搜索在面对高维参数空间时，往往能比网格搜索更高效地找到较优的超参数组合。</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function jumpToSlide(id) {
+            if (!id) return;
+            var element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({behavior: 'smooth', block: 'start'});
+            }
+        }
+    </script>
+...
+    <!-- Slide 18: 学习率设置 -->
+    <div class="slide-container" id="slide18">
+        <div class="image-side">
+            <span class="slide-number">Slide 18</span>
+            <img src="images/learning_rate_setting.jpg" alt="学习率设置">
+        </div>
+        <div class="text-side">
+            <div class="slide-block">
+                <h2>学习率 (Learning Rate) 设置</h2>
+                <p><strong>定义：</strong> 学习率是优化过程中最重要的超参数，直接决定了参数更新的步长。</p>
+                <ul>
+                    <li><strong>学习率过高：</strong> 步长过大，可能导致训练过程发散，直接无法收敛。</li>
+                    <li><strong>学习率偏大：</strong> 会在最优解附近产生震荡，无法精确收敛到最小值。</li>
+                    <li><strong>学习率过小：</strong> 收敛过程非常缓慢，需要漫长的训练时间。</li>
+                    <li><strong>学习率适中：</strong> 在保证训练稳定性的前提下，能够快速收敛并得到最优结果。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+...
+    <!-- Slide 17: 超参数 -->
+    <div class="slide-container" id="slide17">
+        <div class="image-side">
+            <span class="slide-number">Slide 17</span>
+            <img src="images/hyperparameters.jpg" alt="神经网络中的超参数">
+        </div>
+        <div class="text-side">
+            <div class="slide-block">
+                <h2>神经网络中的超参数 (Hyperparameters)</h2>
+                <p><strong>定义：</strong> 超参数是模型训练前需要人工设定的配置，直接决定了模型的容量与训练过程。</p>
+                <ul>
+                    <li><strong>网络结构类：</strong> 如隐层神经元个数、网络深度、激活函数类型等。</li>
+                    <li><strong>优化相关类：</strong> 如学习率、Dropout 比率、正则项 (L2) 强度等。</li>
+                </ul>
+                <p><strong>核心思考：</strong> 既然这些参数无法通过反向传播自动学习，如何高效地搜索并确定一组最优的超参数配置，是模型开发中的重要课题。</p>
+            </div>
+        </div>
+    </div>
+
+    <h1>全连接神经网络训练优化指南</h1>
+
+    <div class="slide-container" id="slide1">
+        <div class="image-side"><span class="slide-number">Slide 1</span><img src="images/gradient_descent_issues.jpg"></div>
+        <div class="text-side"><div class="slide-block"><h2>梯度下降问题</h2><p>峡谷效应导致震荡慢。</p></div></div>
+    </div>
+    <div class="slide-container" id="slide2">
+        <div class="image-side"><span class="slide-number">Slide 2</span><img src="images/momentum_saddle_points.jpg"></div>
+        <div class="text-side"><div class="slide-block"><h2>动量法</h2><p>利用惯性跨越鞍点。</p></div></div>
+    </div>
+    <div class="slide-container" id="slide3">
+        <div class="image-side"><span class="slide-number">Slide 3</span><img src="images/adaptive_learning_rate_visualization.jpg"></div>
+        <div class="text-side"><div class="slide-block"><h2>自适应梯度法</h2><p>震荡区减小步长，平坦区增大。</p></div></div>
+    </div>
+    <div class="slide-container" id="slide4">
+        <div class="image-side"><span class="slide-number">Slide 4</span><img src="images/adagrad_algorithm.jpg"></div>
+        <div class="text-side"><div class="slide-block"><h2>AdaGrad</h2><p>学习率随累积梯度增大而减小。</p></div></div>
+    </div>
+    <div class="slide-container" id="slide5">
+        <div class="image-side"><span class="slide-number">Slide 5</span><img src="images/rmsprop_algorithm.jpg"></div>
+        <div class="text-side"><div class="slide-block"><h2>RMSProp</h2><p>引入衰减防止学习率消失。</p></div></div>
+    </div>
+    <div class="slide-container" id="slide6">
+        <div class="image-side"><span class="slide-number">Slide 6</span><img src="images/adam_algorithm.jpg"></div>
+        <div class="text-side"><div class="slide-block"><h2>Adam</h2><p>动量+RMSProp，主流优化算法。</p></div></div>
+    </div>
+    <div class="slide-container" id="slide7">
+        <div class="image-side"><span class="slide-number">Slide 7</span><img src="images/random_init_failure.jpg"></div>
+        <div class="text-side"><div class="slide-block"><h2>随机初始化失败</h2><p>方差过小导致信号消失。</p></div></div>
+    </div>
+    <div class="slide-container" id="slide8">
+        <div class="image-side"><span class="slide-number">Slide 8</span><img src="images/xavier_definition.jpg"></div>
+        <div class="text-side"><div class="slide-block"><h2>Xavier 初始化</h2><p>保持方差一致。</p></div></div>
+    </div>
+    <div class="slide-container" id="slide9">
+        <div class="image-side"><span class="slide-number">Slide 9</span><img src="images/bn_vs_init.jpg"></div>
+        <div class="text-side"><div class="slide-block"><h2>BN vs 初始化</h2><p>源头控制 vs 过程动态修正。</p></div></div>
+    </div>
+    <div class="slide-container" id="slide10">
+        <div class="image-side"><span class="slide-number">Slide 10</span><img src="images/bn_gradient_vanishing_v2.jpg"></div>
+        <div class="text-side"><div class="slide-block"><h2>BN 与梯度消失</h2><p>拉回线性敏感区。</p></div></div>
+    </div>
+    <div class="slide-container" id="slide11">
+        <div class="image-side"><span class="slide-number">Slide 11</span><img src="images/bn_algorithm.jpg"></div>
+        <div class="text-side"><div class="slide-block"><h2>BN 流程</h2><p>归一化 + 可学习参数。</p></div></div>
+    </div>
+    <div class="slide-container" id="slide12">
+        <div class="image-side"><span class="slide-number">Slide 12</span><img src="images/overfitting.jpg"></div>
+        <div class="text-side"><div class="slide-block"><h2>过拟合</h2><p>背诵训练数据，泛化差。</p></div></div>
+    </div>
+    <div class="slide-container" id="slide13">
+        <div class="image-side"><span class="slide-number">Slide 13</span><img src="images/overfitting_underfitting.jpg"></div>
+        <div class="text-side"><div class="slide-block"><h2>过拟合 vs 欠拟合</h2><p>复杂 vs 简单。</p></div></div>
+    </div>
+    <div class="slide-container" id="slide14">
+        <div class="image-side"><span class="slide-number">Slide 14</span><img src="images/optimization_vs_generalization.jpg"></div>
+        <div class="text-side"><div class="slide-block"><h2>优化 vs 泛化</h2><p>训练最优 vs 未知最优。</p></div></div>
+    </div>
+    <div class="slide-container" id="slide15">
+        <div class="image-side"><span class="slide-number">Slide 15</span><img src="images/l2_regularization.jpg"></div>
+        <div class="text-side"><div class="slide-block"><h2>L2 正则化</h2><p>惩罚大权重，防过拟合。</p></div></div>
+    <!-- Slide 16 -->
+    <div class="slide-container" id="slide16">
+        <div class="image-side">
+            <span class="slide-number">Slide 16</span>
+            <img src="images/dropout.jpg" alt="随机失活 (Dropout)">
+            <img src="images/dropout_explanation.jpg" alt="Dropout 预防过拟合原理解析">
+            <img src="images/dropout_test_stage.jpg" alt="Dropout 教学幻灯片">
+        </div>
+        <div class="text-side">
+            <div class="slide-block">
+                <h2>随机失活 (Dropout)：核心原理解析</h2>
+                <p><strong>Dropout 为什么能防止过拟合？</strong></p>
+                <ul>
+                    <li><strong>解释 1（降低模型容量）：</strong> 在训练过程中，通过随机丢弃神经元，减少了参与单次迭代计算的网络参数量，有效降低了模型的容量。</li>
+                    <li><strong>解释 2（权重分散）：</strong> Dropout 机制鼓励权重分布更加<strong>分散</strong>，迫使网络不依赖于任何特定的神经元组合，从而起到正则化的作用，提升了模型的泛化能力。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

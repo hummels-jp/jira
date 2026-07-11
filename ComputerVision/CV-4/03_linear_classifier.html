@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>03_线性分类器</title>
+        <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; margin: 40px; background-color: #f4f4f4; }
+        .slide-container { display: flex; flex-direction: row; align-items: stretch; background: white; margin-bottom: 30px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); width: 100%; box-sizing: border-box; }
+        .image-col { flex: 1; min-width: 400px; padding-right: 20px; }
+        .qa-col { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+        .slide-block { border: 2px solid #0056b3; padding: 15px; border-radius: 8px; background-color: #e7f1ff; flex: 1; }
+        img { width: 100%; border: 1px solid #999; border-radius: 4px; display: block; }
+        h2 { margin-top: 0; color: #0056b3; font-size: 1.1em; }
+    </style>
+    <style>
+        .float-nav { position: fixed; bottom: 20px; right: 20px; z-index: 1000; background: #0056b3; color: white; padding: 10px 15px; border-radius: 5px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+        .nav-menu { display: none; position: fixed; bottom: 60px; right: 20px; background: white; border: 1px solid #ccc; padding: 10px; max-height: 300px; overflow-y: auto; z-index: 1001; }
+    </style>
+    <script>
+        function toggleNav() {
+            var menu = document.getElementById('nav-menu');
+            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+        }
+        function goToSlide(slideId) {
+            window.location.href = window.location.pathname + '#' + slideId;
+            window.location.reload();
+        }
+    </script>
+</head>
+<body>
+    <div class="float-nav" onclick="toggleNav()">目录定位</div>
+    <div class="nav-menu" id="nav-menu">
+        <script>
+            var menu = document.getElementById('nav-menu');
+            for(let i=1; i<=60; i++) {
+                menu.innerHTML += '<div style="padding: 5px; cursor:pointer;" onclick="goToSlide(\'slide-'+i+'\')">定位到 Slide '+i+'</div>';
+            }
+        </script>
+    </div>
+
+    <!-- Slide 1-50 按序排列 -->
+    <!-- Slide 1 -->
+    <div class="slide-container" id="slide-1">
+        <div class="image-col">
+            <h3>图片: slide-1.png</h3>
+            <img src="images_linear/slide-1.png" alt="Slide 1">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 1-A (上): 线性分类器 (封面)</h2>
+                <p><strong>讲师:</strong> 鲁鹏<br><strong>单位:</strong> 北京邮电大学 计算机学院 智能科学与技术中心</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 1-B (下): 数据集介绍 (页码 1)</h2>
+                <p><strong>数据集:</strong> CIFAR-10</p>
+                <p><strong>核心参数:</strong></p>
+                <ul>
+                    <li>样本规模：50,000 训练集 + 10,000 测试集</li>
+                    <li>类别：10 类 (飞机、汽车、鸟、猫、鹿、狗、蛙、马、船、卡车)</li>
+                    <li>图像规格：32x32 彩色图像</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 2 -->
+    <div class="slide-container" id="slide-2">
+        <div class="image-col">
+            <h3>图片: slide-2.png</h3>
+            <img src="images_linear/slide-2.png" alt="Slide 2">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 2-A (上): 机器学习训练流程概览 (页码 2)</h2>
+                <p><strong>训练核心流程：</strong></p>
+                <ul>
+                    <li>输入：图像 x -> 图像表示</li>
+                    <li>分类模型：参数化模型 -> 预测值 ŷ</li>
+                    <li>评估：损失函数计算 loss</li>
+                    <li>优化：优化算法更新参数</li>
+                </ul>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 2-B (下): 图像表示 (页码 3)</h2>
+                <p><strong>重点环节：</strong> <span style="color:red; font-weight:bold;">图像表示</span></p>
+                <p>本页重点阐述如何将图像 x 转化为计算机可处理的数值矩阵（基于像素）。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 3 -->
+    <div class="slide-container" id="slide-3">
+        <div class="image-col">
+            <h3>图片: slide-3.png</h3>
+            <img src="images_linear/slide-3.png" alt="Slide 3">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 3-A (上): 图像类型 (页码 4)</h2>
+                <p><strong>分类：</strong></p>
+                <ul>
+                    <li><strong>二值图像 (Binary)：</strong> 黑白两色，1 bit/像素。</li>
+                    <li><strong>灰度图像 (Gray Scale)：</strong> 多级亮度，通常 8 bits/像素 (0-255)。</li>
+                    <li><strong>彩色图像 (Color)：</strong> RGB 多通道，包含丰富颜色。</li>
+                </ul>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 3-B (下): 二进制图像 (页码 5)</h2>
+                <p><strong>数值表示：</strong> 0 代表黑色，1 代表白色。</p>
+                <p><strong>数学模型：</strong> 图像存储为 q × p 的二维矩阵。</p>
+                <p><strong>特点：</strong> 每个元素仅为 0 或 1，处理高效。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 4 -->
+    <div class="slide-container" id="slide-4">
+        <div class="image-col">
+            <h3>图片: slide-4.png</h3>
+            <img src="images_linear/slide-4.png" alt="Slide 4">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 4-A (上): 灰度图像 (页码 6)</h2>
+                <p><strong>数值表示：</strong> 图像像素矩阵，每个元素存储一个代表亮度的灰度值。</p>
+                <p><strong>映射：</strong> 0-250 灰度刻度条，从黑色到白色的线性映射。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 4-B (下): 彩色图像 (页码 7)</h2>
+                <p><strong>通道构成：</strong> 图像由多个颜色通道（如 R, G, B）组成。</p>
+                <p><strong>案例：</strong> 展示原始彩色图像分解出的红色 (R) 通道分量。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 5 -->
+    <div class="slide-container" id="slide-5">
+        <div class="image-col">
+            <h3>图片: slide-5.png</h3>
+            <img src="images_linear/slide-5.png" alt="Slide 5">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 5-A (上): 彩色图像 (页码 8)</h2>
+                <p><strong>核心内容：</strong> 展示彩色图像的 RGB 通道分解（蓝、绿、红分量）。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 5-B (下): 图像表示 (页码 9)</h2>
+                <p><strong>核心内容：</strong> 探讨图像表示的基础：大多数分类算法均要求输入向量 (Vector) 格式。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 6 -->
+    <div class="slide-container" id="slide-6">
+        <div class="image-col">
+            <h3>图片: slide-6.png</h3>
+            <img src="images_linear/slide-6.png" alt="Slide 6">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 6-A (上): 图像表示 (页码 10)</h2>
+                <p><strong>核心：</strong> 将图像矩阵直接拉直为一维向量 x，包含所有 RGB 通道值。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 6-B (下): 图像表示维度 (页码 11)</h2>
+                <p><strong>示例：</strong> CIFAR-10 数据集 (32x32)。<br><strong>计算：</strong> 维度 = 32 × 32 × 3 = 3072 维。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 7 -->
+    <div class="slide-container" id="slide-7">
+        <div class="image-col">
+            <h3>图片: slide-7.png</h3>
+            <img src="images_linear/slide-7.png" alt="Slide 7">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 7-A (上): 机器学习训练流程 (页码 12)</h2>
+                <div style="font-size: 0.9em;">
+                    <strong>阶段详解：</strong>
+                    <ul>
+                        <li><strong>图像表示:</strong> 将 x 映射为 d 维特征向量。</li>
+                        <li><strong>模型预测:</strong> 通过参数 W, b 映射为类别得分 f。</li>
+                        <li><strong>损失函数:</strong> 计算 f 与真实 y 的偏差 L。</li>
+                        <li><strong>优化算法:</strong> 沿梯度方向更新参数。</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 7-B (下): 线性分类器引入 (页码 13)</h2>
+                <p><strong>重点：</strong> 线性分类器定义、权值 (Weights) 与分界面。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 8 -->
+    <div class="slide-container" id="slide-8">
+        <div class="image-col">
+            <h3>图片: slide-8.png</h3>
+            <img src="images_linear/slide-8.png" alt="Slide 8">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 8-A (上): 为什么从线性分类器开始? (页码 14)</h2>
+                <p><strong>要点：</strong> 简单直观；层级结构或高维映射可构成强大模型。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 8-B (下): 线性分类器定义 (页码 15)</h2>
+                <p><strong>定义：</strong> 将输入特征映射为类别分数的线性映射。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 9 -->
+    <div class="slide-container" id="slide-9">
+        <div class="image-col">
+            <h3>图片: slide-9.png</h3>
+            <img src="images_linear/slide-9.png" alt="Slide 9">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 9-A (上): 线性分类器定义 (页码 16)</h2>
+                <p><strong>符号：</strong> x 为 d 维向量，c 为类别数。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 9-B (下): 线性分类器定义 (页码 17)</h2>
+                <p><strong>公式：</strong> f_i(x, w_i) = w_i^T x + b_i</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 10 -->
+    <div class="slide-container" id="slide-10">
+        <div class="image-col">
+            <h3>图片: slide-10.png</h3>
+            <img src="images_linear/slide-10.png" alt="Slide 10">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 10-A (上): 线性分类器定义 (页码 18)</h2>
+                <p><strong>公式：</strong> f_i(x, w_i) = w_i^T x + b_i，参数：w_i 为权值，b_i 为偏置。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 10-B (下): 线性分类器定义 (页码 19)</h2>
+                <p><strong>说明：</strong> 每个类别独立拥有参数 w_i 和 b_i。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 11 -->
+    <div class="slide-container" id="slide-11">
+        <div class="image-col">
+            <h3>图片: slide-11.png</h3>
+            <img src="images_linear/slide-11.png" alt="Slide 11">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 11-A (上): 线性分类器决策 (页码 20)</h2>
+                <p><strong>公式：</strong> f_i(x, w_i) = w_i^T x + b_i (i=1, ..., c)</p>
+                <p><strong>决策准则：</strong> 若 f_i(x) > f_j(x) (对所有 j ≠ i)，则判定输入 x 属于第 i 类。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 11-B (下): 线性分类器决策说明 (页码 21)</h2>
+                <p style="color:red;"><strong>重点：</strong> 每个类都有自己的参数 w_i 和 b_i。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 12 -->
+    <div class="slide-container" id="slide-12">
+        <div class="image-col">
+            <h3>图片: slide-12.png</h3>
+            <img src="images_linear/slide-12.png" alt="Slide 12">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 12-A (上): 线性分类示例：图像向量化 (页码 22)</h2>
+                <p><strong>操作：</strong> 将图像表示为 4 维列向量 x。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 12-B (下): 线性分类示例：计算得分 (页码 23)</h2>
+                <p><strong>计算：</strong> f = Wx + b，输出各类别分数。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 13 -->
+    <div class="slide-container" id="slide-13">
+        <div class="image-col">
+            <h3>图片: slide-13.png</h3>
+            <img src="images_linear/slide-13.png" alt="Slide 13">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 13-A (上): 线性分类器示例 (页码 24)</h2>
+                <p><strong>阶段具体做法：</strong></p>
+                <ul>
+                    <li>数据集构建：收集标注图像，划分训练/验证/测试集。</li>
+                    <li>分类器设计：定义模型结构，选择损失函数与优化算法。</li>
+                    <li>分类器决策：推理阶段计算得分，应用最大得分准则。</li>
+                </ul>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 13-B (下): 线性分类器示例 (页码 25)</h2>
+                <p><strong>矩阵表示：</strong> 公式 f = Wx + b，核心是学习权重矩阵 W 和偏置 b。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 14 -->
+    <div class="slide-container" id="slide-14">
+        <div class="image-col">
+            <h3>图片: slide-14.png</h3>
+            <img src="images_linear/slide-14.png" alt="Slide 14">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 14-A (上): 线性分类器的矩阵表示 (页码 26)</h2>
+                <p><strong>核心：</strong> f(x, W) = Wx + b。<br><strong>参数：</strong> 明确 W, x, b 的数学含义与维度。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 14-B (下): 线性分类器的矩阵表示 (页码 27)</h2>
+                <p><strong>示例：</strong> CIFAR10 维度推导 (x:3072x1, W:10x3072, b:10x1)。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 15 -->
+    <div class="slide-container" id="slide-15">
+        <div class="image-col">
+            <h3>图片: slide-15.png</h3>
+            <img src="images_linear/slide-15.png" alt="Slide 15">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 15-A (上): 线性分类器的矩阵表示 (页码 28)</h2>
+                <p><strong>矩阵定义：</strong> f(x, W) = Wx + b。以 CIFAR-10 为例：W 为 10x3072，x 为 3072x1，b 为 10x1。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 15-B (下): 机器学习训练流程 (页码 29)</h2>
+                <p><strong>阶段定义：</strong> 模型构建、预测评估、损失计算、优化参数。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 16 -->
+    <div class="slide-container" id="slide-16">
+        <div class="image-col">
+            <h3>图片: slide-16.png</h3>
+            <img src="images_linear/slide-16.png" alt="Slide 16">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 16-A (上): 权重向量可视化 (页码 30)</h2>
+                <p><strong>核心：</strong> 每个类的权重向量 w_i 可可视化为图像模板。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 16-B (下): 模板视角总结 (页码 31)</h2>
+                <p><strong>结论：</strong> 线性分类器通过计算图像与各类别模板的相似度（点积）进行分类。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 17 -->
+    <div class="slide-container" id="slide-17">
+        <div class="image-col">
+            <h3>图片: slide-17.png</h3>
+            <img src="images_linear/slide-17.png" alt="Slide 17">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 17-A (上): 权值向量 (Weight Vectors) (页码 32)</h2>
+                <p><strong>定义：</strong> 权值向量 w_i 为该类别的“模板”。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 17-B (下): 训练过程流程 (页码 33)</h2>
+                <p><strong>关键逻辑：</strong> 损失函数作为参数优化的核心动力，量化预测误差。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 18 -->
+    <div class="slide-container" id="slide-18">
+        <div class="image-col">
+            <h3>图片: slide-18.png</h3>
+            <img src="images_linear/slide-18.png" alt="Slide 18">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 18-A (上): 特征空间分布 (页码 34)</h2>
+                <p><strong>定义：</strong> 特征空间中不同类别样本的原始分布。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 18-B (下): 线性决策边界 (页码 35)</h2>
+                <p><strong>原理：</strong> 线性分类器通过超平面划分特征空间。公式：决策边界满足 w^T x + b = 0。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 19 -->
+    <div class="slide-container" id="slide-19">
+        <div class="image-col">
+            <h3>图片: slide-19.png</h3>
+            <img src="images_linear/slide-19.png" alt="Slide 19">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 19-A (上): 线性决策边界定义 (页码 36)</h2>
+                <p><strong>核心：</strong> 决策边界满足 w_i^T x + b_i = 0。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 19-B (下): 偏置项 b 的作用 (页码 37)</h2>
+                <p><strong>结论：</strong> 偏置项 b 控制决策边界在空间中的位置。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 20 -->
+    <div class="slide-container" id="slide-20">
+        <div class="image-col">
+            <h3>图片: slide-20.png</h3>
+            <img src="images_linear/slide-20.png" alt="Slide 20">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 20-A (上): 线性分类器的决策边界 (页码 38)</h2>
+                <p><strong>定义：</strong> 决策边界满足 w_i^T x + b_i = 0。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 20-B (下): 线性分类器小结 (页码 39)</h2>
+                <p><strong>章节总结：</strong> 线性分类定义、决策逻辑、模板可视化、决策边界。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 21 -->
+    <div class="slide-container" id="slide-21">
+        <div class="image-col">
+            <h3>图片: slide-21.png</h3>
+            <img src="images_linear/slide-21.png" alt="Slide 21">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 21-A (上): 梯度下降逻辑补充 (页码 40)</h2>
+                <p><strong>重点：</strong> 介绍了优化算法在损失函数表面进行参数搜索的基本数学概念。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 21-B (下): 线性分类示例与流程回顾 (页码 41)</h2>
+                <p><strong>关键步骤：</strong> 再次串联图像表示、分类模型、损失函数与优化算法的训练闭环。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 22 -->
+    <div class="slide-container" id="slide-22">
+        <div class="image-col">
+            <h3>图片: slide-22.png</h3>
+            <img src="images_linear/slide-22.png" alt="Slide 22">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 22-A (上): 线性分类器得分计算 (页码 42)</h2>
+                <p><strong>核心公式：</strong> $f = Wx + b$</p>
+                <p><strong>过程：</strong> 将输入特征向量 $x$ 与权重矩阵 $W$ 相乘，加上偏置 $b$，输出各类别（汽车、猫、船）的分数。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 22-B (下): 性能评估示例 (页码 43)</h2>
+                <p><strong>对比：</strong> 展示两个分类器对同一输入（猫）的计算结果：</p>
+                <ul>
+                    <li><strong>分类器1：</strong> 猫类得分最高，判断<strong>正确</strong>。</li>
+                    <li><strong>分类器2：</strong> 船类得分最高，判断<strong>错误</strong>。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 23 -->
+    <div class="slide-container" id="slide-23">
+        <div class="image-col">
+            <h3>图片: slide-23.png</h3>
+            <img src="images_linear/slide-23.png" alt="Slide 23">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 23-A (上): 为什么要引入损失函数? (页码 44)</h2>
+                <p><strong>痛点：</strong> 仅凭预测分数难以直接评估不同分类器对样本集的综合分类优劣。</p>
+                <p><strong>引入：</strong> 必须建立一个量化的评价指标——<strong>损失函数</strong>，作为判断模型性能好坏的科学标准。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 23-B (下): 什么是损失函数 (页码 45)</h2>
+                <p><strong>定义：</strong> 衡量预测值与真实值不一致程度的函数，输出通常为非负实值。</p>
+                <p><strong>作用：</strong> 充当“桥梁”，将模型性能反馈给参数优化算法，指导通过降低损失来持续提升分类器性能。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 24 -->
+    <div class="slide-container" id="slide-24">
+        <div class="image-col">
+            <h3>图片: slide-24.png</h3>
+            <img src="images_linear/slide-24.png" alt="Slide 24">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 24-A (上): 数据集总损失定义 (页码 46)</h2>
+                <p><strong>公式：</strong> $L = \frac{1}{N} \sum_{i} L_i(f(x_i, W), y_i)$</p>
+                <p><strong>含义：</strong> 数据集损失为所有单个样本损失的算术平均值。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 24-B (下): 损失函数的目标 (页码 47)</h2>
+                <p><strong>核心：</strong> 通过损失函数量化错误，并指导模型通过参数迭代修正错误。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 25 -->
+    <div class="slide-container" id="slide-25">
+        <div class="image-col">
+            <h3>图片: slide-25.png</h3>
+            <img src="images_linear/slide-25.png" alt="Slide 25">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 25-A (上): 多类 SVM 损失 (页码 48)</h2>
+                <p><strong>引入：</strong> 多类支撑向量机损失（Hinge Loss）的数学定义。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 25-B (下): 损失项计算逻辑 (页码 49)</h2>
+                <p><strong>细节：</strong> 解释了如何针对每个样本累加所有错误类别的得分差距。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 26 -->
+    <div class="slide-container" id="slide-26">
+        <div class="image-col">
+            <h3>图片: slide-26.png</h3>
+            <img src="images_linear/slide-26.png" alt="Slide 26">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 26-A (上): 多类 SVM 损失公式 (页码 50)</h2>
+                <p><strong>定义：</strong> $L_i = \sum_{j \neq y_i} \max(0, s_{ij} - s_{y_i} + 1)$。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 26-B (下): 间隔 (Margin) 的解释 (页码 51)</h2>
+                <p><strong>意义：</strong> “+1”代表安全间隔，确保分类准确性且具有稳健性。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 27 -->
+    <div class="slide-container" id="slide-27">
+        <div class="image-col">
+            <h3>图片: slide-27.png</h3>
+            <img src="images_linear/slide-27.png" alt="Slide 27">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 27-A (上): 损失函数数值示例 (页码 52)</h2>
+                <p><strong>应用：</strong> 将具体的类别得分带入 SVM 损失函数计算实例。</p>
+            </div>
+            <div class="slide-block">
+            <h2>Slide 27-B (下): 损失函数数值计算 (页码 53)</h2>
+            <p><strong>演示：</strong> 展示如何累加各错误类别得分与正确类别的差值。</p>
+            <p><strong>Q 多类支撑向量机损失的定义：</strong></p>
+            <p>对于训练集中的第 <em>i</em> 个样本，多类 SVM 损失（Hinge Loss）定义为：</p>
+            <p><strong>L<sub>i</sub> = ∑<sub>j ≠ y<sub>i</sub></sub> max(0, s<sub>j</sub> - s<sub>y<sub>i</sub></sub> + Δ)</strong></p>
+            <p>其中：</p>
+            <ul>
+                <li><strong>s<sub>y<sub>i</sub></sub>：</strong> 正确类别的得分。</li>
+                <li><strong>s<sub>j</sub>：</strong> 第 <em>j</em> 个错误类别的得分。</li>
+                <li><strong>Δ (Delta)：</strong> 安全间隔 (Margin)，通常设为 1。</li>
+            </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 28 -->
+    <div class="slide-container" id="slide-28">
+        <div class="image-col">
+            <h3>图片: slide-28.png</h3>
+            <img src="images_linear/slide-28.png" alt="Slide 28">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 28-A (上): SVM 损失的性质 (页码 54)</h2>
+                <p><strong>分析：</strong> 解释损失函数在得分差距较小时的线性增长特性。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 28-B (下): 权重 w_j 的惩罚 (页码 55)</h2>
+                <p><strong>核心：</strong> 分析错误类别权重对损失函数的影响。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 29 -->
+    <div class="slide-container" id="slide-29">
+        <div class="image-col">
+            <h3>图片: slide-29.png</h3>
+            <img src="images_linear/slide-29.png" alt="Slide 29">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 29-A (上): 损失计算示例补充 (页码 56)</h2>
+                <p><strong>进阶：</strong> 对分类任务中不同样本损失计算的进一步演示。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 29-B (下): 损失计算总结 (页码 57)</h2>
+                <p><strong>逻辑：</strong> 整合之前的计算步骤，总结 SVM 损失的整体计算框架。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 30 -->
+    <div class="slide-container" id="slide-30">
+        <div class="image-col">
+            <h3>图片: slide-30.png</h3>
+            <img src="images_linear/slide-30.png" alt="Slide 30">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 30-A (上): Softmax 与 SVM 对比 (页码 58)</h2>
+                <p><strong>SVM：</strong> 关注边界；<strong>Softmax：</strong> 关注置信度概率。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 30-B (下): 多类 SVM 损失 (页码 59)</h2>
+                <p><strong>公式：</strong> $L_i = \sum_{j \neq y_i} \max(0, s_{ij} - s_{y_i} + 1)$</p>
+                <p><strong>目标：</strong> 使正确类别得分比错误类别至少高出 1 个单位。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 31 -->
+    <div class="slide-container" id="slide-31">
+        <div class="image-col">
+            <h3>图片: slide-31.png</h3>
+            <img src="images_linear/slide-31.png" alt="Slide 31">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 31-A (上): 优化算法概览 (页码 60)</h2>
+                <p><strong>核心：</strong> 介绍参数优化的直观理解，即在损失函数定义的空间中寻找极小值。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 31-B (下): 优化直观 (页码 61)</h2>
+                <p><strong>类比：</strong> 盲人下山，寻找坡度最陡的方向，即负梯度方向。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 32 -->
+    <div class="slide-container" id="slide-32">
+        <div class="image-col">
+            <h3>图片: slide-32.png</h3>
+            <img src="images_linear/slide-32.png" alt="Slide 32">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 32-A (上): 分数与 SVM 损失定义 (页码 62)</h2>
+                <p><strong>分数计算：</strong> $s_{ij} = w_j^T x_i + b_j$</p>
+                <p><strong>损失函数：</strong> $L_i = \sum_{j \neq y_i} \max(0, s_{ij} - s_{y_i} + 1)$</p>
+                <p><strong>目标：</strong> 强制正确类别得分比错误类别至少高出 1 个单位（安全间隔）。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 32-B (下): 折页损失 (Hinge Loss) 特性 (页码 63)</h2>
+                <p><strong>定义：</strong> 这种 $\max(0, \cdot)$ 形式的损失函数称为<strong>折页损失 (Hinge Loss)</strong>。</p>
+                <p><strong>特性：</strong> 当 $s_{y_i} - s_{ij} > 1$ 时，损失为 0；否则损失呈线性增长。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 33 -->
+    <div class="slide-container" id="slide-33">
+        <div class="image-col">
+            <h3>图片: slide-33.png</h3>
+            <img src="images_linear/slide-33.png" alt="Slide 33">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 33-A (上): 多类 SVM 损失计算示例 (页码 64)</h2>
+                <p><strong>场景设定：</strong> 假设有“鸟、猫、车”三类，利用线性分类器预测得分。</p>
+                <p><strong>计算框架：</strong> 将得分表格代入 SVM 损失公式进行量化。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 33-B (下): 鸟类样本损失计算细节 (页码 65)</h2>
+                <p><strong>公式：</strong> $L_i = \sum_{j \neq y_i} \max(0, s_j - s_{y_i} + 1)$</p>
+                <p><strong>计算过程：</strong> 以鸟类为例，得分分别为 $s_{bird}=0.6, s_{cat}=-2.3, s_{car}=1.9$。</p>
+                <p><strong>结果：</strong> $L_{bird} = \max(0, -2.3 - 0.6 + 1) + \max(0, 1.9 - 0.6 + 1) = 0 + 2.3 = 2.3$。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 34 -->
+    <div class="slide-container" id="slide-34">
+        <div class="image-col">
+            <h3>图片: slide-34.png</h3>
+            <img src="images_linear/slide-34.png" alt="Slide 34">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 34-A (上): 猫类样本损失计算 (页码 66)</h2>
+                <p><strong>计算过程：</strong> $s_{bird}=1.7, s_{cat}=2.9, s_{car}=2.3$。</p>
+                <p><strong>结果：</strong> $L_{cat} = \max(0, 1.7 - 2.9 + 1) + \max(0, 2.3 - 2.9 + 1) = 0 + 0.4 = 0.4$。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 34-B (下): 车类样本损失计算 (页码 67)</h2>
+                <p><strong>计算过程：</strong> $s_{bird}=3.1, s_{cat}=-2.6, s_{car}=4.3$。</p>
+                <p><strong>结果：</strong> $L_{car} = \max(0, 3.1 - 4.3 + 1) + \max(0, -2.6 - 4.3 + 1) = 0$ (分类正确且满足安全间隔)。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 35 -->
+    <div class="slide-container" id="slide-35">
+        <div class="image-col">
+            <h3>图片: slide-35.png</h3>
+            <img src="images_linear/slide-35.png" alt="Slide 35">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 35-A (上): 数据集平均损失计算 (页码 68)</h2>
+                <p><strong>定义：</strong> 总损失为所有样本损失的算术平均值。</p>
+                <p><strong>公式：</strong> $L = \frac{1}{N} \sum_{i=1}^{N} L_i$。</p>
+                <p><strong>计算过程：</strong> 基于样本（鸟, 猫, 车）的单个损失 $(2.3 + 0.4 + 0) / 3 = 0.9$。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 35-B (下): SVM 损失函数思考题 (页码 69)</h2>
+                <p><strong>核心知识点：</strong></p>
+                <ul>
+                    <li>损失函数的取值范围与极值分析。</li>
+                    <li>权重 $W$ 与偏置 $b$ 初始化对损失的影响。</li>
+                    <li>损失函数中求和项的数学细节。</li>
+                    <li>损失聚合方式 (求和 vs 平均) 的差异。</li>
+                    <li>SVM 损失变体 (如 Squared Hinge Loss) 分析。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 36 -->
+    <div class="slide-container" id="slide-36">
+        <div class="image-col">
+            <h3>图片: slide-36.png</h3>
+            <img src="images_linear/slide-36.png" alt="Slide 36">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 36-A (上): 机器学习训练流程闭环 (页码 70)</h2>
+                <p><strong>核心架构：</strong> 从数据预处理、模型设计到损失计算与参数优化，形成完整闭环。</p>
+                <p><strong>关键组件：</strong> 线性模型、多类 SVM 损失、正则化、优化算法 (SGD) 及数据集划分。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 36-B (下): 损失函数性质探讨 (页码 71)</h2>
+                <p><strong>数学定义：</strong> $L(W) = \frac{1}{N} \sum_{i} L_i(f(x_i, W), y_i)$。</p>
+                <p><strong>关键思考：</strong> 讨论当 $L=0$ 时，模型参数 $W$ 是否唯一？(探讨过拟合与解的唯一性)。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 37 -->
+    <div class="slide-container" id="slide-37">
+        <div class="image-col">
+            <h3>图片: slide-37.png</h3>
+            <img src="images_linear/slide-37.png" alt="Slide 37">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 37-A (上): 再谈损失函数 (页码 72)</h2>
+                <p><strong>实验设定：</strong> 定义两个分类器，权重关系为 $W_2 = 2W_1$。</p>
+                <p><strong>计算任务：</strong> 分析参数缩放对模型得分及其损失的影响。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 37-B (下): 参数缩放对损失的影响 (页码 73)</h2>
+                <p><strong>分析过程：</strong> 由于得分 $s$ 与参数 $W$ 线性相关 ($s=Wx$)，参数翻倍导致得分也相应翻倍。</p>
+                <p><strong>关键结论：</strong> 模型参数的线性缩放会对 SVM 损失值造成显著非线性影响，这在训练过程中需要通过正则化等手段加以约束。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 38 -->
+    <div class="slide-container" id="slide-38">
+        <div class="image-col">
+            <h3>图片: slide-38.png</h3>
+            <img src="images_linear/slide-38.png" alt="Slide 38">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 38-A (上): SVM 损失计算再探讨 (页码 74)</h2>
+                <p><strong>实验背景：</strong> 对比两个线性分类器（$W_2 = 2W_1$）对同一汽车样本的分类得分。</p>
+                <p><strong>计算目标：</strong> 计算分类器2在该样本下的 SVM 损失。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 38-B (下): 损失计算对比与缩放不变性 (页码 75)</h2>
+                <p><strong>计算结果：</strong> 对比分类器1与分类器2，二者对样本的 SVM 损失均为 0。</p>
+                <p><strong>关键结论：</strong> 由于 SVM 损失关注的是各类别得分之间的<strong>相对差值</strong>，当模型参数 $W$ 发生线性缩放时，只要得分差值满足 Margin 要求，其损失评估具有一致性。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 39 -->
+    <div class="slide-container" id="slide-39">
+        <div class="image-col">
+            <h3>图片: slide-39.png</h3>
+            <img src="images_linear/slide-39.png" alt="Slide 39">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 39-A (上): 损失函数与解的非唯一性 (页码 76)</h2>
+                <p><strong>核心痛点：</strong> 损失函数 $L=0$ 对应的最优解 $W$ 并不唯一。</p>
+                <p><strong>关键问题：</strong> 既然存在多个解，如何在多个满足 $L=0$ 的权重矩阵中进行筛选？</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 39-B (下): 正则化引入 (页码 77)</h2>
+                <p><strong>数学定义：</strong> $L(W) = \frac{1}{N} \sum_{i} L_i(f(x_i, W), y_i) + \lambda R(W)$。</p>
+                <p><strong>设计目的：</strong> 通过正则项 $\lambda R(W)$ 约束模型复杂度，在损失值与模型简单性之间平衡，从而提升模型的泛化能力。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 40 -->
+    <div class="slide-container" id="slide-40">
+        <div class="image-col">
+            <h3>图片: slide-40.png</h3>
+            <img src="images_linear/slide-40.png" alt="Slide 40">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 40-A (上): 数据损失 (Data Loss) (页码 78)</h2>
+                <p><strong>核心公式：</strong> $L(W) = \frac{1}{N} \sum_i L_i(f(x_i, W), y_i)$。</p>
+                <p><strong>物理含义：</strong> 衡量模型预测输出与真实训练数据标签之间的拟合程度，确保模型在训练集上的准确性。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 40-B (下): 正则项损失 (Regularization Loss) (页码 79)</h2>
+                <p><strong>核心公式：</strong> $\lambda R(W)$。</p>
+                <p><strong>物理含义：</strong> 通过对模型权重 $W$ 的复杂性施加惩罚，防止模型在训练集上出现过拟合（即“学得太好”导致泛化能力下降）。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 41 -->
+    <div class="slide-container" id="slide-41">
+        <div class="image-col">
+            <h3>图片: slide-41.png</h3>
+            <img src="images_linear/slide-41.png" alt="Slide 41">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 41-A (上): 正则项损失函数构成 (页码 80)</h2>
+                <p><strong>核心公式：</strong> $L(W) = \frac{1}{N} \sum_{i} L_i(f(x_i, W), y_i) + \lambda R(W)$。</p>
+                <p><strong>组成分析：</strong> 总损失包含“数据损失”和“正则损失”两部分。正则项 $R(W)$ 仅与参数 $W$ 有关，与输入数据无关。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 41-B (下): 超参数 λ 的作用 (页码 81)</h2>
+                <p><strong>作用：</strong> λ 是一个关键超参数，用于调节正则项在总损失函数中的比重。</p>
+                <p><strong>重要性：</strong> 通过调整 λ，可以在模型对训练集的拟合程度（数据损失）与模型的简单性（防止过拟合）之间找到平衡。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 42 -->
+    <div class="slide-container" id="slide-42">
+        <div class="image-col">
+            <h3>图片: slide-42.png</h3>
+            <img src="images_linear/slide-42.png" alt="Slide 42">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 42-A (上): 超参数 (Hyperparameters) (页码 82)</h2>
+                <p><strong>定义：</strong> 模型训练前预先设置、不通过训练学习得到的参数。</p>
+                <p><strong>关键点：</strong> 超参数 λ 的极端取值分析 (λ=0 vs λ=∞)，强调如何设置合理的超参数是模型优化的核心。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 42-B (下): L2 正则化 (页码 83)</h2>
+                <p><strong>正则项定义：</strong> $R(W) = \sum_k \sum_l W_{k,l}^2$。</p>
+                <p><strong>核心作用：</strong> 通过惩罚权重的平方和，限制权重大小，防止模型过拟合，提高泛化能力。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 43 -->
+    <div class="slide-container" id="slide-43">
+        <div class="image-col">
+            <h3>图片: slide-43.png</h3>
+            <img src="images_linear/slide-43.png" alt="Slide 43">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 43-A (上): 正则化与模型选择 (页码 84)</h2>
+                <p><strong>核心痛点：</strong> 如何在“学习得太好”（过拟合）与“学习得不够好”之间取得平衡。</p>
+                <p><strong>解决方法：</strong> 通过引入正则项 λ R(W) 对参数复杂性进行惩罚。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 43-B (下): L2 正则化示例 (页码 85)</h2>
+                <p><strong>实验：</strong> 对比相同分类输出下，$w_1=[1,0,0,0]$ 与 $w_2=[0.25,0.25,0.25,0.25]$ 的正则化代价。</p>
+                <p><strong>结论：</strong> L2 正则化倾向于选择权重值更小且分布更均匀的分类器 $w_2$，这能有效抑制过拟合，增强泛化能力。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 44 -->
+    <div class="slide-container" id="slide-44">
+        <div class="image-col">
+            <h3>图片: slide-44.png</h3>
+            <img src="images_linear/slide-44.png" alt="Slide 44">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 44-A (上): L2 正则化的数学定义 (页码 86)</h2>
+                <p><strong>正则项公式：</strong> $R(W) = \sum_{k} \sum_{l} W_{k,l}^2$。</p>
+                <p><strong>核心逻辑：</strong> 在数据损失之外，通过增加权重平方和的惩罚项，强制模型学习更简单、权重更分散的参数分布。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 44-B (下): L2 正则化的泛化优势 (页码 87)</h2>
+                <p><strong>示例分析：</strong> 对比 $w_1=[1,0,0,0]$ 和 $w_2=[0.25,0.25,0.25,0.25]$，尽管二者输出相同，但 $R(w_2) < R(w_1)$。</p>
+                <p><strong>关键结论：</strong> L2 正则化机制会偏好 $w_2$ 这类权重值小且分布均匀的解，从而提升模型在未知数据上的泛化能力。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 45 -->
+    <div class="slide-container" id="slide-45">
+        <div class="image-col">
+            <h3>图片: slide-45.png</h3>
+            <img src="images_linear/slide-45.png" alt="Slide 45">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 45-A (上): 正则化与模型选择机制 (页码 88)</h2>
+                <p><strong>核心公式：</strong> $L(W) = \text{DataLoss} + \lambda \sum W^2$。</p>
+                <p><strong>机制：</strong> 解释了正则化项如何在模型拟合数据 (Data Loss) 与限制模型复杂度 (Regularization Loss) 之间进行自动折衷。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 45-B (下): 权重分布对正则化的影响 (页码 89)</h2>
+                <p><strong>分析示例：</strong> 比较具有相同分类输出但权重分布截然不同的 $w_1=[1,0,0,0]$ 和 $w_2=[0.25,0.25,0.25,0.25]$。</p>
+                <p><strong>关键结论：</strong> L2 正则化机制会显著惩罚稀疏、极值较大的权重分布，从而迫使模型寻找更平滑的权重分配 $w_2$，提升泛化性能。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 46 -->
+    <div class="slide-container" id="slide-46">
+        <div class="image-col">
+            <h3>图片: slide-46.png</h3>
+            <img src="images_linear/slide-46.png" alt="Slide 46">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 46-A (上): L2 正则化的模型偏好 (页码 90)</h2>
+                <p><strong>机制原理：</strong> 在训练损失相同的情况下，L2 正则化机制为模型引入了“偏好”。</p>
+                <p><strong>对比结论：</strong> 比较 $w_1=[1,0,0,0]$ 和 $w_2=[0.25,0.25,0.25,0.25]$，正则化项倾向于选择损失代价更小的 $w_2$。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 46-B (下): 正则化的核心价值 (页码 91)</h2>
+                <p><strong>核心结论：</strong> “正则项让模型有了偏好！！！”</p>
+                <p><strong>总结：</strong> 该偏好通过抑制单个权重过大，强制模型在所有输入维度上进行“特征整合”，从而实现了更稳健、更具泛化能力的分类策略。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 47 -->
+    <div class="slide-container" id="slide-47">
+        <div class="image-col">
+            <h3>图片: slide-47.png</h3>
+            <img src="images_linear/slide-47.png" alt="Slide 47">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 47-A (上): 正则化形式汇总 (页码 92)</h2>
+                <p><strong>常见正则项对比：</strong></p>
+                <ul>
+                    <li><strong>L1 正则：</strong> $R(W) = \sum |W|$，倾向于产生稀疏权值。</li>
+                    <li><strong>L2 正则：</strong> $R(W) = \sum W^2$，倾向于权值平滑。</li>
+                    <li><strong>Elastic Net：</strong> 结合 L1 和 L2 正则。</li>
+                </ul>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 47-B (下): 训练全流程架构 (页码 93)</h2>
+                <p><strong>训练闭环：</strong> 从“输入数据预处理”到“分类模型设计”、“损失计算”再到“参数更新”的完整逻辑架构。</p>
+                <p><strong>核心任务：</strong> 介绍了包括数据集划分、损失与优化 (SGD/批量) 在内的 10 个关键训练要素。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 48 -->
+    <div class="slide-container" id="slide-48">
+        <div class="image-col">
+            <h3>图片: slide-48.png</h3>
+            <img src="images_linear/slide-48.png" alt="Slide 48">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 48-A (上): 机器学习训练流程闭环 (页码 94)</h2>
+                <p><strong>核心架构：</strong> 系统性地展示了从输入数据预处理到分类模型输出、损失函数计算以及最终通过优化算法进行参数更新的闭环逻辑。</p>
+                <p><strong>关键要素：</strong> 涵盖了图像表示、分类模型、损失计算与优化策略等 10 个关键训练环节。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 48-B (下): 参数优化的内涵 (页码 95)</h2>
+                <p><strong>定义：</strong> 参数优化是利用损失函数的反馈信号，调整分类器内部权值 $W$ 与偏置 $b$ 的过程。</p>
+                <p><strong>核心目标：</strong> 通过参数的精细调整，不断缩小预测值与真实值之间的差距，从而实现模型性能的提升。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 49 -->
+    <div class="slide-container" id="slide-49">
+        <div class="image-col">
+            <h3>图片: slide-49.png</h3>
+            <img src="images_linear/slide-49.png" alt="Slide 49">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 49-A (上): 优化算法的目标与困境 (页码 96)</h2>
+                <p><strong>数学定义：</strong> 优化目标为寻找使损失函数 $L(W)$ 达到最小的最优参数 $W$。</p>
+                <p><strong>实际困境：</strong> 尽管可以直接通过求导 $\frac{\partial L}{\partial W} = 0$ 求解，但由于深度学习模型中 $L$ 的形式通常极度复杂，导致该直接解析解方法在实际场景中难以落地。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 49-B (下): 机器学习训练全貌架构 (页码 97)</h2>
+                <p><strong>流程架构：</strong> 完整展示了数据预处理、模型架构设计、损失反馈以及参数迭代更新的闭环训练逻辑。</p>
+                <p><strong>核心优化策略：</strong> 强调了梯度下降算法 (GD)、随机梯度下降 (SGD) 及小批量梯度下降 (Mini-batch SGD) 作为参数更新核心手段的重要性。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 50 -->
+    <div class="slide-container" id="slide-50">
+        <div class="image-col">
+            <h3>图片: slide-50.png</h3>
+            <img src="images_linear/slide-50.png" alt="Slide 50">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 50-A (上): 梯度下降算法概述</h2>
+                <p>梯度下降算法基础定义</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 50-B (下): 梯度下降算法概述</h2>
+                <p>一种简单而高效的迭代优化算法，是机器学习模型训练的核心手段。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 51 -->
+    <div class="slide-container" id="slide-51">
+        <div class="image-col">
+            <h3>图片: slide-51.png</h3>
+            <img src="images_linear/slide-51.png" alt="Slide 51">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 51-A (上): 梯度下降的优化逻辑</h2>
+                <p>参数更新策略 (一)</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 51-B (下): 梯度下降的优化逻辑</h2>
+                <p>往哪儿走：负梯度方向（即函数下降最快的方向）。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 52 -->
+    <div class="slide-container" id="slide-52">
+        <div class="image-col">
+            <h3>图片: slide-52.png</h3>
+            <img src="images_linear/slide-52.png" alt="Slide 52">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 52-A (上): 参数更新策略 (二)</h2>
+                <p>学习率 (Learning Rate)</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 52-B (下): 参数更新策略 (二)</h2>
+                <p>走多远：学习率控制步长，直接影响收敛速度与稳定性。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 53 -->
+    <div class="slide-container" id="slide-53">
+        <div class="image-col">
+            <h3>图片: slide-53.png</h3>
+            <img src="images_linear/slide-53.png" alt="Slide 53">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 53-A (上): SVM 损失函数回顾</h2>
+                <p>损失函数的参数化设计</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 53-B (下): SVM 损失函数回顾</h2>
+                <p>详细说明 Hinge Loss 的阈值机制及其对错误的惩罚。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 54 -->
+    <div class="slide-container" id="slide-54">
+        <div class="image-col">
+            <h3>图片: slide-54.png</h3>
+            <img src="images_linear/slide-54.png" alt="Slide 54">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 54-A (上): Softmax 分类器引入</h2>
+                <p>Softmax 的概率分布定义</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 54-B (下): Softmax 分类器引入</h2>
+                <p>解释 log 概率与交叉熵损失的关联。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 55 -->
+    <div class="slide-container" id="slide-55">
+        <div class="image-col">
+            <h3>图片: slide-55.png</h3>
+            <img src="images_linear/slide-55.png" alt="Slide 55">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 55-A (上): 交叉熵损失计算</h2>
+                <p>Softmax 分类器示例</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 55-B (下): 交叉熵损失计算</h2>
+                <p>计算示例得分与归一化概率。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 56 -->
+    <div class="slide-container" id="slide-56">
+        <div class="image-col">
+            <h3>图片: slide-56.png</h3>
+            <img src="images_linear/slide-56.png" alt="Slide 56">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 56-A (上): Softmax 与 SVM 对比</h2>
+                <p>多类分类器性能分析</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 56-B (下): Softmax 与 SVM 对比</h2>
+                <p>讨论两者在鲁棒性与计算效率上的差异。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 57 -->
+    <div class="slide-container" id="slide-57">
+        <div class="image-col">
+            <h3>图片: slide-57.png</h3>
+            <img src="images_linear/slide-57.png" alt="Slide 57">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 57-A (上): 最优化问题定义</h2>
+                <p>最优化算法基础</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 57-B (下): 最优化问题定义</h2>
+                <p>寻找损失函数极小值的优化过程。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 58 -->
+    <div class="slide-container" id="slide-58">
+        <div class="image-col">
+            <h3>图片: slide-58.png</h3>
+            <img src="images_linear/slide-58.png" alt="Slide 58">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 58-A (上): 梯度下降算法总结</h2>
+                <p><strong>方法对比：</strong></p>
+                <ul>
+                    <li><strong>梯度下降 (Gradient Descent)：</strong> 利用全部训练数据计算梯度。</li>
+                    <li><strong>随机梯度下降 (SGD)：</strong> 每次随机采样 1 个数据更新权重。</li>
+                    <li><strong>小批量梯度下降 (Mini-batch GD)：</strong> 每次采样一批数据更新权重（深度学习主流）。</li>
+                </ul>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 58-B (下): 图像分类训练闭环</h2>
+                <p><strong>训练流程：</strong></p>
+                <ul>
+                    <li><strong>输入与表示：</strong> 图像 x -> 数值矩阵/特征向量。</li>
+                    <li><strong>模型预测：</strong> 基于分类模型预测值 ŷ。</li>
+                    <li><strong>损失计算：</strong> 比较预测值 ŷ 与真实标签 y，计算损失。</li>
+                    <li><strong>参数优化：</strong> 通过梯度下降算法更新模型参数，完成一次迭代。</li>
+                </ul>
+                <p><strong>核心知识点：</strong> 线性分类、SVM损失、数据集划分、超参数调优。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 59 -->
+    <div class="slide-container" id="slide-59">
+        <div class="image-col">
+            <h3>图片: slide-59.png</h3>
+            <img src="images_linear/slide-59.png" alt="Slide 59">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 59-A (上): 梯度验证逻辑</h2>
+                <p>数值梯度与解析梯度</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 59-B (下): 梯度验证逻辑</h2>
+                <p>对比解析梯度的数学形式与数值梯度的近似计算。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 60 -->
+    <div class="slide-container" id="slide-60">
+        <div class="image-col">
+            <h3>图片: slide-60.png</h3>
+            <img src="images_linear/slide-60.png" alt="Slide 60">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 60-A (上): 学习率影响分析</h2>
+                <p>梯度下降收敛性</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 60-B (下): 学习率影响分析</h2>
+                <p>学习率过大导致震荡，过小导致收敛缓慢的对比分析。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 61 -->
+    <div class="slide-container" id="slide-61">
+        <div class="image-col">
+            <h3>图片: slide-61.png</h3>
+            <img src="images_linear/slide-61.png" alt="Slide 61">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 61-A (上): 小批量随机梯度下降 (Mini-batch SGD)</h2>
+                <p>训练效率优化</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 61-B (下): 小批量随机梯度下降 (Mini-batch SGD)</h2>
+                <p>大规模数据下，通过小批次计算梯度，平衡计算速度与收敛稳定性。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 62 -->
+    <div class="slide-container" id="slide-62">
+        <div class="image-col">
+            <h3>图片: slide-62.png</h3>
+            <img src="images_linear/slide-62.png" alt="Slide 62">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 62-A (上): 超参数调整策略</h2>
+                <p>验证集的作用</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 62-B (下): 超参数调整策略</h2>
+                <p>通过在验证集上对比不同超参数（如学习率、正则化强度）的性能来选择最优值。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 63 -->
+    <div class="slide-container" id="slide-63">
+        <div class="image-col">
+            <h3>图片: slide-63.png</h3>
+            <img src="images_linear/slide-63.png" alt="Slide 63">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 63-A (上): 模型泛化能力</h2>
+                <p>防止过拟合</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 63-B (下): 模型泛化能力</h2>
+                <p>强调在训练集误差与泛化误差之间的权衡。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 64 -->
+    <div class="slide-container" id="slide-64">
+        <div class="image-col">
+            <h3>图片: slide-64.png</h3>
+            <img src="images_linear/slide-64.png" alt="Slide 64">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 64-A (上): 数据预处理 - 去均值化</h2>
+                <p><strong>概念：</strong> 将数据分布的中心平移至坐标原点 (0,0)。</p>
+                <p><strong>意义：</strong> 消除数据在空间位置上的偏移，提升训练稳定性。</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 64-B (下): 数据预处理 - 归一化</h2>
+                <p><strong>概念：</strong> 将特征尺度缩放至统一范围。</p>
+                <p><strong>意义：</strong> 消除不同特征量纲差异带来的影响，防止主导特征失衡，加速梯度下降收敛。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 65 -->
+    <div class="slide-container" id="slide-65">
+        <div class="image-col">
+            <h3>图片: slide-65.png</h3>
+            <img src="images_linear/slide-65.png" alt="Slide 65">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 65-A (上): 深度学习预备知识</h2>
+                <p>向神经网络过渡</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 65-B (下): 深度学习预备知识</h2>
+                <p>线性分类器作为感知机的基础，引出后续的神经网络结构。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 66 -->
+    <div class="slide-container" id="slide-66">
+        <div class="image-col">
+            <h3>图片: slide-66.png</h3>
+            <img src="images_linear/slide-66.png" alt="Slide 66">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 66-A (上): 课程总结</h2>
+                <p>Computer Vision 课程概览</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 66-B (下): 课程总结</h2>
+                <p>从线性分类器到卷积神经网络的演进逻辑。</p>
+            </div>
+        </div>
+    </div>
+    <!-- Slide 67 -->
+    <div class="slide-container" id="slide-67">
+        <div class="image-col">
+            <h3>图片: slide-67.png</h3>
+            <img src="images_linear/slide-67.png" alt="Slide 67">
+        </div>
+        <div class="qa-col">
+            <div class="slide-block">
+                <h2>Slide 67-A (上): Q&A / 课后思考</h2>
+                <p>章节重点提炼</p>
+            </div>
+            <div class="slide-block">
+                <h2>Slide 67-B (下): Q&A / 课后思考</h2>
+                <p>探讨线性分类器的局限性及提升分类能力的可能方向。</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

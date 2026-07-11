@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>大模型时代的端到端自动驾驶</title>
+    <style>
+        body { font-family: 'Helvetica Neue', sans-serif; margin: 0; padding: 20px; background: #f4f4f9; }
+        .slide-container { display: flex; width: 100%; gap: 20px; margin: 0 auto 50px auto; align-items: stretch; box-sizing: border-box; }
+        .slide-image { flex: 1; min-width: 0; }
+        .slide-image img { width: 100%; height: 100%; object-fit: contain; border: 1px solid #ccc; border-radius: 4px; }
+        .slide-block { flex: 1; min-width: 0; border: 2px solid #007bff; padding: 25px; background: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); box-sizing: border-box; }
+        h1 { margin-top: 0; color: #333; font-size: 24px; }
+        h2 { font-size: 18px; color: #555; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 20px; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <!-- Slide: Introduction -->
+    <div class="slide-container">
+        <div class="slide-image">
+            <img src="images/slide_intro.jpg" alt="大模型时代的端到端自动驾驶">
+        </div>
+        <div class="slide-block">
+            <h1>大模型时代的端到端自动驾驶</h1>
+            
+            <h2>核心背景与挑战</h2>
+            <ul>
+                <li><strong>成功经验：</strong>GPT 和 Sora 等大模型的成功源于使用大规模数据进行训练。</li>
+                <li><strong>当前局限：</strong>现有的自动驾驶系统不具备这样的 scale up 能力。</li>
+                <li><strong>核心挑战：</strong>如何设计并训练一个 scalable 的自动驾驶模型。</li>
+            </ul>
+
+            <h2>关键博弈</h2>
+            <ul>
+                <li>模块化设计 <strong>vs.</strong> 端到端模型</li>
+                <li>自动化标注 <strong>vs.</strong> 自监督训练</li>
+            </ul>
+
+            <h2>技术范式：基于自监督三维场景表示的端到端自动驾驶</h2>
+            <p>通过感知模块将图像转化为<strong>三维场景表示</strong>，再接入规划与控制模块。关键在于如何有效连接感知与规控。</p>
+        </div>
+    </div>
+    <!-- Slide: History/Milestones -->
+    <div class="slide-container">
+        <div class="slide-image">
+            <img src="images/slide_history.jpg" alt="端到端自动驾驶演进时间线">
+        </div>
+        <div class="slide-block">
+            <h1>Slide 2: 技术演进里程碑 (2022-2024)</h1>
+            
+            <p><strong>技术路线图：</strong>展示了从三维场景理解到端到端自动驾驶的快速演进。</p>
+
+            <h2>三维场景表示层</h2>
+            <ul>
+                <li><strong>2022.4:</strong> SurroundDepth (自监督深度估计)</li>
+                <li><strong>2022.11:</strong> TPVFormer (三维占用预测)</li>
+                <li><strong>2023.3:</strong> SurroundOcc (自动标注数据集)</li>
+                <li><strong>2023.11:</strong> SelfOcc (自监督占用预测)</li>
+                <li><strong>2024.3:</strong> GaussianFormer (高斯场景表示)</li>
+                <li><strong>2024.7:</strong> SpatialFormer (三维理解主干)</li>
+            </ul>
+
+            <h2>端到端驾驶层</h2>
+            <ul>
+                <li><strong>2022.5:</strong> BEVerse (感知决策一体化)</li>
+                <li><strong>2023.11:</strong> OccWorld (三维占用世界模型)</li>
+                <li><strong>2024.2:</strong> GenAD (生成式端到端模型)</li>
+                <li><strong>2024.5:</strong> S3Gaussian (高斯建模) / OccSora (四维占用世界模型)</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Slide 3: Vision-centric -->
+    <div class="slide-container">
+        <div class="slide-image">
+            <img src="images/slide_vision_centric.jpg" alt="视觉为主的自动驾驶">
+        </div>
+        <div class="slide-block">
+            <h1>Slide 3: 视觉为主的自动驾驶 (Vision-centric)</h1>
+            
+            <h2>核心理念</h2>
+            <ul>
+                <li><strong>第一性原理 (First Principles):</strong> 回溯本质，人类驾驶员主要依靠视觉。</li>
+                <li><strong>信息丰富度：</strong>图像数据相比激光雷达（稀疏性高）提供了更丰富的环境语义信息。</li>
+            </ul>
+
+            <h2>传感器方案对比</h2>
+            <ul>
+                <li><strong>激光雷达 (LiDAR):</strong> 成本高，环境适应性强但视觉信息缺失。</li>
+                <li><strong>摄像头 (Camera):</strong> 成本极低（$35-50/个），配合成熟软件算法实现全功能，是当前多厂商（特斯拉、百度 Apollo Lite）的核心选择。</li>
+            </ul>
+
+            <h2>趋势总结</h2>
+            <p>视觉传感器在软件算法提升和硬件成本双重优势下，已成为行业主流方案。多厂商正在转向“以视觉为主”的传感器架构。</p>
+        </div>
+    </div>
+    <!-- Slide 4: Pure Vision Trend -->
+    <div class="slide-container">
+        <div class="slide-image">
+            <img src="images/slide_pure_vision.jpg" alt="纯视觉自动驾驶发展趋势">
+        </div>
+        <div class="slide-block">
+            <h1>Slide 4: 纯视觉自动驾驶发展趋势</h1>
+            
+            <p><strong>以视觉为中心的自动驾驶发展脉络：</strong></p>
+            <ul>
+                <li><strong>技术目标：</strong> 弥补激光雷达在场景表示上的弱点（提高上限），并利用大数据训练的神经网络推理信息（达到上限）。</li>
+            </ul>
+
+            <h2>演进路径：从“图片”到“Gaussian感知”</h2>
+            <ul>
+                <li><strong>路径：</strong> 深度估计 → BEV 感知 → Occ 感知 → <strong>Gaussian 感知</strong></li>
+                <li><strong>解决痛点：</strong> 逐步克服了深度信息缺失、非显式三维空间及计算效率低等问题。</li>
+            </ul>
+
+            <h2>三维场景表示底层发展</h2>
+            <ul>
+                <li><strong>里程碑：</strong> 三维空间建模 → 细粒度建模（Voxel/TPV）→ <strong>高性能高斯建模 (3D Gaussians)</strong>。</li>
+                <li><strong>核心驱动力：</strong> 模型层面和数据层面的 Scalability（可扩展性）。</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
