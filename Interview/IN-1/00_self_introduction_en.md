@@ -1,6 +1,7 @@
 ### Answers to Common Japanese Interview Questions (Based on Hu Qianqian's Resume)
 
 ## Self-Introduction
+<a id="q1"></a>
 *   **自己紹介をお願いします。(Please introduce yourself.)**
 
     Hello, my name is Hu Qianqian.
@@ -23,6 +24,7 @@
     At your company, I would like to leverage my experience and abilities to contribute to customer success.
 
 ## Reason for Changing Jobs / Reason for Application
+<a id="q2"></a>
 *   **なぜ転職しようと思いましたか？ (Why did you decide to change jobs?)**
 
     I have been working at my current company for 7 years.
@@ -33,6 +35,7 @@
     I feel that there are many innovative opportunities here.
     I am also eager to interact with colleagues from diverse cultures and grow in an international environment.
 
+<a id="q3"></a>
 *   **今回、なぜ弊社を志望されたのでしょうか？ (Why did you apply to our company this time?)**
 
     Your company is a world-leading map service provider.
@@ -50,6 +53,7 @@
     It is an ideal platform where I can interact with talented colleagues from around the world.
     At your company, I would like to contribute my technical expertise and problem-solving skills.
 
+<a id="q4"></a>
 *   **入社後、どのようなことで貢献できますか？ (How can you contribute after joining the company?)**
 
     After joining, I will first focus on properly executing the duties of a Technical Success Manager.
@@ -67,6 +71,7 @@
     Through this, I aim to enhance support efficiency and customer self-service capabilities.
 
 ## Career History / Skills
+<a id="q5"></a>
 *   **これまでの職務経歴について教えてください。 (Please tell us about your past work experience.)**
 
     My 17 years of professional experience can be primarily divided into three stages.
@@ -90,6 +95,7 @@
         I run simulations of perception, prediction, planning, and control algorithms.
         I optimize AI models using machine learning, deep learning, and computer vision.
 
+<a id="q6"></a>
 *   **これまでの仕事で、最も印象に残っていることは何ですか？ (What is the most memorable experience in your past work?)**
 
     The most memorable is the autonomous driving simulator development project at KoteiInfo.
@@ -106,6 +112,7 @@
     At the same time, I experienced the powerful capabilities and rapid updates of AI large language models firsthand.
     I recognized that in the AI era, the attitude of continuous learning is essential.
 
+<a id="q7"></a>
 *   **あなたの強みと弱みを教えてください。 (Please tell us your strengths and weaknesses.)**
 
     My main strengths are the following four points.
@@ -121,6 +128,7 @@
     I try to consult with the team early, set deadlines, and seek feedback.
     I strive to balance technical depth with project progress.
 
+<a id="q8"></a>
 *   **どのようなスキルや経験を活かせますか？ (What skills and experiences can you leverage?)**
 
     The skills and experiences I can leverage are as follows.
@@ -134,6 +142,7 @@
     *   **Simulation Platforms:** Skilled in using Carla, ROS, and RoadRunner. Enables rapid verification.
 
 ## Future Outlook
+<a id="q9"></a>
 *   **今後、どのようなキャリアを築きたいですか？ (What kind of career do you want to build in the future?)**
 
     In the future, I would like to deepen my expertise in the map data field.
@@ -143,6 +152,7 @@
     I will participate in cutting-edge projects and continue technical innovation.
     And I would like to demonstrate leadership within the team and nurture new technical talent.
 
+<a id="q10"></a>
 *   **5年後、10年後、どうなっていたいですか？ (Where do you see yourself in 5 or 10 years?)**
 
     Within 5 years, I want to achieve notable results in autonomous driving or AI model R&D.
@@ -153,6 +163,7 @@
     I hope my work can make substantial contributions to the development of autonomous driving technology.
 
 ## Reverse Questions / Questions from Applicant
+<a id="q11"></a>
 *   **最後に何か質問はありますか？ (Do you have any questions for us at the end?)**
 
     1.  What are the most pressing challenges your company is currently focusing on in map services, and what is your future development direction?
@@ -160,6 +171,7 @@
     3.  What kind of support does your company provide for employee career development and skill enhancement?
 
 ## Others
+<a id="q12"></a>
 *   **残業についてどう思いますか？ (What do you think about overtime work?)**
 
     Regarding overtime, if there are urgent project requirements, I am prepared to respond.
@@ -168,6 +180,7 @@
     However, I believe that efficient work and time management are more important.
     I strive to maximize efficiency within regular working hours.
 
+<a id="q13"></a>
 *   **ストレスを感じた時、どのように対処しますか？ (How do you deal with stress?)**
 
     When I feel stressed, I cope in several ways.
@@ -177,6 +190,7 @@
     Exercise is a great way to relieve stress.
     Talking with family and friends or listening to music also helps.
 
+<a id="q14"></a>
 *   **希望年収はありますか？ (Do you have a desired annual salary?)**
 
     I have 17 years of experience in the autonomous driving field.
