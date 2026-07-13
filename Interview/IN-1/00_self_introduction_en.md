@@ -4,6 +4,8 @@
 <a id="q1"></a>
 *   **自己紹介をお願いします。(Please introduce yourself.)**
 
+    [中](00_self_introduction.md#q1) | [日](00_self_introduction_ja.md#q1) | [英](#q1)
+
     Hello, my name is Hu Qianqian.
     I have 17 years of experience in the fields of digital map navigation and autonomous driving.
     Throughout my career, I have been engaged in the research and development of map data, car navigation, and autonomous driving technologies.
@@ -27,6 +29,8 @@
 <a id="q2"></a>
 *   **なぜ転職しようと思いましたか？ (Why did you decide to change jobs?)**
 
+    [中](00_self_introduction.md#q2) | [日](00_self_introduction_ja.md#q2) | [英](#q2)
+
     I have been working at my current company for 7 years.
     During that time, I have accumulated extensive experience in the map data and autonomous driving fields.
     Now, I would like to take on a more competitive role.
@@ -37,6 +41,8 @@
 
 <a id="q3"></a>
 *   **今回、なぜ弊社を志望されたのでしょうか？ (Why did you apply to our company this time?)**
+
+    [中](00_self_introduction.md#q3) | [日](00_self_introduction_ja.md#q3) | [英](#q3)
 
     Your company is a world-leading map service provider.
     I strongly resonate with your vision.
@@ -56,6 +62,8 @@
 <a id="q4"></a>
 *   **入社後、どのようなことで貢献できますか？ (How can you contribute after joining the company?)**
 
+    [中](00_self_introduction.md#q4) | [日](00_self_introduction_ja.md#q4) | [英](#q4)
+
     After joining, I will first focus on properly executing the duties of a Technical Success Manager.
     I will make efforts to quickly familiarize myself with your workflow and support systems.
     I have accumulated 17 years of experience in map data services.
@@ -73,6 +81,8 @@
 ## Career History / Skills
 <a id="q5"></a>
 *   **これまでの職務経歴について教えてください。 (Please tell us about your past work experience.)**
+
+    [中](00_self_introduction.md#q5) | [日](00_self_introduction_ja.md#q5) | [英](#q5)
 
     My 17 years of professional experience can be primarily divided into three stages.
 
@@ -98,6 +108,8 @@
 <a id="q6"></a>
 *   **これまでの仕事で、最も印象に残っていることは何ですか？ (What is the most memorable experience in your past work?)**
 
+    [中](00_self_introduction.md#q6) | [日](00_self_introduction_ja.md#q6) | [英](#q6)
+
     The most memorable is the autonomous driving simulator development project at KoteiInfo.
     Through this project, I gained deep knowledge of machine learning, deep learning, and computer vision.
     I also built and trained models for object detection, tracking, and segmentation.
@@ -115,6 +127,8 @@
 <a id="q7"></a>
 *   **あなたの強みと弱みを教えてください。 (Please tell us your strengths and weaknesses.)**
 
+    [中](00_self_introduction.md#q7) | [日](00_self_introduction_ja.md#q7) | [英](#q7)
+
     My main strengths are the following four points.
 
     1.  **Rich Technical Experience:** I have 17 years of experience in digital maps and autonomous driving. I have strong professional technical capabilities and a deep understanding of business logic.
@@ -131,6 +145,8 @@
 <a id="q8"></a>
 *   **どのようなスキルや経験を活かせますか？ (What skills and experiences can you leverage?)**
 
+    [中](00_self_introduction.md#q8) | [日](00_self_introduction_ja.md#q8) | [英](#q8)
+
     The skills and experiences I can leverage are as follows.
 
     *   **Map Data and Navigation Standards:** Proficient in NDS, with experience developing EHP systems using ADASIS 2.0. This overlaps highly with the job requirements.
@@ -145,6 +161,8 @@
 <a id="q9"></a>
 *   **今後、どのようなキャリアを築きたいですか？ (What kind of career do you want to build in the future?)**
 
+    [中](00_self_introduction.md#q9) | [日](00_self_introduction_ja.md#q9) | [英](#q9)
+
     In the future, I would like to deepen my expertise in the map data field.
     I aspire to become a top-tier technical expert or project leader.
     I want to leverage my experience in AI technology, map data, and navigation systems.
@@ -154,6 +172,8 @@
 
 <a id="q10"></a>
 *   **5年後、10年後、どうなっていたいですか？ (Where do you see yourself in 5 or 10 years?)**
+
+    [中](00_self_introduction.md#q10) | [日](00_self_introduction_ja.md#q10) | [英](#q10)
 
     Within 5 years, I want to achieve notable results in autonomous driving or AI model R&D.
     I aim to become an expert in a specific technical area and lead one or two influential projects.
@@ -166,6 +186,8 @@
 <a id="q11"></a>
 *   **最後に何か質問はありますか？ (Do you have any questions for us at the end?)**
 
+    [中](00_self_introduction.md#q11) | [日](00_self_introduction_ja.md#q11) | [英](#q11)
+
     1.  What are the most pressing challenges your company is currently focusing on in map services, and what is your future development direction?
     2.  If I were to join, what kind of projects would my team be responsible for?
     3.  What kind of support does your company provide for employee career development and skill enhancement?
@@ -173,6 +195,8 @@
 ## Others
 <a id="q12"></a>
 *   **残業についてどう思いますか？ (What do you think about overtime work?)**
+
+    [中](00_self_introduction.md#q12) | [日](00_self_introduction_ja.md#q12) | [英](#q12)
 
     Regarding overtime, if there are urgent project requirements, I am prepared to respond.
     If it is to solve important technical challenges, I am willing to invest additional time.
@@ -183,6 +207,8 @@
 <a id="q13"></a>
 *   **ストレスを感じた時、どのように対処しますか？ (How do you deal with stress?)**
 
+    [中](00_self_introduction.md#q13) | [日](00_self_introduction_ja.md#q13) | [英](#q13)
+
     When I feel stressed, I cope in several ways.
     First, I analyze the source of the stress.
     Then, I break it down into small, manageable parts and address them one by one.
@@ -192,6 +218,8 @@
 
 <a id="q14"></a>
 *   **希望年収はありますか？ (Do you have a desired annual salary?)**
+
+    [中](00_self_introduction.md#q14) | [日](00_self_introduction_ja.md#q14) | [英](#q14)
 
     I have 17 years of experience in the autonomous driving field.
     I also have skills in AI model development, simulation, map data, and project management.
