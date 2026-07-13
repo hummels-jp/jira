@@ -634,6 +634,7 @@
 ### 1. Integration Management (7 processes)
 
 <a id="itto-1"></a>
+
 #### 1. Develop Project Charter — Initiating
 [CN](02_pmp_interview.md#itto-1) | [JA](02_pmp_interview_ja.md#itto-1) | [EN](#itto-1)
 | I | T&T | O |
@@ -641,6 +642,7 @@
 | Business documents (business case, benefits management plan), agreements, EEF, OPA | Expert judgment, data gathering (brainstorming, focus groups, interviews), interpersonal & team skills (conflict management, facilitation, meeting management), meetings | **Project charter**, assumption log |
 
 <a id="itto-2"></a>
+
 #### 2. Develop Project Management Plan — Planning
 [CN](02_pmp_interview.md#itto-2) | [JA](02_pmp_interview_ja.md#itto-2) | [EN](#itto-2)
 | I | T&T | O |
@@ -648,6 +650,7 @@
 | Project charter, outputs from other processes, EEF, OPA | Expert judgment, data gathering, interpersonal & team skills, meetings | **Project management plan** |
 
 <a id="itto-3"></a>
+
 #### 3. Direct and Manage Project Work — Executing
 [CN](02_pmp_interview.md#itto-3) | [JA](02_pmp_interview_ja.md#itto-3) | [EN](#itto-3)
 | I | T&T | O |
@@ -655,6 +658,7 @@
 | PM plan, project documents, approved change requests, EEF, OPA | Expert judgment, PMIS, meetings | **Deliverables**, work performance data, issue log, change requests, PM plan / project documents / OPA updates |
 
 <a id="itto-4"></a>
+
 #### 4. Manage Project Knowledge — Executing
 [CN](02_pmp_interview.md#itto-4) | [JA](02_pmp_interview_ja.md#itto-4) | [EN](#itto-4)
 | I | T&T | O |
@@ -662,6 +666,7 @@
 | PM plan, project documents (lessons learned register, team assignments, RBS, stakeholder register), deliverables, EEF, OPA | Expert judgment, knowledge management, information management, interpersonal & team skills | **Lessons learned register**, PM plan updates, OPA updates |
 
 <a id="itto-5"></a>
+
 #### 5. Monitor and Control Project Work — Monitoring
 [CN](02_pmp_interview.md#itto-5) | [JA](02_pmp_interview_ja.md#itto-5) | [EN](#itto-5)
 | I | T&T | O |
@@ -669,6 +674,7 @@
 | PM plan, project documents, work performance information, agreements, EEF, OPA | Expert judgment, data analysis (EVA, root cause, alternatives, cost-benefit, trend, variance), decision making, meetings | Work performance reports, change requests, PM plan / project documents updates |
 
 <a id="itto-6"></a>
+
 #### 6. Perform Integrated Change Control — Monitoring
 [CN](02_pmp_interview.md#itto-6) | [JA](02_pmp_interview_ja.md#itto-6) | [EN](#itto-6)
 | I | T&T | O |
@@ -676,6 +682,7 @@
 | PM plan, project documents (baselines, change log), work performance reports, change requests, EEF, OPA | Expert judgment, change control tools, data analysis, decision making (voting, autocratic, MCDA), meetings | **Approved/rejected change requests**, PM plan / project documents updates (change log) |
 
 <a id="itto-7"></a>
+
 #### 7. Close Project or Phase — Closing
 [CN](02_pmp_interview.md#itto-7) | [JA](02_pmp_interview_ja.md#itto-7) | [EN](#itto-7)
 | I | T&T | O |
@@ -687,6 +694,7 @@
 ### 2. Scope Management (6 processes)
 
 <a id="itto-8"></a>
+
 #### 8. Plan Scope Management — Planning
 [CN](02_pmp_interview.md#itto-8) | [JA](02_pmp_interview_ja.md#itto-8) | [EN](#itto-8)
 | I | T&T | O |
@@ -694,6 +702,7 @@
 | Project charter, PM plan (quality / life cycle / development approach), EEF, OPA | Expert judgment, data analysis (alternatives), meetings | **Scope management plan**, **requirements management plan** |
 
 <a id="itto-9"></a>
+
 #### 9. Collect Requirements — Planning
 [CN](02_pmp_interview.md#itto-9) | [JA](02_pmp_interview_ja.md#itto-9) | [EN](#itto-9)
 | I | T&T | O |
@@ -701,6 +710,7 @@
 | Project charter, PM plan, project documents, business documents, agreements, EEF, OPA | Expert judgment, data gathering (brainstorming, interviews, focus groups, questionnaires, benchmarking), data analysis, decision making, data representation (affinity, mind mapping), interpersonal & team skills (nominal group, observation/conversation, facilitation), context diagram, prototypes | **Requirements documentation**, **requirements traceability matrix** |
 
 <a id="itto-10"></a>
+
 #### 10. Define Scope — Planning
 [CN](02_pmp_interview.md#itto-10) | [JA](02_pmp_interview_ja.md#itto-10) | [EN](#itto-10)
 | I | T&T | O |
@@ -708,6 +718,7 @@
 | Project charter, PM plan, project documents (assumption log, requirements documentation, risk register), EEF, OPA | Expert judgment, data analysis, decision making, interpersonal & team skills, product analysis | **Project scope statement**, project documents updates |
 
 <a id="itto-11"></a>
+
 #### 11. Create WBS — Planning
 [CN](02_pmp_interview.md#itto-11) | [JA](02_pmp_interview_ja.md#itto-11) | [EN](#itto-11)
 | I | T&T | O |
@@ -715,6 +726,7 @@
 | PM plan (scope management plan), project documents (project scope statement, requirements documentation), EEF, OPA | Expert judgment, **decomposition** | **Scope baseline** (project scope statement + WBS + WBS dictionary), project documents updates |
 
 <a id="itto-12"></a>
+
 #### 12. Validate Scope — Monitoring
 [CN](02_pmp_interview.md#itto-12) | [JA](02_pmp_interview_ja.md#itto-12) | [EN](#itto-12)
 | I | T&T | O |
@@ -722,6 +734,7 @@
 | PM plan, project documents (lessons learned, quality reports, requirements documentation, RTM), verified deliverables, work performance data | **Inspection**, decision making (voting) | **Accepted deliverables**, work performance information, change requests, project documents updates |
 
 <a id="itto-13"></a>
+
 #### 13. Control Scope — Monitoring
 [CN](02_pmp_interview.md#itto-13) | [JA](02_pmp_interview_ja.md#itto-13) | [EN](#itto-13)
 | I | T&T | O |
@@ -733,6 +746,7 @@
 ### 3. Schedule Management (6 processes)
 
 <a id="itto-14"></a>
+
 #### 14. Plan Schedule Management — Planning
 [CN](02_pmp_interview.md#itto-14) | [JA](02_pmp_interview_ja.md#itto-14) | [EN](#itto-14)
 | I | T&T | O |
@@ -740,6 +754,7 @@
 | Project charter, PM plan, EEF, OPA | Expert judgment, data analysis, meetings | **Schedule management plan** |
 
 <a id="itto-15"></a>
+
 #### 15. Define Activities — Planning
 [CN](02_pmp_interview.md#itto-15) | [JA](02_pmp_interview_ja.md#itto-15) | [EN](#itto-15)
 | I | T&T | O |
@@ -747,6 +762,7 @@
 | PM plan (schedule / scope baseline), EEF, OPA | Expert judgment, **decomposition**, rolling wave planning, meetings | **Activity list**, activity attributes, milestone list, change requests, PM plan updates |
 
 <a id="itto-16"></a>
+
 #### 16. Sequence Activities — Planning
 [CN](02_pmp_interview.md#itto-16) | [JA](02_pmp_interview_ja.md#itto-16) | [EN](#itto-16)
 | I | T&T | O |
@@ -754,6 +770,7 @@
 | PM plan, project documents, EEF, OPA | **Precedence Diagramming Method (PDM)**, **dependency determination & integration** (mandatory/discretionary/internal/external), **leads and lags**, PMIS | **Project schedule network diagram**, project documents updates |
 
 <a id="itto-17"></a>
+
 #### 17. Estimate Activity Durations — Planning
 [CN](02_pmp_interview.md#itto-17) | [JA](02_pmp_interview_ja.md#itto-17) | [EN](#itto-17)
 | I | T&T | O |
@@ -761,6 +778,7 @@
 | PM plan, project documents, EEF, OPA | Expert judgment, **analogous**, **parametric**, **three-point (PERT)**, bottom-up, data analysis (alternatives, reserve), decision making, meetings | **Duration estimates**, basis of estimates, project documents updates |
 
 <a id="itto-18"></a>
+
 #### 18. Develop Schedule — Planning
 [CN](02_pmp_interview.md#itto-18) | [JA](02_pmp_interview_ja.md#itto-18) | [EN](#itto-18)
 | I | T&T | O |
@@ -768,6 +786,7 @@
 | PM plan, project documents, agreements, EEF, OPA | Schedule network analysis, **Critical Path Method (CPM)**, **resource optimization** (leveling/smoothing), data analysis (what-if scenario, Monte Carlo), leads and lags, **schedule compression** (crashing / fast-tracking), PMIS, agile release planning | **Schedule baseline**, **project schedule**, schedule data, project calendars, change requests, PM plan / project documents updates |
 
 <a id="itto-19"></a>
+
 #### 19. Control Schedule — Monitoring
 [CN](02_pmp_interview.md#itto-19) | [JA](02_pmp_interview_ja.md#itto-19) | [EN](#itto-19)
 | I | T&T | O |
@@ -779,6 +798,7 @@
 ### 4. Cost Management (4 processes)
 
 <a id="itto-20"></a>
+
 #### 20. Plan Cost Management — Planning
 [CN](02_pmp_interview.md#itto-20) | [JA](02_pmp_interview_ja.md#itto-20) | [EN](#itto-20)
 | I | T&T | O |
@@ -786,6 +806,7 @@
 | Project charter, PM plan, EEF, OPA | Expert judgment, data analysis, meetings | **Cost management plan** |
 
 <a id="itto-21"></a>
+
 #### 21. Estimate Costs — Planning
 [CN](02_pmp_interview.md#itto-21) | [JA](02_pmp_interview_ja.md#itto-21) | [EN](#itto-21)
 | I | T&T | O |
@@ -793,6 +814,7 @@
 | PM plan, project documents, EEF, OPA | Expert judgment, analogous / parametric / bottom-up / three-point estimating, data analysis (alternatives, reserve, cost of quality), PMIS, decision making | **Cost estimates**, basis of estimates, project documents updates |
 
 <a id="itto-22"></a>
+
 #### 22. Determine Budget — Planning
 [CN](02_pmp_interview.md#itto-22) | [JA](02_pmp_interview_ja.md#itto-22) | [EN](#itto-22)
 | I | T&T | O |
@@ -800,6 +822,7 @@
 | PM plan, project documents, business documents, agreements, EEF, OPA | Expert judgment, cost aggregation, data analysis (reserve), historical information review, funding limit reconciliation, financing | **Cost baseline**, project funding requirements, project documents updates |
 
 <a id="itto-23"></a>
+
 #### 23. Control Costs — Monitoring
 [CN](02_pmp_interview.md#itto-23) | [JA](02_pmp_interview_ja.md#itto-23) | [EN](#itto-23)
 | I | T&T | O |
@@ -811,6 +834,7 @@
 ### 5. Quality Management (3 processes)
 
 <a id="itto-24"></a>
+
 #### 24. Plan Quality Management — Planning
 [CN](02_pmp_interview.md#itto-24) | [JA](02_pmp_interview_ja.md#itto-24) | [EN](#itto-24)
 | I | T&T | O |
@@ -818,6 +842,7 @@
 | Project charter, PM plan, project documents, EEF, OPA | Expert judgment, data gathering (benchmarking, brainstorming, interviews), data analysis (cost-benefit, cost of quality), decision making, data representation (**flowcharts**, **logical data model**, **matrix diagrams**, **mind mapping**), test & inspection planning, meetings | **Quality management plan**, **quality metrics**, PM plan / project documents updates |
 
 <a id="itto-25"></a>
+
 #### 25. Manage Quality — Executing
 [CN](02_pmp_interview.md#itto-25) | [JA](02_pmp_interview_ja.md#itto-25) | [EN](#itto-25)
 | I | T&T | O |
@@ -825,6 +850,7 @@
 | PM plan, project documents, OPA | Data gathering (checklists), data analysis (alternatives, document, process, **root cause**), decision making, data representation (**affinity diagrams**, **cause-and-effect (fishbone)**, **flowcharts**, **histograms**, **matrix diagrams**, **scatter diagrams**), **audits**, design for X, problem solving, quality improvement methods (PDCA, Six Sigma) | **Quality reports**, **test and evaluation documents**, change requests, PM plan / project documents updates |
 
 <a id="itto-26"></a>
+
 #### 26. Control Quality — Monitoring
 [CN](02_pmp_interview.md#itto-26) | [JA](02_pmp_interview_ja.md#itto-26) | [EN](#itto-26)
 | I | T&T | O |
@@ -836,6 +862,7 @@
 ### 6. Resource Management (6 processes)
 
 <a id="itto-27"></a>
+
 #### 27. Plan Resource Management — Planning
 [CN](02_pmp_interview.md#itto-27) | [JA](02_pmp_interview_ja.md#itto-27) | [EN](#itto-27)
 | I | T&T | O |
@@ -843,6 +870,7 @@
 | Project charter, PM plan, project documents, EEF, OPA | Expert judgment, data representation (**hierarchical** — OBS/RBS/WBS, **Responsibility Assignment Matrix RAM/RACI**, text-oriented), organizational theory, meetings | **Resource management plan**, **team charter**, project documents updates |
 
 <a id="itto-28"></a>
+
 #### 28. Estimate Activity Resources — Planning
 [CN](02_pmp_interview.md#itto-28) | [JA](02_pmp_interview_ja.md#itto-28) | [EN](#itto-28)
 | I | T&T | O |
@@ -850,6 +878,7 @@
 | PM plan, project documents, EEF, OPA | Expert judgment, bottom-up / analogous / parametric estimating, data analysis (alternatives), PMIS, meetings | Resource requirements, basis of estimates, **resource breakdown structure (RBS)**, project documents updates |
 
 <a id="itto-29"></a>
+
 #### 29. Acquire Resources — Executing
 [CN](02_pmp_interview.md#itto-29) | [JA](02_pmp_interview_ja.md#itto-29) | [EN](#itto-29)
 | I | T&T | O |
@@ -857,6 +886,7 @@
 | PM plan, project documents, EEF, OPA | Decision making (MCDA), interpersonal & team skills (negotiation), pre-assignment, virtual teams | **Physical resource assignments**, **project team assignments**, resource calendars, change requests, PM plan / project documents / EEF / OPA updates |
 
 <a id="itto-30"></a>
+
 #### 30. Develop Team — Executing
 [CN](02_pmp_interview.md#itto-30) | [JA](02_pmp_interview_ja.md#itto-30) | [EN](#itto-30)
 | I | T&T | O |
@@ -864,6 +894,7 @@
 | PM plan, project documents, EEF, OPA | Colocation, virtual teams, communication technology, interpersonal & team skills (conflict management, influencing, motivation, negotiation, **team building**), **recognition and rewards**, **training**, **individual and team assessments**, meetings | **Team performance assessments**, change requests, PM plan / project documents / EEF / OPA updates |
 
 <a id="itto-31"></a>
+
 #### 31. Manage Team — Executing
 [CN](02_pmp_interview.md#itto-31) | [JA](02_pmp_interview_ja.md#itto-31) | [EN](#itto-31)
 | I | T&T | O |
@@ -871,6 +902,7 @@
 | PM plan, project documents, work performance reports, team performance assessments, EEF, OPA | Interpersonal & team skills (**conflict management**, decision making, EI, influencing, **leadership**), PMIS | Change requests, PM plan / project documents / EEF updates |
 
 <a id="itto-32"></a>
+
 #### 32. Control Resources — Monitoring
 [CN](02_pmp_interview.md#itto-32) | [JA](02_pmp_interview_ja.md#itto-32) | [EN](#itto-32)
 | I | T&T | O |
@@ -882,6 +914,7 @@
 ### 7. Communications Management (3 processes)
 
 <a id="itto-33"></a>
+
 #### 33. Plan Communications Management — Planning
 [CN](02_pmp_interview.md#itto-33) | [JA](02_pmp_interview_ja.md#itto-33) | [EN](#itto-33)
 | I | T&T | O |
@@ -889,6 +922,7 @@
 | Project charter, PM plan, project documents (requirements documentation, stakeholder register), EEF, OPA | Expert judgment, **communication requirements analysis**, **communication technology**, **communication models** (sender-receiver), **communication methods** (interactive / push / pull), interpersonal & team skills, data representation (stakeholder engagement assessment matrix), meetings | **Communications management plan**, PM plan / project documents updates |
 
 <a id="itto-34"></a>
+
 #### 34. Manage Communications — Executing
 [CN](02_pmp_interview.md#itto-34) | [JA](02_pmp_interview_ja.md#itto-34) | [EN](#itto-34)
 | I | T&T | O |
@@ -896,6 +930,7 @@
 | PM plan, project documents, work performance reports, EEF, OPA | Communication technology / methods / skills, PMIS, project reporting, interpersonal & team skills, meetings | **Project communications**, PM plan / project documents / OPA updates |
 
 <a id="itto-35"></a>
+
 #### 35. Monitor Communications — Monitoring
 [CN](02_pmp_interview.md#itto-35) | [JA](02_pmp_interview_ja.md#itto-35) | [EN](#itto-35)
 | I | T&T | O |
@@ -907,6 +942,7 @@
 ### 8. Risk Management (7 processes)
 
 <a id="itto-36"></a>
+
 #### 36. Plan Risk Management — Planning
 [CN](02_pmp_interview.md#itto-36) | [JA](02_pmp_interview_ja.md#itto-36) | [EN](#itto-36)
 | I | T&T | O |
@@ -914,6 +950,7 @@
 | Project charter, PM plan, project documents (stakeholder register), EEF, OPA | Expert judgment, data analysis (stakeholder analysis), meetings | **Risk management plan** (risk categories RBS, probability & impact matrix, risk appetite, etc.) |
 
 <a id="itto-37"></a>
+
 #### 37. Identify Risks — Planning
 [CN](02_pmp_interview.md#itto-37) | [JA](02_pmp_interview_ja.md#itto-37) | [EN](#itto-37)
 | I | T&T | O |
@@ -921,6 +958,7 @@
 | PM plan, project documents, agreements, procurement documentation, EEF, OPA | Expert judgment, data gathering (**brainstorming**, **checklists**, interviews), data analysis (**root cause**, assumption & constraint, **SWOT**, document), interpersonal & team skills (facilitation), prompt lists, meetings | **Risk register**, risk report, project documents updates |
 
 <a id="itto-38"></a>
+
 #### 38. Perform Qualitative Risk Analysis — Planning
 [CN](02_pmp_interview.md#itto-38) | [JA](02_pmp_interview_ja.md#itto-38) | [EN](#itto-38)
 | I | T&T | O |
@@ -928,6 +966,7 @@
 | PM plan, project documents, EEF, OPA | Expert judgment, data gathering (interviews), data analysis (**risk data quality assessment**, **probability & impact assessment**, other risk parameters), interpersonal & team skills, **risk categorization**, data representation (**probability & impact matrix**, hierarchical charts), meetings | Project documents updates (risk register, risk report, assumption log, issue log) |
 
 <a id="itto-39"></a>
+
 #### 39. Perform Quantitative Risk Analysis — Planning
 [CN](02_pmp_interview.md#itto-39) | [JA](02_pmp_interview_ja.md#itto-39) | [EN](#itto-39)
 | I | T&T | O |
@@ -935,6 +974,7 @@
 | PM plan, project documents, EEF, OPA | Expert judgment, data gathering (interviews), interpersonal & team skills, representations of uncertainty, data analysis (**Monte Carlo simulation**, **sensitivity analysis — tornado**, **decision tree**, **influence diagrams**) | Project documents updates (risk report) |
 
 <a id="itto-40"></a>
+
 #### 40. Plan Risk Responses — Planning
 [CN](02_pmp_interview.md#itto-40) | [JA](02_pmp_interview_ja.md#itto-40) | [EN](#itto-40)
 | I | T&T | O |
@@ -942,6 +982,7 @@
 | PM plan, project documents, EEF, OPA | Expert judgment, data gathering (interviews), interpersonal & team skills, **threat strategies** (escalate, avoid, transfer, mitigate, accept), **opportunity strategies** (escalate, exploit, share, enhance, accept), **contingent response**, **overall project risk strategies**, data analysis (alternatives, cost-benefit), decision making | Change requests, PM plan / project documents updates |
 
 <a id="itto-41"></a>
+
 #### 41. Implement Risk Responses — Executing
 [CN](02_pmp_interview.md#itto-41) | [JA](02_pmp_interview_ja.md#itto-41) | [EN](#itto-41)
 | I | T&T | O |
@@ -949,6 +990,7 @@
 | PM plan, project documents (lessons learned, risk register, risk report), OPA | Expert judgment, interpersonal & team skills (influencing), PMIS | Change requests, project documents updates |
 
 <a id="itto-42"></a>
+
 #### 42. Monitor Risks — Monitoring
 [CN](02_pmp_interview.md#itto-42) | [JA](02_pmp_interview_ja.md#itto-42) | [EN](#itto-42)
 | I | T&T | O |
@@ -960,6 +1002,7 @@
 ### 9. Procurement Management (3 processes)
 
 <a id="itto-43"></a>
+
 #### 43. Plan Procurement Management — Planning
 [CN](02_pmp_interview.md#itto-43) | [JA](02_pmp_interview_ja.md#itto-43) | [EN](#itto-43)
 | I | T&T | O |
@@ -967,6 +1010,7 @@
 | Project charter, business documents, PM plan, project documents, EEF, OPA | Expert judgment, data gathering (market research), data analysis (**make-or-buy**), source selection analysis, meetings | **Procurement management plan**, **procurement strategy**, **bid documents** (RFI/RFQ/RFP), **procurement statement of work (SOW)**, source selection criteria, **make-or-buy decisions**, independent cost estimates, change requests, project documents / OPA updates |
 
 <a id="itto-44"></a>
+
 #### 44. Conduct Procurements — Executing
 [CN](02_pmp_interview.md#itto-44) | [JA](02_pmp_interview_ja.md#itto-44) | [EN](#itto-44)
 | I | T&T | O |
@@ -974,6 +1018,7 @@
 | PM plan, project documents, procurement documentation, seller proposals, EEF, OPA | Expert judgment, advertising, bidder conferences, data analysis (proposal evaluation), interpersonal & team skills (**negotiation**) | **Selected sellers**, **agreements/contracts**, change requests, PM plan / project documents / OPA updates |
 
 <a id="itto-45"></a>
+
 #### 45. Control Procurements — Monitoring
 [CN](02_pmp_interview.md#itto-45) | [JA](02_pmp_interview_ja.md#itto-45) | [EN](#itto-45)
 | I | T&T | O |
@@ -985,6 +1030,7 @@
 ### 10. Stakeholder Management (4 processes)
 
 <a id="itto-46"></a>
+
 #### 46. Identify Stakeholders — Initiating
 [CN](02_pmp_interview.md#itto-46) | [JA](02_pmp_interview_ja.md#itto-46) | [EN](#itto-46)
 | I | T&T | O |
@@ -992,6 +1038,7 @@
 | Project charter, business documents, PM plan, project documents, agreements, EEF, OPA | Expert judgment, data gathering (questionnaires, brainstorming), data analysis (**stakeholder analysis**, document analysis), data representation (**power/interest grid**, power/influence grid, impact/influence grid, salience model, stakeholder cube, **stakeholder engagement assessment matrix**, directional influence, prioritization), meetings | **Stakeholder register**, change requests, PM plan / project documents updates |
 
 <a id="itto-47"></a>
+
 #### 47. Plan Stakeholder Engagement — Planning
 [CN](02_pmp_interview.md#itto-47) | [JA](02_pmp_interview_ja.md#itto-47) | [EN](#itto-47)
 | I | T&T | O |
@@ -999,6 +1046,7 @@
 | Project charter, PM plan, project documents, agreements, EEF, OPA | Expert judgment, data gathering (benchmarking), data analysis (assumption & constraint, root cause), decision making (prioritization), data representation (mind mapping, **stakeholder engagement assessment matrix**: unaware / resistant / neutral / supportive / leading), meetings | **Stakeholder engagement plan** |
 
 <a id="itto-48"></a>
+
 #### 48. Manage Stakeholder Engagement — Executing
 [CN](02_pmp_interview.md#itto-48) | [JA](02_pmp_interview_ja.md#itto-48) | [EN](#itto-48)
 | I | T&T | O |
@@ -1006,6 +1054,7 @@
 | PM plan, project documents, EEF, OPA | Expert judgment, communication skills (feedback), interpersonal & team skills (conflict management, cultural awareness, negotiation, observation/conversation, political awareness), ground rules, meetings | Change requests, PM plan / project documents updates |
 
 <a id="itto-49"></a>
+
 #### 49. Monitor Stakeholder Engagement — Monitoring
 [CN](02_pmp_interview.md#itto-49) | [JA](02_pmp_interview_ja.md#itto-49) | [EN](#itto-49)
 | I | T&T | O |
