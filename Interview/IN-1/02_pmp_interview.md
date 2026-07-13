@@ -623,7 +623,9 @@
 
 ---
 
+<a id="itto"></a>
 ## 附录：PMBOK 第六版 49 个项目管理过程的 ITTO
+[中](#itto) | [日](02_pmp_interview_ja.md#itto) | [英](02_pmp_interview_en.md#itto)
 
 > **说明**：ITTO = Inputs（输入）/ Tools & Techniques（工具与技术）/ Outputs（输出）。以下按 **10 大知识领域** 组织，每个过程列出核心 ITTO（精简版，非全量）。
 

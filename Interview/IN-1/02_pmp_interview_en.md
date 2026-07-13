@@ -619,3 +619,321 @@
    [中](02_pmp_interview.md#q100) | [日](02_pmp_interview_ja.md#q100) | [英](#q100)
 
    **A:** Challenges include: mindset shifts (from plan-driven to value-driven), organizational structure and process inertia, incompatible contract and budget models, management's desire for control, and team lack of agile skills. Response strategies: start with pilot projects, provide training and coaching, secure executive sponsorship, expand gradually, and establish an Agile Center of Excellence for continuous improvement.
+
+
+---
+
+<a id="itto"></a>
+## Appendix: ITTO of the 49 Project Management Processes (PMBOK 6th Edition)
+[CN](02_pmp_interview.md#itto) | [JA](02_pmp_interview_ja.md#itto) | [EN](#itto)
+
+> **Note**: ITTO = Inputs / Tools & Techniques / Outputs. The processes below are organized by the **10 Knowledge Areas**. Only core ITTO items are listed (condensed, not exhaustive).
+
+---
+
+### 1. Integration Management (7 processes)
+
+#### 1. Develop Project Charter — Initiating
+| I | T&T | O |
+|---|---|---|
+| Business documents (business case, benefits management plan), agreements, EEF, OPA | Expert judgment, data gathering (brainstorming, focus groups, interviews), interpersonal & team skills (conflict management, facilitation, meeting management), meetings | **Project charter**, assumption log |
+
+#### 2. Develop Project Management Plan — Planning
+| I | T&T | O |
+|---|---|---|
+| Project charter, outputs from other processes, EEF, OPA | Expert judgment, data gathering, interpersonal & team skills, meetings | **Project management plan** |
+
+#### 3. Direct and Manage Project Work — Executing
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, approved change requests, EEF, OPA | Expert judgment, PMIS, meetings | **Deliverables**, work performance data, issue log, change requests, PM plan / project documents / OPA updates |
+
+#### 4. Manage Project Knowledge — Executing
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents (lessons learned register, team assignments, RBS, stakeholder register), deliverables, EEF, OPA | Expert judgment, knowledge management, information management, interpersonal & team skills | **Lessons learned register**, PM plan updates, OPA updates |
+
+#### 5. Monitor and Control Project Work — Monitoring
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, work performance information, agreements, EEF, OPA | Expert judgment, data analysis (EVA, root cause, alternatives, cost-benefit, trend, variance), decision making, meetings | Work performance reports, change requests, PM plan / project documents updates |
+
+#### 6. Perform Integrated Change Control — Monitoring
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents (baselines, change log), work performance reports, change requests, EEF, OPA | Expert judgment, change control tools, data analysis, decision making (voting, autocratic, MCDA), meetings | **Approved/rejected change requests**, PM plan / project documents updates (change log) |
+
+#### 7. Close Project or Phase — Closing
+| I | T&T | O |
+|---|---|---|
+| Project charter, PM plan, project documents, accepted deliverables, business documents, agreements, procurement documentation, OPA | Expert judgment, data analysis, meetings | Project documents updates (lessons learned register), **final product/service/result transition**, final report, OPA updates |
+
+---
+
+### 2. Scope Management (6 processes)
+
+#### 8. Plan Scope Management — Planning
+| I | T&T | O |
+|---|---|---|
+| Project charter, PM plan (quality / life cycle / development approach), EEF, OPA | Expert judgment, data analysis (alternatives), meetings | **Scope management plan**, **requirements management plan** |
+
+#### 9. Collect Requirements — Planning
+| I | T&T | O |
+|---|---|---|
+| Project charter, PM plan, project documents, business documents, agreements, EEF, OPA | Expert judgment, data gathering (brainstorming, interviews, focus groups, questionnaires, benchmarking), data analysis, decision making, data representation (affinity, mind mapping), interpersonal & team skills (nominal group, observation/conversation, facilitation), context diagram, prototypes | **Requirements documentation**, **requirements traceability matrix** |
+
+#### 10. Define Scope — Planning
+| I | T&T | O |
+|---|---|---|
+| Project charter, PM plan, project documents (assumption log, requirements documentation, risk register), EEF, OPA | Expert judgment, data analysis, decision making, interpersonal & team skills, product analysis | **Project scope statement**, project documents updates |
+
+#### 11. Create WBS — Planning
+| I | T&T | O |
+|---|---|---|
+| PM plan (scope management plan), project documents (project scope statement, requirements documentation), EEF, OPA | Expert judgment, **decomposition** | **Scope baseline** (project scope statement + WBS + WBS dictionary), project documents updates |
+
+#### 12. Validate Scope — Monitoring
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents (lessons learned, quality reports, requirements documentation, RTM), verified deliverables, work performance data | **Inspection**, decision making (voting) | **Accepted deliverables**, work performance information, change requests, project documents updates |
+
+#### 13. Control Scope — Monitoring
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, work performance data, OPA | Data analysis (**variance**, trend) | Work performance information, change requests, PM plan / project documents updates |
+
+---
+
+### 3. Schedule Management (6 processes)
+
+#### 14. Plan Schedule Management — Planning
+| I | T&T | O |
+|---|---|---|
+| Project charter, PM plan, EEF, OPA | Expert judgment, data analysis, meetings | **Schedule management plan** |
+
+#### 15. Define Activities — Planning
+| I | T&T | O |
+|---|---|---|
+| PM plan (schedule / scope baseline), EEF, OPA | Expert judgment, **decomposition**, rolling wave planning, meetings | **Activity list**, activity attributes, milestone list, change requests, PM plan updates |
+
+#### 16. Sequence Activities — Planning
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, EEF, OPA | **Precedence Diagramming Method (PDM)**, **dependency determination & integration** (mandatory/discretionary/internal/external), **leads and lags**, PMIS | **Project schedule network diagram**, project documents updates |
+
+#### 17. Estimate Activity Durations — Planning
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, EEF, OPA | Expert judgment, **analogous**, **parametric**, **three-point (PERT)**, bottom-up, data analysis (alternatives, reserve), decision making, meetings | **Duration estimates**, basis of estimates, project documents updates |
+
+#### 18. Develop Schedule — Planning
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, agreements, EEF, OPA | Schedule network analysis, **Critical Path Method (CPM)**, **resource optimization** (leveling/smoothing), data analysis (what-if scenario, Monte Carlo), leads and lags, **schedule compression** (crashing / fast-tracking), PMIS, agile release planning | **Schedule baseline**, **project schedule**, schedule data, project calendars, change requests, PM plan / project documents updates |
+
+#### 19. Control Schedule — Monitoring
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, work performance data, OPA | Data analysis (**EVA**, iteration burndown chart, performance reviews, trend, variance, what-if), CPM, PMIS, resource optimization, leads and lags, schedule compression | Work performance information, **schedule forecasts**, change requests, PM plan / project documents updates |
+
+---
+
+### 4. Cost Management (4 processes)
+
+#### 20. Plan Cost Management — Planning
+| I | T&T | O |
+|---|---|---|
+| Project charter, PM plan, EEF, OPA | Expert judgment, data analysis, meetings | **Cost management plan** |
+
+#### 21. Estimate Costs — Planning
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, EEF, OPA | Expert judgment, analogous / parametric / bottom-up / three-point estimating, data analysis (alternatives, reserve, cost of quality), PMIS, decision making | **Cost estimates**, basis of estimates, project documents updates |
+
+#### 22. Determine Budget — Planning
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, business documents, agreements, EEF, OPA | Expert judgment, cost aggregation, data analysis (reserve), historical information review, funding limit reconciliation, financing | **Cost baseline**, project funding requirements, project documents updates |
+
+#### 23. Control Costs — Monitoring
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, project funding requirements, work performance data, OPA | Expert judgment, data analysis (**EVA** EV/PV/AC/CV/SV/CPI/SPI, variance, trend, reserve), **To-Complete Performance Index (TCPI)**, PMIS | Work performance information, **cost forecasts** (EAC/ETC/VAC), change requests, PM plan / project documents updates |
+
+---
+
+### 5. Quality Management (3 processes)
+
+#### 24. Plan Quality Management — Planning
+| I | T&T | O |
+|---|---|---|
+| Project charter, PM plan, project documents, EEF, OPA | Expert judgment, data gathering (benchmarking, brainstorming, interviews), data analysis (cost-benefit, cost of quality), decision making, data representation (**flowcharts**, **logical data model**, **matrix diagrams**, **mind mapping**), test & inspection planning, meetings | **Quality management plan**, **quality metrics**, PM plan / project documents updates |
+
+#### 25. Manage Quality — Executing
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, OPA | Data gathering (checklists), data analysis (alternatives, document, process, **root cause**), decision making, data representation (**affinity diagrams**, **cause-and-effect (fishbone)**, **flowcharts**, **histograms**, **matrix diagrams**, **scatter diagrams**), **audits**, design for X, problem solving, quality improvement methods (PDCA, Six Sigma) | **Quality reports**, **test and evaluation documents**, change requests, PM plan / project documents updates |
+
+#### 26. Control Quality — Monitoring
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, approved change requests, deliverables, work performance data, EEF, OPA | Data gathering (checklists, check sheets, statistical sampling, questionnaires), data analysis (performance reviews, root cause), **inspection**, **testing/product evaluations**, data representation (cause-and-effect, control charts, histograms, scatter diagrams), meetings | **Quality control measurements**, **verified deliverables**, work performance information, change requests, PM plan / project documents updates |
+
+---
+
+### 6. Resource Management (6 processes)
+
+#### 27. Plan Resource Management — Planning
+| I | T&T | O |
+|---|---|---|
+| Project charter, PM plan, project documents, EEF, OPA | Expert judgment, data representation (**hierarchical** — OBS/RBS/WBS, **Responsibility Assignment Matrix RAM/RACI**, text-oriented), organizational theory, meetings | **Resource management plan**, **team charter**, project documents updates |
+
+#### 28. Estimate Activity Resources — Planning
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, EEF, OPA | Expert judgment, bottom-up / analogous / parametric estimating, data analysis (alternatives), PMIS, meetings | Resource requirements, basis of estimates, **resource breakdown structure (RBS)**, project documents updates |
+
+#### 29. Acquire Resources — Executing
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, EEF, OPA | Decision making (MCDA), interpersonal & team skills (negotiation), pre-assignment, virtual teams | **Physical resource assignments**, **project team assignments**, resource calendars, change requests, PM plan / project documents / EEF / OPA updates |
+
+#### 30. Develop Team — Executing
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, EEF, OPA | Colocation, virtual teams, communication technology, interpersonal & team skills (conflict management, influencing, motivation, negotiation, **team building**), **recognition and rewards**, **training**, **individual and team assessments**, meetings | **Team performance assessments**, change requests, PM plan / project documents / EEF / OPA updates |
+
+#### 31. Manage Team — Executing
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, work performance reports, team performance assessments, EEF, OPA | Interpersonal & team skills (**conflict management**, decision making, EI, influencing, **leadership**), PMIS | Change requests, PM plan / project documents / EEF updates |
+
+#### 32. Control Resources — Monitoring
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, work performance data, agreements, OPA | Data analysis (alternatives, cost-benefit, performance reviews, trend), problem solving, interpersonal & team skills (negotiation, influencing), PMIS | Work performance information, change requests, PM plan / project documents updates |
+
+---
+
+### 7. Communications Management (3 processes)
+
+#### 33. Plan Communications Management — Planning
+| I | T&T | O |
+|---|---|---|
+| Project charter, PM plan, project documents (requirements documentation, stakeholder register), EEF, OPA | Expert judgment, **communication requirements analysis**, **communication technology**, **communication models** (sender-receiver), **communication methods** (interactive / push / pull), interpersonal & team skills, data representation (stakeholder engagement assessment matrix), meetings | **Communications management plan**, PM plan / project documents updates |
+
+#### 34. Manage Communications — Executing
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, work performance reports, EEF, OPA | Communication technology / methods / skills, PMIS, project reporting, interpersonal & team skills, meetings | **Project communications**, PM plan / project documents / OPA updates |
+
+#### 35. Monitor Communications — Monitoring
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, work performance data, EEF, OPA | Expert judgment, PMIS, data analysis, interpersonal & team skills (observation/conversation), meetings | Work performance information, change requests, PM plan / project documents updates |
+
+---
+
+### 8. Risk Management (7 processes)
+
+#### 36. Plan Risk Management — Planning
+| I | T&T | O |
+|---|---|---|
+| Project charter, PM plan, project documents (stakeholder register), EEF, OPA | Expert judgment, data analysis (stakeholder analysis), meetings | **Risk management plan** (risk categories RBS, probability & impact matrix, risk appetite, etc.) |
+
+#### 37. Identify Risks — Planning
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, agreements, procurement documentation, EEF, OPA | Expert judgment, data gathering (**brainstorming**, **checklists**, interviews), data analysis (**root cause**, assumption & constraint, **SWOT**, document), interpersonal & team skills (facilitation), prompt lists, meetings | **Risk register**, risk report, project documents updates |
+
+#### 38. Perform Qualitative Risk Analysis — Planning
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, EEF, OPA | Expert judgment, data gathering (interviews), data analysis (**risk data quality assessment**, **probability & impact assessment**, other risk parameters), interpersonal & team skills, **risk categorization**, data representation (**probability & impact matrix**, hierarchical charts), meetings | Project documents updates (risk register, risk report, assumption log, issue log) |
+
+#### 39. Perform Quantitative Risk Analysis — Planning
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, EEF, OPA | Expert judgment, data gathering (interviews), interpersonal & team skills, representations of uncertainty, data analysis (**Monte Carlo simulation**, **sensitivity analysis — tornado**, **decision tree**, **influence diagrams**) | Project documents updates (risk report) |
+
+#### 40. Plan Risk Responses — Planning
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, EEF, OPA | Expert judgment, data gathering (interviews), interpersonal & team skills, **threat strategies** (escalate, avoid, transfer, mitigate, accept), **opportunity strategies** (escalate, exploit, share, enhance, accept), **contingent response**, **overall project risk strategies**, data analysis (alternatives, cost-benefit), decision making | Change requests, PM plan / project documents updates |
+
+#### 41. Implement Risk Responses — Executing
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents (lessons learned, risk register, risk report), OPA | Expert judgment, interpersonal & team skills (influencing), PMIS | Change requests, project documents updates |
+
+#### 42. Monitor Risks — Monitoring
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, work performance data, work performance reports | Data analysis (technical performance analysis, **reserve analysis**), **audits**, meetings | Work performance information, change requests, PM plan / project documents / OPA updates |
+
+---
+
+### 9. Procurement Management (3 processes)
+
+#### 43. Plan Procurement Management — Planning
+| I | T&T | O |
+|---|---|---|
+| Project charter, business documents, PM plan, project documents, EEF, OPA | Expert judgment, data gathering (market research), data analysis (**make-or-buy**), source selection analysis, meetings | **Procurement management plan**, **procurement strategy**, **bid documents** (RFI/RFQ/RFP), **procurement statement of work (SOW)**, source selection criteria, **make-or-buy decisions**, independent cost estimates, change requests, project documents / OPA updates |
+
+#### 44. Conduct Procurements — Executing
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, procurement documentation, seller proposals, EEF, OPA | Expert judgment, advertising, bidder conferences, data analysis (proposal evaluation), interpersonal & team skills (**negotiation**) | **Selected sellers**, **agreements/contracts**, change requests, PM plan / project documents / OPA updates |
+
+#### 45. Control Procurements — Monitoring
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, agreements, procurement documentation, approved change requests, work performance data, EEF, OPA | Expert judgment, **claims administration**, data analysis (performance reviews, EVA, trend), **inspection**, **audits** | **Closed procurements**, work performance information, procurement documentation updates, change requests, PM plan / project documents / OPA updates |
+
+---
+
+### 10. Stakeholder Management (4 processes)
+
+#### 46. Identify Stakeholders — Initiating
+| I | T&T | O |
+|---|---|---|
+| Project charter, business documents, PM plan, project documents, agreements, EEF, OPA | Expert judgment, data gathering (questionnaires, brainstorming), data analysis (**stakeholder analysis**, document analysis), data representation (**power/interest grid**, power/influence grid, impact/influence grid, salience model, stakeholder cube, **stakeholder engagement assessment matrix**, directional influence, prioritization), meetings | **Stakeholder register**, change requests, PM plan / project documents updates |
+
+#### 47. Plan Stakeholder Engagement — Planning
+| I | T&T | O |
+|---|---|---|
+| Project charter, PM plan, project documents, agreements, EEF, OPA | Expert judgment, data gathering (benchmarking), data analysis (assumption & constraint, root cause), decision making (prioritization), data representation (mind mapping, **stakeholder engagement assessment matrix**: unaware / resistant / neutral / supportive / leading), meetings | **Stakeholder engagement plan** |
+
+#### 48. Manage Stakeholder Engagement — Executing
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, EEF, OPA | Expert judgment, communication skills (feedback), interpersonal & team skills (conflict management, cultural awareness, negotiation, observation/conversation, political awareness), ground rules, meetings | Change requests, PM plan / project documents updates |
+
+#### 49. Monitor Stakeholder Engagement — Monitoring
+| I | T&T | O |
+|---|---|---|
+| PM plan, project documents, work performance data, EEF, OPA | Data analysis (alternatives, root cause, stakeholder analysis), decision making (MCDA, voting), data representation (stakeholder engagement assessment matrix), communication skills (feedback, presentations), interpersonal & team skills (active listening, cultural awareness, leadership, networking, political awareness), meetings | Work performance information, change requests, PM plan / project documents updates |
+
+---
+
+### Appendix Table: 5 Process Groups × 10 Knowledge Areas (49 processes at a glance)
+
+| Knowledge Area \\ Process Group | Initiating (2) | Planning (24) | Executing (10) | Monitoring & Controlling (12) | Closing (1) |
+|---|---|---|---|---|---|
+| **Integration (7)** | Develop Project Charter | Develop Project Management Plan | Direct and Manage Project Work; Manage Project Knowledge | Monitor and Control Project Work; Perform Integrated Change Control | Close Project or Phase |
+| **Scope (6)** | | Plan Scope Management; Collect Requirements; Define Scope; Create WBS | | Validate Scope; Control Scope | |
+| **Schedule (6)** | | Plan Schedule Management; Define Activities; Sequence Activities; Estimate Activity Durations; Develop Schedule | | Control Schedule | |
+| **Cost (4)** | | Plan Cost Management; Estimate Costs; Determine Budget | | Control Costs | |
+| **Quality (3)** | | Plan Quality Management | Manage Quality | Control Quality | |
+| **Resource (6)** | | Plan Resource Management; Estimate Activity Resources | Acquire Resources; Develop Team; Manage Team | Control Resources | |
+| **Communications (3)** | | Plan Communications Management | Manage Communications | Monitor Communications | |
+| **Risk (7)** | | Plan Risk Management; Identify Risks; Perform Qualitative Risk Analysis; Perform Quantitative Risk Analysis; Plan Risk Responses | Implement Risk Responses | Monitor Risks | |
+| **Procurement (3)** | | Plan Procurement Management | Conduct Procurements | Control Procurements | |
+| **Stakeholder (4)** | Identify Stakeholders | Plan Stakeholder Engagement | Manage Stakeholder Engagement | Monitor Stakeholder Engagement | |
+
+> **Memory tips**:
+> - **Almost every knowledge area has a "Plan XX Management" process** (except Integration and Stakeholder);
+> - **Control-type processes are concentrated in the Monitoring & Controlling group**;
+> - **EEF/OPA are universal inputs to nearly every process**;
+> - **Expert judgment, meetings, and data analysis** are the most common universal tools & techniques;
+> - **Change requests, PM plan updates, and project documents updates** are the most common universal outputs.
