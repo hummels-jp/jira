@@ -86,6 +86,112 @@
 
 ---
 
+## 8. HD マップ生成詳細: CityGML LOD3 → Lanelet2 / OpenDRIVE
+
+### 8.1 CityGML 道路データ（Transportation Module）の LOD 別内容
+
+| LOD | 表現 | 内容 | HD Map 用途 |
+|---|---|---|---|
+| LOD0 | 中心線（1D linestring） | 道路ネットワーク・トポロジー | ❌ ナビ級のみ |
+| LOD1 | 面（2D polygon） | 道路総面積、車線区分なし | ❌ |
+| LOD2 | 表面（補助区含む） | 車道 / 歩道 / 中央帯を分離 | △ 半自動 |
+| **LOD3** | **車線レベル 3D ジオメトリ** | **各車線独立面 + 附属物** | ✅ **HD Map ソース** |
+| LOD4 | 屋内 | トンネル内部等 | 特殊シーン |
+
+### 8.2 LOD3 道路データの構成要素
+
+#### (1) ジオメトリ要素（Geometry）
+
+- **TrafficArea（通行区域）**
+  - 車道 (driving lane) / 自転車道 (cycle lane) / 歩道 (sidewalk)
+  - 駐車帯 (parking) / バス専用道 (bus lane)
+- **AuxiliaryTrafficArea（補助区域）**
+  - 中央分離帯・路肩・緑化帯・導流島
+- 各 area は独立した **3D ポリゴン（Z 値付き）**
+
+#### (2) 車線属性（Lane Attributes）
+
+| 属性 | 説明 |
+|---|---|
+| `function` | 用途（driving / cycle / pedestrian…） |
+| `usage` | 通行方式（一方通行 / 双方向 等） |
+| `surfaceMaterial` | 路面材質（asphalt / concrete） |
+| `numberOfLanes` | 車線数 |
+| `width` | 車線幅 |
+| `slope` / `gradient` | 勾配 |
+
+#### (3) 道路附属物（CityFurniture / Road Markings）
+
+- **標示（マーキング）**: 車線境界線・停止線・横断歩道・導流線
+- **標識**: 制限速度・指示・警告
+- **信号機**: 交通信号機・歩行者信号
+- **ガードレール / 中央分離帯**
+- **縁石（curb）**
+- **マンホール / 排水溝**
+
+#### (4) トポロジー関係（Topology）
+
+- **Intersection（交差点）**: 車線接続関係
+- **Section（路段）**: セグメント管理
+- **Connectivity**: predecessor / successor 関係
+
+#### (5) セマンティクス（Semantics）
+
+CityGML 3.0 では **SpaceBoundary** による意味付けが強化：
+- 車線境界タイプ（実線 / 破線 / 二重黄線）
+- 路面色
+- 通行規則
+
+### 8.3 変換マッピング: CityGML LOD3 → **Lanelet2**（Autoware）
+
+| CityGML | Lanelet2 |
+|---|---|
+| TrafficArea (driving) | `Lanelet`（車線プリミティブ） |
+| 車線左右境界線 | `LineString`（bound） |
+| Intersection | `Lanelet` グループ + `RegulatoryElement` |
+| 停止線 / 横断歩道 | `RegulatoryElement`（stop_line, crosswalk） |
+| 信号機 | `RegulatoryElement`（traffic_light） |
+| トポロジー接続 | Lanelet の relation 関係 |
+
+**出力**: `.osm` 形式（Lanelet2 は OSM XML 拡張を使用）
+
+### 8.4 変換マッピング: CityGML LOD3 → **OpenDRIVE**（CARLA）
+
+| CityGML | OpenDRIVE (.xodr) |
+|---|---|
+| 道路中心線 | `<road>` + `<planView>`（geometry: line/arc/spiral） |
+| 車線面 | `<lanes>` + `<laneSection>` + `<lane>` |
+| 高さ | `<elevationProfile>` |
+| 超高 / 横断勾配 | `<lateralProfile>` |
+| 交差点 | `<junction>` + `<connection>` |
+| 標示 | `<roadMark>` |
+| 信号 | `<signals>` / `<signal>` |
+| オブジェクト（ガードレール等） | `<objects>` / `<object>` |
+
+**出力**: `.xodr` ファイル（CARLA-90 の `NOA_CITYWAY_V3.0.xodr` と同形式）
+
+### 8.5 変換の難所（Challenges）
+
+1. **中心線抽出**: CityGML LOD3 は**面**表現 → skeleton アルゴリズムで中心線算出
+2. **幾何フィッティング**: OpenDRIVE はパラメトリック曲線（line/arc/spiral/poly3）必須 → 曲線フィッティング
+3. **トポロジー再構築**: LOD3 の接続情報は不完全 → 交差点を再構築
+4. **標示の紐付け**: CityFurniture の標示を対応車線にマッチング
+5. **信号バインド**: 交通信号を controlled lane に紐付け
+
+### 8.6 ツールチェーン
+
+| ツール | 方向 | 説明 |
+|---|---|---|
+| **plateau-py** | 読取 | Python で CityGML パース |
+| **PLATEAU SDK for Unity** | 可視化 | Unity 内で閲覧 |
+| **CityGML2OBJs** | 3D | Mesh 変換 |
+| **FME / QGIS プラグイン** | ETL | 商用 GIS 変換 |
+| **lanelet2 (C++/Py)** | 生成 | Autoware 公式 API |
+| **esmini / CommonRoad** | OpenDRIVE | 検証・編集 |
+| **carla-map-editor** | CARLA | .xodr 微調整 |
+
+---
+
 ## 参考リンク
 
 - 国交省 PLATEAU 公式: <https://www.mlit.go.jp/plateau/>
