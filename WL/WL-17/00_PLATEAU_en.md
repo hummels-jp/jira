@@ -3,11 +3,14 @@
 > Jira: **WL-17**
 > Created: 2026-07-15
 > Category: Research / Reference
-> Language: [中文](00_PLATEAU.md) / [日本語](00_PLATEAU_ja.md) / **English (this document)**
+> 🌐 Language: [中文](00_PLATEAU.md) · [日本語](00_PLATEAU_ja.md) · **English (this document)**
 
 ---
 
+<a id="sec-1"></a>
 ## 1. What is PLATEAU
+
+> 🌐 [中文](00_PLATEAU.md#sec-1) · [日本語](00_PLATEAU_ja.md#sec-1) · **English**
 
 **PLATEAU** is a **3D city model development, utilization, and open data initiative** led by Japan's Ministry of Land, Infrastructure, Transport and Tourism (MLIT).
 
@@ -18,7 +21,10 @@
 
 ---
 
+<a id="sec-2"></a>
 ## 2. Data Specifications
+
+> 🌐 [中文](00_PLATEAU.md#sec-2) · [日本語](00_PLATEAU_ja.md#sec-2) · **English**
 
 | Item | Content |
 |---|---|
@@ -39,7 +45,10 @@
 
 ---
 
+<a id="sec-3"></a>
 ## 3. Main Use Cases
+
+> 🌐 [中文](00_PLATEAU.md#sec-3) · [日本語](00_PLATEAU_ja.md#sec-3) · **English**
 
 1. **Disaster simulation** — Flood, tsunami, landslide visualization
 2. **Autonomous driving / MaaS** — HD map augmentation, simulator maps
@@ -49,7 +58,10 @@
 
 ---
 
+<a id="sec-4"></a>
 ## 4. Data Acquisition
+
+> 🌐 [中文](00_PLATEAU.md#sec-4) · [日本語](00_PLATEAU_ja.md#sec-4) · **English**
 
 - **G-Spatial Information Center**: <https://www.geospatial.jp/ckan/dataset?q=plateau>
 - **PLATEAU VIEW**: <https://plateauview.mlit.go.jp/>
@@ -57,7 +69,10 @@
 
 ---
 
+<a id="sec-5"></a>
 ## 5. Related Tools / SDKs
+
+> 🌐 [中文](00_PLATEAU.md#sec-5) · [日本語](00_PLATEAU_ja.md#sec-5) · **English**
 
 | Tool | Purpose |
 |---|---|
@@ -69,7 +84,10 @@
 
 ---
 
+<a id="sec-6"></a>
 ## 6. Integration with Autonomous Driving (CARLA / Autoware)
+
+> 🌐 [中文](00_PLATEAU.md#sec-6) · [日本語](00_PLATEAU_ja.md#sec-6) · **English**
 
 - **HD map generation**: CityGML road LOD3 → Lanelet2 / OpenDRIVE conversion
 - **Building geometry**: FBX export for CARLA simulator
@@ -78,7 +96,10 @@
 
 ---
 
+<a id="sec-7"></a>
 ## 7. Next Actions (TODO)
+
+> 🌐 [中文](00_PLATEAU.md#sec-7) · [日本語](00_PLATEAU_ja.md#sec-7) · **English**
 
 - [ ] Download PLATEAU data for target cities
 - [ ] PoC for CityGML → OpenDRIVE conversion
@@ -87,9 +108,17 @@
 
 ---
 
+<a id="sec-8"></a>
 ## 8. HD Map Generation Details: CityGML LOD3 → Lanelet2 / OpenDRIVE
 
+> 🌐 [中文](00_PLATEAU.md#sec-8) · [日本語](00_PLATEAU_ja.md#sec-8) · **English**
+
+---
+
+<a id="sec-8-1"></a>
 ### 8.1 CityGML Road Data (Transportation Module) by LOD
+
+> 🌐 [中文](00_PLATEAU.md#sec-8-1) · [日本語](00_PLATEAU_ja.md#sec-8-1) · **English**
 
 | LOD | Representation | Content | HD Map use |
 |---|---|---|---|
@@ -99,7 +128,12 @@
 | **LOD3** | **Lane-level 3D geometry** | **Each lane as independent surface + attachments** | ✅ **HD Map source** |
 | LOD4 | Interior | Tunnel interior, etc. | Special scenes |
 
+---
+
+<a id="sec-8-2"></a>
 ### 8.2 Components of LOD3 Road Data
+
+> 🌐 [中文](00_PLATEAU.md#sec-8-2) · [日本語](00_PLATEAU_ja.md#sec-8-2) · **English**
 
 #### (1) Geometry
 
@@ -143,7 +177,12 @@ CityGML 3.0 strengthens **SpaceBoundary** semantic tagging:
 - Pavement color
 - Traffic rules
 
+---
+
+<a id="sec-8-3"></a>
 ### 8.3 Mapping: CityGML LOD3 → **Lanelet2** (Autoware)
+
+> 🌐 [中文](00_PLATEAU.md#sec-8-3) · [日本語](00_PLATEAU_ja.md#sec-8-3) · **English**
 
 | CityGML | Lanelet2 |
 |---|---|
@@ -156,7 +195,12 @@ CityGML 3.0 strengthens **SpaceBoundary** semantic tagging:
 
 **Output**: `.osm` format (Lanelet2 uses OSM XML extension)
 
+---
+
+<a id="sec-8-4"></a>
 ### 8.4 Mapping: CityGML LOD3 → **OpenDRIVE** (CARLA)
+
+> 🌐 [中文](00_PLATEAU.md#sec-8-4) · [日本語](00_PLATEAU_ja.md#sec-8-4) · **English**
 
 | CityGML | OpenDRIVE (.xodr) |
 |---|---|
@@ -171,7 +215,12 @@ CityGML 3.0 strengthens **SpaceBoundary** semantic tagging:
 
 **Output**: `.xodr` file (same format as `NOA_CITYWAY_V3.0.xodr` in CARLA-90)
 
+---
+
+<a id="sec-8-5"></a>
 ### 8.5 Conversion Challenges
+
+> 🌐 [中文](00_PLATEAU.md#sec-8-5) · [日本語](00_PLATEAU_ja.md#sec-8-5) · **English**
 
 1. **Centerline extraction**: CityGML LOD3 is **surface**-based → need skeleton algorithm
 2. **Geometry fitting**: OpenDRIVE requires parametric curves (line/arc/spiral/poly3) → curve fitting
@@ -179,7 +228,12 @@ CityGML 3.0 strengthens **SpaceBoundary** semantic tagging:
 4. **Marking association**: Match CityFurniture markings to corresponding lanes
 5. **Signal binding**: Bind traffic signals to controlled lanes
 
+---
+
+<a id="sec-8-6"></a>
 ### 8.6 Toolchain
+
+> 🌐 [中文](00_PLATEAU.md#sec-8-6) · [日本語](00_PLATEAU_ja.md#sec-8-6) · **English**
 
 | Tool | Direction | Description |
 |---|---|---|
@@ -193,9 +247,14 @@ CityGML 3.0 strengthens **SpaceBoundary** semantic tagging:
 
 ---
 
+<a id="sec-ref"></a>
 ## References
+
+> 🌐 [中文](00_PLATEAU.md#sec-ref) · [日本語](00_PLATEAU_ja.md#sec-ref) · **English**
 
 - MLIT PLATEAU official: <https://www.mlit.go.jp/plateau/>
 - PLATEAU VIEW: <https://plateauview.mlit.go.jp/>
 - GitHub: <https://github.com/Project-PLATEAU>
 - OGC CityGML: <https://www.ogc.org/standards/citygml>
+
+---

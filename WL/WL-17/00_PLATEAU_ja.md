@@ -3,11 +3,14 @@
 > Jira: **WL-17**
 > 作成日: 2026-07-15
 > 分類: 調査 / 基礎資料
-> 言語版: [中文](00_PLATEAU.md) / **日本語（本文書）** / [English](00_PLATEAU_en.md)
+> 🌐 言語: [中文](00_PLATEAU.md) · **日本語（本文書）** · [English](00_PLATEAU_en.md)
 
 ---
 
+<a id="sec-1"></a>
 ## 1. PLATEAU とは
+
+> 🌐 [中文](00_PLATEAU.md#sec-1) · **日本語** · [English](00_PLATEAU_en.md#sec-1)
 
 **PLATEAU（プラトー）** は、日本の国土交通省が主導する **3D 都市モデル整備・活用・オープンデータ化プロジェクト**。
 
@@ -18,7 +21,10 @@
 
 ---
 
+<a id="sec-2"></a>
 ## 2. データ規格
+
+> 🌐 [中文](00_PLATEAU.md#sec-2) · **日本語** · [English](00_PLATEAU_en.md#sec-2)
 
 | 項目 | 内容 |
 |---|---|
@@ -39,7 +45,10 @@
 
 ---
 
+<a id="sec-3"></a>
 ## 3. 主要ユースケース
+
+> 🌐 [中文](00_PLATEAU.md#sec-3) · **日本語** · [English](00_PLATEAU_en.md#sec-3)
 
 1. **防災シミュレーション** — 洪水・津波・土砂災害の可視化
 2. **自動運転 / MaaS** — HD マップ補完、シミュレータ地図
@@ -49,7 +58,10 @@
 
 ---
 
+<a id="sec-4"></a>
 ## 4. データ入手
+
+> 🌐 [中文](00_PLATEAU.md#sec-4) · **日本語** · [English](00_PLATEAU_en.md#sec-4)
 
 - **G 空間情報センター**: <https://www.geospatial.jp/ckan/dataset?q=plateau>
 - **PLATEAU VIEW**: <https://plateauview.mlit.go.jp/>
@@ -57,7 +69,10 @@
 
 ---
 
+<a id="sec-5"></a>
 ## 5. 関連ツール / SDK
+
+> 🌐 [中文](00_PLATEAU.md#sec-5) · **日本語** · [English](00_PLATEAU_en.md#sec-5)
 
 | ツール | 用途 |
 |---|---|
@@ -69,7 +84,10 @@
 
 ---
 
+<a id="sec-6"></a>
 ## 6. 自動運転（CARLA / Autoware）との連携ポイント
+
+> 🌐 [中文](00_PLATEAU.md#sec-6) · **日本語** · [English](00_PLATEAU_en.md#sec-6)
 
 - **HD マップ生成**: CityGML の道路 LOD3 → Lanelet2 / OpenDRIVE 変換
 - **建物ジオメトリ**: CARLA のシミュレータ用 FBX 出力
@@ -78,7 +96,10 @@
 
 ---
 
+<a id="sec-7"></a>
 ## 7. 次のアクション（TODO）
+
+> 🌐 [中文](00_PLATEAU.md#sec-7) · **日本語** · [English](00_PLATEAU_en.md#sec-7)
 
 - [ ] 対象都市の PLATEAU データダウンロード
 - [ ] CityGML → OpenDRIVE 変換 PoC
@@ -87,9 +108,17 @@
 
 ---
 
+<a id="sec-8"></a>
 ## 8. HD マップ生成詳細: CityGML LOD3 → Lanelet2 / OpenDRIVE
 
+> 🌐 [中文](00_PLATEAU.md#sec-8) · **日本語** · [English](00_PLATEAU_en.md#sec-8)
+
+---
+
+<a id="sec-8-1"></a>
 ### 8.1 CityGML 道路データ（Transportation Module）の LOD 別内容
+
+> 🌐 [中文](00_PLATEAU.md#sec-8-1) · **日本語** · [English](00_PLATEAU_en.md#sec-8-1)
 
 | LOD | 表現 | 内容 | HD Map 用途 |
 |---|---|---|---|
@@ -99,7 +128,12 @@
 | **LOD3** | **車線レベル 3D ジオメトリ** | **各車線独立面 + 附属物** | ✅ **HD Map ソース** |
 | LOD4 | 屋内 | トンネル内部等 | 特殊シーン |
 
+---
+
+<a id="sec-8-2"></a>
 ### 8.2 LOD3 道路データの構成要素
+
+> 🌐 [中文](00_PLATEAU.md#sec-8-2) · **日本語** · [English](00_PLATEAU_en.md#sec-8-2)
 
 #### (1) ジオメトリ要素（Geometry）
 
@@ -143,7 +177,12 @@ CityGML 3.0 では **SpaceBoundary** による意味付けが強化：
 - 路面色
 - 通行規則
 
+---
+
+<a id="sec-8-3"></a>
 ### 8.3 変換マッピング: CityGML LOD3 → **Lanelet2**（Autoware）
+
+> 🌐 [中文](00_PLATEAU.md#sec-8-3) · **日本語** · [English](00_PLATEAU_en.md#sec-8-3)
 
 | CityGML | Lanelet2 |
 |---|---|
@@ -156,7 +195,12 @@ CityGML 3.0 では **SpaceBoundary** による意味付けが強化：
 
 **出力**: `.osm` 形式（Lanelet2 は OSM XML 拡張を使用）
 
+---
+
+<a id="sec-8-4"></a>
 ### 8.4 変換マッピング: CityGML LOD3 → **OpenDRIVE**（CARLA）
+
+> 🌐 [中文](00_PLATEAU.md#sec-8-4) · **日本語** · [English](00_PLATEAU_en.md#sec-8-4)
 
 | CityGML | OpenDRIVE (.xodr) |
 |---|---|
@@ -171,7 +215,12 @@ CityGML 3.0 では **SpaceBoundary** による意味付けが強化：
 
 **出力**: `.xodr` ファイル（CARLA-90 の `NOA_CITYWAY_V3.0.xodr` と同形式）
 
+---
+
+<a id="sec-8-5"></a>
 ### 8.5 変換の難所（Challenges）
+
+> 🌐 [中文](00_PLATEAU.md#sec-8-5) · **日本語** · [English](00_PLATEAU_en.md#sec-8-5)
 
 1. **中心線抽出**: CityGML LOD3 は**面**表現 → skeleton アルゴリズムで中心線算出
 2. **幾何フィッティング**: OpenDRIVE はパラメトリック曲線（line/arc/spiral/poly3）必須 → 曲線フィッティング
@@ -179,7 +228,12 @@ CityGML 3.0 では **SpaceBoundary** による意味付けが強化：
 4. **標示の紐付け**: CityFurniture の標示を対応車線にマッチング
 5. **信号バインド**: 交通信号を controlled lane に紐付け
 
+---
+
+<a id="sec-8-6"></a>
 ### 8.6 ツールチェーン
+
+> 🌐 [中文](00_PLATEAU.md#sec-8-6) · **日本語** · [English](00_PLATEAU_en.md#sec-8-6)
 
 | ツール | 方向 | 説明 |
 |---|---|---|
@@ -193,9 +247,14 @@ CityGML 3.0 では **SpaceBoundary** による意味付けが強化：
 
 ---
 
+<a id="sec-ref"></a>
 ## 参考リンク
+
+> 🌐 [中文](00_PLATEAU.md#sec-ref) · **日本語** · [English](00_PLATEAU_en.md#sec-ref)
 
 - 国交省 PLATEAU 公式: <https://www.mlit.go.jp/plateau/>
 - PLATEAU VIEW: <https://plateauview.mlit.go.jp/>
 - GitHub: <https://github.com/Project-PLATEAU>
 - OGC CityGML: <https://www.ogc.org/standards/citygml>
+
+---

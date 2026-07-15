@@ -3,11 +3,14 @@
 > Jira: **WL-17**
 > 创建日期: 2026-07-15
 > 分类: 调查 / 基础资料
-> 语言版本: **中文（本文档）** / [日本語](00_PLATEAU_ja.md) / [English](00_PLATEAU_en.md)
+> 🌐 语言: **中文（本文档）** · [日本語](00_PLATEAU_ja.md) · [English](00_PLATEAU_en.md)
 
 ---
 
+<a id="sec-1"></a>
 ## 1. PLATEAU 是什么
+
+> 🌐 **中文** · [日本語](00_PLATEAU_ja.md#sec-1) · [English](00_PLATEAU_en.md#sec-1)
 
 **PLATEAU（プラトー）** 是日本国土交通省主导的 **3D 城市模型建设、利用及开放数据化项目**。
 
@@ -18,7 +21,10 @@
 
 ---
 
+<a id="sec-2"></a>
 ## 2. 数据规格
+
+> 🌐 **中文** · [日本語](00_PLATEAU_ja.md#sec-2) · [English](00_PLATEAU_en.md#sec-2)
 
 | 项目 | 内容 |
 |---|---|
@@ -39,7 +45,10 @@
 
 ---
 
+<a id="sec-3"></a>
 ## 3. 主要应用场景
+
+> 🌐 **中文** · [日本語](00_PLATEAU_ja.md#sec-3) · [English](00_PLATEAU_en.md#sec-3)
 
 1. **防灾仿真** — 洪水、海啸、泥石流灾害可视化
 2. **自动驾驶 / MaaS** — HD 地图补充、仿真器地图
@@ -49,7 +58,10 @@
 
 ---
 
+<a id="sec-4"></a>
 ## 4. 数据获取
+
+> 🌐 **中文** · [日本語](00_PLATEAU_ja.md#sec-4) · [English](00_PLATEAU_en.md#sec-4)
 
 - **G 空间信息中心**: <https://www.geospatial.jp/ckan/dataset?q=plateau>
 - **PLATEAU VIEW**: <https://plateauview.mlit.go.jp/>
@@ -57,7 +69,10 @@
 
 ---
 
+<a id="sec-5"></a>
 ## 5. 相关工具 / SDK
+
+> 🌐 **中文** · [日本語](00_PLATEAU_ja.md#sec-5) · [English](00_PLATEAU_en.md#sec-5)
 
 | 工具 | 用途 |
 |---|---|
@@ -69,7 +84,10 @@
 
 ---
 
+<a id="sec-6"></a>
 ## 6. 与自动驾驶（CARLA / Autoware）的联动要点
+
+> 🌐 **中文** · [日本語](00_PLATEAU_ja.md#sec-6) · [English](00_PLATEAU_en.md#sec-6)
 
 - **HD 地图生成**: CityGML 道路 LOD3 → Lanelet2 / OpenDRIVE 转换
 - **建筑几何**: 为 CARLA 仿真器输出 FBX
@@ -78,7 +96,10 @@
 
 ---
 
+<a id="sec-7"></a>
 ## 7. 后续行动 (TODO)
+
+> 🌐 **中文** · [日本語](00_PLATEAU_ja.md#sec-7) · [English](00_PLATEAU_en.md#sec-7)
 
 - [ ] 下载目标城市的 PLATEAU 数据
 - [ ] CityGML → OpenDRIVE 转换 PoC
@@ -87,9 +108,17 @@
 
 ---
 
+<a id="sec-8"></a>
 ## 8. HD 地图生成详情: CityGML LOD3 → Lanelet2 / OpenDRIVE
 
+> 🌐 **中文** · [日本語](00_PLATEAU_ja.md#sec-8) · [English](00_PLATEAU_en.md#sec-8)
+
+---
+
+<a id="sec-8-1"></a>
 ### 8.1 CityGML 道路数据（Transportation Module）按 LOD 分级
+
+> 🌐 **中文** · [日本語](00_PLATEAU_ja.md#sec-8-1) · [English](00_PLATEAU_en.md#sec-8-1)
 
 | LOD | 表现 | 内容 | HD Map 用途 |
 |---|---|---|---|
@@ -99,7 +128,12 @@
 | **LOD3** | **车道级 3D 几何** | **各车道独立面 + 附属物** | ✅ **HD Map 数据源** |
 | LOD4 | 室内 | 隧道内部等 | 特殊场景 |
 
+---
+
+<a id="sec-8-2"></a>
 ### 8.2 LOD3 道路数据的构成要素
+
+> 🌐 **中文** · [日本語](00_PLATEAU_ja.md#sec-8-2) · [English](00_PLATEAU_en.md#sec-8-2)
 
 #### (1) 几何要素（Geometry）
 
@@ -143,7 +177,12 @@ CityGML 3.0 强化了 **SpaceBoundary** 语义标注：
 - 路面颜色
 - 通行规则
 
+---
+
+<a id="sec-8-3"></a>
 ### 8.3 转换映射: CityGML LOD3 → **Lanelet2**（Autoware 使用）
+
+> 🌐 **中文** · [日本語](00_PLATEAU_ja.md#sec-8-3) · [English](00_PLATEAU_en.md#sec-8-3)
 
 | CityGML | Lanelet2 |
 |---|---|
@@ -156,7 +195,12 @@ CityGML 3.0 强化了 **SpaceBoundary** 语义标注：
 
 **输出**: `.osm` 格式（Lanelet2 使用 OSM XML 扩展）
 
+---
+
+<a id="sec-8-4"></a>
 ### 8.4 转换映射: CityGML LOD3 → **OpenDRIVE**（CARLA 使用）
+
+> 🌐 **中文** · [日本語](00_PLATEAU_ja.md#sec-8-4) · [English](00_PLATEAU_en.md#sec-8-4)
 
 | CityGML | OpenDRIVE (.xodr) |
 |---|---|
@@ -171,7 +215,12 @@ CityGML 3.0 强化了 **SpaceBoundary** 语义标注：
 
 **输出**: `.xodr` 文件（与 CARLA-90 中 `NOA_CITYWAY_V3.0.xodr` 同格式）
 
+---
+
+<a id="sec-8-5"></a>
 ### 8.5 转换难点
+
+> 🌐 **中文** · [日本語](00_PLATEAU_ja.md#sec-8-5) · [English](00_PLATEAU_en.md#sec-8-5)
 
 1. **中心线提取**: CityGML LOD3 是**面**表达 → 需 skeleton 算法提取中心线
 2. **几何拟合**: OpenDRIVE 要求参数化曲线（line/arc/spiral/poly3） → 需曲线拟合
@@ -179,7 +228,12 @@ CityGML 3.0 强化了 **SpaceBoundary** 语义标注：
 4. **标线关联**: CityFurniture 的标线需匹配到对应车道
 5. **信号绑定**: 交通信号需绑定到 controlled lane
 
+---
+
+<a id="sec-8-6"></a>
 ### 8.6 工具链
+
+> 🌐 **中文** · [日本語](00_PLATEAU_ja.md#sec-8-6) · [English](00_PLATEAU_en.md#sec-8-6)
 
 | 工具 | 方向 | 说明 |
 |---|---|---|
@@ -193,9 +247,14 @@ CityGML 3.0 强化了 **SpaceBoundary** 语义标注：
 
 ---
 
+<a id="sec-ref"></a>
 ## 参考链接
+
+> 🌐 **中文** · [日本語](00_PLATEAU_ja.md#sec-ref) · [English](00_PLATEAU_en.md#sec-ref)
 
 - 国交省 PLATEAU 官方: <https://www.mlit.go.jp/plateau/>
 - PLATEAU VIEW: <https://plateauview.mlit.go.jp/>
 - GitHub: <https://github.com/Project-PLATEAU>
 - OGC CityGML: <https://www.ogc.org/standards/citygml>
+
+---
