@@ -1,200 +1,201 @@
-# PLATEAU（プラトー）調査ノート
+# PLATEAU 调查笔记
 
 > Jira: **WL-17**
-> 作成日: 2026-07-15
-> 分類: 調査 / 基礎資料
+> 创建日期: 2026-07-15
+> 分类: 调查 / 基础资料
+> 语言版本: **中文（本文档）** / [日本語](00_PLATEAU_ja.md) / [English](00_PLATEAU_en.md)
 
 ---
 
-## 1. PLATEAU とは
+## 1. PLATEAU 是什么
 
-**PLATEAU（プラトー）** は、日本の国土交通省が主導する **3D 都市モデル整備・活用・オープンデータ化プロジェクト**。
+**PLATEAU（プラトー）** 是日本国土交通省主导的 **3D 城市模型建设、利用及开放数据化项目**。
 
-- **開始年**: 2020 年度
-- **主管**: 国土交通省 都市局
-- **公式サイト**: <https://www.mlit.go.jp/plateau/>
-- **目的**: 全国の都市を 3D デジタルツイン化し、まちづくり・防災・自動運転・シミュレーション等に活用できる共通基盤を提供する。
+- **启动年份**: 2020 年度
+- **主管部门**: 国土交通省 都市局
+- **官方网站**: <https://www.mlit.go.jp/plateau/>
+- **目标**: 将日本全国城市 3D 数字孪生化，为城市规划、防灾、自动驾驶、仿真等提供通用基础设施。
 
 ---
 
-## 2. データ規格
+## 2. 数据规格
 
-| 項目 | 内容 |
+| 项目 | 内容 |
 |---|---|
-| **標準規格** | CityGML 2.0 / 3.0（OGC 標準） |
-| **配布形式** | CityGML, 3D Tiles, MVT, FBX, OBJ, GeoJSON |
-| **座標系** | 平面直角座標系 / JGD2011 |
-| **ライセンス** | クリエイティブ・コモンズ 表示 4.0 (CC BY 4.0) |
-| **カバー範囲** | 全国 200 以上の都市（2025 年時点） |
+| **标准规格** | CityGML 2.0 / 3.0（OGC 标准） |
+| **分发格式** | CityGML, 3D Tiles, MVT, FBX, OBJ, GeoJSON |
+| **坐标系** | 平面直角坐标系 / JGD2011 |
+| **许可协议** | 知识共享署名 4.0 (CC BY 4.0) |
+| **覆盖范围** | 全国 200+ 城市（截至 2025 年） |
 
-### 主な地物クラス（LOD）
+### 主要地物类别（LOD）
 
-- **建築物** (Building) — LOD1〜LOD4
+- **建筑物** (Building) — LOD1〜LOD4
 - **道路** (Transportation) — LOD1〜LOD3
 - **土地利用** (LandUse)
-- **都市設備** (CityFurniture)
-- **植生** (Vegetation)
-- **災害リスク** (UrbanPlanning 拡張)
+- **城市设施** (CityFurniture)
+- **植被** (Vegetation)
+- **灾害风险** (UrbanPlanning 扩展)
 
 ---
 
-## 3. 主要ユースケース
+## 3. 主要应用场景
 
-1. **防災シミュレーション** — 洪水・津波・土砂災害の可視化
-2. **自動運転 / MaaS** — HD マップ補完、シミュレータ地図
-3. **都市計画** — 日照・景観・容積率シミュレーション
-4. **スマートシティ / デジタルツイン** — IoT データとの連携
-5. **XR / メタバース** — 実都市ベースの空間体験
+1. **防灾仿真** — 洪水、海啸、泥石流灾害可视化
+2. **自动驾驶 / MaaS** — HD 地图补充、仿真器地图
+3. **城市规划** — 日照、景观、容积率仿真
+4. **智慧城市 / 数字孪生** — 与 IoT 数据联动
+5. **XR / 元宇宙** — 基于真实城市的空间体验
 
 ---
 
-## 4. データ入手
+## 4. 数据获取
 
-- **G 空間情報センター**: <https://www.geospatial.jp/ckan/dataset?q=plateau>
+- **G 空间信息中心**: <https://www.geospatial.jp/ckan/dataset?q=plateau>
 - **PLATEAU VIEW**: <https://plateauview.mlit.go.jp/>
-- **GitHub (公式)**: <https://github.com/Project-PLATEAU>
+- **GitHub 官方**: <https://github.com/Project-PLATEAU>
 
 ---
 
-## 5. 関連ツール / SDK
+## 5. 相关工具 / SDK
 
-| ツール | 用途 |
+| 工具 | 用途 |
 |---|---|
-| **PLATEAU SDK for Unity** | Unity 上で CityGML をインポート |
-| **PLATEAU SDK for Unreal** | Unreal Engine 版 |
-| **plateau-py** | Python から CityGML を読み書き |
-| **FME / QGIS プラグイン** | GIS 連携 |
-| **Cesium / deck.gl** | Web 3D ビジュアライズ |
+| **PLATEAU SDK for Unity** | 在 Unity 中导入 CityGML |
+| **PLATEAU SDK for Unreal** | Unreal Engine 版本 |
+| **plateau-py** | 用 Python 读写 CityGML |
+| **FME / QGIS 插件** | 与 GIS 联动 |
+| **Cesium / deck.gl** | Web 3D 可视化 |
 
 ---
 
-## 6. 自動運転（CARLA / Autoware）との連携ポイント
+## 6. 与自动驾驶（CARLA / Autoware）的联动要点
 
-- **HD マップ生成**: CityGML の道路 LOD3 → Lanelet2 / OpenDRIVE 変換
-- **建物ジオメトリ**: CARLA のシミュレータ用 FBX 出力
-- **交差点・信号**: CityFurniture から抽出
-- **相互運用**: OSM / DGM とのハイブリッド運用が現実的
-
----
-
-## 7. 次のアクション（TODO）
-
-- [ ] 対象都市の PLATEAU データダウンロード
-- [ ] CityGML → OpenDRIVE 変換 PoC
-- [ ] Autoware 用 Lanelet2 マップ生成フロー確認
-- [ ] CARLA 上での可視化テスト
+- **HD 地图生成**: CityGML 道路 LOD3 → Lanelet2 / OpenDRIVE 转换
+- **建筑几何**: 为 CARLA 仿真器输出 FBX
+- **交叉口、信号**: 从 CityFurniture 提取
+- **互操作性**: 与 OSM / DGM 混合运用较为现实
 
 ---
 
-## 8. HD マップ生成詳細: CityGML LOD3 → Lanelet2 / OpenDRIVE
+## 7. 后续行动 (TODO)
 
-### 8.1 CityGML 道路データ（Transportation Module）の LOD 別内容
+- [ ] 下载目标城市的 PLATEAU 数据
+- [ ] CityGML → OpenDRIVE 转换 PoC
+- [ ] 确认 Autoware 用 Lanelet2 地图生成流程
+- [ ] CARLA 上的可视化测试
 
-| LOD | 表現 | 内容 | HD Map 用途 |
+---
+
+## 8. HD 地图生成详情: CityGML LOD3 → Lanelet2 / OpenDRIVE
+
+### 8.1 CityGML 道路数据（Transportation Module）按 LOD 分级
+
+| LOD | 表现 | 内容 | HD Map 用途 |
 |---|---|---|---|
-| LOD0 | 中心線（1D linestring） | 道路ネットワーク・トポロジー | ❌ ナビ級のみ |
-| LOD1 | 面（2D polygon） | 道路総面積、車線区分なし | ❌ |
-| LOD2 | 表面（補助区含む） | 車道 / 歩道 / 中央帯を分離 | △ 半自動 |
-| **LOD3** | **車線レベル 3D ジオメトリ** | **各車線独立面 + 附属物** | ✅ **HD Map ソース** |
-| LOD4 | 屋内 | トンネル内部等 | 特殊シーン |
+| LOD0 | 中心线（1D linestring） | 道路网络、拓扑 | ❌ 仅导航级 |
+| LOD1 | 面（2D polygon） | 道路总面积、无车道区分 | ❌ |
+| LOD2 | 表面（含辅助区） | 车道 / 人行道 / 中央分离带分离 | △ 半自动 |
+| **LOD3** | **车道级 3D 几何** | **各车道独立面 + 附属物** | ✅ **HD Map 数据源** |
+| LOD4 | 室内 | 隧道内部等 | 特殊场景 |
 
-### 8.2 LOD3 道路データの構成要素
+### 8.2 LOD3 道路数据的构成要素
 
-#### (1) ジオメトリ要素（Geometry）
+#### (1) 几何要素（Geometry）
 
 - **TrafficArea（通行区域）**
-  - 車道 (driving lane) / 自転車道 (cycle lane) / 歩道 (sidewalk)
-  - 駐車帯 (parking) / バス専用道 (bus lane)
-- **AuxiliaryTrafficArea（補助区域）**
-  - 中央分離帯・路肩・緑化帯・導流島
-- 各 area は独立した **3D ポリゴン（Z 値付き）**
+  - 车行道 (driving lane) / 自行车道 (cycle lane) / 人行道 (sidewalk)
+  - 停车带 (parking) / 公交专用道 (bus lane)
+- **AuxiliaryTrafficArea（辅助区域）**
+  - 中央分离带、路肩、绿化带、导流岛
+- 每个 area 都是独立的 **3D 多边形（含 Z 值）**
 
-#### (2) 車線属性（Lane Attributes）
+#### (2) 车道属性（Lane Attributes）
 
-| 属性 | 説明 |
+| 属性 | 说明 |
 |---|---|
 | `function` | 用途（driving / cycle / pedestrian…） |
-| `usage` | 通行方式（一方通行 / 双方向 等） |
-| `surfaceMaterial` | 路面材質（asphalt / concrete） |
-| `numberOfLanes` | 車線数 |
-| `width` | 車線幅 |
-| `slope` / `gradient` | 勾配 |
+| `usage` | 通行方式（单向 / 双向 等） |
+| `surfaceMaterial` | 路面材质（asphalt / concrete） |
+| `numberOfLanes` | 车道数 |
+| `width` | 车道宽度 |
+| `slope` / `gradient` | 坡度 |
 
 #### (3) 道路附属物（CityFurniture / Road Markings）
 
-- **標示（マーキング）**: 車線境界線・停止線・横断歩道・導流線
-- **標識**: 制限速度・指示・警告
-- **信号機**: 交通信号機・歩行者信号
-- **ガードレール / 中央分離帯**
-- **縁石（curb）**
-- **マンホール / 排水溝**
+- **标线**: 车道分界线、停止线、斑马线、导流线
+- **标志**: 限速、指示、警告
+- **信号灯**: 交通信号灯、行人信号灯
+- **护栏 / 中央隔离带**
+- **路缘石（curb）**
+- **井盖 / 排水沟**
 
-#### (4) トポロジー関係（Topology）
+#### (4) 拓扑关系（Topology）
 
-- **Intersection（交差点）**: 車線接続関係
-- **Section（路段）**: セグメント管理
-- **Connectivity**: predecessor / successor 関係
+- **Intersection（交叉点）**: 车道连接关系
+- **Section（路段）**: 分段管理
+- **Connectivity**: predecessor / successor 关系
 
-#### (5) セマンティクス（Semantics）
+#### (5) 语义信息（Semantics）
 
-CityGML 3.0 では **SpaceBoundary** による意味付けが強化：
-- 車線境界タイプ（実線 / 破線 / 二重黄線）
-- 路面色
-- 通行規則
+CityGML 3.0 强化了 **SpaceBoundary** 语义标注：
+- 车道边界类型（实线 / 虚线 / 双黄线）
+- 路面颜色
+- 通行规则
 
-### 8.3 変換マッピング: CityGML LOD3 → **Lanelet2**（Autoware）
+### 8.3 转换映射: CityGML LOD3 → **Lanelet2**（Autoware 使用）
 
 | CityGML | Lanelet2 |
 |---|---|
-| TrafficArea (driving) | `Lanelet`（車線プリミティブ） |
-| 車線左右境界線 | `LineString`（bound） |
-| Intersection | `Lanelet` グループ + `RegulatoryElement` |
-| 停止線 / 横断歩道 | `RegulatoryElement`（stop_line, crosswalk） |
-| 信号機 | `RegulatoryElement`（traffic_light） |
-| トポロジー接続 | Lanelet の relation 関係 |
+| TrafficArea (driving) | `Lanelet`（车道原语） |
+| 车道左右边界线 | `LineString`（bound） |
+| Intersection | `Lanelet` 组 + `RegulatoryElement` |
+| 停止线 / 斑马线 | `RegulatoryElement`（stop_line, crosswalk） |
+| 信号灯 | `RegulatoryElement`（traffic_light） |
+| 拓扑连接 | Lanelet 的 relation 关系 |
 
-**出力**: `.osm` 形式（Lanelet2 は OSM XML 拡張を使用）
+**输出**: `.osm` 格式（Lanelet2 使用 OSM XML 扩展）
 
-### 8.4 変換マッピング: CityGML LOD3 → **OpenDRIVE**（CARLA）
+### 8.4 转换映射: CityGML LOD3 → **OpenDRIVE**（CARLA 使用）
 
 | CityGML | OpenDRIVE (.xodr) |
 |---|---|
-| 道路中心線 | `<road>` + `<planView>`（geometry: line/arc/spiral） |
-| 車線面 | `<lanes>` + `<laneSection>` + `<lane>` |
-| 高さ | `<elevationProfile>` |
-| 超高 / 横断勾配 | `<lateralProfile>` |
-| 交差点 | `<junction>` + `<connection>` |
-| 標示 | `<roadMark>` |
+| 道路中心线 | `<road>` + `<planView>`（geometry: line/arc/spiral） |
+| 车道面 | `<lanes>` + `<laneSection>` + `<lane>` |
+| 高程 | `<elevationProfile>` |
+| 超高 / 横坡 | `<lateralProfile>` |
+| 交叉口 | `<junction>` + `<connection>` |
+| 标线 | `<roadMark>` |
 | 信号 | `<signals>` / `<signal>` |
-| オブジェクト（ガードレール等） | `<objects>` / `<object>` |
+| 物体（护栏等） | `<objects>` / `<object>` |
 
-**出力**: `.xodr` ファイル（CARLA-90 の `NOA_CITYWAY_V3.0.xodr` と同形式）
+**输出**: `.xodr` 文件（与 CARLA-90 中 `NOA_CITYWAY_V3.0.xodr` 同格式）
 
-### 8.5 変換の難所（Challenges）
+### 8.5 转换难点
 
-1. **中心線抽出**: CityGML LOD3 は**面**表現 → skeleton アルゴリズムで中心線算出
-2. **幾何フィッティング**: OpenDRIVE はパラメトリック曲線（line/arc/spiral/poly3）必須 → 曲線フィッティング
-3. **トポロジー再構築**: LOD3 の接続情報は不完全 → 交差点を再構築
-4. **標示の紐付け**: CityFurniture の標示を対応車線にマッチング
-5. **信号バインド**: 交通信号を controlled lane に紐付け
+1. **中心线提取**: CityGML LOD3 是**面**表达 → 需 skeleton 算法提取中心线
+2. **几何拟合**: OpenDRIVE 要求参数化曲线（line/arc/spiral/poly3） → 需曲线拟合
+3. **拓扑重建**: LOD3 的连接信息不完整 → 需重建交叉口
+4. **标线关联**: CityFurniture 的标线需匹配到对应车道
+5. **信号绑定**: 交通信号需绑定到 controlled lane
 
-### 8.6 ツールチェーン
+### 8.6 工具链
 
-| ツール | 方向 | 説明 |
+| 工具 | 方向 | 说明 |
 |---|---|---|
-| **plateau-py** | 読取 | Python で CityGML パース |
-| **PLATEAU SDK for Unity** | 可視化 | Unity 内で閲覧 |
-| **CityGML2OBJs** | 3D | Mesh 変換 |
-| **FME / QGIS プラグイン** | ETL | 商用 GIS 変換 |
-| **lanelet2 (C++/Py)** | 生成 | Autoware 公式 API |
-| **esmini / CommonRoad** | OpenDRIVE | 検証・編集 |
-| **carla-map-editor** | CARLA | .xodr 微調整 |
+| **plateau-py** | 读取 | Python 解析 CityGML |
+| **PLATEAU SDK for Unity** | 可视化 | Unity 内浏览 |
+| **CityGML2OBJs** | 3D | Mesh 转换 |
+| **FME / QGIS 插件** | ETL | 商业 GIS 转换 |
+| **lanelet2 (C++/Py)** | 生成 | Autoware 官方 API |
+| **esmini / CommonRoad** | OpenDRIVE | 验证与编辑 |
+| **carla-map-editor** | CARLA | .xodr 微调 |
 
 ---
 
-## 参考リンク
+## 参考链接
 
-- 国交省 PLATEAU 公式: <https://www.mlit.go.jp/plateau/>
+- 国交省 PLATEAU 官方: <https://www.mlit.go.jp/plateau/>
 - PLATEAU VIEW: <https://plateauview.mlit.go.jp/>
 - GitHub: <https://github.com/Project-PLATEAU>
 - OGC CityGML: <https://www.ogc.org/standards/citygml>
