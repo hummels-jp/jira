@@ -22,14 +22,12 @@
 
 ## I. Agile Fundamentals and Mindset
 
-<a id="q1"></a>
-1. **Q: What is Agile? What are its core ideas?**
+1. <a id="q1"></a>**Q: What is Agile? What are its core ideas?**
    [[中]](04_agile_modle.md#q1) | [[日]](04_agile_modle_ja.md#q1) | [英](#q1)
 
    **A:** Agile is a software development philosophy centered on **iterative and incremental delivery, rapid feedback, and embracing change**. It emphasizes delivering working software in small batches over short cycles, and copes with uncertainty through continuous customer collaboration and self-organizing teams. Agile is not a specific method but a set of values and principles; Scrum, Kanban, and XP are concrete practices that implement it.
 
-<a id="q2"></a>
-2. **Q: State the four values of the Agile Manifesto.**
+2. <a id="q2"></a>**Q: State the four values of the Agile Manifesto.**
    [[中]](04_agile_modle.md#q2) | [[日]](04_agile_modle_ja.md#q2) | [英](#q2)
 
    **A:** The Agile Manifesto (2001) proposes four value pairs (the left is valued over the right):
@@ -40,26 +38,22 @@
 
    The items on the right still have value, but the items on the left are valued more.
 
-<a id="q3"></a>
-3. **Q: What are the key points among the 12 principles of the Agile Manifesto?**
+3. <a id="q3"></a>**Q: What are the key points among the 12 principles of the Agile Manifesto?**
    [[中]](04_agile_modle.md#q3) | [[日]](04_agile_modle_ja.md#q3) | [英](#q3)
 
    **A:** Key points include: **early and continuous delivery of value**, **welcoming change** (even late in development), **frequent delivery of working software** (weeks to months), **daily collaboration between business and developers**, **trust and motivation of the team**, **face-to-face communication as most effective**, **working software as the primary measure of progress**, **sustainable pace**, **technical excellence and good design**, **simplicity** (the art of maximizing work not done), **self-organizing teams**, and **regular reflection and adjustment**.
 
-<a id="q4"></a>
-4. **Q: What is the core difference between Agile and the Waterfall model?**
+4. <a id="q4"></a>**Q: What is the core difference between Agile and the Waterfall model?**
    [[中]](04_agile_modle.md#q4) | [[日]](04_agile_modle_ja.md#q4) | [英](#q4)
 
    **A:** Waterfall is **sequential, gated, and large-batch** (requirements → design → development → testing → release), locking in requirements up front; Agile is **iterative, incremental, and small-batch**, allowing requirements to evolve continuously. Waterfall suits projects where requirements are clear and change is costly (aerospace, construction); Agile suits software products where requirements are uncertain and evolve quickly. The core difference lies in the **assumption about the cost of change**: Waterfall assumes change is expensive and therefore locks it down early; Agile assumes change is inevitable and therefore reduces the cost of each individual change.
 
-<a id="q5"></a>
-5. **Q: What are Iterations and Increments?**
+5. <a id="q5"></a>**Q: What are Iterations and Increments?**
    [[中]](04_agile_modle.md#q5) | [[日]](04_agile_modle_ja.md#q5) | [英](#q5)
 
    **A:** An **iteration** refers to a full cycle of "planning → development → testing → review" completed within a fixed short period (1–4 weeks); an **increment** refers to the working, deliverable slice of software functionality produced by each iteration. Multiple iterations accumulate to form the complete product. The iteration is the **process**, while the increment is the **product**. Classic analogy: to paint the Mona Lisa, Waterfall paints from the top-left to the bottom-right cell by cell; Agile sketches the whole picture first and then adds detail round by round.
 
-<a id="q6"></a>
-6. **Q: What are the common Agile methods/frameworks?**
+6. <a id="q6"></a>**Q: What are the common Agile methods/frameworks?**
    [[中]](04_agile_modle.md#q6) | [[日]](04_agile_modle_ja.md#q6) | [英](#q6)
 
    **A:** Mainstream Agile methods include:
@@ -70,14 +64,12 @@
    - **Crystal**, **FDD (Feature-Driven Development)**, **DSDM**
    - Scaling frameworks: **SAFe**, **LeSS**, **Nexus**, **Scrum@Scale**
 
-<a id="q7"></a>
-7. **Q: Is Agile suitable for all types of projects?**
+7. <a id="q7"></a>**Q: Is Agile suitable for all types of projects?**
    [[中]](04_agile_modle.md#q7) | [[日]](04_agile_modle_ja.md#q7) | [英](#q7)
 
    **A:** No. Agile is best suited to scenarios with **uncertain requirements, technical complexity, and a need for rapid feedback** (such as internet products and innovative R&D). It is less suitable when requirements are completely clear and stable (production-line replication), in safety-critical systems (aerospace and medical devices require rigorous documentation), on fixed-price contracts with strong contractual constraints, or in situations where frequent customer interaction is not possible. A **hybrid** approach can be used: Waterfall overall with Agile locally.
 
-<a id="q8"></a>
-8. **Q: What are Definition of Ready (DoR) and Definition of Done (DoD)?**
+8. <a id="q8"></a>**Q: What are Definition of Ready (DoR) and Definition of Done (DoD)?**
    [[中]](04_agile_modle.md#q8) | [[日]](04_agile_modle_ja.md#q8) | [英](#q8)
 
    **A:**
@@ -86,14 +78,12 @@
 
    Both are a **quality contract** agreed upon by the team, avoiding the fuzzy statement "we're 90% done."
 
-<a id="q9"></a>
-9. **Q: What is a Minimum Viable Product (MVP)?**
+9. <a id="q9"></a>**Q: What is a Minimum Viable Product (MVP)?**
    [[中]](04_agile_modle.md#q9) | [[日]](04_agile_modle_ja.md#q9) | [英](#q9)
 
    **A:** An MVP (Minimum Viable Product) is **the simplest version of a product that can validate the core value hypothesis**. It is not a feature-incomplete product but rather one that **focuses on the smallest useful feature set** so it can be shipped quickly to gather feedback from real users, thereby reducing the biggest risk at the lowest cost. The MVP is then iteratively expanded. Classic examples: Dropbox validated demand with a demo video, and the Zappos founder manually shipped shoes from local stores to validate the online shoe-selling model.
 
-<a id="q10"></a>
-10. **Q: What is the "Agile Mindset"?**
+10. <a id="q10"></a>**Q: What is the "Agile Mindset"?**
    [[中]](04_agile_modle.md#q10) | [[日]](04_agile_modle_ja.md#q10) | [英](#q10)
 
    **A:** The Agile mindset emphasizes **a growth mindset, embracing uncertainty, focusing on customer value, continuous learning and experimentation, psychological safety, and treating failure as learning**. True Agile transformation is not "implementing Scrum" but a shift in organizational culture and ways of thinking—from command-and-control to empowerment and collaboration, from plan-driven to value-driven. Without an Agile mindset, any framework will degrade into "Zombie Scrum."
@@ -104,8 +94,7 @@
 
 ## II. The Scrum Framework
 
-<a id="q11"></a>
-11. **Q: What is Scrum? What are its three pillars?**
+11. <a id="q11"></a>**Q: What is Scrum? What are its three pillars?**
    [[中]](04_agile_modle.md#q11) | [[日]](04_agile_modle_ja.md#q11) | [英](#q11)
 
    **A:** Scrum is the most popular Agile framework, grounded in **empiricism**—making decisions through observation and experimentation. Its three pillars are:
@@ -115,8 +104,7 @@
 
    Scrum forms a closed loop through 3 roles, 5 events, and 3 artifacts.
 
-<a id="q12"></a>
-12. **Q: What are the three roles in Scrum, and what are their responsibilities?**
+12. <a id="q12"></a>**Q: What are the three roles in Scrum, and what are their responsibilities?**
    [[中]](04_agile_modle.md#q12) | [[日]](04_agile_modle_ja.md#q12) | [英](#q12)
 
    **A:**
@@ -126,8 +114,7 @@
 
    The Scrum Team consists of all three, jointly accountable for the product.
 
-<a id="q13"></a>
-13. **Q: What are the five events (meetings) in Scrum?**
+13. <a id="q13"></a>**Q: What are the five events (meetings) in Scrum?**
    [[中]](04_agile_modle.md#q13) | [[日]](04_agile_modle_ja.md#q13) | [英](#q13)
 
    **A:**
@@ -137,8 +124,7 @@
    4. **Sprint Review**: at the end of the Sprint, demos the Increment to stakeholders and collects feedback (≤ 4h/month)
    5. **Sprint Retrospective**: the team reflects on process improvements (≤ 3h/month)
 
-<a id="q14"></a>
-14. **Q: What are the three artifacts in Scrum?**
+14. <a id="q14"></a>**Q: What are the three artifacts in Scrum?**
    [[中]](04_agile_modle.md#q14) | [[日]](04_agile_modle_ja.md#q14) | [英](#q14)
 
    **A:**
@@ -151,8 +137,7 @@
    - Sprint Backlog → **Sprint Goal**
    - Increment → **Definition of Done**
 
-<a id="q15"></a>
-15. **Q: How long is a Sprint typically? Why is it fixed?**
+15. <a id="q15"></a>**Q: How long is a Sprint typically? Why is it fixed?**
    [[中]](04_agile_modle.md#q15) | [[日]](04_agile_modle_ja.md#q15) | [英](#q15)
 
    **A:** Typically **1–4 weeks**, most commonly 2 weeks. Sprint length **should stay fixed within a product**, because:
@@ -162,8 +147,7 @@
 
    Once started, a Sprint cannot be extended; if the goal is clearly unachievable, the PO may **cancel the Sprint (Sprint Cancellation)**, but this is a rare last resort.
 
-<a id="q16"></a>
-16. **Q: What happens in Sprint Planning, and what does it produce?**
+16. <a id="q16"></a>**Q: What happens in Sprint Planning, and what does it produce?**
    [[中]](04_agile_modle.md#q16) | [[日]](04_agile_modle_ja.md#q16) | [英](#q16)
 
    **A:** Sprint Planning answers three questions:
@@ -173,8 +157,7 @@
 
    Output: the **Sprint Goal + Sprint Backlog**. The entire Scrum Team participates; the PO clarifies priorities and requirements, and the Developers decide on the commitment level.
 
-<a id="q17"></a>
-17. **Q: What is the purpose of the Daily Scrum, and what are common pitfalls?**
+17. <a id="q17"></a>**Q: What is the purpose of the Daily Scrum, and what are common pitfalls?**
    [[中]](04_agile_modle.md#q17) | [[日]](04_agile_modle_ja.md#q17) | [英](#q17)
 
    **A:** **Purpose**: Developers meet for 15 minutes each day to sync progress, surface impediments, and adjust the day's plan to advance the Sprint Goal. It is **not** a status report to the Scrum Master or a manager. The classic three questions (optional): What did I do yesterday? What will I do today? Any impediments?
@@ -185,8 +168,7 @@
    - Overrunning the timebox (strictly hold to 15 minutes)
    - The PO or manager interrogating individuals, breaking psychological safety
 
-<a id="q18"></a>
-18. **Q: What is the difference between the Sprint Review and the Sprint Retrospective?**
+18. <a id="q18"></a>**Q: What is the difference between the Sprint Review and the Sprint Retrospective?**
    [[中]](04_agile_modle.md#q18) | [[日]](04_agile_modle_ja.md#q18) | [英](#q18)
 
    **A:**
@@ -199,8 +181,7 @@
 
    In one sentence: **the Review is about "what we did," the Retrospective is about "how to do it better."**
 
-<a id="q19"></a>
-19. **Q: What is the difference between a Scrum Master and a Project Manager?**
+19. <a id="q19"></a>**Q: What is the difference between a Scrum Master and a Project Manager?**
    [[中]](04_agile_modle.md#q19) | [[日]](04_agile_modle_ja.md#q19) | [英](#q19)
 
    **A:**
@@ -214,8 +195,7 @@
 
    The Scrum Master does not assign tasks, chase progress, or evaluate performance.
 
-<a id="q20"></a>
-20. **Q: What is the most important capability for a Product Owner?**
+20. <a id="q20"></a>**Q: What is the most important capability for a Product Owner?**
    [[中]](04_agile_modle.md#q20) | [[日]](04_agile_modle_ja.md#q20) | [英](#q20)
 
    **A:** Core capabilities:
@@ -227,8 +207,7 @@
 
    Common failure modes: a part-time PO, a PO without decision authority, or a PO who turns the Backlog into a growing pile of to-dos.
 
-<a id="q21"></a>
-21. **Q: What is Product Backlog Refinement?**
+21. <a id="q21"></a>**Q: What is Product Backlog Refinement?**
    [[中]](04_agile_modle.md#q21) | [[日]](04_agile_modle_ja.md#q21) | [英](#q21)
 
    **A:** Backlog Refinement (also called Grooming) is an **ongoing** activity (not a formal Scrum event), led by the PO with participation from the whole team, aimed at keeping the Backlog in a **DEEP** state:
@@ -239,8 +218,7 @@
 
    Typically 5–10% of Sprint time is spent on refinement, including splitting large Stories, adding acceptance criteria, estimating, and ordering.
 
-<a id="q22"></a>
-22. **Q: Can new requirements be added mid-Sprint?**
+22. <a id="q22"></a>**Q: Can new requirements be added mid-Sprint?**
    [[中]](04_agile_modle.md#q22) | [[日]](04_agile_modle_ja.md#q22) | [英](#q22)
 
    **A:** **In principle, no.** Once the Sprint Goal is set, the Sprint Backlog is "protected" for the development team. Injecting requirements mid-Sprint disrupts the cadence and undermines commitments. **How to handle it**:
@@ -256,8 +234,7 @@
 
 ## III. Kanban and the Kanban Method
 
-<a id="q23"></a>
-23. **Q: What is Kanban? How does it differ from Scrum?**
+23. <a id="q23"></a>**Q: What is Kanban? How does it differ from Scrum?**
    [[中]](04_agile_modle.md#q23) | [[日]](04_agile_modle_ja.md#q23) | [英](#q23)
 
    **A:** Kanban originated from the Toyota Production System and is a **flow-based, visual, pull-driven method**. It does not prescribe roles, events, or iterations, only that you: **visualize the workflow, limit WIP, manage flow, make policies explicit, implement feedback loops, and improve collaboratively**.
@@ -270,8 +247,7 @@
    | Metrics | Velocity | Lead Time / Throughput |
    | Fit | Product development | Operations, support, diverse tasks |
 
-<a id="q24"></a>
-24. **Q: What are the six core practices of Kanban?**
+24. <a id="q24"></a>**Q: What are the six core practices of Kanban?**
    [[中]](04_agile_modle.md#q24) | [[日]](04_agile_modle_ja.md#q24) | [英](#q24)
 
    **A:**
@@ -282,8 +258,7 @@
    5. **Implement feedback loops** (daily standups, replenishment meetings, delivery meetings)
    6. **Improve collaboratively, evolve experimentally** (Kaizen)
 
-<a id="q25"></a>
-25. **Q: What is a WIP (Work In Progress) limit? Why is it important?**
+25. <a id="q25"></a>**Q: What is a WIP (Work In Progress) limit? Why is it important?**
    [[中]](04_agile_modle.md#q25) | [[日]](04_agile_modle_ja.md#q25) | [英](#q25)
 
    **A:** A WIP limit is the **maximum number of items simultaneously in a given workflow state**. Its benefits:
@@ -294,8 +269,7 @@
 
    Rule of thumb: start with a WIP of 1–1.5× team size, then gradually lower it.
 
-<a id="q26"></a>
-26. **Q: What is a Cumulative Flow Diagram (CFD)?**
+26. <a id="q26"></a>**Q: What is a Cumulative Flow Diagram (CFD)?**
    [[中]](04_agile_modle.md#q26) | [[日]](04_agile_modle_ja.md#q26) | [英](#q26)
 
    **A:** The CFD is a core Kanban visualization: the x-axis is time and the y-axis is cumulative item count, with each state stacked in a different color. From it you can read:
@@ -306,8 +280,7 @@
 
    A healthy CFD has bands rising in parallel; a bulging band signals a bottleneck or blockage.
 
-<a id="q27"></a>
-27. **Q: What are Lead Time, Cycle Time, and Throughput?**
+27. <a id="q27"></a>**Q: What are Lead Time, Cycle Time, and Throughput?**
    [[中]](04_agile_modle.md#q27) | [[日]](04_agile_modle_ja.md#q27) | [英](#q27)
 
    **A:**
@@ -317,8 +290,7 @@
 
    Classic analogy: Lead Time = from ordering to receiving your pizza; Cycle Time = from starting to make the pizza to it coming out of the oven; Throughput = how many pizzas come out per hour.
 
-<a id="q28"></a>
-28. **Q: What is Scrumban?**
+28. <a id="q28"></a>**Q: What is Scrumban?**
    [[中]](04_agile_modle.md#q28) | [[日]](04_agile_modle_ja.md#q28) | [英](#q28)
 
    **A:** Scrumban is a **hybrid of Scrum and Kanban**: it retains Scrum's roles, Sprint cadence, and Review/Retro, while introducing Kanban's visualization and WIP limits. It is commonly used when:
@@ -334,8 +306,7 @@
 
 ## IV. User Stories and Requirements Management
 
-<a id="q29"></a>
-29. **Q: What is a User Story? What is the standard format?**
+29. <a id="q29"></a>**Q: What is a User Story? What is the standard format?**
    [[中]](04_agile_modle.md#q29) | [[日]](04_agile_modle_ja.md#q29) | [英](#q29)
 
    **A:** A User Story is a short expression of a requirement **from the user's perspective**. The classic template:
@@ -347,8 +318,7 @@
 
    A User Story is not an exhaustive requirements document but **a starting point for a conversation** — the details are filled in through discussion.
 
-<a id="q30"></a>
-30. **Q: What is the INVEST principle?**
+30. <a id="q30"></a>**Q: What is the INVEST principle?**
    [[中]](04_agile_modle.md#q30) | [[日]](04_agile_modle_ja.md#q30) | [英](#q30)
 
    **A:** INVEST is a set of six criteria for evaluating the quality of a User Story:
@@ -359,8 +329,7 @@
    - **S**mall: small enough to complete within a single Sprint
    - **T**estable: has clear acceptance criteria
 
-<a id="q31"></a>
-31. **Q: What are the 3Cs of a User Story?**
+31. <a id="q31"></a>**Q: What are the 3Cs of a User Story?**
    [[中]](04_agile_modle.md#q31) | [[日]](04_agile_modle_ja.md#q31) | [英](#q31)
 
    **A:** The 3Cs are the three elements of a User Story proposed by Ron Jeffries:
@@ -370,8 +339,7 @@
 
    Core idea: **the card is a token that promises a conversation, not the full text of the requirement**.
 
-<a id="q32"></a>
-32. **Q: What is the hierarchical relationship between Epic, Feature, User Story, and Task?**
+32. <a id="q32"></a>**Q: What is the hierarchical relationship between Epic, Feature, User Story, and Task?**
    [[中]](04_agile_modle.md#q32) | [[日]](04_agile_modle_ja.md#q32) | [英](#q32)
 
    **A:** From largest to smallest requirement granularity:
@@ -382,8 +350,7 @@
 
    Tasks are internal to the team and are usually not visible to the PO; the PO mainly manages down to the Story level.
 
-<a id="q33"></a>
-33. **Q: What are Acceptance Criteria? What are common formats?**
+33. <a id="q33"></a>**Q: What are Acceptance Criteria? What are common formats?**
    [[中]](04_agile_modle.md#q33) | [[日]](04_agile_modle_ja.md#q33) | [英](#q33)
 
    **A:** Acceptance criteria describe the specific, verifiable conditions under which **a Story is considered done**, defined jointly by the PO and the team. Common formats:
@@ -402,8 +369,7 @@
    Then the system sends a reset email to that address within 1 minute
    ```
 
-<a id="q34"></a>
-34. **Q: How do you split a large User Story?**
+34. <a id="q34"></a>**Q: How do you split a large User Story?**
    [[中]](04_agile_modle.md#q34) | [[日]](04_agile_modle_ja.md#q34) | [英](#q34)
 
    **A:** Common splitting techniques (SPIDR and similar patterns):
@@ -423,8 +389,7 @@
 
 ## V. Agile Estimation and Planning
 
-<a id="q35"></a>
-35. **Q: What are Story Points? Why not use hours?**
+35. <a id="q35"></a>**Q: What are Story Points? Why not use hours?**
    [[中]](04_agile_modle.md#q35) | [[日]](04_agile_modle_ja.md#q35) | [英](#q35)
 
    **A:** Story Points are a **relative estimation unit** that jointly considers **complexity, effort, and uncertainty**. Reasons to use them instead of hours:
@@ -435,8 +400,7 @@
 
    Story Points typically use the **Fibonacci sequence** (1, 2, 3, 5, 8, 13, 21, ...), since the growing spacing reflects the increased estimation uncertainty of larger stories.
 
-<a id="q36"></a>
-36. **Q: What is Planning Poker?**
+36. <a id="q36"></a>**Q: What is Planning Poker?**
    [[中]](04_agile_modle.md#q36) | [[日]](04_agile_modle_ja.md#q36) | [英](#q36)
 
    **A:** Planning Poker is a collaborative team estimation technique:
@@ -448,8 +412,7 @@
 
    Advantages: **avoids anchoring bias** (in sequential estimation, later voters are influenced by earlier ones), leverages collective wisdom, and surfaces hidden risks and knowledge gaps.
 
-<a id="q37"></a>
-37. **Q: What is Velocity, and how do you use it?**
+37. <a id="q37"></a>**Q: What is Velocity, and how do you use it?**
    [[中]](04_agile_modle.md#q37) | [[日]](04_agile_modle_ja.md#q37) | [英](#q37)
 
    **A:** Velocity is the **average number of Story Points a team completes per Sprint**. Uses:
@@ -462,8 +425,7 @@
    - Do not use it to evaluate individual performance (it induces estimate inflation)
    - For newly formed teams, Velocity fluctuates significantly during the first 3 Sprints, which is normal
 
-<a id="q38"></a>
-38. **Q: What is Release Planning?**
+38. <a id="q38"></a>**Q: What is Release Planning?**
    [[中]](04_agile_modle.md#q38) | [[日]](04_agile_modle_ja.md#q38) | [英](#q38)
 
    **A:** Release Planning is **mid-range planning across multiple Sprints**, answering "when can we release which features?" Steps:
@@ -476,8 +438,7 @@
 
    Key idea: **scope, time, and resources — pick two**. Agile typically fixes time and resources and lets scope flex.
 
-<a id="q39"></a>
-39. **Q: What are Burndown and Burnup Charts?**
+39. <a id="q39"></a>**Q: What are Burndown and Burnup Charts?**
    [[中]](04_agile_modle.md#q39) | [[日]](04_agile_modle_ja.md#q39) | [英](#q39)
 
    **A:**
@@ -486,8 +447,7 @@
 
    **Advantage of the Burnup**: it can show **scope changes** — if the total scope line rises, requirements were added mid-flight, whereas a Burndown may misleadingly suggest the team is not making progress. For that reason, Burnups are better suited to release-level tracking.
 
-<a id="q40"></a>
-40. **Q: How do you address the problem of over-committing and missing the Sprint goal?**
+40. <a id="q40"></a>**Q: How do you address the problem of over-committing and missing the Sprint goal?**
    [[中]](04_agile_modle.md#q40) | [[日]](04_agile_modle_ja.md#q40) | [英](#q40)
 
    **A:** Strategies:
@@ -505,8 +465,7 @@
 
 ## VI. Agile Metrics and Continuous Improvement
 
-<a id="q41"></a>
-41. **Q: What metrics are commonly used in Agile projects?**
+41. <a id="q41"></a>**Q: What metrics are commonly used in Agile projects?**
    [[中]](04_agile_modle.md#q41) | [[日]](04_agile_modle_ja.md#q41) | [英](#q41)
 
    **A:** They fall into four broad categories:
@@ -517,8 +476,7 @@
 
    **Principle**: **measure outcomes over outputs**. Shipping a feature does not equal realizing value.
 
-<a id="q42"></a>
-42. **Q: What are the four key DORA metrics?**
+42. <a id="q42"></a>**Q: What are the four key DORA metrics?**
    [[中]](04_agile_modle.md#q42) | [[日]](04_agile_modle_ja.md#q42) | [英](#q42)
 
    **A:** The four DevOps high-performance metrics proposed by DORA (DevOps Research and Assessment):
@@ -529,8 +487,7 @@
 
    Elite team benchmarks (per Google's reports): multiple deployments per day, <1 day lead time, <15% failure rate, <1 hour recovery time.
 
-<a id="q43"></a>
-43. **Q: How do you make a Sprint Retrospective effective?**
+43. <a id="q43"></a>**Q: How do you make a Sprint Retrospective effective?**
    [[中]](04_agile_modle.md#q43) | [[日]](04_agile_modle_ja.md#q43) | [英](#q43)
 
    **A:** Keys to an effective Retro:
@@ -543,8 +500,7 @@
 
    The heart of the practice is a **culture of continuous improvement**, not the meeting itself.
 
-<a id="q44"></a>
-44. **Q: What is "Zombie Scrum," and how do you recognize it?**
+44. <a id="q44"></a>**Q: What is "Zombie Scrum," and how do you recognize it?**
    [[中]](04_agile_modle.md#q44) | [[日]](04_agile_modle_ja.md#q44) | [英](#q44)
 
    **A:** Zombie Scrum refers to a state where a team **does Scrum in form but has lost its Agile essence**. Typical symptoms:
@@ -558,8 +514,7 @@
 
    The cure: return to Agile values and principles, focus on "delivering real value," and rebuild psychological safety and a culture of experimentation.
 
-<a id="q45"></a>
-45. **Q: What is Technical Debt, and how do you manage it?**
+45. <a id="q45"></a>**Q: What is Technical Debt, and how do you manage it?**
    [[中]](04_agile_modle.md#q45) | [[日]](04_agile_modle_ja.md#q45) | [英](#q45)
 
    **A:** Ward Cunningham's metaphor: **suboptimal technical decisions** made in order to ship quickly, which accrue "interest" over time (maintenance cost, difficulty changing). Classifications:
@@ -578,8 +533,7 @@
 
 ## VII. Scaled Agile and Engineering Practices
 
-<a id="q46"></a>
-46. **Q: What are the common scaled Agile frameworks, and what are their characteristics?**
+46. <a id="q46"></a>**Q: What are the common scaled Agile frameworks, and what are their characteristics?**
    [[中]](04_agile_modle.md#q46) | [[日]](04_agile_modle_ja.md#q46) | [英](#q46)
 
    **A:**
@@ -589,8 +543,7 @@
    - **Scrum@Scale**: proposed by Jeff Sutherland, extending Scrum recursively as a "Scrum of Scrums."
    - **Spotify Model**: Squad/Tribe/Chapter/Guild organizational structure, valuing culture over framework.
 
-<a id="q47"></a>
-47. **Q: What is PI Planning in SAFe?**
+47. <a id="q47"></a>**Q: What is PI Planning in SAFe?**
    [[中]](04_agile_modle.md#q47) | [[日]](04_agile_modle_ja.md#q47) | [英](#q47)
 
    **A:** PI (Program Increment) Planning is the core event in SAFe, typically held **once every 8–12 weeks over 2 days**, with the entire ART (50–125 people) attending. Purposes:
@@ -601,8 +554,7 @@
 
    PI Planning is the heartbeat of SAFe's organizational cadence — expensive to run once, but greatly improves cross-team coordination.
 
-<a id="q48"></a>
-48. **Q: What are Continuous Integration (CI), Continuous Delivery (CD), and Continuous Deployment?**
+48. <a id="q48"></a>**Q: What are Continuous Integration (CI), Continuous Delivery (CD), and Continuous Deployment?**
    [[中]](04_agile_modle.md#q48) | [[日]](04_agile_modle_ja.md#q48) | [英](#q48)
 
    **A:**
@@ -612,8 +564,7 @@
 
    Relationship: **CI ⊂ CD ⊂ Continuous Deployment**. Netflix and Facebook release hundreds of times per day, powered by a full Continuous Deployment pipeline, robust test automation, and progressive/canary releases.
 
-<a id="q49"></a>
-49. **Q: What are the core engineering practices of XP (Extreme Programming)?**
+49. <a id="q49"></a>**Q: What are the core engineering practices of XP (Extreme Programming)?**
    [[中]](04_agile_modle.md#q49) | [[日]](04_agile_modle_ja.md#q49) | [英](#q49)
 
    **A:** XP (Kent Beck) focuses on engineering practices and often complements Scrum:
@@ -629,8 +580,7 @@
 
    Scrum tells you **what to do and when**; XP tells you **how to do it well**.
 
-<a id="q50"></a>
-50. **Q: What are the most common challenges in transitioning from Waterfall to Agile, and how do you address them?**
+50. <a id="q50"></a>**Q: What are the most common challenges in transitioning from Waterfall to Agile, and how do you address them?**
    [[中]](04_agile_modle.md#q50) | [[日]](04_agile_modle_ja.md#q50) | [英](#q50)
 
    **A:** **Common challenges**:

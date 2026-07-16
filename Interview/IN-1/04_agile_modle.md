@@ -22,14 +22,12 @@
 
 ## 一、敏捷基础与思想
 
-<a id="q1"></a>
-1. **问：什么是敏捷（Agile）？它的核心思想是什么？**
+1. <a id="q1"></a>**问：什么是敏捷（Agile）？它的核心思想是什么？**
    [中](#q1) | [[日]](04_agile_modle_ja.md#q1) | [[英]](04_agile_modle_en.md#q1)
 
    **答：** 敏捷是一种以**迭代增量交付、快速反馈、拥抱变化**为核心的软件开发理念。它强调小批量、短周期地交付可工作的软件，通过持续与客户协作和团队自组织来应对不确定性。敏捷不是具体方法，而是一组价值观和原则，Scrum、Kanban、XP 等都是其具体实践。
 
-<a id="q2"></a>
-2. **问：请说出《敏捷宣言》的 4 个价值观。**
+2. <a id="q2"></a>**问：请说出《敏捷宣言》的 4 个价值观。**
    [中](#q2) | [[日]](04_agile_modle_ja.md#q2) | [[英]](04_agile_modle_en.md#q2)
 
    **答：** 敏捷宣言（Agile Manifesto，2001）提出四对价值观（左项优于右项）：
@@ -40,26 +38,22 @@
 
    右项仍有价值，但左项更被重视。
 
-<a id="q3"></a>
-3. **问：敏捷宣言的 12 条原则你了解哪些关键点？**
+3. <a id="q3"></a>**问：敏捷宣言的 12 条原则你了解哪些关键点？**
    [中](#q3) | [[日]](04_agile_modle_ja.md#q3) | [[英]](04_agile_modle_en.md#q3)
 
    **答：** 关键点包括：**尽早持续交付价值**、**欢迎变化**（即使在开发后期）、**频繁交付可工作软件**（几周到几个月）、**业务与开发每日协作**、**信任并激励团队**、**面对面沟通最有效**、**可工作软件是主要进度度量**、**可持续开发节奏**、**技术卓越与良好设计**、**简洁**（不做的艺术）、**自组织团队**、**定期反思与调整**。
 
-<a id="q4"></a>
-4. **问：敏捷与瀑布模型的核心区别是什么？**
+4. <a id="q4"></a>**问：敏捷与瀑布模型的核心区别是什么？**
    [中](#q4) | [[日]](04_agile_modle_ja.md#q4) | [[英]](04_agile_modle_en.md#q4)
 
    **答：** 瀑布是**顺序、阶段门、大批量**（需求→设计→开发→测试→上线），前期锁定需求；敏捷是**迭代、增量、小批量**，允许需求持续演进。瀑布适合需求明确、变更成本高的项目（航天、建筑）；敏捷适合需求不确定、快速演化的软件产品。核心差别是**变更的成本假设**：瀑布假设变更代价高故前期锁死；敏捷假设变更不可避免故降低单次变更成本。
 
-<a id="q5"></a>
-5. **问：什么是迭代（Iteration）和增量（Increment）？**
+5. <a id="q5"></a>**问：什么是迭代（Iteration）和增量（Increment）？**
    [中](#q5) | [[日]](04_agile_modle_ja.md#q5) | [[英]](04_agile_modle_en.md#q5)
 
    **答：** **迭代**指在固定的短时间（1–4 周）内完成"规划→开发→测试→评审"的完整周期；**增量**指每次迭代产出的可工作、可交付的软件功能片段。多次迭代累积形成完整产品。迭代是**过程**，增量是**产物**。经典比喻：画蒙娜丽莎，瀑布是从左上开始逐格画到右下；敏捷是先画整幅草图，再逐轮加细节。
 
-<a id="q6"></a>
-6. **问：常见的敏捷方法/框架有哪些？**
+6. <a id="q6"></a>**问：常见的敏捷方法/框架有哪些？**
    [中](#q6) | [[日]](04_agile_modle_ja.md#q6) | [[英]](04_agile_modle_en.md#q6)
 
    **答：** 主流敏捷方法包括：
@@ -70,14 +64,12 @@
    - **Crystal**、**FDD（特性驱动开发）**、**DSDM**
    - 规模化：**SAFe**、**LeSS**、**Nexus**、**Scrum@Scale**
 
-<a id="q7"></a>
-7. **问：敏捷适用于所有类型的项目吗？**
+7. <a id="q7"></a>**问：敏捷适用于所有类型的项目吗？**
    [中](#q7) | [[日]](04_agile_modle_ja.md#q7) | [[英]](04_agile_modle_en.md#q7)
 
    **答：** 不是。敏捷最适合**需求不确定、技术复杂、需要快速反馈**的场景（如互联网产品、创新研发）。不太适合的场景：需求完全明确且不变（生产线复制）、安全关键系统（航天医疗需严格文档）、强合同约束的固定价项目、无法与客户频繁互动的场景。可以用**混合型（Hybrid）**：整体瀑布 + 局部敏捷。
 
-<a id="q8"></a>
-8. **问：什么是 Definition of Ready（DoR）和 Definition of Done（DoD）？**
+8. <a id="q8"></a>**问：什么是 Definition of Ready（DoR）和 Definition of Done（DoD）？**
    [中](#q8) | [[日]](04_agile_modle_ja.md#q8) | [[英]](04_agile_modle_en.md#q8)
 
    **答：**
@@ -86,14 +78,12 @@
 
    两者是团队共同商定的**质量契约**，避免"完成了 90%"的模糊表述。
 
-<a id="q9"></a>
-9. **问：什么是最小可行产品（MVP）？**
+9. <a id="q9"></a>**问：什么是最小可行产品（MVP）？**
    [中](#q9) | [[日]](04_agile_modle_ja.md#q9) | [[英]](04_agile_modle_en.md#q9)
 
    **答：** MVP（Minimum Viable Product）是**能验证核心价值假设的最简版本产品**。它不是功能残缺的产品，而是**聚焦最小功能集**用于快速上线并从真实用户获取反馈，以最小成本降低最大风险。MVP 之后再迭代扩展。经典例子：Dropbox 用一段演示视频验证需求，Zappos 创始人手动跑腿采购验证在线卖鞋模式。
 
-<a id="q10"></a>
-10. **问：什么是"敏捷心态（Agile Mindset）"？**
+10. <a id="q10"></a>**问：什么是"敏捷心态（Agile Mindset）"？**
    [中](#q10) | [[日]](04_agile_modle_ja.md#q10) | [[英]](04_agile_modle_en.md#q10)
 
    **答：** 敏捷心态强调**成长思维、拥抱不确定性、以客户价值为中心、持续学习与实验、心理安全、失败即学习**。真正的敏捷转型不是"实施 Scrum"，而是组织文化和思维方式的转变——从命令控制到赋能协作，从计划驱动到价值驱动。没有敏捷心态，任何框架都会退化为"僵尸 Scrum（Zombie Scrum）"。
@@ -104,8 +94,7 @@
 
 ## 二、Scrum 框架
 
-<a id="q11"></a>
-11. **问：什么是 Scrum？它的三大支柱是什么？**
+11. <a id="q11"></a>**问：什么是 Scrum？它的三大支柱是什么？**
    [中](#q11) | [[日]](04_agile_modle_ja.md#q11) | [[英]](04_agile_modle_en.md#q11)
 
    **答：** Scrum 是最流行的敏捷框架，基于**经验主义（Empiricism）**——通过观察和实验做决策。三大支柱：
@@ -115,8 +104,7 @@
 
    Scrum 通过 3 个角色、5 个事件、3 个工件形成闭环。
 
-<a id="q12"></a>
-12. **问：Scrum 有哪三个角色？各自职责是什么？**
+12. <a id="q12"></a>**问：Scrum 有哪三个角色？各自职责是什么？**
    [中](#q12) | [[日]](04_agile_modle_ja.md#q12) | [[英]](04_agile_modle_en.md#q12)
 
    **答：**
@@ -126,8 +114,7 @@
 
    Scrum Team 是这三者的整体，共同对产品负责。
 
-<a id="q13"></a>
-13. **问：Scrum 的 5 个事件（会议）是什么？**
+13. <a id="q13"></a>**问：Scrum 的 5 个事件（会议）是什么？**
    [中](#q13) | [[日]](04_agile_modle_ja.md#q13) | [[英]](04_agile_modle_en.md#q13)
 
    **答：**
@@ -137,8 +124,7 @@
    4. **Sprint Review（迭代评审）**：Sprint 结束，向干系人演示增量，收集反馈（≤ 4h/月）
    5. **Sprint Retrospective（回顾会）**：团队反思过程改进（≤ 3h/月）
 
-<a id="q14"></a>
-14. **问：Scrum 的 3 个工件（Artifacts）是什么？**
+14. <a id="q14"></a>**问：Scrum 的 3 个工件（Artifacts）是什么？**
    [中](#q14) | [[日]](04_agile_modle_ja.md#q14) | [[英]](04_agile_modle_en.md#q14)
 
    **答：**
@@ -151,8 +137,7 @@
    - Sprint Backlog → **Sprint Goal**
    - Increment → **Definition of Done**
 
-<a id="q15"></a>
-15. **问：Sprint 长度一般多久？为什么固定？**
+15. <a id="q15"></a>**问：Sprint 长度一般多久？为什么固定？**
    [中](#q15) | [[日]](04_agile_modle_ja.md#q15) | [[英]](04_agile_modle_en.md#q15)
 
    **答：** 通常 **1–4 周**，最常见 2 周。Sprint 长度**在一个产品中应保持固定**，因为：
@@ -162,8 +147,7 @@
 
    Sprint 一旦开始不能延长；如果目标已明显不可能达成，PO 可以**中止 Sprint（Sprint Cancellation）**，但这是极少见的最后手段。
 
-<a id="q16"></a>
-16. **问：Sprint Planning 会议做什么？输出什么？**
+16. <a id="q16"></a>**问：Sprint Planning 会议做什么？输出什么？**
    [中](#q16) | [[日]](04_agile_modle_ja.md#q16) | [[英]](04_agile_modle_en.md#q16)
 
    **答：** Sprint Planning 回答三个问题：
@@ -173,8 +157,7 @@
 
    输出：**Sprint Goal + Sprint Backlog**。整个 Scrum Team 参与，PO 澄清优先级和需求，Developers 决定承诺量。
 
-<a id="q17"></a>
-17. **问：Daily Scrum（每日站会）的目的和常见误区？**
+17. <a id="q17"></a>**问：Daily Scrum（每日站会）的目的和常见误区？**
    [中](#q17) | [[日]](04_agile_modle_ja.md#q17) | [[英]](04_agile_modle_en.md#q17)
 
    **答：** **目的**：Developers 每天 15 分钟同步进展、发现障碍、调整当日计划以推进 Sprint Goal。**不是**向 SM 或经理汇报。经典三问（可选）：昨天做了什么？今天做什么？有什么障碍？
@@ -185,8 +168,7 @@
    - 站会超时（严格控制 15 分钟）
    - PO/经理点名审问，破坏心理安全
 
-<a id="q18"></a>
-18. **问：Sprint Review 和 Sprint Retrospective 的区别？**
+18. <a id="q18"></a>**问：Sprint Review 和 Sprint Retrospective 的区别？**
    [中](#q18) | [[日]](04_agile_modle_ja.md#q18) | [[英]](04_agile_modle_en.md#q18)
 
    **答：**
@@ -199,8 +181,7 @@
 
    一句话：**Review 谈"做了什么"，Retro 谈"怎么做得更好"**。
 
-<a id="q19"></a>
-19. **问：Scrum Master 和 Project Manager 有何区别？**
+19. <a id="q19"></a>**问：Scrum Master 和 Project Manager 有何区别？**
    [中](#q19) | [[日]](04_agile_modle_ja.md#q19) | [[英]](04_agile_modle_en.md#q19)
 
    **答：**
@@ -214,8 +195,7 @@
 
    Scrum Master 不安排任务、不催进度、不评估绩效。
 
-<a id="q20"></a>
-20. **问：Product Owner 最重要的能力是什么？**
+20. <a id="q20"></a>**问：Product Owner 最重要的能力是什么？**
    [中](#q20) | [[日]](04_agile_modle_ja.md#q20) | [[英]](04_agile_modle_en.md#q20)
 
    **答：** 核心能力：
@@ -227,8 +207,7 @@
 
    一个失败的 PO 常见于：兼职、无决策权、把 Backlog 变成待办清单堆积。
 
-<a id="q21"></a>
-21. **问：什么是 Product Backlog Refinement（Backlog 梳理）？**
+21. <a id="q21"></a>**问：什么是 Product Backlog Refinement（Backlog 梳理）？**
    [中](#q21) | [[日]](04_agile_modle_ja.md#q21) | [[英]](04_agile_modle_en.md#q21)
 
    **答：** Backlog Refinement（又称 Grooming）是**持续进行**的活动（不是正式 Scrum 事件），由 PO 主导、全团队参与，目的是让 Backlog 保持**DEEP** 状态：
@@ -239,8 +218,7 @@
 
    通常每 Sprint 花 5–10% 时间做 Refinement，包括拆分大 Story、补充验收标准、估算、排序。
 
-<a id="q22"></a>
-22. **问：Sprint 中途可以增加新需求吗？**
+22. <a id="q22"></a>**问：Sprint 中途可以增加新需求吗？**
    [中](#q22) | [[日]](04_agile_modle_ja.md#q22) | [[英]](04_agile_modle_en.md#q22)
 
    **答：** **原则上不可以**。Sprint Goal 一旦确定，Sprint Backlog 内容对开发团队是"保护"的。中途插入需求会破坏节奏、损害承诺。**处理方式**：
@@ -256,8 +234,7 @@
 
 ## 三、Kanban 与看板方法
 
-<a id="q23"></a>
-23. **问：什么是 Kanban？它与 Scrum 有何区别？**
+23. <a id="q23"></a>**问：什么是 Kanban？它与 Scrum 有何区别？**
    [中](#q23) | [[日]](04_agile_modle_ja.md#q23) | [[英]](04_agile_modle_en.md#q23)
 
    **答：** Kanban（看板）源自丰田生产系统，是一种**基于流的可视化拉动方法**。它不规定角色、事件或迭代，只要求：**可视化工作流、限制 WIP、管理流动、显式规则、反馈循环、协作改进**。
@@ -270,8 +247,7 @@
    | 度量 | Velocity | Lead Time / Throughput |
    | 适用 | 产品开发 | 运维、支持、任务多样 |
 
-<a id="q24"></a>
-24. **问：Kanban 的六大核心实践是什么？**
+24. <a id="q24"></a>**问：Kanban 的六大核心实践是什么？**
    [中](#q24) | [[日]](04_agile_modle_ja.md#q24) | [[英]](04_agile_modle_en.md#q24)
 
    **答：**
@@ -282,8 +258,7 @@
    5. **反馈循环**（每日站会、补充会议、交付会议）
    6. **协作改进、实验演化**（Kaizen）
 
-<a id="q25"></a>
-25. **问：什么是 WIP（Work In Progress）限制？为什么重要？**
+25. <a id="q25"></a>**问：什么是 WIP（Work In Progress）限制？为什么重要？**
    [中](#q25) | [[日]](04_agile_modle_ja.md#q25) | [[英]](04_agile_modle_en.md#q25)
 
    **答：** WIP 限制是**每个工作状态列同时进行的任务数上限**。设定 WIP 限制的作用：
@@ -294,8 +269,7 @@
 
    经验：初始 WIP 设为团队人数的 1–1.5 倍，然后逐步降低。
 
-<a id="q26"></a>
-26. **问：什么是 Cumulative Flow Diagram（CFD，累积流图）？**
+26. <a id="q26"></a>**问：什么是 Cumulative Flow Diagram（CFD，累积流图）？**
    [中](#q26) | [[日]](04_agile_modle_ja.md#q26) | [[英]](04_agile_modle_en.md#q26)
 
    **答：** CFD 是 Kanban 核心可视化工具，横轴时间，纵轴累积任务数，每种状态用不同颜色堆叠。可读出：
@@ -306,8 +280,7 @@
 
    健康的 CFD 各色带平行上升；某色带鼓包说明有瓶颈或阻塞。
 
-<a id="q27"></a>
-27. **问：Lead Time、Cycle Time、Throughput 分别是什么？**
+27. <a id="q27"></a>**问：Lead Time、Cycle Time、Throughput 分别是什么？**
    [中](#q27) | [[日]](04_agile_modle_ja.md#q27) | [[英]](04_agile_modle_en.md#q27)
 
    **答：**
@@ -317,8 +290,7 @@
 
    经典类比：Lead Time = 从下单到收到披萨；Cycle Time = 从开始做披萨到出炉；Throughput = 每小时出几个披萨。
 
-<a id="q28"></a>
-28. **问：什么是 Scrumban？**
+28. <a id="q28"></a>**问：什么是 Scrumban？**
    [中](#q28) | [[日]](04_agile_modle_ja.md#q28) | [[英]](04_agile_modle_en.md#q28)
 
    **答：** Scrumban 是 **Scrum + Kanban 的混合方法**：保留 Scrum 的角色、Sprint 节奏、评审回顾，同时引入 Kanban 的可视化和 WIP 限制。常用于：
@@ -334,8 +306,7 @@
 
 ## 四、用户故事与需求管理
 
-<a id="q29"></a>
-29. **问：什么是用户故事（User Story）？标准格式是什么？**
+29. <a id="q29"></a>**问：什么是用户故事（User Story）？标准格式是什么？**
    [中](#q29) | [[日]](04_agile_modle_ja.md#q29) | [[英]](04_agile_modle_en.md#q29)
 
    **答：** User Story 是**从用户视角**描述功能的简短需求表达。经典模板：
@@ -347,8 +318,7 @@
 
    User Story 不是详尽需求文档，而是**对话的起点**——细节在讨论中补充。
 
-<a id="q30"></a>
-30. **问：INVEST 原则是什么？**
+30. <a id="q30"></a>**问：INVEST 原则是什么？**
    [中](#q30) | [[日]](04_agile_modle_ja.md#q30) | [[英]](04_agile_modle_en.md#q30)
 
    **答：** INVEST 是评估 User Story 好坏的 6 个标准：
@@ -359,8 +329,7 @@
    - **S**mall：足够小（能在一个 Sprint 内完成）
    - **T**estable：可测试（有明确验收标准）
 
-<a id="q31"></a>
-31. **问：User Story 的 3C 是什么？**
+31. <a id="q31"></a>**问：User Story 的 3C 是什么？**
    [中](#q31) | [[日]](04_agile_modle_ja.md#q31) | [[英]](04_agile_modle_en.md#q31)
 
    **答：** 3C 是 Ron Jeffries 提出的 User Story 三要素：
@@ -370,8 +339,7 @@
 
    核心思想：**卡片是承诺开对话的凭证，不是需求全文**。
 
-<a id="q32"></a>
-32. **问：Epic、Feature、User Story、Task 的层级关系？**
+32. <a id="q32"></a>**问：Epic、Feature、User Story、Task 的层级关系？**
    [中](#q32) | [[日]](04_agile_modle_ja.md#q32) | [[英]](04_agile_modle_en.md#q32)
 
    **答：** 从大到小的需求粒度层级：
@@ -382,8 +350,7 @@
 
    Task 是团队内部工作，通常不对 PO 可见；PO 主要管理到 Story 层。
 
-<a id="q33"></a>
-33. **问：什么是验收标准（Acceptance Criteria）？常见格式？**
+33. <a id="q33"></a>**问：什么是验收标准（Acceptance Criteria）？常见格式？**
    [中](#q33) | [[日]](04_agile_modle_ja.md#q33) | [[英]](04_agile_modle_en.md#q33)
 
    **答：** 验收标准描述 **Story 何时算完成**的具体、可验证的条件，由 PO 与团队共同定义。常见格式：
@@ -402,8 +369,7 @@
    Then 系统在 1 分钟内发送重置邮件到该邮箱
    ```
 
-<a id="q34"></a>
-34. **问：如何拆分大的 User Story？**
+34. <a id="q34"></a>**问：如何拆分大的 User Story？**
    [中](#q34) | [[日]](04_agile_modle_ja.md#q34) | [[英]](04_agile_modle_en.md#q34)
 
    **答：** 常用拆分技巧（SPIDR 或类似模式）：
@@ -423,8 +389,7 @@
 
 ## 五、敏捷估算与计划
 
-<a id="q35"></a>
-35. **问：什么是故事点（Story Point）？为什么不用工时？**
+35. <a id="q35"></a>**问：什么是故事点（Story Point）？为什么不用工时？**
    [中](#q35) | [[日]](04_agile_modle_ja.md#q35) | [[英]](04_agile_modle_en.md#q35)
 
    **答：** Story Point 是**相对估算单位**，综合考虑**复杂度、工作量、不确定性**三个维度。使用它而非工时的原因：
@@ -435,8 +400,7 @@
 
    常用 **斐波那契数列**（1, 2, 3, 5, 8, 13, 21, ...），因为间距扩大反映了大 Story 的估算不确定性。
 
-<a id="q36"></a>
-36. **问：什么是计划扑克（Planning Poker）？**
+36. <a id="q36"></a>**问：什么是计划扑克（Planning Poker）？**
    [中](#q36) | [[日]](04_agile_modle_ja.md#q36) | [[英]](04_agile_modle_en.md#q36)
 
    **答：** Planning Poker 是团队协作估算技巧：
@@ -448,8 +412,7 @@
 
    优势：**避免锚定效应**（若逐个发言，后来者会被前者影响）、集思广益暴露隐藏风险和知识差。
 
-<a id="q37"></a>
-37. **问：什么是 Velocity（速率）？如何使用？**
+37. <a id="q37"></a>**问：什么是 Velocity（速率）？如何使用？**
    [中](#q37) | [[日]](04_agile_modle_ja.md#q37) | [[英]](04_agile_modle_en.md#q37)
 
    **答：** Velocity 是团队**每个 Sprint 平均完成的故事点数**。用途：
@@ -462,8 +425,7 @@
    - 不能用它评估个人绩效（会诱发膨胀估算）
    - 新组建团队 Velocity 前 3 Sprint 波动大，属正常
 
-<a id="q38"></a>
-38. **问：什么是发布计划（Release Planning）？**
+38. <a id="q38"></a>**问：什么是发布计划（Release Planning）？**
    [中](#q38) | [[日]](04_agile_modle_ja.md#q38) | [[英]](04_agile_modle_en.md#q38)
 
    **答：** Release Planning 是**跨多个 Sprint 的中期规划**，回答"何时能发布哪些功能"。步骤：
@@ -476,8 +438,7 @@
 
    关键理念：**范围、时间、资源三选二**——敏捷通常固定时间和资源，让范围灵活。
 
-<a id="q39"></a>
-39. **问：什么是燃尽图（Burndown Chart）和燃起图（Burnup Chart）？**
+39. <a id="q39"></a>**问：什么是燃尽图（Burndown Chart）和燃起图（Burnup Chart）？**
    [中](#q39) | [[日]](04_agile_modle_ja.md#q39) | [[英]](04_agile_modle_en.md#q39)
 
    **答：**
@@ -486,8 +447,7 @@
 
    **Burnup 的优势**：能显示**范围变化**——若总范围线上升说明中途加了需求，而 Burndown 会误以为团队没进展。因此 Burnup 更适合发布级别的跟踪。
 
-<a id="q40"></a>
-40. **问：如何应对承诺过多完不成的问题？**
+40. <a id="q40"></a>**问：如何应对承诺过多完不成的问题？**
    [中](#q40) | [[日]](04_agile_modle_ja.md#q40) | [[英]](04_agile_modle_en.md#q40)
 
    **答：** 应对策略：
@@ -505,8 +465,7 @@
 
 ## 六、敏捷度量与持续改进
 
-<a id="q41"></a>
-41. **问：敏捷项目常用的度量指标有哪些？**
+41. <a id="q41"></a>**问：敏捷项目常用的度量指标有哪些？**
    [中](#q41) | [[日]](04_agile_modle_ja.md#q41) | [[英]](04_agile_modle_en.md#q41)
 
    **答：** 分四大类：
@@ -517,8 +476,7 @@
 
    **原则**：**度量结果而非产出**（Outcomes over Outputs）。功能上线不等于价值实现。
 
-<a id="q42"></a>
-42. **问：什么是 DORA 四大关键指标？**
+42. <a id="q42"></a>**问：什么是 DORA 四大关键指标？**
    [中](#q42) | [[日]](04_agile_modle_ja.md#q42) | [[英]](04_agile_modle_en.md#q42)
 
    **答：** DORA（DevOps Research and Assessment）研究提出的 4 个 DevOps 高绩效指标：
@@ -529,8 +487,7 @@
 
    精英团队标准（Google 报告）：日多次部署、<1 天上线、<15% 失败率、<1 小时恢复。
 
-<a id="q43"></a>
-43. **问：Sprint Retrospective 如何做才有效？**
+43. <a id="q43"></a>**问：Sprint Retrospective 如何做才有效？**
    [中](#q43) | [[日]](04_agile_modle_ja.md#q43) | [[英]](04_agile_modle_en.md#q43)
 
    **答：** 有效 Retro 的关键：
@@ -543,8 +500,7 @@
 
    核心是**持续改进的文化**，而非会议本身。
 
-<a id="q44"></a>
-44. **问：什么是"僵尸敏捷（Zombie Scrum）"？如何识别？**
+44. <a id="q44"></a>**问：什么是"僵尸敏捷（Zombie Scrum）"？如何识别？**
    [中](#q44) | [[日]](04_agile_modle_ja.md#q44) | [[英]](04_agile_modle_en.md#q44)
 
    **答：** Zombie Scrum 指**形式上做 Scrum，实质失去敏捷本质**的状态。典型症状：
@@ -558,8 +514,7 @@
 
    治疗：回到敏捷价值观和原则，聚焦"交付真实价值"，重建心理安全和实验文化。
 
-<a id="q45"></a>
-45. **问：什么是技术债（Technical Debt）？如何管理？**
+45. <a id="q45"></a>**问：什么是技术债（Technical Debt）？如何管理？**
    [中](#q45) | [[日]](04_agile_modle_ja.md#q45) | [[英]](04_agile_modle_en.md#q45)
 
    **答：** Ward Cunningham 提出的比喻：为快速交付而做的**次优技术决策**，会随时间累积"利息"（维护成本、变更困难）。分类：
@@ -578,8 +533,7 @@
 
 ## 七、规模化敏捷与工程实践
 
-<a id="q46"></a>
-46. **问：常见的规模化敏捷框架有哪些？各自特点？**
+46. <a id="q46"></a>**问：常见的规模化敏捷框架有哪些？各自特点？**
    [中](#q46) | [[日]](04_agile_modle_ja.md#q46) | [[英]](04_agile_modle_en.md#q46)
 
    **答：**
@@ -589,8 +543,7 @@
    - **Scrum@Scale**：Jeff Sutherland 提出，"Scrum of Scrums"递归扩展。
    - **Spotify Model**：Squad/Tribe/Chapter/Guild 组织结构，重视文化而非框架。
 
-<a id="q47"></a>
-47. **问：什么是 SAFe 中的 PI Planning？**
+47. <a id="q47"></a>**问：什么是 SAFe 中的 PI Planning？**
    [中](#q47) | [[日]](04_agile_modle_ja.md#q47) | [[英]](04_agile_modle_en.md#q47)
 
    **答：** PI（Program Increment）Planning 是 SAFe 的核心活动，通常**8–12 周一次、2 天**，一个 ART（50–125 人）全体参与。目的：
@@ -601,8 +554,7 @@
 
    PI Planning 是 SAFe 组织节奏的心跳，一次成本高但显著提升跨团队协同。
 
-<a id="q48"></a>
-48. **问：什么是持续集成（CI）、持续交付（CD）、持续部署？**
+48. <a id="q48"></a>**问：什么是持续集成（CI）、持续交付（CD）、持续部署？**
    [中](#q48) | [[日]](04_agile_modle_ja.md#q48) | [[英]](04_agile_modle_en.md#q48)
 
    **答：**
@@ -612,8 +564,7 @@
 
    关系：**CI ⊂ CD ⊂ Continuous Deployment**。Netflix、Facebook 一天可上线数百次，靠的是完整的 Continuous Deployment 流水线 + 强测试自动化 + 灰度发布。
 
-<a id="q49"></a>
-49. **问：XP（极限编程）的核心工程实践有哪些？**
+49. <a id="q49"></a>**问：XP（极限编程）的核心工程实践有哪些？**
    [中](#q49) | [[日]](04_agile_modle_ja.md#q49) | [[英]](04_agile_modle_en.md#q49)
 
    **答：** XP（Kent Beck）注重工程实践，与 Scrum 常互补：
@@ -629,8 +580,7 @@
 
    Scrum 告诉你**做什么/何时做**，XP 告诉你**如何做好**。
 
-<a id="q50"></a>
-50. **问：从瀑布向敏捷转型，最常见的挑战和应对策略？**
+50. <a id="q50"></a>**问：从瀑布向敏捷转型，最常见的挑战和应对策略？**
    [中](#q50) | [[日]](04_agile_modle_ja.md#q50) | [[英]](04_agile_modle_en.md#q50)
 
    **答：** **常见挑战**：
