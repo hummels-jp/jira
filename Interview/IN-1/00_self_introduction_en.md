@@ -226,3 +226,14 @@
     Based on that, my desired annual salary is between 12 million and 13 million JPY.
     I believe my experience and abilities will bring value to your company.
     I hope for compensation that reflects this.
+
+<a id="q15"></a>
+*   **日本の文化や好きなことわざはありますか？**
+
+    [中](00_self_introduction.md#q15) | [日](00_self_introduction_ja.md#q15) | [英](#q15)
+
+    I love Japanese culture and deeply respect people who make sincere efforts.
+    I also love Japanese proverbs — my favorite is "石の上にも三年" (Ishi no ue ni mo san nen).
+    It means: even a cold stone becomes warm if you sit on it for three years — persistence pays off.
+    I have spent 17 years in autonomous driving and AI, and this "three years on a stone" spirit has kept me going.
+    I truly believe that long-term dedication and steady accumulation are what create real value.
