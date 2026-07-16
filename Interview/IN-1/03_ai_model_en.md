@@ -29,7 +29,9 @@
 
 ## 1. Fundamentals of AI Models
 
+<a id="cnn"></a>
 ### 1.1 CNN (Convolutional Neural Network)
+[[中]](03_ai_model.md#cnn) | [[日]](03_ai_model_ja.md#cnn) | [英](#cnn)
 
 **Core idea:** Slide convolution kernels over input data (typically images) to extract local features. Characterized by **local connectivity** and **weight sharing**.
 
@@ -46,7 +48,9 @@
 
 ---
 
+<a id="rnn"></a>
 ### 1.2 RNN (Recurrent Neural Network)
+[[中]](03_ai_model.md#rnn) | [[日]](03_ai_model_ja.md#rnn) | [英](#rnn)
 
 **Core idea:** Introduces a **recurrent connection along the time dimension**, feeding the previous hidden state into the current step to endow the network with "memory."
 
@@ -69,7 +73,9 @@ y_t = W_hy · h_t
 
 ---
 
+<a id="transformer"></a>
 ### 1.3 Transformer
+[[中]](03_ai_model.md#transformer) | [[日]](03_ai_model_ja.md#transformer) | [英](#transformer)
 
 **Core idea:** Built entirely on **Self-Attention**, discarding RNN recurrence for **fully parallel computation** and capturing dependencies at arbitrary distances.
 
@@ -111,7 +117,9 @@ Since Self-Attention itself carries no positional information, sequence order is
 
 ## 2. Fine-Tuning Techniques for Large Models
 
+<a id="fine-tuning"></a>
 ### 2.1 Fine-Tuning (Full-Parameter)
+[[中]](03_ai_model.md#fine-tuning) | [[日]](03_ai_model_ja.md#fine-tuning) | [英](#fine-tuning)
 
 **Definition:** Start from a pretrained model and **update all parameters** using downstream task data.
 
@@ -128,7 +136,9 @@ Since Self-Attention itself carries no positional information, sequence order is
 
 ---
 
+<a id="rlhf"></a>
 ### 2.2 HFRL / RLHF (Reinforcement Learning from Human Feedback)
+[[中]](03_ai_model.md#rlhf) | [[日]](03_ai_model_ja.md#rlhf) | [英](#rlhf)
 
 **Definition:** Train a Reward Model on **human preference data**, then use reinforcement learning (usually PPO) to optimize the language model so its outputs better align with human values.
 
@@ -147,7 +157,9 @@ Since Self-Attention itself carries no positional information, sequence order is
 
 ---
 
+<a id="prompt-eng"></a>
 ### 2.3 Prompt Engineering
+[[中]](03_ai_model.md#prompt-eng) | [[日]](03_ai_model_ja.md#prompt-eng) | [英](#prompt-eng)
 
 **Definition:** **Without modifying model parameters**, carefully craft input prompts to steer the model toward the desired output.
 
@@ -164,7 +176,9 @@ Since Self-Attention itself carries no positional information, sequence order is
 
 ---
 
+<a id="lora"></a>
 ### 2.4 LoRA (Low-Rank Adaptation)
+[[中]](03_ai_model.md#lora) | [[日]](03_ai_model_ja.md#lora) | [英](#lora)
 
 **Core idea:** Freeze the pretrained weight W and add **two low-rank matrices A and B** alongside it (with rank r ≪ original dimension). Only A and B are trained.
 
@@ -187,7 +201,9 @@ W_new = W + ΔW = W + B·A     where A ∈ R^(r×d), B ∈ R^(d×r), r << d
 
 ---
 
+<a id="instruction-tuning"></a>
 ### 2.5 Instruction Tuning
+[[中]](03_ai_model.md#instruction-tuning) | [[日]](03_ai_model_ja.md#instruction-tuning) | [英](#instruction-tuning)
 
 **Definition:** Fine-tune a model on large amounts of **"instruction–response"** data so it learns to follow natural language instructions.
 
@@ -220,7 +236,9 @@ Classic architecture: **Agent = LLM + Memory + Planning + Tools**
 
 ---
 
+<a id="prompt-template"></a>
 ### 3.1 Prompt Template
+[[中]](03_ai_model.md#prompt-template) | [[日]](03_ai_model_ja.md#prompt-template) | [英](#prompt-template)
 
 **Definition:** A pre-designed prompt containing **placeholders (variables)** that get filled in at runtime to produce the final prompt.
 
@@ -247,7 +265,9 @@ Answer in {language}, no more than {max_words} words.
 
 ---
 
+<a id="tool"></a>
 ### 3.2 Tool (Tool Calling)
+[[中]](03_ai_model.md#tool) | [[日]](03_ai_model_ja.md#tool) | [英](#tool)
 
 **Definition:** The Agent has the LLM emit a **structured call request** (usually JSON) that triggers an external function/API. The result is returned to the LLM to continue reasoning.
 
@@ -277,7 +297,9 @@ Thought → Action (call Tool) → Observation (result) → Thought → ... → 
 
 ---
 
+<a id="skills"></a>
 ### 3.3 Skills
+[[中]](03_ai_model.md#skills) | [[日]](03_ai_model_ja.md#skills) | [英](#skills)
 
 **Definition:** A higher-level abstraction than Tool — a reusable capability module that encapsulates **Prompt + Tool + workflow**. Each Skill typically corresponds to a full solution for a specific task.
 

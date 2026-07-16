@@ -29,7 +29,9 @@
 
 ## 1. AI 模型的基本原理
 
+<a id="cnn"></a>
 ### 1.1 CNN（Convolutional Neural Network，卷积神经网络）
+[中](#cnn) | [[日]](03_ai_model_ja.md#cnn) | [[英]](03_ai_model_en.md#cnn)
 
 **核心思想：** 通过卷积核在输入数据（通常是图像）上滑动，提取局部特征，具有**局部连接**和**权值共享**的特点。
 
@@ -46,7 +48,9 @@
 
 ---
 
+<a id="rnn"></a>
 ### 1.2 RNN（Recurrent Neural Network，循环神经网络）
+[中](#rnn) | [[日]](03_ai_model_ja.md#rnn) | [[英]](03_ai_model_en.md#rnn)
 
 **核心思想：** 引入**时间维度的循环连接**，将上一时刻的隐藏状态作为当前时刻的输入，从而具备"记忆"能力。
 
@@ -69,7 +73,9 @@ y_t = W_hy · h_t
 
 ---
 
+<a id="transformer"></a>
 ### 1.3 Transformer
+[中](#transformer) | [[日]](03_ai_model_ja.md#transformer) | [[英]](03_ai_model_en.md#transformer)
 
 **核心思想：** 完全基于**自注意力机制（Self-Attention）**，摒弃 RNN 的循环结构，实现**全并行计算**，捕捉任意距离的依赖关系。
 
@@ -111,7 +117,9 @@ Attention(Q, K, V) = softmax(Q·K^T / √d_k) · V
 
 ## 2. AI 大模型的微调技术
 
+<a id="fine-tuning"></a>
 ### 2.1 Fine-Tuning（全参数微调）
+[中](#fine-tuning) | [[日]](03_ai_model_ja.md#fine-tuning) | [[英]](03_ai_model_en.md#fine-tuning)
 
 **定义：** 在预训练模型（Pretrained Model）基础上，使用下游任务数据**更新全部参数**。
 
@@ -128,7 +136,9 @@ Attention(Q, K, V) = softmax(Q·K^T / √d_k) · V
 
 ---
 
+<a id="rlhf"></a>
 ### 2.2 HFRL / RLHF（Reinforcement Learning from Human Feedback，人类反馈强化学习）
+[中](#rlhf) | [[日]](03_ai_model_ja.md#rlhf) | [[英]](03_ai_model_en.md#rlhf)
 
 **定义：** 利用**人类偏好数据**训练奖励模型（Reward Model），再通过强化学习（通常是 PPO）优化语言模型，使输出更符合人类价值观。
 
@@ -147,7 +157,9 @@ Attention(Q, K, V) = softmax(Q·K^T / √d_k) · V
 
 ---
 
+<a id="prompt-eng"></a>
 ### 2.3 Prompt Engineering（提示词工程）
+[中](#prompt-eng) | [[日]](03_ai_model_ja.md#prompt-eng) | [[英]](03_ai_model_en.md#prompt-eng)
 
 **定义：** **不修改模型参数**，仅通过精心设计输入提示（Prompt）来引导模型输出期望结果。
 
@@ -164,7 +176,9 @@ Attention(Q, K, V) = softmax(Q·K^T / √d_k) · V
 
 ---
 
+<a id="lora"></a>
 ### 2.4 LoRA（Low-Rank Adaptation，低秩适配）
+[中](#lora) | [[日]](03_ai_model_ja.md#lora) | [[英]](03_ai_model_en.md#lora)
 
 **核心思想：** 冻结预训练模型的原始权重 W，在旁边添加**两个低秩矩阵 A 和 B**（A × B 的秩 r 远小于原矩阵维度），只训练 A 和 B。
 
@@ -187,7 +201,9 @@ W_new = W + ΔW = W + B·A     其中 A ∈ R^(r×d), B ∈ R^(d×r), r << d
 
 ---
 
+<a id="instruction-tuning"></a>
 ### 2.5 Instruction Tuning（指令微调）
+[中](#instruction-tuning) | [[日]](03_ai_model_ja.md#instruction-tuning) | [[英]](03_ai_model_en.md#instruction-tuning)
 
 **定义：** 用**大量"指令-回答"格式**的数据集微调模型，使模型学会遵循自然语言指令。
 
@@ -220,7 +236,9 @@ W_new = W + ΔW = W + B·A     其中 A ∈ R^(r×d), B ∈ R^(d×r), r << d
 
 ---
 
+<a id="prompt-template"></a>
 ### 3.1 指令模板（Prompt Template）
+[中](#prompt-template) | [[日]](03_ai_model_ja.md#prompt-template) | [[英]](03_ai_model_en.md#prompt-template)
 
 **定义：** 预先设计的、含有**占位符（变量）**的 Prompt 模板，运行时填入具体参数生成最终 Prompt。
 
@@ -247,7 +265,9 @@ template = """
 
 ---
 
+<a id="tool"></a>
 ### 3.2 Tool（工具调用）
+[中](#tool) | [[日]](03_ai_model_ja.md#tool) | [[英]](03_ai_model_en.md#tool)
 
 **定义：** Agent 通过 LLM 输出**结构化调用请求**（通常是 JSON），触发外部函数/API 执行，然后将结果返回给 LLM 继续推理。
 
@@ -277,7 +297,9 @@ Thought → Action（调用 Tool）→ Observation（结果）→ Thought → ..
 
 ---
 
+<a id="skills"></a>
 ### 3.3 Skills（技能）
+[中](#skills) | [[日]](03_ai_model_ja.md#skills) | [[英]](03_ai_model_en.md#skills)
 
 **定义：** 比 Tool 更高一层的抽象——**封装了 Prompt + Tool + 流程**的可复用能力模块。一个 Skill 通常对应一个特定任务的完整解决方案。
 

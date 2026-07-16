@@ -29,7 +29,9 @@
 
 ## 1. AI モデルの基本原理
 
+<a id="cnn"></a>
 ### 1.1 CNN（Convolutional Neural Network、畳み込みニューラルネットワーク）
+[[中]](03_ai_model.md#cnn) | [日](#cnn) | [[英]](03_ai_model_en.md#cnn)
 
 **中核となる考え方：** 畳み込みカーネルを入力データ（通常は画像）上でスライドさせて局所特徴を抽出する。**局所結合**と**重み共有**という特徴を持つ。
 
@@ -46,7 +48,9 @@
 
 ---
 
+<a id="rnn"></a>
 ### 1.2 RNN（Recurrent Neural Network、再帰型ニューラルネットワーク）
+[[中]](03_ai_model.md#rnn) | [日](#rnn) | [[英]](03_ai_model_en.md#rnn)
 
 **中核となる考え方：** **時間方向の循環結合**を導入し、前時刻の隠れ状態を現時刻の入力とすることで「記憶」能力を持たせる。
 
@@ -69,7 +73,9 @@ y_t = W_hy · h_t
 
 ---
 
+<a id="transformer"></a>
 ### 1.3 Transformer
+[[中]](03_ai_model.md#transformer) | [日](#transformer) | [[英]](03_ai_model_en.md#transformer)
 
 **中核となる考え方：** 完全に **Self-Attention（自己注意機構）** に基づき、RNN の循環構造を廃止して**完全並列計算**を実現し、任意距離の依存関係を捉える。
 
@@ -111,7 +117,9 @@ Self-Attention 自体は位置情報を含まないため、sin/cos または学
 
 ## 2. AI 大規模モデルのファインチューニング技術
 
+<a id="fine-tuning"></a>
 ### 2.1 Fine-Tuning（全パラメータ微調整）
+[[中]](03_ai_model.md#fine-tuning) | [日](#fine-tuning) | [[英]](03_ai_model_en.md#fine-tuning)
 
 **定義：** 事前学習モデル（Pretrained Model）をベースに、下流タスクのデータで**全パラメータを更新**する。
 
@@ -128,7 +136,9 @@ Self-Attention 自体は位置情報を含まないため、sin/cos または学
 
 ---
 
+<a id="rlhf"></a>
 ### 2.2 HFRL / RLHF（Reinforcement Learning from Human Feedback、人間フィードバック強化学習）
+[[中]](03_ai_model.md#rlhf) | [日](#rlhf) | [[英]](03_ai_model_en.md#rlhf)
 
 **定義：** **人間の選好データ**で報酬モデル（Reward Model）を学習し、強化学習（通常は PPO）で言語モデルを最適化することで、出力を人間の価値観により合致させる。
 
@@ -147,7 +157,9 @@ Self-Attention 自体は位置情報を含まないため、sin/cos または学
 
 ---
 
+<a id="prompt-eng"></a>
 ### 2.3 Prompt Engineering（プロンプトエンジニアリング）
+[[中]](03_ai_model.md#prompt-eng) | [日](#prompt-eng) | [[英]](03_ai_model_en.md#prompt-eng)
 
 **定義：** **モデルパラメータを変更せず**、入力プロンプトを工夫することで期待する出力へと誘導する。
 
@@ -164,7 +176,9 @@ Self-Attention 自体は位置情報を含まないため、sin/cos または学
 
 ---
 
+<a id="lora"></a>
 ### 2.4 LoRA（Low-Rank Adaptation、低ランク適応）
+[[中]](03_ai_model.md#lora) | [日](#lora) | [[英]](03_ai_model_en.md#lora)
 
 **中核となる考え方：** 事前学習モデルの元の重み W を凍結し、その横に**低ランク行列 A と B の 2 つ**（A × B のランク r は元行列の次元より遥かに小さい）を追加し、A と B のみを学習する。
 
@@ -187,7 +201,9 @@ W_new = W + ΔW = W + B·A     ここで A ∈ R^(r×d), B ∈ R^(d×r), r << d
 
 ---
 
+<a id="instruction-tuning"></a>
 ### 2.5 Instruction Tuning（指示微調整）
+[[中]](03_ai_model.md#instruction-tuning) | [日](#instruction-tuning) | [[英]](03_ai_model_en.md#instruction-tuning)
 
 **定義：** 大量の**「指示-回答」形式**のデータセットでモデルを微調整し、自然言語の指示に従えるようにする。
 
@@ -220,7 +236,9 @@ W_new = W + ΔW = W + B·A     ここで A ∈ R^(r×d), B ∈ R^(d×r), r << d
 
 ---
 
+<a id="prompt-template"></a>
 ### 3.1 プロンプトテンプレート（Prompt Template）
+[[中]](03_ai_model.md#prompt-template) | [日](#prompt-template) | [[英]](03_ai_model_en.md#prompt-template)
 
 **定義：** **プレースホルダー（変数）** を含むプロンプトテンプレートを事前設計し、実行時に具体的なパラメータを埋め込んで最終プロンプトを生成する。
 
@@ -247,7 +265,9 @@ template = """
 
 ---
 
+<a id="tool"></a>
 ### 3.2 Tool（ツール呼び出し）
+[[中]](03_ai_model.md#tool) | [日](#tool) | [[英]](03_ai_model_en.md#tool)
 
 **定義：** Agent は LLM が出力する**構造化された呼び出し要求**（通常 JSON）を通じて外部関数/API を実行し、結果を LLM に返して推論を継続させる。
 
@@ -277,7 +297,9 @@ Thought → Action（Tool 呼び出し）→ Observation（結果）→ Thought 
 
 ---
 
+<a id="skills"></a>
 ### 3.3 Skills（スキル）
+[[中]](03_ai_model.md#skills) | [日](#skills) | [[英]](03_ai_model_en.md#skills)
 
 **定義：** Tool よりも一段上の抽象——**Prompt + Tool + フロー**をカプセル化した再利用可能な能力モジュール。1 つの Skill は通常、特定タスクの完全なソリューションに対応する。
 
