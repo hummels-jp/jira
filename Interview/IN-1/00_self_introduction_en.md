@@ -329,6 +329,52 @@
     "Don't carry it alone," "prepare before asking," "give learnings back to the organization"
     — these are the three principles I am always mindful of.
 
+## Role Understanding
+<a id="q21"></a>
+*   **What do you think are the main responsibilities of a Technical Success Manager (TSM)?**
+
+    [中](00_self_introduction.md#q21) | [日](00_self_introduction_ja.md#q21) | [英](#q21)
+
+    In my understanding, the role of a Technical Success Manager is
+    "to enable customers to achieve business success through our product, from a technical standpoint."
+    Concretely, I believe the core responsibilities can be summarized in 5 areas:
+
+    1.  **Technical onboarding and adoption support**
+        Help customers smoothly onboard our product, APIs, and SDKs
+        through design reviews, integration support, and best-practice guidance.
+        Not letting customers get stuck in the early stage is the foundation for long-term success.
+
+    2.  **Technical issue diagnosis and troubleshooting**
+        Isolate and identify root causes of issues in map data, APIs,
+        positioning, or performance, using logs, reproduction steps, and data.
+        Escalate to the development team when necessary,
+        while serving as the customer's single point of contact until resolution.
+
+    3.  **Bridge between customers and the development team**
+        Translate customers' requests and challenges into technical language
+        for the product team, and conversely explain product-side changes
+        and constraints in a way that customers can easily understand.
+        In short, ensure smooth two-way information flow.
+
+    4.  **Increase customer adoption and satisfaction**
+        Through regular health checks, usage reviews, feature proposals,
+        and training sessions, help customers use the product more deeply
+        and more broadly. This directly connects to renewals and expansions.
+
+    5.  **Feed customer voice back to the product**
+        Structure the customer feedback gathered from the field
+        and reflect it into the product roadmap.
+        This includes proposing improvements to FAQs, documentation,
+        UI text, and error messages.
+        The goal is not to "resolve one ticket,"
+        but to "make sure the same issue never happens again."
+
+    In summary, TSM is a position where you simultaneously exercise
+    three competencies: technical skill, communication, and customer perspective.
+    I am confident that my 17 years of technical experience,
+    combined with my Japanese and English proficiency,
+    are highly suited to this role.
+
 ## Others
 <a id="q12"></a>
 *   **残業についてどう思いますか？ (What do you think about overtime work?)**
