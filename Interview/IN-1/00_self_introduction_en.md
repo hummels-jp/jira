@@ -192,6 +192,189 @@
     2.  If I were to join, what kind of projects would my team be responsible for?
     3.  What kind of support does your company provide for employee career development and skill enhancement?
 
+## Situational / Problem-Solving
+<a id="q16"></a>
+*   **A customer insists "this is a product defect," but you believe the issue is caused by their own configuration. How do you respond?**
+
+    [中](00_self_introduction.md#q16) | [日](00_self_introduction_ja.md#q16) | [英](#q16)
+
+    First, I would listen to the customer's concern carefully and to the end.
+    Understanding exactly why they perceive it as a defect is my top priority.
+    I would never deny their claim on the spot,
+    as that could damage the trust relationship.
+
+    Next, I would perform a fact-based investigation.
+    I would gather reproduction steps, logs, API requests and responses, and configuration values.
+    Then I would verify the behavior in an internal test environment and isolate the root cause.
+
+    Even if I confirm the cause is on the customer's configuration side,
+    I would never say "this is your configuration error."
+    Instead, I would say something like: "In our environment, we observed this behavior with this setting.
+    May I compare it with your configuration together with you?"
+    I always take the stance of investigating the cause jointly with the customer.
+
+    Finally, to prevent the same issue from recurring,
+    I would propose improvements to the documentation, FAQ,
+    or to the UI and error messages, in collaboration with the product team.
+    Improving the customer experience at its root is, in my view, the true role of a TSM.
+
+<a id="q17"></a>
+*   **If you receive an extremely harsh complaint from a customer, how do you respond even before the technical root cause is known?**
+
+    [中](00_self_introduction.md#q17) | [日](00_self_introduction_ja.md#q17) | [英](#q17)
+
+    The very first thing to do is not to explain the cause, but to empathize with the customer.
+    I would sincerely apologize: "I am truly sorry for the inconvenience."
+    Then I would first understand what business impact they are experiencing.
+
+    Next, I would honestly share "what is known so far" and "what is still unknown."
+    I would never give vague answers or make promises without evidence,
+    as that is the biggest cause of losing trust.
+
+    Then I would clearly commit to the next actions:
+    "I will report the initial investigation results by X,"
+    "During the investigation, I will update you every N hours."
+    I would proactively propose the timeline and communication frequency from my side.
+
+    Internally, I would escalate quickly to the development and product teams.
+    I would keep myself as the single point of contact for the customer,
+    so that they don't have to repeat the same explanation to multiple people.
+
+    After the issue is finally resolved, I would write a postmortem.
+    I would share the root cause, actions taken, and preventive measures
+    with both the customer and internal teams,
+    aiming to restore and strengthen the trust relationship.
+
+<a id="q18"></a>
+*   **You have a long development background. Why do you want to be a Technical Success Manager rather than a development engineer?**
+
+    [中](00_self_introduction.md#q18) | [日](00_self_introduction_ja.md#q18) | [英](#q18)
+
+    Through 17 years of development experience, I have come to a firm belief:
+    "Great products come not only from technical strength,
+    but also from a mechanism that channels the customer's voice back into the product."
+
+    As a development engineer, I worked deeply on map data, ADASIS 2.0,
+    autonomous driving simulators, AI models, and many other technical areas.
+    At the same time, as a team lead, I also handled customer negotiations,
+    requirements definition, and coordination across internal and external stakeholders.
+    Through that, I strongly felt the value of a person who "understands the technology
+    AND can stand between the customer and the product team."
+
+    Technical Success Manager is exactly the role that carries this responsibility.
+    It allows me to simultaneously leverage both my technical depth
+    (NDS, ADASIS 2.0, APIs, AI) and my multilingual communication ability
+    (Japanese N1, English CET-6).
+    Rather than writing one more line of code,
+    I now more strongly want to contribute to customer success and overall product improvement.
+
+    Moreover, in the AI era, the value of people who can "translate" technology
+    and "bridge" between parties will only grow.
+    Applying my 17 years of experience to the maximum in that domain is my motivation.
+
+<a id="q19"></a>
+*   **After joining, what would you do if the actual job content differs from what you expected?**
+
+    [中](00_self_introduction.md#q19) | [日](00_self_introduction_ja.md#q19) | [英](#q19)
+
+    First, rather than immediately being dissatisfied,
+    I would try to understand "why this work was assigned to me."
+    Companies have their own reasons,
+    and there is always a bigger picture that a new employee cannot see.
+
+    Next, I would sincerely engage with the actual work.
+    Any kind of work always has something to learn from,
+    and that experience will surely be useful in the future.
+    As the Japanese proverb "ishi no ue ni mo san nen" (perseverance pays off) suggests,
+    I would first settle down and focus on delivering value.
+
+    After gaining some experience on the job for a certain period,
+    I would ask my manager for a 1-on-1 and have an honest conversation.
+    I would align on my career direction, the areas where I can leverage my strengths,
+    and the company's expectations of me.
+    Instead of one-sidedly asserting my own preferences,
+    I would look for "a form that benefits both the company and myself."
+
+    In conclusion, I value flexibility and a long-term perspective.
+    I would not be swayed by short-term gaps,
+    but rather build my career step by step, by accumulating trust.
+
+<a id="q20"></a>
+*   **What do you do when you face a technical problem that you cannot solve on your own?**
+
+    [中](00_self_introduction.md#q20) | [日](00_self_introduction_ja.md#q20) | [英](#q20)
+
+    First, what I value most is "never leave it alone and never carry it alone."
+    Especially in customer-facing situations, time directly translates into trust.
+
+    First, I would try to "narrow down" the problem as much as possible.
+    I would organize factual information such as logs, reproduction steps,
+    error messages, and API responses.
+    Then I would search official documentation, internal knowledge bases,
+    and past similar tickets.
+    Recently, I also use AI (large language models) to quickly form hypotheses.
+
+    If I still don't see a way forward, I would escalate early
+    to the development team or a senior engineer.
+    At that moment, to not waste their time, I would organize
+    "what I have already tried," "what is already known,"
+    and "what I would like them to verify," before consulting them.
+
+    After the problem is solved, I always do a retrospective.
+    I document the root cause, the resolution steps, and the preventive measures,
+    and store them in the knowledge base.
+    This way, next time the same issue occurs,
+    not only I but the entire team can resolve it faster.
+
+    "Don't carry it alone," "prepare before asking," "give learnings back to the organization"
+    — these are the three principles I am always mindful of.
+
+## Role Understanding
+<a id="q21"></a>
+*   **What do you think are the main responsibilities of a Technical Success Manager (TSM)?**
+
+    [中](00_self_introduction.md#q21) | [日](00_self_introduction_ja.md#q21) | [英](#q21)
+
+    In my understanding, the role of a Technical Success Manager is
+    "to enable customers to achieve business success through our product, from a technical standpoint."
+    Concretely, I believe the core responsibilities can be summarized in 5 areas:
+
+    1.  **Technical onboarding and adoption support**
+        Help customers smoothly onboard our product, APIs, and SDKs
+        through design reviews, integration support, and best-practice guidance.
+        Not letting customers get stuck in the early stage is the foundation for long-term success.
+
+    2.  **Technical issue diagnosis and troubleshooting**
+        Isolate and identify root causes of issues in map data, APIs,
+        positioning, or performance, using logs, reproduction steps, and data.
+        Escalate to the development team when necessary,
+        while serving as the customer's single point of contact until resolution.
+
+    3.  **Bridge between customers and the development team**
+        Translate customers' requests and challenges into technical language
+        for the product team, and conversely explain product-side changes
+        and constraints in a way that customers can easily understand.
+        In short, ensure smooth two-way information flow.
+
+    4.  **Increase customer adoption and satisfaction**
+        Through regular health checks, usage reviews, feature proposals,
+        and training sessions, help customers use the product more deeply
+        and more broadly. This directly connects to renewals and expansions.
+
+    5.  **Feed customer voice back to the product**
+        Structure the customer feedback gathered from the field
+        and reflect it into the product roadmap.
+        This includes proposing improvements to FAQs, documentation,
+        UI text, and error messages.
+        The goal is not to "resolve one ticket,"
+        but to "make sure the same issue never happens again."
+
+    In summary, TSM is a position where you simultaneously exercise
+    three competencies: technical skill, communication, and customer perspective.
+    I am confident that my 17 years of technical experience,
+    combined with my Japanese and English proficiency,
+    are highly suited to this role.
+
 ## Others
 <a id="q12"></a>
 *   **残業についてどう思いますか？ (What do you think about overtime work?)**
@@ -226,3 +409,14 @@
     Based on that, my desired annual salary is between 12 million and 13 million JPY.
     I believe my experience and abilities will bring value to your company.
     I hope for compensation that reflects this.
+
+<a id="q15"></a>
+*   **日本の文化や好きなことわざはありますか？**
+
+    [中](00_self_introduction.md#q15) | [日](00_self_introduction_ja.md#q15) | [英](#q15)
+
+    I love Japanese culture and deeply respect people who make sincere efforts.
+    I also love Japanese proverbs — my favorite is "石の上にも三年" (Ishi no ue ni mo san nen).
+    It means: even a cold stone becomes warm if you sit on it for three years — persistence pays off.
+    I have spent 17 years in autonomous driving and AI, and this "three years on a stone" spirit has kept me going.
+    I truly believe that long-term dedication and steady accumulation are what create real value.
