@@ -5,14 +5,17 @@
 ---
 
 ## 1. 计算机视觉（CV）基础
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 
 ### 1.1 图像分类（Image Classification）
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **定义**：为整张图片分配一个类别标签，回答"这张图里有什么"。
 - **车企场景**：识别车辆品牌、车型、颜色；判断天气/光照条件（晴天/雨天/夜间）。
 - **标注形式**：无需框选，仅需给图片打标签（Label）。
 - **常用模型**：ResNet、EfficientNet、VGG。
 
 ### 1.2 目标检测（Object Detection）
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **定义**：在图中找出目标并用矩形框（Bounding Box）框出，同时给出类别。
 - **车企场景**：检测道路上的车辆、行人、交通标志、红绿灯、车道线障碍物等。
 - **标注形式**：BBox（矩形框）+ 类别标签。
@@ -20,6 +23,7 @@
 - **关键指标**：mAP（平均精度均值）、IoU（交并比）。
 
 ### 1.3 语义分割（Semantic Segmentation）
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **定义**：将图像中每个像素都分配到某个类别，不区分个体。
 - **车企场景**：区分可行驶区域（道路）、不可行驶区域（人行道、建筑）、天空、植被等。
 - **标注形式**：像素级 Mask（掩膜），同一类别的所有像素归为一类。
@@ -27,6 +31,7 @@
 - **注意**：两辆车紧挨着会被涂成同一种颜色，不区分"这是车A还是车B"。
 
 ### 1.4 实例分割（Instance Segmentation）
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **定义**：在语义分割基础上，进一步区分同一类别的不同个体。
 - **车企场景**：不仅知道"这是车"，还要知道"这是第1辆车、第2辆车"，每辆车有独立轮廓。
 - **标注形式**：像素级 Mask + 实例 ID。
@@ -34,6 +39,7 @@
 - **与语义分割区别**：实例分割会为每个目标单独生成一个 Mask。
 
 ### 1.5 关键点标注（Keypoint Annotation）
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **定义**：在目标上标记具有语义意义的特征点。
 - **车企场景**：驾驶员姿态估计（眼、鼻、肩、手位置）、车辆关键点（车灯、车轮中心、后视镜）。
 - **标注形式**：坐标点（x, y）+ 可见性标志（可见/遮挡/未标注）。
@@ -43,8 +49,10 @@
 ---
 
 ## 2. 标注工具
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 
 ### 2.1 CVAT（Computer Vision Annotation Tool）
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **开发者**：Intel OpenVINO 团队。
 - **特点**：开源免费，支持 Web 端协作，功能全面。
 - **支持格式**：图像分类、目标检测（BBox）、分割（Polygon/Mask）、关键点、视频追踪、3D 标注。
@@ -52,6 +60,7 @@
 - **优势**：支持自动化标注（AI 辅助预标注）、半自动追踪、与模型训练 pipeline 集成。
 
 ### 2.2 LabelMe
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **开发者**：MIT。
 - **特点**：轻量级开源工具，有桌面版和在线版。
 - **支持格式**：Polygon 多边形标注为主，也可画 BBox。
@@ -60,6 +69,7 @@
 - **优势**：简单易用，学习成本低；劣势是协作功能弱。
 
 ### 2.3 Label Studio
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **开发者**：Heartex（现 Human Signal）。
 - **特点**：开源、高度可配置，支持多种数据类型（图像、文本、音频、视频、时间序列）。
 - **适用场景**：需要灵活配置标注界面、多模态数据混合标注的项目。
@@ -67,6 +77,7 @@
 - **车企应用**：除了图像，还可用于语音指令标注、车内传感器时间序列标注。
 
 ### 2.4 Scale AI
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **性质**：商业标注平台（非开源），提供"标注即服务"。
 - **特点**：自己有标注员团队，客户上传数据后由 Scale 完成标注并交付。
 - **适用场景**：预算充足、时间紧、需要高质量快速交付的项目。
@@ -76,14 +87,17 @@
 ---
 
 ## 3. 标注类型详解
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 
 ### 3.1 BBox（Bounding Box，边界框）
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **形式**：矩形框，由左上角和右下角坐标定义，或（中心点 x, y + 宽 w + 高 h）。
 - **格式示例**：`(x_min, y_min, x_max, y_max)` 或 `(cx, cy, w, h)`（归一化/像素值）。
 - **适用任务**：目标检测。
 - **优缺点**：标注快、成本低；但框内包含背景噪声，对遮挡和旋转目标不够精确。
 
 ### 3.2 Polygon（多边形）
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **形式**：由一系列顶点连接成的闭合多边形，可贴合任意形状。
 - **格式示例**：`[(x1,y1), (x2,y2), ..., (xn,yn)]`。
 - **适用任务**：精确目标检测、实例分割、语义分割。
@@ -91,6 +105,7 @@
 - **车企场景**：精确勾勒车辆轮廓、道路边界、不规则障碍物。
 
 ### 3.3 Mask（掩膜/像素掩码）
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **形式**：与图像尺寸相同的二值矩阵，目标区域为 1（或 255），背景为 0。
 - **格式示例**：PNG 掩码图、RLE（Run-Length Encoding）编码。
 - **适用任务**：语义分割、实例分割。
@@ -98,6 +113,7 @@
 - **生成方式**：可手动绘制，也可由 Polygon 填充转换，或由模型生成后人工修正。
 
 ### 3.4 Keypoint（关键点）
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **形式**：在目标上标记若干预定义的特征点坐标。
 - **格式示例**：`{"point_id": 1, "x": 120, "y": 80, "visibility": 2}`。
 - **可见性标志**：通常 0=未标注，1=可见，2=被遮挡（但位置可推测）。
@@ -105,6 +121,7 @@
 - **车企场景**：DMS（驾驶员监控系统）中的眼动追踪、头部姿态。
 
 ### 3.5 图像分类与分组标号
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **分类（Classification）**：给整张图一个主标签，如 `scene: highway`, `weather: rainy`。
 - **分组（Grouping）**：将同一批次或同一场景的图像归为一组，便于管理和训练时采样。
 - **标号（Labeling/Indexing）**：
@@ -115,8 +132,10 @@
 ---
 
 ## 4. 数据集管理格式
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 
 ### 4.1 COCO 格式（Common Objects in Context）
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **来源**：Microsoft 推出的标准数据集格式，现已成为行业通用标准。
 - **文件结构**：单个 JSON 文件，包含 `info`、`licenses`、`images`、`annotations`、`categories` 五个顶层字段。
 - **核心字段说明**：
@@ -127,6 +146,7 @@
 - **车企价值**：如果客户要求 COCO 格式，可直接用于训练 Detectron2、MMDetection 等主流框架。
 
 ### 4.2 YOLO 格式（You Only Look Once）
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **来源**：Ultralytics 公司随 YOLO 检测器推出的简洁格式。
 - **文件结构**：每张图片对应一个 `.txt` 文件，文件名与图片同名。
 - **内容格式**：每行代表一个目标，格式为 `<class_id> <x_center> <y_center> <width> <height>`（均为相对于图像宽高的归一化值，0-1 之间）。
@@ -136,6 +156,7 @@
 - **车企价值**：很多量产嵌入式部署（如 NVIDIA Jetson）直接跑 YOLO，客户常要求此格式。
 
 ### 4.3 VOC 格式（PASCAL VOC）
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **来源**：PASCAL VOC 挑战赛（2005-2012）定义的早期标准。
 - **文件结构**：XML 文件（Annotations），每张图一个 XML。
 - **核心字段**：`filename`、`size`（width/height/depth）、`object`（name、pose、truncated、difficult、bndbox 的 xmin/ymin/xmax/ymax）。
@@ -144,6 +165,7 @@
 - **车企价值**：老项目迁移、与旧有数据 pipeline 兼容。
 
 ### 4.4 JSON 格式（通用结构化）
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **性质**：并非特定标准，而是指数组/字典式的灵活格式。
 - **常见变体**：
   - **LabelMe JSON**：`{"shapes": [{"label": "car", "points": [[x1,y1], ...], "shape_type": "polygon"}]}`。
@@ -152,6 +174,7 @@
 - **车企场景**：当客户有自定义需求（如额外标注车辆颜色、角度、遮挡率）时，JSON 最方便扩展。
 
 ### 4.5 XML 格式（可扩展标记语言）
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **性质**：与 JSON 类似，是通用的结构化数据格式，但采用标签嵌套形式。
 - **常见变体**：
   - **PASCAL VOC XML**：如上所述。
@@ -161,6 +184,7 @@
 - **转换关系**：实际工作中，经常需要在 COCO ↔ YOLO ↔ VOC ↔ JSON 之间互相转换，需编写或使用现成的转换脚本。
 
 ### 4.6 格式选择策略
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **客户要求优先**：确认客户的模型训练框架期望什么输入格式。
 - **存储策略**：建议以"最丰富格式"（如 COCO 或自定义 JSON）作为"母格式"存储，导出时转换为 YOLO/VOC。
 - **版本管理**：数据集迭代时，标注文件应与图片文件分离管理，使用 Git-LFS 或 DVC 做版本控制。
@@ -168,8 +192,10 @@
 ---
 
 ## 5. 项目管理经验要点
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 
 ### 5.1 项目背景描述（面试/商谈用）
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **项目类型**：明确是什么类型的标注（2D 图像检测、3D 点云、语义分割、多传感器融合）。
 - **行业领域**：强调车企/自动驾驶/智能座舱背景，突出领域经验。
 - **数据规模**：
@@ -178,6 +204,7 @@
   - 类别数量（如 12 类：车辆、行人、 cyclist、交通标志等）。
 
 ### 5.2 团队与流程管理
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **标注模式**：
   - **单人标注**：速度快，成本低，适合简单任务。
   - **Double 标注（双人独立标注）**：两人分别标同一张图，通过 IoU 或像素重叠度对比差异，仲裁解决分歧；适合高精度要求。
@@ -192,6 +219,7 @@
   - 所有 QA 问题和规范变更需书面记录（Email/Confluence/Notion）。
 
 ### 5.3 预算与交付
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **预算构成**：
   - 人力成本（标注员 × 工时）。
   - 工具/平台费用（如 Scale AI 按张计费，或 CVAT 服务器费用）。
@@ -206,6 +234,7 @@
   - **一致性**：同一标注员前后一致，不同标注员之间差异可控。
 
 ### 5.4 成果物交付
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **数据包结构**：
   ```
   project_delivery/
@@ -223,8 +252,10 @@
 ---
 
 ## 6. 补充说明（角色与要求）
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 
 ### 6.1 客户面试与商谈
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **首次客户对接**：由 AI 负责人参与，展现专业度。
 - **需准备内容**：
   - 理解客户业务场景（ADAS、泊车、座舱监控？）。
@@ -236,6 +267,7 @@
   - "进度延迟怎么办？" → 预留 Buffer，可增派人手，每日进度追踪。
 
 ### 6.2 质量最终把关
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **角色定位**：AI 负责人是质量的最后防线（Gate Keeper）。
 - **把关动作**：
   - 交付前进行最终抽检（Final QA）。
@@ -244,6 +276,7 @@
 - **责任**：一旦交付，质量问题首先由负责人承担，因此必须严格。
 
 ### 6.3 QA 问题与客户沟通
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **问题收集**：标注员在工作中遇到模糊案例（如"这个被树挡住一半的行人要不要标？"），汇总到负责人。
 - **升级机制**：
   - Level 1：内部讨论，参考标注指南（Annotation Guideline）解决。
@@ -254,6 +287,7 @@
   - 每个问题附上示例图片和当前团队的不同意见，方便客户快速决策。
 
 ### 6.4 语言与出勤要求
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 - **日语能力**：需要商务日语流利（N1 或同等水平），能独立进行技术讨论和邮件往来。
 - **出勤安排**：
   - "0.4 人月" ≈ 每月出勤约 8 天（按 20 工作日/月 × 0.4 计算）。
@@ -264,6 +298,7 @@
 ---
 
 ## 附录：快速参考表
+> [中文](data_label.md) | [English](data_label_en.md) | [日本語](data_label_ja.md)
 
 | 能力项 | 核心要点 | 面试必考点 |
 |--------|----------|------------|
