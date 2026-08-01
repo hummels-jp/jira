@@ -153,12 +153,57 @@ print(response)
 - **数据分析**：让模型查询数据库并生成分析结论。
 - **自动化工作流**：通过 Agent 调用多种工具完成复杂任务。
 
-## 7. LangChain 生态
+## 7. LangChain 的四大支柱
 
-- **LangChain**：核心框架，提供模型、提示、链、代理等基础能力。
-- **LangGraph**：用于构建复杂、有状态的多代理应用。
-- **LangServe**：将 LangChain 应用部署为 REST API。
-- **LangSmith**：用于监控、调试和评估 LLM 应用的平台。
+LangChain 生态由四个核心框架 / 平台组成，分别覆盖应用开发、复杂工作流编排、深度智能代理和企业级运维观测四个层面。
+
+### 7.1 LangChain — 应用开发框架
+
+LangChain 是生态的核心基础框架，提供了一整套开发 LLM 应用所需的能力和抽象，包括：
+
+- 统一接口接入各种 LLM、Chat Model 和 Embedding Model。
+- `PromptTemplate`、Few-shot 等提示词管理工具。
+- Chain 与 LCEL（LangChain Expression Language）链式调用。
+- Memory、Retriever、Agent、Tool 等扩展组件。
+
+它的作用是帮助开发者快速将大模型能力整合到应用中，解决模型调用、上下文管理、外部数据接入、工具调用等常见问题。
+
+### 7.2 LangGraph — 复杂工作流与多代理编排框架
+
+LangGraph 是基于图结构（Graph）的框架，用于构建有状态、可循环、可分支的复杂工作流和多代理（Multi-Agent）系统。
+
+主要特点：
+
+- 以节点（Node）和边（Edge）建模任务流程。
+- 支持循环、条件分支、并行执行等人机 / 机机协作模式。
+- 内置持久化状态（State Persistence），可恢复和检查工作流执行过程。
+
+LangGraph 适合需要精确控制执行路径、长期运行、多轮交互或复杂 Agent 协作的场景。
+
+### 7.3 DeepAgent — 深度推理与自主执行代理框架
+
+DeepAgent 是面向复杂任务执行和深度研究的代理框架，强调让 LLM 具备更深层次的推理、规划和自主执行能力。
+
+核心能力：
+
+- 多步骤任务分解与规划（Planning）。
+- 结合搜索引擎、数据库、API 等工具进行深度信息收集。
+- 长周期执行与自我反思（Reflection），持续迭代直到任务完成。
+
+DeepAgent 适用于需要深度调研、复杂报告生成、自动化研究、多步骤决策等高级 Agent 场景。
+
+### 7.4 LangSmith — LLM 应用可观测性与评估平台
+
+LangSmith 是面向 LLM 应用全生命周期的可观测性平台，提供追踪、调试、测试、评估和提示词管理等功能。
+
+核心功能：
+
+- **Tracing**：记录每一次调用链的执行过程，查看输入、输出、延迟和 Token 消耗。
+- **Debugging**：快速定位链或 Agent 中的错误和异常行为。
+- **Evaluation**：使用数据集对应用进行系统化评估，比较不同版本效果。
+- **Prompt Management**：集中管理提示词模板，支持版本控制。
+
+LangSmith 帮助开发团队在生产环境中监控、优化和运维 LLM 应用，提升可靠性和性能。
 
 ## 8. 学习建议
 
